@@ -8,6 +8,8 @@ const options = {
     key: readFileSync('./certs/key.pem')
 };
 
+app.use(express.static('/public'));
+
 app.get('/', (req: express.Request, res: express.Response) => {
     res.send('Hello Client');
 });
