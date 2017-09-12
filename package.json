@@ -2,8 +2,7 @@
     "name": "todo",
     "version": "0.0.1",
     "private": true,
-    "description":
-        "A simple application backend in Node.js to play around a little bit",
+    "description": "A simple application backend in Node.js to play around a little bit",
     "main": "src/index.ts",
     "scripts": {
         "start": "ts-node src/index.ts"
@@ -19,8 +18,14 @@
     },
     "homepage": "https://github.com/sspringer82/todo#readme",
     "devDependencies": {
+        "@types/express": "^4.0.37",
+        "@types/node": "^8.0.28",
         "ts-node": "^3.3.0",
         "typescript": "^2.5.2"
     },
-    "dependencies": {}
+    "dependencies": {
+        "@types/spdy": "^3.4.2",
+        "express": "^4.15.4",
+        "spdy": "^3.4.7"
+    }
 }
