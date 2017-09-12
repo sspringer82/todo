@@ -1,0 +1,19 @@
+{
+    "name": "todo",
+    "version": "0.0.1",
+    "private": true,
+    "description":
+        "A simple application backend in Node.js to play around a little bit",
+    "main": "index.js",
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/sspringer82/todo.git"
+    },
+    "author": "Sebastian Springer <info@sebastian-springer.com>",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/sspringer82/todo/issues"
+    },
+    "homepage": "https://github.com/sspringer82/todo#readme"
+}
