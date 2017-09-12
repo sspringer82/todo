@@ -16,5 +16,5 @@ app.get('/', (req: express.Request, res: express.Response) => {
 
 const server = createServer(options, app);
 server.listen(8080, () => {
-    console.log('Server is listening to http://localhost:8080');
+    console.log('Server is listening to https://localhost:8080');
 });
