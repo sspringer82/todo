@@ -1,6 +1,7 @@
 import * as express from 'express';
 import { createServer } from 'spdy';
 import { readFileSync } from 'fs';
+import { attachAccessLogger } from './accessLogger';
 
 const app: express.Application = express();
 const options = {
@@ -9,6 +10,7 @@ const options = {
 };
 
 app.use(express.static('/public'));
+attachAccessLogger(app);
 
 app.get('/', (req: express.Request, res: express.Response) => {
     res.send('Hello Client');
