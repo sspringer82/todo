@@ -2,6 +2,7 @@ import * as express from 'express';
 import { createServer } from 'spdy';
 import { readFileSync } from 'fs';
 import { attachAccessLogger } from './accessLogger';
+import { logger } from './logger';
 
 const app: express.Application = express();
 const options = {
@@ -18,5 +19,5 @@ app.get('/', (req: express.Request, res: express.Response) => {
 
 const server = createServer(options, app);
 server.listen(8080, () => {
-    console.log('Server is listening to https://localhost:8080');
+    logger.info('Server started');
 });
