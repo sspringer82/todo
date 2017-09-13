@@ -4,43 +4,14 @@ import { readFileSync } from 'fs';
 import { attachAccessLogger } from './accessLogger';
 import { logger } from './logger';
 import * as helmet from 'helmet';
-import { User } from './user';
-import * as session from 'express-session';
+
+import { initializePassport } from './passport';
+import * as passport from 'passport';
 
 import { ensureLoggedIn } from 'connect-ensure-login';
 
-import * as passport from 'passport';
-import { Strategy } from 'passport-local';
-
 const app: express.Application = express();
-
-passport.use(
-    new Strategy((username, password, cb) => {
-        if (username === 'admin' && password === 'test') {
-            const user = new User(username, password);
-            return cb(null, user);
-        } else {
-            cb(null, false);
-        }
-    })
-);
-passport.serializeUser((user: User, cb) => cb(null, user.name));
-passport.deserializeUser((id, cb) => {
-    const user = new User('admin', 'test');
-    cb(null, user);
-});
-var sess = {
-    secret: 'secret',
-    cookie: {},
-    resave: false,
-    saveUninitialized: false
-};
-app.use(session(sess));
-app.use(require('cookie-parser')());
-app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(passport.initialize());
-app.use(passport.session());
-
+initializePassport(app);
 const options = {
     cert: readFileSync('./certs/certificate.pem'),
     key: readFileSync('./certs/key.pem')
@@ -66,7 +37,7 @@ app.get('/logout', (req: express.Request, res: express.Response) => {
 
 app.get(
     '/secret',
-    ensureLoggedIn(),
+    ensureLoggedIn({ redirectTo: '/' }),
     (req: express.Request, res: express.Response) => {
         res.send('Hello Client');
     }
