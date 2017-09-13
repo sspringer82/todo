@@ -2,8 +2,7 @@
     "name": "todo",
     "version": "0.0.1",
     "private": true,
-    "description":
-        "A simple application backend in Node.js to play around a little bit",
+    "description": "A simple application backend in Node.js to play around a little bit",
     "main": "src/index.ts",
     "scripts": {
         "start": "ts-node src/index.ts"
@@ -39,6 +38,7 @@
         "bunyan": "^1.8.12",
         "connect-ensure-login": "^0.1.1",
         "cookie-parser": "^1.4.3",
+        "ejs": "^2.5.7",
         "express": "^4.15.4",
         "express-session": "^1.15.5",
         "helmet": "^3.8.1",

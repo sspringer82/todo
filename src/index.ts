@@ -11,6 +11,7 @@ import * as passport from 'passport';
 import { ensureLoggedIn } from 'connect-ensure-login';
 
 const app: express.Application = express();
+app.set('view engine', 'ejs');
 initializePassport(app);
 const options = {
     cert: readFileSync('./certs/certificate.pem'),
