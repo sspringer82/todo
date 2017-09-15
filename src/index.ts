@@ -46,7 +46,7 @@ app.get(
     }
 );
 
-app.use('/todo', todoRouter);
+app.use('/todo', , ensureLoggedIn({ redirectTo: '/' }), todoRouter);
 
 const server = createServer(options, app);
 server.listen(8080, () => {
