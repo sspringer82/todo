@@ -10,6 +10,8 @@ import * as passport from 'passport';
 
 import { ensureLoggedIn } from 'connect-ensure-login';
 
+import { router as todoRouter } from './todo/router';
+
 const app: express.Application = express();
 app.set('view engine', 'ejs');
 initializePassport(app);
@@ -43,6 +45,8 @@ app.get(
         res.send('Hello Client');
     }
 );
+
+app.use('/todo', todoRouter);
 
 const server = createServer(options, app);
 server.listen(8080, () => {
