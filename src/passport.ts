@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as session from 'express-session';
 import * as passport from 'passport';
 import { Strategy } from 'passport-local';
-import { User } from './user';
+import { User } from './types/user';
 
 export function initializePassport(app: express.Application) {
     passport.use(
