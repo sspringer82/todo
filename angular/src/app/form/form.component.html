@@ -1,0 +1,18 @@
+<div>
+  Title:
+  <input type="text" [(ngModel)]="todo.title" #title>
+</div>
+<div>
+  Status:
+  <select name="" id="" [(ngModel)]="todo.status">
+    <option [value]="status" *ngFor="let status of [0,1]">{{Status[status]}}</option>
+  </select>
+</div>
+<div>
+  Created:
+  <input type="text" [(ngModel)]="todo.created" readonly>
+</div>
+<div>
+  <button (click)="save()">save</button>
+  <button [routerLink]="['/list']">cancel</button>
+</div>

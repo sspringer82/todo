@@ -1,0 +1,10 @@
+<td>{{todo.id}}</td>
+<td>{{todo.title}}</td>
+<td (click)="changeStatus(todo)" class="status">{{Status[todo.status]}}</td>
+<td>{{todo.created | date: 'short' }}</td>
+<td>
+  <button [routerLink]="['/edit', todo.id]">edit</button>
+</td>
+<td>
+  <button (click)="delete(todo)">delete</button>
+</td>

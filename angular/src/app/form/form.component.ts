@@ -1,0 +1,72 @@
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+} from '@angular/core';
+import { Todo, Status } from '../models/todo';
+import {
+  ActivatedRoute,
+  Router,
+  ParamMap,
+  NavigationEnd,
+} from '@angular/router';
+import { TodoService } from '../services/todo.service';
+import { Observable } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
+
+@Component({
+  selector: 'todo-form',
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.css'],
+})
+export class FormComponent implements OnInit, AfterViewInit {
+  @ViewChild('title') private titleField: ElementRef;
+
+  public todo = new Todo();
+  public Status = Status;
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private todoService: TodoService,
+  ) {}
+
+  ngOnInit() {
+    const id = parseInt(this.route.snapshot.paramMap.get('id'), 10);
+    if (!isNaN(id)) {
+      this.todoService.load();
+      this.todoService.todos.subscribe((todos: Todo[]) => {
+        Observable.from(todos)
+          .filter((todo: Todo) => {
+            return todo.id === id;
+          })
+          .subscribe((todo: Todo) => {
+            this.todo = todo;
+          });
+      });
+    } else {
+      this.todo.status = Status.open;
+      this.todo.created = new Date();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.titleField.nativeElement.focus();
+  }
+
+  save() {
+    const subscription = this.todoService.todos.subscribe(() => {
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+      this.router.navigate(['/list']);
+    });
+    if (!this.todo.id) {
+      this.todoService.add(this.todo);
+    } else {
+      this.todoService.update(this.todo);
+    }
+  }
+}
