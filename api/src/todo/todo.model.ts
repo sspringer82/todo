@@ -1,45 +1,73 @@
+import { promisify } from 'util';
 import { Status, Todo } from './todo.type';
 
-const data: Todo[] = [
-  {
-    id: 1,
-    title: 'aufstehen',
-    status: Status.done,
-    created: new Date(2017, 9, 1),
+import { Database, RunResult } from 'sqlite3';
+
+const db = new Database('db/database.sqlite3');
+
+const dbAPI = {
+  all(sql: string): Promise<Todo[]> {
+    return new Promise((resolve, reject) => {
+      db.all(sql, (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
   },
-  {
-    id: 2,
-    title: 'essen',
-    status: Status.done,
-    created: new Date(2017, 9, 2),
+  get(sql: string, params: any[]): Promise<Todo> {
+    return new Promise((resolve, reject) => {
+      db.get(sql, params, (err, row) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(row);
+        }
+      });
+    });
   },
-  {
-    id: 3,
-    title: 'schlafen gehen',
-    status: Status.open,
-    created: new Date(2017, 10, 1),
+  run(sql: string, params: any[]): Promise<RunResult> {
+    return new Promise((resolve, reject) => {
+      db.run(sql, params, function(this: RunResult, err: Error | null) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(this);
+        }
+      });
+    });
   },
-];
+};
 
 const model = {
   getOne(id: number): Promise<Todo> {
-    return new Promise((resolve: Function, reject: Function) => {
-      const todo = data.find((todo: Todo) => {
-        return todo.id === id;
-      });
-      if (todo) {
-        resolve(todo);
-      }
-    });
+    const query = 'SELECT * FROM todo WHERE id = ?';
+    return dbAPI.get(query, [id]);
   },
   getAll(): Promise<Todo[]> {
-    return new Promise((resolve: Function, reject: Function) => {
-      resolve(data);
+    const query = 'SELECT * from todo';
+    return dbAPI.all(query);
+  },
+  create(todo: Todo): Promise<Todo> {
+    const query = 'INSERT INTO todo (title, status, created) VALUES (?, ?, ?)';
+    return dbAPI
+      .run(query, [todo.title, todo.status, todo.created])
+      .then((data: RunResult) => {
+        return { ...todo, id: data.lastID };
+      });
+  },
+  update(todo: Todo): Promise<Todo> {
+    const query = 'UPDATE todo SET title = ?, status = ? WHERE id = ?';
+    return dbAPI.run(query, [todo.title, todo.status, todo.id]).then(() => {
+      return todo;
     });
   },
-  create(todo: Todo) {},
-  update() {},
-  delete() {},
+  delete(id: number): Promise<RunResult> {
+    const query = 'DELETE FROM todo WHERE id = ?';
+    return dbAPI.run(query, [id]);
+  },
 };
 
 export default model;
