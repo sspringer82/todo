@@ -1,0 +1,4 @@
+node_modules
+db/database.sqlite3
+certs/certificate.pem
+certs/key.pem
