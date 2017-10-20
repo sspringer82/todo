@@ -39,23 +39,27 @@ export class TodoService {
   }
 
   add(todo: Todo) {
-    todo.id = this.id;
-    this.dataStore.todos.push(todo);
-    this.id += 1;
-    this._todos.next([...this.dataStore.todos]);
+    this.http.post('/todo', todo).subscribe((newTodo: Todo) => {
+      this.dataStore.todos.push(newTodo);
+      this._todos.next([...this.dataStore.todos]);
+    });
   }
 
   update(todo: Todo) {
-    const index = this.dataStore.todos.findIndex(
-      existingTodo => existingTodo.id === todo.id,
-    );
-    this.dataStore.todos[index] = todo;
-    this._todos.next([...this.dataStore.todos]);
+    this.http.put(`/todo/${todo.id}`, todo).subscribe((updatedTodo: Todo) => {
+      const index = this.dataStore.todos.findIndex(
+        existingTodo => existingTodo.id === todo.id,
+      );
+      this.dataStore.todos[index] = todo;
+      this._todos.next([...this.dataStore.todos]);
+    });
   }
 
   delete(todo: Todo) {
-    const index = this.dataStore.todos.findIndex(item => item.id === todo.id);
-    this.dataStore.todos.splice(index, 1);
-    this._todos.next([...this.dataStore.todos]);
+    this.http.delete(`/todo/${todo.id}`).subscribe(() => {
+      const index = this.dataStore.todos.findIndex(item => item.id === todo.id);
+      this.dataStore.todos.splice(index, 1);
+      this._todos.next([...this.dataStore.todos]);
+    });
   }
 }
