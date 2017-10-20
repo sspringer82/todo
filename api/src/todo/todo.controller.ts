@@ -37,7 +37,16 @@ const controller = {
     res.json(todo);
     return todo;
   },
-  deleteAction(req: express.Request, res: express.Response): void {},
+  async deleteAction(
+    req: express.Request,
+    res: express.Response,
+  ): Promise<boolean> {
+    const id = parseInt(req.params.id, 10);
+    const result = await todoModel.delete(id);
+    console.log('foo');
+    res.json(true);
+    return true;
+  },
 };
 
 export default controller;
