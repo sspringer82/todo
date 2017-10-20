@@ -21,7 +21,15 @@ const controller = {
     res.json(todo);
     return todo;
   },
-  createAction(req: express.Request, res: express.Response): void {},
+  async createAction(
+    req: express.Request,
+    res: express.Response,
+  ): Promise<Todo> {
+    console.log(req.body);
+    const todo = await todoModel.create(req.body);
+    res.json(todo);
+    return todo;
+  },
   updateAction(req: express.Request, res: express.Response): void {},
   deleteAction(req: express.Request, res: express.Response): void {},
 };

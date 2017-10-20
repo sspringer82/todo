@@ -1,10 +1,12 @@
 import * as express from 'express';
 import { createServer } from 'spdy';
 import todoRouter from './todo/router';
+import * as bodyParser from 'body-parser';
 
 import { readFileSync } from 'fs';
 
 const app: express.Application = express();
+app.use(bodyParser.json());
 
 app.use('/todo', todoRouter);
 

@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', controller.getAllAction);
 router.get('/:id', controller.getOneAction);
-router.post('/:id', controller.createAction);
+router.post('/', controller.createAction);
 router.put('/:id', controller.updateAction);
 router.delete('/:id', controller.deleteAction);
 
