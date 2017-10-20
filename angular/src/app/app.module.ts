@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { ListComponent } from './list/list.component';
@@ -11,7 +12,7 @@ import { routerModule } from './app.router';
 
 @NgModule({
   declarations: [AppComponent, ListComponent, ListItemComponent, FormComponent],
-  imports: [BrowserModule, routerModule, FormsModule],
+  imports: [BrowserModule, routerModule, FormsModule, HttpClientModule],
   providers: [TodoService],
   bootstrap: [AppComponent],
 })

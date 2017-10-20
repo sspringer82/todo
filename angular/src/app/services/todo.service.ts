@@ -3,6 +3,7 @@ import { Todo, Status } from '../models/todo';
 
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class TodoService {
@@ -15,38 +16,26 @@ export class TodoService {
     todos: Todo[];
   };
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.dataStore = { todos: [] };
     this._todos = <BehaviorSubject<Todo[]>>new BehaviorSubject([]);
     this.todos = this._todos.asObservable();
   }
 
   load() {
-    if (!this.loaded) {
-      this.dataStore.todos = [
-        {
-          id: 1,
-          title: 'aufstehen',
-          status: Status.done,
-          created: new Date(2017, 9, 1),
-        },
-        {
-          id: 2,
-          title: 'essen',
-          status: Status.done,
-          created: new Date(2017, 9, 2),
-        },
-        {
-          id: 3,
-          title: 'schlafen gehen',
-          status: Status.open,
-          created: new Date(2017, 10, 1),
-        },
-      ];
-      this.id = this.dataStore.todos.length + 1;
-      this.loaded = true;
-    }
-    this._todos.next([...this.dataStore.todos]);
+    Observable.of(!this.loaded)
+      .mergeMap(loaded => {
+        if (loaded) {
+          return this.http.get('/todo');
+        } else {
+          return Observable.of(this.dataStore.todos);
+        }
+      })
+      .subscribe((todos: Todo[]) => {
+        this.loaded = true;
+        this.dataStore.todos = todos;
+        this._todos.next([...this.dataStore.todos]);
+      });
   }
 
   add(todo: Todo) {
