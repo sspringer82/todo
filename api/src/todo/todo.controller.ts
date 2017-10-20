@@ -25,12 +25,18 @@ const controller = {
     req: express.Request,
     res: express.Response,
   ): Promise<Todo> {
-    console.log(req.body);
     const todo = await todoModel.create(req.body);
     res.json(todo);
     return todo;
   },
-  updateAction(req: express.Request, res: express.Response): void {},
+  async updateAction(
+    req: express.Request,
+    res: express.Response,
+  ): Promise<Todo> {
+    const todo = await todoModel.update(req.body);
+    res.json(todo);
+    return todo;
+  },
   deleteAction(req: express.Request, res: express.Response): void {},
 };
 

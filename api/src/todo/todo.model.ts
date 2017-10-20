@@ -54,15 +54,13 @@ const model = {
     const query = 'INSERT INTO todo (title, status, created) VALUES (?, ?, ?)';
     return dbAPI
       .run(query, [todo.title, todo.status, todo.created])
-      .then((data: RunResult) => {
-        return { ...todo, id: data.lastID };
-      });
+      .then((data: RunResult) => ({ ...todo, id: data.lastID }));
   },
   update(todo: Todo): Promise<Todo> {
     const query = 'UPDATE todo SET title = ?, status = ? WHERE id = ?';
-    return dbAPI.run(query, [todo.title, todo.status, todo.id]).then(() => {
-      return todo;
-    });
+    return dbAPI
+      .run(query, [todo.title, todo.status, todo.id])
+      .then(() => todo);
   },
   delete(id: number): Promise<RunResult> {
     const query = 'DELETE FROM todo WHERE id = ?';
