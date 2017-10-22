@@ -13,9 +13,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/express-jwt": "0.0.37",
     "@types/node": "^8.0.34",
     "body-parser": "^1.18.1",
     "express": "^4.15.4",
+    "express-jwt": "^5.3.0",
     "jsonwebtoken": "^8.1.0",
     "spdy": "^3.4.7",
     "sqlite3": "^3.1.13"
