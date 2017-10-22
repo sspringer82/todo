@@ -4,6 +4,8 @@ import { Todo, Status } from '../models/todo';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { HttpClient } from '@angular/common/http';
+import { LoginService } from './login.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class TodoService {
@@ -16,7 +18,7 @@ export class TodoService {
     todos: Todo[];
   };
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private loginService: LoginService) {
     this.dataStore = { todos: [] };
     this._todos = <BehaviorSubject<Todo[]>>new BehaviorSubject([]);
     this.todos = this._todos.asObservable();
@@ -26,7 +28,11 @@ export class TodoService {
     Observable.of(!this.loaded)
       .mergeMap(loaded => {
         if (loaded) {
-          return this.http.get('/todo');
+          const headers = new HttpHeaders().set(
+            'Authorization',
+            'Bearer ' + this.loginService.getToken(),
+          );
+          return this.http.get('/todo', { headers });
         } else {
           return Observable.of(this.dataStore.todos);
         }
