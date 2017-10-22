@@ -1,8 +1,13 @@
 import { ListComponent } from './list/list.component';
 import { FormComponent } from './form/form.component';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
   {
     path: 'list',
     component: ListComponent,
@@ -18,7 +23,7 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/list',
+    redirectTo: '/login',
     pathMatch: 'full',
   },
 ];
