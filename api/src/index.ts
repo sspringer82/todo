@@ -2,12 +2,15 @@ import * as express from 'express';
 import { createServer } from 'spdy';
 import todoRouter from './todo/router';
 import * as bodyParser from 'body-parser';
+import authRouter from './auth';
 
 import { readFileSync } from 'fs';
 
 const app: express.Application = express();
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use('/login', authRouter);
 app.use('/todo', todoRouter);
 
 const options = {
