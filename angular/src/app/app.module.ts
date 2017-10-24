@@ -12,6 +12,13 @@ import { routerModule } from './app.router';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './services/login.service';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  MatCardModule,
+  MatInputModule,
+  MatButtonModule,
+} from '@angular/material';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +27,16 @@ import { LoginService } from './services/login.service';
     FormComponent,
     LoginComponent,
   ],
-  imports: [BrowserModule, routerModule, FormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    routerModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatInputModule,
+    MatButtonModule,
+  ],
   providers: [TodoService, LoginService],
   bootstrap: [AppComponent],
 })
