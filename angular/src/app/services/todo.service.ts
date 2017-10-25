@@ -32,7 +32,7 @@ export class TodoService {
   }
 
   load() {
-    Observable.of(!this.loaded)
+    return Observable.of(!this.loaded)
       .mergeMap(loaded => {
         if (loaded) {
           return this.http.get('/todo', { headers: this.getAuthHeader() });
@@ -40,35 +40,44 @@ export class TodoService {
           return Observable.of(this.dataStore.todos);
         }
       })
-      .subscribe((todos: Todo[]) => {
+      .map((todos: Todo[]) => {
         this.loaded = true;
         this.dataStore.todos = todos;
         this._todos.next([...this.dataStore.todos]);
+        return todos;
       });
   }
 
   add(todo: Todo) {
-    this.http.post('/todo', todo).subscribe((newTodo: Todo) => {
-      this.dataStore.todos.push(newTodo);
-      this._todos.next([...this.dataStore.todos]);
-    });
+    this.http
+      .post('/todo', todo, { headers: this.getAuthHeader() })
+      .subscribe((newTodo: Todo) => {
+        this.dataStore.todos.push(newTodo);
+        this._todos.next([...this.dataStore.todos]);
+      });
   }
 
   update(todo: Todo) {
-    this.http.put(`/todo/${todo.id}`, todo).subscribe((updatedTodo: Todo) => {
-      const index = this.dataStore.todos.findIndex(
-        existingTodo => existingTodo.id === todo.id,
-      );
-      this.dataStore.todos[index] = todo;
-      this._todos.next([...this.dataStore.todos]);
-    });
+    this.http
+      .put(`/todo/${todo.id}`, todo, { headers: this.getAuthHeader() })
+      .subscribe((updatedTodo: Todo) => {
+        const index = this.dataStore.todos.findIndex(
+          existingTodo => existingTodo.id === todo.id,
+        );
+        this.dataStore.todos[index] = todo;
+        this._todos.next([...this.dataStore.todos]);
+      });
   }
 
   delete(todo: Todo) {
-    this.http.delete(`/todo/${todo.id}`).subscribe(() => {
-      const index = this.dataStore.todos.findIndex(item => item.id === todo.id);
-      this.dataStore.todos.splice(index, 1);
-      this._todos.next([...this.dataStore.todos]);
-    });
+    this.http
+      .delete(`/todo/${todo.id}`, { headers: this.getAuthHeader() })
+      .subscribe(() => {
+        const index = this.dataStore.todos.findIndex(
+          item => item.id === todo.id,
+        );
+        this.dataStore.todos.splice(index, 1);
+        this._todos.next([...this.dataStore.todos]);
+      });
   }
 }

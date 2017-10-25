@@ -4,6 +4,8 @@ import { Todo, Status } from '../models/todo';
 import { TodoService } from '../services/todo.service';
 
 import { Observable } from 'rxjs/Observable';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'todo-list',
@@ -13,11 +15,15 @@ import { Observable } from 'rxjs/Observable';
 export class ListComponent implements OnInit {
   public todos: Observable<Todo[]>;
 
-  constructor(private todoService: TodoService) {}
+  constructor(private todoService: TodoService, private router: Router) {}
 
   ngOnInit() {
     this.todos = this.todoService.todos;
-    this.todoService.load();
+    this.todoService.load().subscribe(null, (err: HttpErrorResponse) => {
+      if (err.status === 401) {
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
   changeStatus(todo: Todo) {
