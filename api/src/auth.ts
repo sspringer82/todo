@@ -8,6 +8,7 @@ router.get('/', (req: express.Request, res: express.Response) => {
 });
 
 router.post('/', (req: express.Request, res: express.Response) => {
+  // @todo use database here
   if (req.body.username === 'basti' && req.body.password === 'test') {
     const data = { username: req.body.username };
     const token = jwt.sign(data, 'secret');
