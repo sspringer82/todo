@@ -57,16 +57,15 @@ export class FormComponent implements OnInit, AfterViewInit {
   }
 
   save() {
-    const subscription = this.todoService.todos.subscribe(() => {
-      if (subscription) {
-        subscription.unsubscribe();
-      }
+    let observable: Observable<Todo>;
+    if (!this.todo.id) {
+      observable = this.todoService.add(this.todo);
+    } else {
+      observable = this.todoService.update(this.todo);
+    }
+
+    observable.subscribe(() => {
       this.router.navigate(['/list']);
     });
-    if (!this.todo.id) {
-      this.todoService.add(this.todo);
-    } else {
-      this.todoService.update(this.todo);
-    }
   }
 }
