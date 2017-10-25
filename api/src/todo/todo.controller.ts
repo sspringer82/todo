@@ -43,7 +43,6 @@ const controller = {
   ): Promise<boolean> {
     const id = parseInt(req.params.id, 10);
     const result = await todoModel.delete(id);
-    console.log('foo');
     res.json(true);
     return true;
   },

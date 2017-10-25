@@ -4,7 +4,6 @@ import * as jwt from 'jsonwebtoken';
 const router = express.Router();
 
 router.post('/', (req: express.Request, res: express.Response) => {
-  console.log(req.body.username);
   if (req.body.username === 'basti' && req.body.password === 'test') {
     const data = { username: req.body.username };
     const token = jwt.sign(data, 'secret');
