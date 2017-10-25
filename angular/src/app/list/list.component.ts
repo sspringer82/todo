@@ -33,7 +33,9 @@ export class ListComponent implements OnInit {
   changeStatus(todo: Todo) {
     const cloneTodo = { ...todo };
     cloneTodo.status = todo.status === Status.open ? Status.done : Status.open;
-    this.todoService.update(cloneTodo);
+    this.todoService
+      .update(cloneTodo)
+      .subscribe(null, e => this.handleError(e));
   }
 
   delete(todo: Todo) {
