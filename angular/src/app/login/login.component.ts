@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+} from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
 
@@ -7,7 +13,8 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
+  @ViewChild('username') private usernameField: ElementRef;
   // @todo add type user
   public user: {
     username: string;
@@ -22,6 +29,10 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  ngAfterViewInit(): void {
+    Promise.resolve().then(() => this.usernameField.nativeElement.focus());
+  }
 
   login() {
     this.loginService
