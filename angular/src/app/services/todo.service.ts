@@ -24,15 +24,18 @@ export class TodoService {
     this.todos = this._todos.asObservable();
   }
 
+  getAuthHeader(headers: HttpHeaders = new HttpHeaders()): HttpHeaders {
+    return headers.set(
+      'Authorization',
+      'Bearer ' + this.loginService.getToken(),
+    );
+  }
+
   load() {
     Observable.of(!this.loaded)
       .mergeMap(loaded => {
         if (loaded) {
-          const headers = new HttpHeaders().set(
-            'Authorization',
-            'Bearer ' + this.loginService.getToken(),
-          );
-          return this.http.get('/todo', { headers });
+          return this.http.get('/todo', { headers: this.getAuthHeader() });
         } else {
           return Observable.of(this.dataStore.todos);
         }
