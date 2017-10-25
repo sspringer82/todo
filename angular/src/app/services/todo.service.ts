@@ -48,36 +48,39 @@ export class TodoService {
       });
   }
 
-  add(todo: Todo) {
-    this.http
+  add(todo: Todo): Observable<Todo> {
+    return this.http
       .post('/todo', todo, { headers: this.getAuthHeader() })
-      .subscribe((newTodo: Todo) => {
+      .map((newTodo: Todo): Todo => {
         this.dataStore.todos.push(newTodo);
         this._todos.next([...this.dataStore.todos]);
+        return newTodo;
       });
   }
 
-  update(todo: Todo) {
-    this.http
+  update(todo: Todo): Observable<Todo> {
+    return this.http
       .put(`/todo/${todo.id}`, todo, { headers: this.getAuthHeader() })
-      .subscribe((updatedTodo: Todo) => {
+      .map((updatedTodo: Todo): Todo => {
         const index = this.dataStore.todos.findIndex(
           existingTodo => existingTodo.id === todo.id,
         );
         this.dataStore.todos[index] = todo;
         this._todos.next([...this.dataStore.todos]);
+        return updatedTodo;
       });
   }
 
-  delete(todo: Todo) {
-    this.http
+  delete(todo: Todo): Observable<Todo> {
+    return this.http
       .delete(`/todo/${todo.id}`, { headers: this.getAuthHeader() })
-      .subscribe(() => {
+      .map((): Todo => {
         const index = this.dataStore.todos.findIndex(
           item => item.id === todo.id,
         );
         this.dataStore.todos.splice(index, 1);
         this._todos.next([...this.dataStore.todos]);
+        return todo;
       });
   }
 }
