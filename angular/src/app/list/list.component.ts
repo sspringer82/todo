@@ -17,13 +17,17 @@ export class ListComponent implements OnInit {
 
   constructor(private todoService: TodoService, private router: Router) {}
 
+  handleError(err: HttpErrorResponse) {
+    if (err.status === 401) {
+      this.router.navigate(['/login']);
+    } else {
+      console.log('Whoops an error occured');
+    }
+  }
+
   ngOnInit() {
     this.todos = this.todoService.todos;
-    this.todoService.load().subscribe(null, (err: HttpErrorResponse) => {
-      if (err.status === 401) {
-        this.router.navigate(['/login']);
-      }
-    });
+    this.todoService.load().subscribe(null, e => this.handleError(e));
   }
 
   changeStatus(todo: Todo) {
@@ -33,6 +37,6 @@ export class ListComponent implements OnInit {
   }
 
   delete(todo: Todo) {
-    this.todoService.delete(todo);
+    this.todoService.delete(todo).subscribe(null, e => this.handleError(e));
   }
 }
