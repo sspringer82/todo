@@ -3,6 +3,10 @@ import * as jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
+router.get('/', (req: express.Request, res: express.Response) => {
+  res.redirect('/');
+});
+
 router.post('/', (req: express.Request, res: express.Response) => {
   if (req.body.username === 'basti' && req.body.password === 'test') {
     const data = { username: req.body.username };
