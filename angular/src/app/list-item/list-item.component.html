@@ -1,10 +1,27 @@
-<td>{{todo.id}}</td>
-<td>{{todo.title}}</td>
-<td (click)="changeStatus(todo)" class="status">{{Status[todo.status]}}</td>
-<td>{{todo.created | date: 'short' }}</td>
-<td>
-  <button [routerLink]="['/edit', todo.id]">edit</button>
-</td>
-<td>
-  <button (click)="delete(todo)">delete</button>
-</td>
+<mat-card>
+
+  <div class="container">
+    <div class="title">
+      {{todo.title}}
+    </div>
+    <div class="status">
+      <button mat-button *ngIf="todo.status === Status.done" (click)="changeStatus(todo)">
+        <i class="done material-icons">done</i>
+      </button>
+      <button mat-button *ngIf="todo.status === Status.open" (click)="changeStatus(todo)">
+        <i class="open material-icons">clear</i>
+      </button>
+    </div>
+
+    <div>
+      <button mat-button [routerLink]="['/edit', todo.id]">
+        <i class="material-icons">mode_edit</i>
+      </button>
+    </div>
+    <div>
+      <button mat-button (click)="delete(todo)">
+        <i class="material-icons">delete</i>
+      </button>
+    </div>
+  </div>
+</mat-card>

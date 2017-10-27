@@ -1,3 +1,21 @@
+.container {
+  display: flex;
+}
+
+.title {
+  flex-grow: 1;
+}
+
 .status {
   cursor: pointer;
+}
+
+.done {
+  color: green;
+  font-weight: bold;
+}
+
+.open {
+  color: red;
+  font-weight: bold;
 }

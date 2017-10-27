@@ -1,16 +1,4 @@
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Title</th>
-      <th>Status</th>
-      <th>Created</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="todo-list-item" *ngFor="let todo of todos | async " [todo]="todo" (onStatusChange)="changeStatus($event)" (onDelete)="delete($event)">
-    </tr>
-  </tbody>
-</table>
+<todo-list-item *ngFor="let todo of todos | async " [todo]="todo" (onStatusChange)="changeStatus($event)" (onDelete)="delete($event)">
+</todo-list-item>
 
 <button [routerLink]="['/form']">new</button>

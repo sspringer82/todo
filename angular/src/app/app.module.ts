@@ -17,6 +17,7 @@ import {
   MatCardModule,
   MatInputModule,
   MatButtonModule,
+  MatIconModule,
 } from '@angular/material';
 
 @NgModule({
