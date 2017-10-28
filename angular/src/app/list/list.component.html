@@ -1,4 +1,12 @@
 <div class="container">
+
+  <h1>Your todos</h1>
+
+  <div>
+    Show only open todos:
+    <mat-slide-toggle [formControl]="showOnlyOpen"></mat-slide-toggle>
+  </div>
+
   <todo-list-item *ngFor="let todo of todos | async " [todo]="todo" (onStatusChange)="changeStatus($event)" (onDelete)="delete($event)">
   </todo-list-item>
 

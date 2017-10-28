@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -19,6 +19,7 @@ import {
   MatButtonModule,
   MatIconModule,
   MatSelectModule,
+  MatSlideToggleModule,
 } from '@angular/material';
 
 @NgModule({
@@ -33,12 +34,14 @@ import {
     BrowserModule,
     routerModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatCardModule,
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
+    MatSlideToggleModule,
   ],
   providers: [TodoService, LoginService],
   bootstrap: [AppComponent],

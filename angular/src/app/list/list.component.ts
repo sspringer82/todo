@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 import { Todo, Status } from '../models/todo';
 import { TodoService } from '../services/todo.service';
@@ -14,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class ListComponent implements OnInit {
   public todos: Observable<Todo[]>;
+  public showOnlyOpen = new FormControl();
 
   constructor(private todoService: TodoService, private router: Router) {}
 
@@ -26,7 +28,18 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.todos = this.todoService.todos;
+    this.todos = this.todoService.todos.mergeMap((todos: Todo[]) => {
+      return this.showOnlyOpen.valueChanges
+        .startWith(false)
+        .map((value: boolean) => {
+          if (value) {
+            return todos.filter((todo: Todo) => todo.status === Status.open);
+          } else {
+            return todos;
+          }
+        });
+    });
+
     this.todoService.load().subscribe(null, e => this.handleError(e));
   }
 
