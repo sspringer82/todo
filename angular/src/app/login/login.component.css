@@ -2,6 +2,10 @@
   margin: 25px 25%;
 }
 
+form {
+  text-align: center;
+}
+
 h1 {
   text-align: center;
 }
