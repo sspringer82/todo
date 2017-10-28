@@ -18,6 +18,7 @@ import {
   MatInputModule,
   MatButtonModule,
   MatIconModule,
+  MatSelectModule,
 } from '@angular/material';
 
 @NgModule({
@@ -37,6 +38,7 @@ import {
     MatCardModule,
     MatInputModule,
     MatButtonModule,
+    MatSelectModule,
   ],
   providers: [TodoService, LoginService],
   bootstrap: [AppComponent],

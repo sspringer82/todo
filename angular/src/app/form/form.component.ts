@@ -53,7 +53,7 @@ export class FormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.titleField.nativeElement.focus();
+    Promise.resolve().then(() => this.titleField.nativeElement.focus());
   }
 
   save() {

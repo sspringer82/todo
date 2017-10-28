@@ -1,18 +1,29 @@
-<div>
-  Title:
-  <input type="text" [(ngModel)]="todo.title" #title>
-</div>
-<div>
-  Status:
-  <select name="" id="" [(ngModel)]="todo.status">
-    <option [value]="status" *ngFor="let status of [0,1]">{{Status[status]}}</option>
-  </select>
-</div>
-<div>
-  Created:
-  <input type="text" [(ngModel)]="todo.created" readonly>
-</div>
-<div>
-  <button (click)="save()">save</button>
-  <button [routerLink]="['/list']">cancel</button>
-</div>
+<mat-card>
+  <form #todoForm="ngForm" (ngSubmit)="save()">
+    <div>
+      <mat-form-field>
+        <input matInput placeholder="Title" type="text" [(ngModel)]="todo.title" #title name="title">
+      </mat-form-field>
+    </div>
+    <div>
+
+      <mat-form-field>
+        <mat-select placeholder="Status" name="status" [(ngModel)]="todo.status">
+          <mat-option *ngFor="let status of [0, 1]" [value]="status">
+            {{Status[status]}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+    <div>
+      <mat-form-field>
+        <input matInput placeholder="Created" type="text" [(ngModel)]="todo.created" readonly name="created">
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-raised-button type="submit">save</button>
+      <button mat-raised-button [routerLink]="['/list']">cancel</button>
+    </div>
+  </form>
+</mat-card>
