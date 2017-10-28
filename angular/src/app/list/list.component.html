@@ -1,6 +1,8 @@
-<todo-list-item *ngFor="let todo of todos | async " [todo]="todo" (onStatusChange)="changeStatus($event)" (onDelete)="delete($event)">
-</todo-list-item>
+<div class="container">
+  <todo-list-item *ngFor="let todo of todos | async " [todo]="todo" (onStatusChange)="changeStatus($event)" (onDelete)="delete($event)">
+  </todo-list-item>
 
-<button mat-fab [routerLink]="['/form']" class="addButton">
-  <i class="open material-icons">add</i>
-</button>
+  <button mat-fab [routerLink]="['/form']" class="addButton">
+    <i class="open material-icons">add</i>
+  </button>
+</div>

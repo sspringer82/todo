@@ -1,5 +1,10 @@
+.container {
+  margin: 25px 25%;
+}
+
 .addButton {
   position: fixed;
+  margin-right: 25%;
   right: 30px;
   bottom: 30px;
 }
