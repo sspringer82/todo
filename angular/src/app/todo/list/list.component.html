@@ -2,9 +2,23 @@
 
   <h1>Your todos</h1>
 
-  <div>
-    Show only open todos:
-    <mat-slide-toggle [formControl]="showOnlyOpen"></mat-slide-toggle>
+  <div class="controls">
+    <div>
+      Show only open todos:
+      <mat-slide-toggle [formControl]="showOnlyOpen"></mat-slide-toggle>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-select placeholder="List" name="list">
+          <mat-option *ngFor="let list of lists |async" [value]="list.id">
+            {{list.title}}
+          </mat-option>
+        </mat-select>
+
+      </mat-form-field>
+
+    </div>
   </div>
 
   <todo-list-item *ngFor="let todo of todos | async " [todo]="todo" (onStatusChange)="changeStatus($event)" (onDelete)="delete($event)">

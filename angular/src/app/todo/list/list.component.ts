@@ -7,6 +7,8 @@ import { TodoService } from '../services/todo.service';
 import { Observable } from 'rxjs/Observable';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ListService } from '../services/list.service';
+import { List } from '../models/list';
 
 @Component({
   selector: 'todo-list',
@@ -15,9 +17,14 @@ import { Router } from '@angular/router';
 })
 export class ListComponent implements OnInit {
   public todos: Observable<Todo[]>;
+  public lists: Observable<List[]>;
   public showOnlyOpen = new FormControl();
 
-  constructor(private todoService: TodoService, private router: Router) {}
+  constructor(
+    private todoService: TodoService,
+    private router: Router,
+    private listService: ListService,
+  ) {}
 
   handleError(err: HttpErrorResponse) {
     if (err.status === 401) {
@@ -41,6 +48,7 @@ export class ListComponent implements OnInit {
     });
 
     this.todoService.load().subscribe(null, e => this.handleError(e));
+    this.lists = this.listService.getLists();
   }
 
   changeStatus(todo: Todo) {

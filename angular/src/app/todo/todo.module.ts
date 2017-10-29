@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ListComponent } from './list/list.component';
 import { ListItemComponent } from './list-item/list-item.component';
 import { TodoService } from './services/todo.service';
+import { ListService } from './services/list.service';
 import { FormComponent } from './form/form.component';
 import { TodoRoutingModule } from './todo-routing.module';
 
@@ -32,6 +33,6 @@ import {
     MatSelectModule,
     MatSlideToggleModule,
   ],
-  providers: [TodoService],
+  providers: [TodoService, ListService],
 })
 export class TodoModule {}

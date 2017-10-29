@@ -8,3 +8,12 @@
   right: 30px;
   bottom: 30px;
 }
+
+.controls {
+  display: flex;
+  align-items: center;
+}
+
+.controls > div {
+  flex-grow: 1;
+}
