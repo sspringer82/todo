@@ -1,6 +1,6 @@
 export enum Status {
-  open,
-  done,
+  open = 1,
+  done = 2,
 }
 export class Todo {
   id: number;

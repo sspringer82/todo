@@ -9,7 +9,7 @@
 
       <mat-form-field>
         <mat-select placeholder="Status" name="status" [(ngModel)]="todo.status">
-          <mat-option *ngFor="let status of [0, 1]" [value]="status">
+          <mat-option *ngFor="let status of [1, 2]" [value]="status">
             {{Status[status]}}
           </mat-option>
         </mat-select>
