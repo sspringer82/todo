@@ -1,45 +1,10 @@
-import { promisify } from 'util';
-import { Status, Todo } from './todo.type';
+import { Todo } from './todo.type';
 
 import { Database, RunResult } from 'sqlite3';
+import { DbApi } from '../shared/db-api';
 
 const db = new Database('db/database.sqlite3');
-
-const dbAPI = {
-  all(sql: string): Promise<Todo[]> {
-    return new Promise((resolve, reject) => {
-      db.all(sql, (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(rows);
-        }
-      });
-    });
-  },
-  get(sql: string, params: any[]): Promise<Todo> {
-    return new Promise((resolve, reject) => {
-      db.get(sql, params, (err, row) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(row);
-        }
-      });
-    });
-  },
-  run(sql: string, params: any[]): Promise<RunResult> {
-    return new Promise((resolve, reject) => {
-      db.run(sql, params, function(this: RunResult, err: Error | null) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(this);
-        }
-      });
-    });
-  },
-};
+const dbAPI = new DbApi<Todo>(db);
 
 const model = {
   getOne(id: number): Promise<Todo> {
