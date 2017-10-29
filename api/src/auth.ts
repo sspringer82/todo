@@ -1,5 +1,7 @@
 import * as express from 'express';
 import * as jwt from 'jsonwebtoken';
+import { userModel } from './user/user.model';
+import { User } from './user/user.type';
 
 const router = express.Router();
 
@@ -7,10 +9,15 @@ router.get('/', (req: express.Request, res: express.Response) => {
   res.redirect('/');
 });
 
-router.post('/', (req: express.Request, res: express.Response) => {
-  // @todo use database here
-  if (req.body.username === 'basti' && req.body.password === 'test') {
-    const data = { username: req.body.username };
+router.post('/', async (req: express.Request, res: express.Response) => {
+  const user: User = await userModel.getOneByCredentials(
+    req.body.username,
+    req.body.password,
+  );
+
+  if (user) {
+    const data = { ...user };
+    delete data.password;
     const token = jwt.sign(data, 'secret');
     res.json({ token });
   } else {
