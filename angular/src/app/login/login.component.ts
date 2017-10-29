@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'todo-login',
@@ -21,11 +22,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
     password: string;
   };
 
+  private initialCredentials = {
+    username: '',
+    password: '',
+  };
+
   constructor(private loginService: LoginService, private router: Router) {
-    this.user = {
-      username: '',
-      password: '',
-    };
+    this.user = { ...this.initialCredentials };
   }
 
   ngOnInit() {}
@@ -35,10 +38,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   login() {
-    this.loginService
-      .doLogin(this.user.username, this.user.password)
-      .subscribe(() => {
+    this.loginService.doLogin(this.user.username, this.user.password).subscribe(
+      () => {
         this.router.navigate(['/list']);
-      });
+      },
+      (err: HttpErrorResponse) => {
+        // @todo show error msg
+        this.user = {
+          ...this.initialCredentials,
+        };
+      },
+    );
   }
 }
