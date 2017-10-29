@@ -10,4 +10,6 @@ router.post('/', jwt({ secret: 'secret' }), controller.createAction);
 router.put('/:id', jwt({ secret: 'secret' }), controller.updateAction);
 router.delete('/:id', jwt({ secret: 'secret' }), controller.deleteAction);
 
+router.get('/list', jwt({ secret: 'secret' }), controller.getListAction);
+
 export default router;

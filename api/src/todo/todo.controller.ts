@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { Todo } from './todo.type';
+import { List } from './list.type';
 
 import todoModel from './todo.model';
 
@@ -45,6 +46,14 @@ const controller = {
     const result = await todoModel.delete(id);
     res.json(true);
     return true;
+  },
+  async getListAction(
+    req: express.Request,
+    res: express.Response,
+  ): Promise<List[]> {
+    const lists = await todoModel.getLists(req.user.id);
+    res.json(lists);
+    return lists;
   },
 };
 
