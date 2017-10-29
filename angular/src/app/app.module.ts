@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { routerModule } from './app.router';
+import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './services/login.service';
 
@@ -34,7 +34,7 @@ import {
     MatSelectModule,
     MatSlideToggleModule,
     TodoModule,
-    routerModule,
+    AppRoutingModule,
   ],
   providers: [LoginService],
   bootstrap: [AppComponent],
