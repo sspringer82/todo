@@ -11,7 +11,17 @@ CREATE TABLE todo (
   status INTEGER,
   creator INTEGER,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (creator) REFERENCES user(id) ON DELETE CASCADE
+  list INTEGER,
+  FOREIGN KEY (creator) REFERENCES user(id) ON DELETE CASCADE,
+  FOREIGN KEY (list) REFERENCES list(id) ON DELETE CASCADE
+);
+
+DROP TABLE IF EXISTS list;
+CREATE TABLE list (
+  id INTEGER PRIMARY KEY,
+  title TEXT,
+  owner INTEGER,
+  FOREIGN KEY (owner) REFERENCES user(id) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS userstatus;
@@ -35,7 +45,7 @@ CREATE TABLE user (
   role INTEGER,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (status) REFERENCES userstatus(id) ON DELETE CASCADE,
-  FOREIGN KEY (role) REFERENCES role(id) ON DELETE CASCADE,
+  FOREIGN KEY (role) REFERENCES role(id) ON DELETE CASCADE
 );
 
 INSERT INTO userstatus (status) VALUES 
@@ -53,7 +63,11 @@ INSERT INTO todostatus (status) VALUES
 ('open'),
 ('done');
 
-INSERT INTO todo (title, status) VALUES
-('aufstehen', (SELECT id FROM todostatus WHERE status = 'done')),
-('essen', (SELECT id FROM todostatus WHERE status = 'done')),
-('schlafen gehen', (SELECT id FROM todostatus WHERE status = 'open'));
+INSERT INTO list (title, owner) VALUES
+('private', (SELECT id FROM user WHERE username = 'basti')),
+('work', (SELECT id FROM user WHERE username = 'basti'));
+
+INSERT INTO todo (title, status, list) VALUES
+('aufstehen', (SELECT id FROM todostatus WHERE status = 'done'), (SELECT id FROM list WHERE title = 'private')),
+('essen', (SELECT id FROM todostatus WHERE status = 'done'), (SELECT id FROM list WHERE title = 'private')),
+('schlafen gehen', (SELECT id FROM todostatus WHERE status = 'open'), (SELECT id FROM list WHERE title = 'private'));
