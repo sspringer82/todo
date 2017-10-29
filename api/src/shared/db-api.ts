@@ -3,9 +3,9 @@ import { Database, RunResult } from 'sqlite3';
 export class DbApi<T> {
   constructor(private db: Database) {}
 
-  all(sql: string): Promise<T[]> {
+  all(sql: string, params: any[] = []): Promise<T[]> {
     return new Promise((resolve, reject) => {
-      this.db.all(sql, (err, rows) => {
+      this.db.all(sql, params, (err, rows) => {
         if (err) {
           reject(err);
         } else {
