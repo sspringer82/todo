@@ -4,7 +4,7 @@ import { Todo, Status } from '../models/todo';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { HttpClient } from '@angular/common/http';
-import { LoginService } from './login.service';
+import { LoginService } from '../../services/login.service';
 import { HttpHeaders } from '@angular/common/http';
 
 @Injectable()

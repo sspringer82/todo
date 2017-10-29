@@ -1,14 +1,12 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { AppComponent } from './app.component';
-import { routerModule } from './app.router';
-import { LoginComponent } from './login/login.component';
-import { LoginService } from './services/login.service';
-
-import { TodoModule } from './todo';
+import { ListComponent } from './list/list.component';
+import { ListItemComponent } from './list-item/list-item.component';
+import { TodoService } from './services/todo.service';
+import { FormComponent } from './form/form.component';
+import { TodoRoutingModule } from './todo-routing.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -21,9 +19,9 @@ import {
 } from '@angular/material';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [ListComponent, ListItemComponent, FormComponent],
   imports: [
-    BrowserModule,
+    TodoRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -33,10 +31,7 @@ import {
     MatButtonModule,
     MatSelectModule,
     MatSlideToggleModule,
-    TodoModule,
-    routerModule,
   ],
-  providers: [LoginService],
-  bootstrap: [AppComponent],
+  providers: [TodoService],
 })
-export class AppModule {}
+export class TodoModule {}
