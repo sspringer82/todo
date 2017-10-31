@@ -6,7 +6,6 @@
       </mat-form-field>
     </div>
     <div>
-
       <mat-form-field>
         <mat-select placeholder="Status" name="status" [(ngModel)]="todo.status">
           <mat-option *ngFor="let status of [1, 2]" [value]="status">
@@ -14,7 +13,15 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-select placeholder="List" name="list" [(ngModel)]="todo.list">
+          <mat-option *ngFor="let list of lists|async" [value]="list.title">
+            {{list.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <div>
       <mat-form-field>

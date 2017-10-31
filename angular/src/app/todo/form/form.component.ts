@@ -15,6 +15,8 @@ import {
 import { TodoService } from '../services/todo.service';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
+import { List } from '../models/list';
+import { ListService } from '../services/list.service';
 
 @Component({
   selector: 'todo-form',
@@ -26,15 +28,18 @@ export class FormComponent implements OnInit, AfterViewInit {
 
   public todo = new Todo();
   public Status = Status;
+  public lists: Observable<List[]>;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private todoService: TodoService,
+    private listService: ListService,
   ) {}
 
   ngOnInit() {
     const id = parseInt(this.route.snapshot.paramMap.get('id'), 10);
+    this.lists = this.listService.getLists();
     if (!isNaN(id)) {
       this.todoService.load();
       this.todoService.todos.subscribe((todos: Todo[]) => {
