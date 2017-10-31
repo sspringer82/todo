@@ -10,8 +10,8 @@
 
     <div>
       <mat-form-field>
-        <mat-select placeholder="List" name="list">
-          <mat-option *ngFor="let list of lists |async" [value]="list.id">
+        <mat-select placeholder="List" name="list" [formControl]="listSelect">
+          <mat-option *ngFor="let list of lists |async" [value]="list.title">
             {{list.title}}
           </mat-option>
         </mat-select>

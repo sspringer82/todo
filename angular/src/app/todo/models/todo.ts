@@ -7,4 +7,5 @@ export class Todo {
   title: string;
   status: Status;
   created: Date;
+  list: string;
 }

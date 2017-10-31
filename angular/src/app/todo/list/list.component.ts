@@ -19,6 +19,7 @@ export class ListComponent implements OnInit {
   public todos: Observable<Todo[]>;
   public lists: Observable<List[]>;
   public showOnlyOpen = new FormControl();
+  public listSelect = new FormControl();
 
   constructor(
     private todoService: TodoService,
@@ -38,17 +39,23 @@ export class ListComponent implements OnInit {
     this.todos = this.todoService.todos.mergeMap((todos: Todo[]) => {
       return this.showOnlyOpen.valueChanges
         .startWith(false)
-        .map((value: boolean) => {
-          if (value) {
-            return todos.filter((todo: Todo) => todo.status === Status.open);
-          } else {
-            return todos;
-          }
+        .combineLatest(this.listSelect.valueChanges)
+        .map(([showOnlyOpen, list]) => {
+          return todos.filter((todo: Todo) => {
+            let result = true;
+            if (showOnlyOpen) {
+              result = todo.status === Status.open;
+            }
+            return result && todo.list === list;
+          });
         });
     });
 
     this.todoService.load().subscribe(null, e => this.handleError(e));
-    this.lists = this.listService.getLists();
+    this.lists = this.listService.getLists().map((list: List[]) => {
+      this.listSelect.setValue(list[0].title);
+      return list;
+    });
   }
 
   changeStatus(todo: Todo) {
