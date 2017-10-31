@@ -36,20 +36,18 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.todos = this.todoService.todos.mergeMap((todos: Todo[]) => {
-      return this.showOnlyOpen.valueChanges
-        .startWith(false)
-        .combineLatest(this.listSelect.valueChanges)
-        .map(([showOnlyOpen, list]) => {
-          return todos.filter((todo: Todo) => {
-            let result = true;
-            if (showOnlyOpen) {
-              result = todo.status === Status.open;
-            }
-            return result && todo.list === list;
-          });
+    this.todos = this.showOnlyOpen.valueChanges
+      .startWith(false)
+      .combineLatest(this.listSelect.valueChanges, this.todoService.todos)
+      .map(([showOnlyOpen, list, todos]) => {
+        return todos.filter((todo: Todo) => {
+          let result = true;
+          if (showOnlyOpen) {
+            result = todo.status === Status.open;
+          }
+          return result && todo.list === list;
         });
-    });
+      });
 
     this.todoService.load().subscribe(null, e => this.handleError(e));
     this.lists = this.listService.getLists().map((list: List[]) => {
