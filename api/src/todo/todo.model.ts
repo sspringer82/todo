@@ -25,15 +25,17 @@ const model = {
     return todoAPI.all(query);
   },
   create(todo: Todo): Promise<Todo> {
-    const query = 'INSERT INTO todo (title, status, created) VALUES (?, ?, ?)';
+    const query =
+      'INSERT INTO todo (title, status, created, list) VALUES (?, ?, ?, (SELECT id FROM list WHERE title = ?))';
     return todoAPI
       .run(query, [todo.title, todo.status, todo.created])
       .then((data: RunResult) => ({ ...todo, id: data.lastID }));
   },
   update(todo: Todo): Promise<Todo> {
-    const query = 'UPDATE todo SET title = ?, status = ? WHERE id = ?';
+    const query =
+      'UPDATE todo SET title = ?, status = ?, list = (SELECT id FROM list WHERE title = ?) WHERE id = ?';
     return todoAPI
-      .run(query, [todo.title, todo.status, todo.id])
+      .run(query, [todo.title, todo.status, todo.list, todo.id])
       .then(() => todo);
   },
   delete(id: number): Promise<RunResult> {
