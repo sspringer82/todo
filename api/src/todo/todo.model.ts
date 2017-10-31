@@ -24,16 +24,16 @@ const model = {
       LEFT JOIN list AS l ON t.list = l.id`;
     return todoAPI.all(query);
   },
-  create(todo: Todo): Promise<Todo> {
+  create(todo: Todo, userId: number): Promise<Todo> {
     const query =
-      'INSERT INTO todo (title, status, created, list) VALUES (?, ?, ?, (SELECT id FROM list WHERE title = ?))';
+      'INSERT INTO todo (title, status, created, list) VALUES (?, ?, ?, (SELECT id FROM list WHERE title = ? and owner = ?))';
     return todoAPI
       .run(query, [todo.title, todo.status, todo.created])
       .then((data: RunResult) => ({ ...todo, id: data.lastID }));
   },
-  update(todo: Todo): Promise<Todo> {
+  update(todo: Todo, userId: number): Promise<Todo> {
     const query =
-      'UPDATE todo SET title = ?, status = ?, list = (SELECT id FROM list WHERE title = ?) WHERE id = ?';
+      'UPDATE todo SET title = ?, status = ?, list = (SELECT id FROM list WHERE title = ? and owner = ?) WHERE id = ?';
     return todoAPI
       .run(query, [todo.title, todo.status, todo.list, todo.id])
       .then(() => todo);

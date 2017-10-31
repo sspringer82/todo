@@ -26,7 +26,7 @@ const controller = {
     req: express.Request,
     res: express.Response,
   ): Promise<Todo> {
-    const todo = await todoModel.create(req.body);
+    const todo = await todoModel.create(req.body, req.user.id);
     res.json(todo);
     return todo;
   },
@@ -34,7 +34,7 @@ const controller = {
     req: express.Request,
     res: express.Response,
   ): Promise<Todo> {
-    const todo = await todoModel.update(req.body);
+    const todo = await todoModel.update(req.body, req.user.id);
     res.json(todo);
     return todo;
   },
