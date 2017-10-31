@@ -36,10 +36,12 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.todos = this.showOnlyOpen.valueChanges
-      .startWith(false)
-      .combineLatest(this.listSelect.valueChanges, this.todoService.todos)
-      .map(([showOnlyOpen, list, todos]) => {
+    this.todos = this.todoService.todos
+      .combineLatest(
+        this.listSelect.valueChanges,
+        this.showOnlyOpen.valueChanges.startWith(false),
+      )
+      .map(([todos, list, showOnlyOpen]) => {
         return todos.filter((todo: Todo) => {
           let result = true;
           if (showOnlyOpen) {
