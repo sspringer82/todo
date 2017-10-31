@@ -14,7 +14,14 @@ const model = {
     return todoAPI.get(query, [id]);
   },
   getAll(): Promise<Todo[]> {
-    const query = 'SELECT * from todo';
+    const query = `SELECT 
+        t.id,
+        t.title AS title,
+        t.status,
+        t.created,
+        l.title as list
+      FROM todo AS t 
+      LEFT JOIN list AS l ON t.list = l.id`;
     return todoAPI.all(query);
   },
   create(todo: Todo): Promise<Todo> {
