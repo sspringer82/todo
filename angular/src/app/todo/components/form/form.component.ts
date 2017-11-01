@@ -70,7 +70,7 @@ export class FormComponent implements OnInit, AfterViewInit {
     }
 
     observable.subscribe(() => {
-      this.router.navigate(['/list']);
+      this.router.navigate(['/todo/list']);
     });
   }
 }

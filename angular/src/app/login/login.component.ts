@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   login() {
     this.loginService.doLogin(this.user.username, this.user.password).subscribe(
       () => {
-        this.router.navigate(['/list']);
+        this.router.navigate(['/todo/list']);
       },
       (err: HttpErrorResponse) => {
         // @todo show error msg

@@ -5,7 +5,7 @@ import { ListComponent } from './components/list/list.component';
 
 const listRoutes: Routes = [
   {
-    path: 'list',
+    path: 'list/list',
     component: ListComponent,
   },
 ];

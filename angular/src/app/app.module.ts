@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { LoginService } from './services/login.service';
 
 import { TodoModule } from './todo';
+import { ListModule } from './list';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -34,6 +35,7 @@ import {
     MatSelectModule,
     MatSlideToggleModule,
     TodoModule,
+    ListModule,
     AppRoutingModule,
   ],
   providers: [LoginService],
