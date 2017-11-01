@@ -5,8 +5,13 @@ import { ListComponent } from './components/list/list.component';
 
 const listRoutes: Routes = [
   {
-    path: 'list/list',
-    component: ListComponent,
+    path: 'list',
+    children: [
+      {
+        path: 'list',
+        component: ListComponent,
+      },
+    ],
   },
 ];
 

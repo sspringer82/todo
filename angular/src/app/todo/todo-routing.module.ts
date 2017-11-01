@@ -6,17 +6,22 @@ import { FormComponent } from './components/form/form.component';
 
 const todoRoutes: Routes = [
   {
-    path: 'todo/list',
-    component: ListComponent,
-  },
-  {
-    path: 'todo/form',
-    component: FormComponent,
-  },
+    path: 'todo',
+    children: [
+      {
+        path: 'list',
+        component: ListComponent,
+      },
+      {
+        path: 'form',
+        component: FormComponent,
+      },
 
-  {
-    path: 'todo/edit/:id',
-    component: FormComponent,
+      {
+        path: 'edit/:id',
+        component: FormComponent,
+      },
+    ],
   },
 ];
 
