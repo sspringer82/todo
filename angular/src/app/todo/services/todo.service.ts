@@ -6,29 +6,18 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { HttpClient } from '@angular/common/http';
 import { LoginService } from '../../services/login.service';
 import { HttpHeaders } from '@angular/common/http';
+import { BaseService } from '../../shared/services/base.service';
 
 @Injectable()
-export class TodoService {
-  private loaded = false;
-  private id: number;
+export class TodoService extends BaseService<Todo> {
   public todos: Observable<Todo[]>;
-  private _todos: BehaviorSubject<Todo[]>;
-  private baseUrl: string;
-  private dataStore: {
-    todos: Todo[];
-  };
 
-  constructor(private http: HttpClient, private loginService: LoginService) {
-    this.dataStore = { todos: [] };
-    this._todos = <BehaviorSubject<Todo[]>>new BehaviorSubject([]);
-    this.todos = this._todos.asObservable();
-  }
-
-  getAuthHeader(headers: HttpHeaders = new HttpHeaders()): HttpHeaders {
-    return headers.set(
-      'Authorization',
-      'Bearer ' + this.loginService.getToken(),
-    );
+  constructor(
+    protected http: HttpClient,
+    protected loginService: LoginService,
+  ) {
+    super(http, loginService);
+    this.todos = this._items.asObservable();
   }
 
   load() {
@@ -37,13 +26,13 @@ export class TodoService {
         if (loaded) {
           return this.http.get('/todo', { headers: this.getAuthHeader() });
         } else {
-          return Observable.of(this.dataStore.todos);
+          return Observable.of(this.dataStore.items);
         }
       })
       .map((todos: Todo[]) => {
         this.loaded = true;
-        this.dataStore.todos = todos;
-        this._todos.next([...this.dataStore.todos]);
+        this.dataStore.items = todos;
+        this._items.next([...this.dataStore.items]);
         return todos;
       });
   }
@@ -52,8 +41,8 @@ export class TodoService {
     return this.http
       .post('/todo', todo, { headers: this.getAuthHeader() })
       .map((newTodo: Todo): Todo => {
-        this.dataStore.todos.push(newTodo);
-        this._todos.next([...this.dataStore.todos]);
+        this.dataStore.items.push(newTodo);
+        this._items.next([...this.dataStore.items]);
         return newTodo;
       });
   }
@@ -62,11 +51,11 @@ export class TodoService {
     return this.http
       .put(`/todo/${todo.id}`, todo, { headers: this.getAuthHeader() })
       .map((updatedTodo: Todo): Todo => {
-        const index = this.dataStore.todos.findIndex(
+        const index = this.dataStore.items.findIndex(
           existingTodo => existingTodo.id === todo.id,
         );
-        this.dataStore.todos[index] = todo;
-        this._todos.next([...this.dataStore.todos]);
+        this.dataStore.items[index] = todo;
+        this._items.next([...this.dataStore.items]);
         return updatedTodo;
       });
   }
@@ -75,11 +64,11 @@ export class TodoService {
     return this.http
       .delete(`/todo/${todo.id}`, { headers: this.getAuthHeader() })
       .map((): Todo => {
-        const index = this.dataStore.todos.findIndex(
+        const index = this.dataStore.items.findIndex(
           item => item.id === todo.id,
         );
-        this.dataStore.todos.splice(index, 1);
-        this._todos.next([...this.dataStore.todos]);
+        this.dataStore.items.splice(index, 1);
+        this._items.next([...this.dataStore.items]);
         return todo;
       });
   }
