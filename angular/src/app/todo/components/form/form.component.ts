@@ -42,7 +42,7 @@ export class FormComponent implements OnInit, AfterViewInit {
     this.lists = this.listService.getLists();
     if (!isNaN(id)) {
       this.todoService.load();
-      this.todoService.todos.subscribe((todos: Todo[]) => {
+      this.todoService.items.subscribe((todos: Todo[]) => {
         Observable.from(todos)
           .filter((todo: Todo) => {
             return todo.id === id;

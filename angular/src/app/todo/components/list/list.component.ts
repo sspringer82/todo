@@ -36,7 +36,7 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.todos = this.todoService.todos
+    this.todos = this.todoService.items
       .combineLatest(
         this.listSelect.valueChanges,
         this.showOnlyOpen.valueChanges.startWith(false),
