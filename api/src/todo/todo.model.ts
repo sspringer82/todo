@@ -2,7 +2,7 @@ import { Todo } from './todo.type';
 
 import { Database, RunResult } from 'sqlite3';
 import { DbApi } from '../shared/db-api';
-import { List } from './list.type';
+import { List } from './../shared/list.type';
 
 const db = new Database('db/database.sqlite3');
 const todoAPI = new DbApi<Todo>(db);
