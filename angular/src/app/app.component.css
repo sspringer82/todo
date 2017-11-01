@@ -1,0 +1,18 @@
+.container {
+  background-color: white;
+  height: 100%;
+}
+
+.navButton {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+}
+
+ul {
+  list-style: none;
+}
+
+.active-link {
+  background-color: gray;
+}

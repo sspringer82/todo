@@ -1,1 +1,20 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container class="container">
+  <mat-sidenav #sidenav position="end">
+    <mat-list>
+      <mat-list-item>
+        <button mat-button [routerLink]="['/todo/list']" routerLinkActive="active-link">Todos</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button [routerLink]="['/list/list']" routerLinkActive="active-link">Lists</button>
+      </mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+
+  <div class="sidenav-content">
+    <router-outlet></router-outlet>
+    <button mat-button (click)="sidenav.open()" class="navButton">
+      <i class="open material-icons">menu</i>
+    </button>
+  </div>
+
+</mat-sidenav-container>

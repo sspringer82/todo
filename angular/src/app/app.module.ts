@@ -19,6 +19,8 @@ import {
   MatIconModule,
   MatSelectModule,
   MatSlideToggleModule,
+  MatSidenavModule,
+  MatListModule,
 } from '@angular/material';
 
 @NgModule({
@@ -34,6 +36,8 @@ import {
     MatButtonModule,
     MatSelectModule,
     MatSlideToggleModule,
+    MatSidenavModule,
+    MatListModule,
     TodoModule,
     ListModule,
     AppRoutingModule,
