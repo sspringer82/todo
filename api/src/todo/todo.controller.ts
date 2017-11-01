@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { Todo } from './todo.type';
+import { Todo } from './../shared/todo.type';
 import { List } from './../shared/list.type';
 
 import todoModel from './todo.model';
