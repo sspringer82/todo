@@ -1,8 +1,9 @@
 import * as express from 'express';
 import { createServer } from 'spdy';
-import todoRouter from './todo/router';
 import * as bodyParser from 'body-parser';
 import authRouter from './auth';
+import todoRouter from './todo/router';
+import listRouter from './list/router';
 
 import { readFileSync } from 'fs';
 
@@ -12,6 +13,7 @@ app.use(bodyParser.json());
 
 app.use('/login', authRouter);
 app.use('/todo', todoRouter);
+app.use('/list', listRouter);
 
 const options = {
   cert: readFileSync('./certs/certificate.pem'),
