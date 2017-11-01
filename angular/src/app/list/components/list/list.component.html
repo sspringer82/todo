@@ -1,3 +1,27 @@
-<p>
-  list works!
-</p>
+<mat-table #table [dataSource]="dataSource">
+
+  <ng-container matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+    <mat-cell *matCellDef="let listItem"> {{listItem.title}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="edit">
+    <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
+    <mat-cell *matCellDef="let listItem">
+      <button mat-button [routerLink]="['/list/edit', listItem.id]">
+        <i class="material-icons">mode_edit</i>
+      </button>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="delete">
+    <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
+    <mat-cell *matCellDef="let listItem">
+      <button mat-button (click)="delete(listItem)">
+        <i class="material-icons">delete</i>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+</mat-table>
