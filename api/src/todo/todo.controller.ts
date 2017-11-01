@@ -47,14 +47,6 @@ const controller = {
     res.json(true);
     return true;
   },
-  async getListAction(
-    req: express.Request,
-    res: express.Response,
-  ): Promise<List[]> {
-    const lists = await todoModel.getLists(req.user.id);
-    res.json(lists);
-    return lists;
-  },
 };
 
 export default controller;

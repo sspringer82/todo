@@ -41,10 +41,6 @@ const model = {
     const query = 'DELETE FROM todo WHERE id = ?';
     return todoAPI.run(query, [id]);
   },
-  getLists(userId: number): Promise<List[]> {
-    const query = 'SELECT * FROM list WHERE owner = ?';
-    return listAPI.all(query, [userId]);
-  },
 };
 
 export default model;

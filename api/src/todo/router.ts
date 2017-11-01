@@ -4,7 +4,6 @@ import controller from './todo.controller';
 
 const router = express.Router();
 
-router.get('/list', jwt({ secret: 'secret' }), controller.getListAction);
 router.get('/', jwt({ secret: 'secret' }), controller.getAllAction);
 router.get('/:id', jwt({ secret: 'secret' }), controller.getOneAction);
 router.post('/', jwt({ secret: 'secret' }), controller.createAction);
