@@ -9,9 +9,10 @@ import { ListRoutingModule } from './list-routing.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListComponent } from './components/list/list.component';
+import { FormComponent } from './components/form/form.component';
 
 @NgModule({
-  declarations: [ListComponent],
+  declarations: [ListComponent, FormComponent],
   imports: [
     ListRoutingModule,
     HttpClientModule,
