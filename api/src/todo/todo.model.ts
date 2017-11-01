@@ -27,14 +27,14 @@ const model = {
     const query =
       'INSERT INTO todo (title, status, created, list) VALUES (?, ?, ?, (SELECT id FROM list WHERE title = ? and owner = ?))';
     return todoAPI
-      .run(query, [todo.title, todo.status, todo.created])
+      .run(query, [todo.title, todo.status, todo.created, todo.list, userId])
       .then((data: RunResult) => ({ ...todo, id: data.lastID }));
   },
   update(todo: Todo, userId: number): Promise<Todo> {
     const query =
       'UPDATE todo SET title = ?, status = ?, list = (SELECT id FROM list WHERE title = ? and owner = ?) WHERE id = ?';
     return todoAPI
-      .run(query, [todo.title, todo.status, todo.list, todo.id])
+      .run(query, [todo.title, todo.status, todo.list, userId, todo.id])
       .then(() => todo);
   },
   delete(id: number): Promise<RunResult> {
