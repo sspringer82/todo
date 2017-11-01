@@ -5,18 +5,18 @@ import {
   ElementRef,
   AfterViewInit,
 } from '@angular/core';
-import { Todo, Status } from '../models/todo';
+import { Todo, Status } from '../../models/todo';
 import {
   ActivatedRoute,
   Router,
   ParamMap,
   NavigationEnd,
 } from '@angular/router';
-import { TodoService } from '../services/todo.service';
+import { TodoService } from '../../services/todo.service';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
-import { List } from '../models/list';
-import { ListService } from '../services/list.service';
+import { List } from '../../../list/models/list';
+import { ListService } from '../../../list/services/list.service';
 
 @Component({
   selector: 'todo-form',

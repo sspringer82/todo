@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import { Todo, Status } from '../models/todo';
-import { TodoService } from '../services/todo.service';
+import { Todo, Status } from '../../models/todo';
+import { TodoService } from '../../services/todo.service';
 
 import { Observable } from 'rxjs/Observable';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { ListService } from '../services/list.service';
-import { List } from '../models/list';
+import { ListService } from '../../../list/services/list.service';
+import { List } from '../../../list/models/list';
 
 @Component({
   selector: 'todo-list',

@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { ListComponent } from './list/list.component';
-import { ListItemComponent } from './list-item/list-item.component';
+import { ListComponent } from './components/list/list.component';
+import { ListItemComponent } from './components/list-item/list-item.component';
+import { FormComponent } from './components/form/form.component';
 import { TodoService } from './services/todo.service';
-import { ListService } from './services/list.service';
-import { FormComponent } from './form/form.component';
+import { ListModule } from '../list';
 import { TodoRoutingModule } from './todo-routing.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,7 +32,8 @@ import {
     MatButtonModule,
     MatSelectModule,
     MatSlideToggleModule,
+    ListModule,
   ],
-  providers: [TodoService, ListService],
+  providers: [TodoService],
 })
 export class TodoModule {}
