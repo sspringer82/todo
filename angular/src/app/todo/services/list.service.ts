@@ -15,6 +15,6 @@ export class ListService {
       'Bearer ' + this.loginService.getToken(),
     );
 
-    return <Observable<List[]>>this.http.get('/todo/list', { headers });
+    return <Observable<List[]>>this.http.get('/list', { headers });
   }
 }
