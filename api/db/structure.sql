@@ -41,23 +41,15 @@ CREATE TABLE user (
   id INTEGER PRIMARY KEY,
   username TEXT,
   password TEXT,
-  status INTEGER,
-  role INTEGER,
+  isActive INTEGER,
+  isAdmin INTEGER,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (status) REFERENCES userstatus(id) ON DELETE CASCADE,
   FOREIGN KEY (role) REFERENCES role(id) ON DELETE CASCADE
 );
 
-INSERT INTO userstatus (status) VALUES 
-('active'),
-('inactive');
-
-INSERT INTO role (role) VALUES
-('user'),
-('admin');
-
-INSERT INTO user (username, password, status, role) VALUES 
-('basti', 'test', (SELECT id FROM userstatus WHERE status = 'active'), (SELECT id FROM role WHERE role = 'admin'));
+INSERT INTO user (username, password, isActive, isAdmin) VALUES 
+('basti', 'test', 1, 1);
 
 INSERT INTO todostatus (status) VALUES
 ('open'),

@@ -2,7 +2,7 @@ export class User {
   id: number;
   username: string;
   password: string;
-  status: string;
-  role: string;
+  isActive: boolean;
+  isAdmin: boolean;
   created: number;
 }
