@@ -43,9 +43,7 @@ CREATE TABLE user (
   password TEXT,
   isActive INTEGER,
   isAdmin INTEGER,
-  created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (status) REFERENCES userstatus(id) ON DELETE CASCADE,
-  FOREIGN KEY (role) REFERENCES role(id) ON DELETE CASCADE
+  created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 INSERT INTO user (username, password, isActive, isAdmin) VALUES 

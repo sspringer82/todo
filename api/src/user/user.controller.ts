@@ -25,7 +25,7 @@ const controller = {
     req: express.Request,
     res: express.Response,
   ): Promise<User> {
-    const todo = await userModel.create(req.body, req.user.id);
+    const todo = await userModel.create(req.body);
     res.json(todo);
     return todo;
   },
@@ -33,7 +33,7 @@ const controller = {
     req: express.Request,
     res: express.Response,
   ): Promise<User> {
-    const todo = await userModel.update(req.body, req.user.id);
+    const todo = await userModel.update(req.body);
     res.json(todo);
     return todo;
   },
