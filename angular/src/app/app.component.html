@@ -15,7 +15,7 @@
 
   <div class="sidenav-content">
     <router-outlet></router-outlet>
-    <button mat-button (click)="sidenav.open()" class="navButton">
+    <button mat-button (click)="sidenav.open()" class="navButton" *ngIf="!isNavHidden">
       <i class="open material-icons">menu</i>
     </button>
   </div>
