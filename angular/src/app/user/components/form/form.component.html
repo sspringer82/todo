@@ -1,3 +1,22 @@
-<p>
-  form works!
-</p>
+<mat-card class="container">
+  <form #todoForm="ngForm" (ngSubmit)="save()">
+    <div class="formElementContainer">
+      <mat-form-field>
+        <input matInput placeholder="Username" type="text" [(ngModel)]="user.username" #username name="username">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Passwort" type="text" [(ngModel)]="user.password" name="password">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="isAdmin" type="text" [(ngModel)]="user.isAdmin" name="isAdmin">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="isActive" type="text" [(ngModel)]="user.isActive" name="isActive">
+      </mat-form-field>
+      <div>
+        <button mat-raised-button type="submit">save</button>
+        <button mat-raised-button [routerLink]="['/user/list']">cancel</button>
+      </div>
+    </div>
+  </form>
+</mat-card>
