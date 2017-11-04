@@ -2,13 +2,13 @@
   <mat-sidenav #sidenav position="end">
     <mat-list>
       <mat-list-item>
-        <button mat-button [routerLink]="['/todo/list']" routerLinkActive="active-link">Todos</button>
+        <button mat-button [routerLink]="['/todo/list']" routerLinkActive="active-link" (click)="sidenav.close()">Todos</button>
       </mat-list-item>
       <mat-list-item>
-        <button mat-button [routerLink]="['/list/list']" routerLinkActive="active-link">Lists</button>
+        <button mat-button [routerLink]="['/list/list']" routerLinkActive="active-link" (click)="sidenav.close()">Lists</button>
       </mat-list-item>
       <mat-list-item>
-        <button mat-button [routerLink]="['/user/list']" routerLinkActive="active-link">Users</button>
+        <button mat-button [routerLink]="['/user/list']" routerLinkActive="active-link" (click)="sidenav.close()">Users</button>
       </mat-list-item>
     </mat-list>
   </mat-sidenav>
