@@ -22,6 +22,7 @@ import {
   MatSidenavModule,
   MatListModule,
 } from '@angular/material';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent],
@@ -40,6 +41,7 @@ import {
     MatListModule,
     TodoModule,
     ListModule,
+    UserModule,
     AppRoutingModule,
   ],
   providers: [LoginService],
