@@ -13,7 +13,13 @@ import { UserDataSource } from '../../model/user-data-source';
 export class ListComponent implements OnInit {
   public lists: Observable<User[]>;
   public dataSource: UserDataSource;
-  public displayedColumns = ['username', 'isActive', 'isAdmin'];
+  public displayedColumns = [
+    'username',
+    'isActive',
+    'isAdmin',
+    'edit',
+    'delete',
+  ];
 
   constructor(private userService: UserService) {}
 
