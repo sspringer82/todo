@@ -3,6 +3,7 @@ import { ListService } from '../../services/list.service';
 import { Observable } from 'rxjs/Observable';
 import { List } from '../../models/list';
 import { DataSource } from '@angular/cdk/table';
+import { ListDataSource } from '../../models/list-data-source';
 
 @Component({
   selector: 'todo-list',
@@ -27,15 +28,4 @@ export class ListComponent implements OnInit {
   public delete(listItem: List) {
     this.listService.delete(listItem).subscribe(null, e => console.log(e));
   }
-}
-
-class ListDataSource extends DataSource<List> {
-  constructor(private lists: Observable<List[]>) {
-    super();
-  }
-
-  connect(): Observable<List[]> {
-    return this.lists;
-  }
-  disconnect(): void {}
 }
