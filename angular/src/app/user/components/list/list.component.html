@@ -1,0 +1,39 @@
+<mat-table #table [dataSource]="dataSource">
+
+  <ng-container matColumnDef="username">
+    <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+    <mat-cell *matCellDef="let listItem"> {{listItem.username}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="isAdmin">
+    <mat-header-cell *matHeaderCellDef> isAdmin </mat-header-cell>
+    <mat-cell *matCellDef="let listItem"> {{listItem.isAdmin}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="isActive">
+    <mat-header-cell *matHeaderCellDef> isActive </mat-header-cell>
+    <mat-cell *matCellDef="let listItem"> {{listItem.isActive}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="edit">
+    <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
+    <mat-cell *matCellDef="let listItem">
+      <button mat-button [routerLink]="['/user/edit', listItem.id]">
+        <i class="material-icons">mode_edit</i>
+      </button>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="delete">
+    <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
+    <mat-cell *matCellDef="let listItem">
+      <button mat-button (click)="delete(listItem)">
+        <i class="material-icons">delete</i>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+</mat-table>
+
+<button mat-fab [routerLink]="['/user/form']" class="addButton">
+  <i class="open material-icons">add</i>
+</button>
