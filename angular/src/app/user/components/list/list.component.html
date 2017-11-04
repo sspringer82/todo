@@ -6,11 +6,25 @@
   </ng-container>
   <ng-container matColumnDef="isAdmin">
     <mat-header-cell *matHeaderCellDef> isAdmin </mat-header-cell>
-    <mat-cell *matCellDef="let listItem"> {{listItem.isAdmin}} </mat-cell>
+    <mat-cell *matCellDef="let listItem">
+      <button mat-button *ngIf="listItem.isAdmin === 1" (click)="changeIsAdmin(listItem)">
+        <i class="done material-icons">done</i>
+      </button>
+      <button mat-button *ngIf="listItem.isAdmin === 0" (click)="changeIsAdmin(listItem)">
+        <i class="open material-icons">clear</i>
+      </button>
+    </mat-cell>
   </ng-container>
   <ng-container matColumnDef="isActive">
     <mat-header-cell *matHeaderCellDef> isActive </mat-header-cell>
-    <mat-cell *matCellDef="let listItem"> {{listItem.isActive}} </mat-cell>
+    <mat-cell *matCellDef="let listItem">
+      <button mat-button *ngIf="listItem.isActive === 1" (click)="changeIsActive(listItem)">
+        <i class="done material-icons">done</i>
+      </button>
+      <button mat-button *ngIf="listItem.isActive === 0" (click)="changeIsActive(listItem)">
+        <i class="open material-icons">clear</i>
+      </button>
+    </mat-cell>
   </ng-container>
   <ng-container matColumnDef="edit">
     <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>

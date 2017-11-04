@@ -34,4 +34,18 @@ export class ListComponent implements OnInit {
   public delete(listItem: User) {
     this.userService.delete(listItem).subscribe(null, e => console.log(e));
   }
+
+  public changeIsAdmin(listItem: User) {
+    const isAdmin = listItem.isAdmin === 1 ? 0 : 1;
+    this.userService
+      .update({ ...listItem, isAdmin })
+      .subscribe(null, e => console.log(e));
+  }
+
+  public changeIsActive(listItem: User) {
+    const isActive = listItem.isActive === 1 ? 0 : 1;
+    this.userService
+      .update({ ...listItem, isActive })
+      .subscribe(null, e => console.log(e));
+  }
 }

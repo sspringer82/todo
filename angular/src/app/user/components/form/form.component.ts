@@ -47,6 +47,8 @@ export class FormComponent implements OnInit, AfterViewInit {
   }
 
   save() {
+    this.user.isActive = parseInt(this.user.isActive + '', 10);
+    this.user.isAdmin = parseInt(this.user.isAdmin + '', 10);
     let observable: Observable<User>;
     if (!this.user.id) {
       observable = this.userService.add(this.user);
