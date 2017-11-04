@@ -10,6 +10,7 @@ import {
   MatInputModule,
   MatButtonModule,
   MatIconModule,
+  MatCardModule,
 } from '@angular/material';
 import { UserService } from './services/user.service';
 
@@ -21,6 +22,7 @@ import { UserService } from './services/user.service';
     FormsModule,
     BrowserAnimationsModule,
     MatTableModule,
+    MatCardModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
