@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { User } from '../user/model/user';
+import * as jwtDecode from 'jwt-decode';
 
 @Injectable()
 export class LoginService {
@@ -26,5 +28,12 @@ export class LoginService {
 
   setToken(token: string) {
     this.token = token;
+  }
+
+  getUser(): User | null {
+    if (this.token) {
+      return jwtDecode(this.token);
+    }
+    return null;
   }
 }
