@@ -23,6 +23,7 @@ import {
   MatListModule,
 } from '@angular/material';
 import { UserModule } from './user/user.module';
+import { AdminAuthGuard } from './shared/services/admin-auth-guard.service';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent],
@@ -44,7 +45,7 @@ import { UserModule } from './user/user.module';
     UserModule,
     AppRoutingModule,
   ],
-  providers: [LoginService],
+  providers: [LoginService, AdminAuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
