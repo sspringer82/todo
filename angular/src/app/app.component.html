@@ -7,7 +7,7 @@
       <mat-list-item>
         <button mat-button [routerLink]="['/list/list']" routerLinkActive="active-link" (click)="sidenav.close()">Lists</button>
       </mat-list-item>
-      <mat-list-item>
+      <mat-list-item *ngIf="isAdmin">
         <button mat-button [routerLink]="['/user/list']" routerLinkActive="active-link" (click)="sidenav.close()">Users</button>
       </mat-list-item>
     </mat-list>
