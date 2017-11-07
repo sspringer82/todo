@@ -25,6 +25,13 @@
     </div>
     <div>
       <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Due" [(ngModel)]="due" name="due">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
         <input matInput placeholder="Created" type="text" [(ngModel)]="todo.created" readonly name="created">
       </mat-form-field>
     </div>

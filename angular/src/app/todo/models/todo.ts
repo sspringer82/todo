@@ -6,7 +6,7 @@ export class Todo {
   id: number;
   title: string;
   status: Status;
-  created: Date;
+  created: number;
   list: string;
-  due: Date;
+  due: number;
 }

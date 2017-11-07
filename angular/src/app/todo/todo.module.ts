@@ -17,6 +17,8 @@ import {
   MatIconModule,
   MatSelectModule,
   MatSlideToggleModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
 } from '@angular/material';
 
 @NgModule({
@@ -32,6 +34,8 @@ import {
     MatButtonModule,
     MatSelectModule,
     MatSlideToggleModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     ListModule,
   ],
   providers: [TodoService],

@@ -27,6 +27,7 @@ export class FormComponent implements OnInit, AfterViewInit {
   @ViewChild('title') private titleField: ElementRef;
 
   public todo = new Todo();
+  public due: Date;
   public Status = Status;
   public lists: Observable<List[]>;
 
@@ -49,11 +50,12 @@ export class FormComponent implements OnInit, AfterViewInit {
           })
           .subscribe((todo: Todo) => {
             this.todo = todo;
+            this.due = new Date(this.todo.due);
           });
       });
     } else {
       this.todo.status = Status.open;
-      this.todo.created = new Date();
+      this.todo.created = Date.now();
     }
   }
 
@@ -63,6 +65,7 @@ export class FormComponent implements OnInit, AfterViewInit {
 
   save() {
     let observable: Observable<Todo>;
+    this.todo.due = this.due.getTime();
     if (!this.todo.id) {
       observable = this.todoService.add(this.todo);
     } else {
