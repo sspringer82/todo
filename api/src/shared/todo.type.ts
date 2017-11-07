@@ -8,4 +8,5 @@ export class Todo {
   status: Status;
   created: Date;
   list: string;
+  due: Date;
 }

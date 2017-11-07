@@ -18,6 +18,7 @@ const model = {
         t.title AS title,
         t.status,
         t.created,
+        t.due,
         l.title as list
       FROM todo AS t 
       LEFT JOIN list AS l ON t.list = l.id`;
@@ -25,16 +26,30 @@ const model = {
   },
   create(todo: Todo, userId: number): Promise<Todo> {
     const query =
-      'INSERT INTO todo (title, status, created, list) VALUES (?, ?, ?, (SELECT id FROM list WHERE title = ? and owner = ?))';
+      'INSERT INTO todo (title, status, created, list, due) VALUES (?, ?, ?, (SELECT id FROM list WHERE title = ? and owner = ?), ?)';
     return todoAPI
-      .run(query, [todo.title, todo.status, todo.created, todo.list, userId])
+      .run(query, [
+        todo.title,
+        todo.status,
+        todo.created,
+        todo.list,
+        userId,
+        todo.due,
+      ])
       .then((data: RunResult) => ({ ...todo, id: data.lastID }));
   },
   update(todo: Todo, userId: number): Promise<Todo> {
     const query =
-      'UPDATE todo SET title = ?, status = ?, list = (SELECT id FROM list WHERE title = ? and owner = ?) WHERE id = ?';
+      'UPDATE todo SET title = ?, status = ?, list = (SELECT id FROM list WHERE title = ? and owner = ?), due = ? WHERE id = ?';
     return todoAPI
-      .run(query, [todo.title, todo.status, todo.list, userId, todo.id])
+      .run(query, [
+        todo.title,
+        todo.status,
+        todo.list,
+        userId,
+        todo.due,
+        todo.id,
+      ])
       .then(() => todo);
   },
   delete(id: number): Promise<RunResult> {
