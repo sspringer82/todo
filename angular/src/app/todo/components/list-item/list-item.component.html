@@ -3,6 +3,7 @@
   <div class="container">
     <div class="title">
       {{todo.title}}
+      <span *ngIf="!!todo.due">({{todo.due | date:short}})</span>
     </div>
     <div class="status">
       <button mat-button *ngIf="todo.status === Status.done" (click)="changeStatus(todo)">
