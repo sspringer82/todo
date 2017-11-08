@@ -61,4 +61,5 @@ INSERT INTO list (title, owner) VALUES
 INSERT INTO todo (title, status, list, due) VALUES
 ('aufstehen', (SELECT id FROM todostatus WHERE status = 'done'), (SELECT id FROM list WHERE title = 'private'), 1510085891651),
 ('essen', (SELECT id FROM todostatus WHERE status = 'done'), (SELECT id FROM list WHERE title = 'private'), 1510085891651),
-('schlafen gehen', (SELECT id FROM todostatus WHERE status = 'open'), (SELECT id FROM list WHERE title = 'private'), 1510085891651);
+('schlafen gehen', (SELECT id FROM todostatus WHERE status = 'open'), (SELECT id FROM list WHERE title = 'private'), 1510085891651),
+('Büroschlaf!', (SELECT id FROM todostatus WHERE status = 'open'), (SELECT id FROM list WHERE title = 'work'), 1510085891651);
