@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Todo, Status } from '../../models/todo';
+import * as moment from 'moment';
 
 @Component({
   selector: 'todo-list-item',
@@ -15,6 +16,10 @@ export class ListItemComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  isDue() {
+    return moment(this.todo.due).isBefore(moment());
+  }
 
   changeStatus(todo: Todo) {
     this.onStatusChange.emit(todo);

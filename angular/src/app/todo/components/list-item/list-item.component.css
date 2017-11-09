@@ -19,3 +19,12 @@
   color: red;
   font-weight: bold;
 }
+
+.due {
+  color: red;
+  font-weight: bold;
+}
+.notDue {
+  color: green;
+  font-weight: bold;
+}
