@@ -21,6 +21,10 @@ export class ListItemComponent implements OnInit {
     return moment(this.todo.due).isBefore(moment());
   }
 
+  isDone() {
+    return this.todo.status === Status.done;
+  }
+
   changeStatus(todo: Todo) {
     this.onStatusChange.emit(todo);
   }

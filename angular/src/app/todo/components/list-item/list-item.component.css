@@ -10,12 +10,12 @@
   cursor: pointer;
 }
 
-.done {
+i.done {
   color: green;
   font-weight: bold;
 }
 
-.open {
+i.open {
   color: red;
   font-weight: bold;
 }
@@ -27,4 +27,11 @@
 .notDue {
   color: green;
   font-weight: bold;
+}
+
+mat-card.done {
+  background-color: #bdecb6;
+}
+mat-card.notDone {
+  background-color: #ff7878;
 }
