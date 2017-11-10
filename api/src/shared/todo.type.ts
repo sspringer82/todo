@@ -9,4 +9,5 @@ export class Todo {
   created: Date;
   list: string;
   due: Date;
+  description: string;
 }
