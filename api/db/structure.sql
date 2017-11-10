@@ -11,6 +11,7 @@ CREATE TABLE todo (
   status INTEGER,
   creator INTEGER,
   due TIMESTAMP,
+  description TEXT,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   list INTEGER,
   FOREIGN KEY (creator) REFERENCES user(id) ON DELETE CASCADE,
