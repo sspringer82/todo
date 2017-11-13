@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Todo, Status } from '../../models/todo';
 import * as moment from 'moment';
+import { MatDialog } from '@angular/material';
+import { DescriptionDialogComponent } from '../description-dialog/description-dialog.component';
 
 @Component({
   selector: 'todo-list-item',
@@ -13,7 +15,7 @@ export class ListItemComponent implements OnInit {
   @Output() public onDelete = new EventEmitter();
 
   public Status = Status;
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit() {}
 
@@ -28,7 +30,15 @@ export class ListItemComponent implements OnInit {
   changeStatus(todo: Todo) {
     this.onStatusChange.emit(todo);
   }
+
   delete(todo: Todo) {
     this.onDelete.emit(todo);
+  }
+
+  openDialog() {
+    this.dialog.open(DescriptionDialogComponent, {
+      width: '250px',
+      data: { todo: this.todo },
+    });
   }
 }

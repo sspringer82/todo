@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ListComponent } from './components/list/list.component';
 import { ListItemComponent } from './components/list-item/list-item.component';
 import { FormComponent } from './components/form/form.component';
+import { DescriptionDialogComponent } from './components/description-dialog/description-dialog.component';
 import { TodoService } from './services/todo.service';
 import { ListModule } from '../list';
 import { TodoRoutingModule } from './todo-routing.module';
@@ -19,10 +20,17 @@ import {
   MatSlideToggleModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatDialogModule,
 } from '@angular/material';
 
 @NgModule({
-  declarations: [ListComponent, ListItemComponent, FormComponent],
+  declarations: [
+    ListComponent,
+    ListItemComponent,
+    FormComponent,
+    DescriptionDialogComponent,
+  ],
+  entryComponents: [DescriptionDialogComponent],
   imports: [
     TodoRoutingModule,
     FormsModule,
@@ -36,6 +44,7 @@ import {
     MatSlideToggleModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatDialogModule,
     ListModule,
   ],
   providers: [TodoService],

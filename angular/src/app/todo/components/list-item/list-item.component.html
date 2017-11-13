@@ -7,6 +7,11 @@
         ({{todo.due | date:short}})
       </span>
     </div>
+    <div *ngIf="todo.description">
+      <button mat-button (click)="openDialog()">
+        <i class="material-icons">info_outline</i>
+      </button>
+    </div>
     <div class="status">
       <button mat-button *ngIf="todo.status === Status.done" (click)="changeStatus(todo)">
         <i class="done material-icons">done</i>
@@ -15,7 +20,6 @@
         <i class="open material-icons">clear</i>
       </button>
     </div>
-
     <div>
       <button mat-button [routerLink]="['/todo/edit', todo.id]">
         <i class="material-icons">mode_edit</i>
