@@ -12,7 +12,7 @@ CREATE TABLE todo (
   creator INTEGER,
   due TIMESTAMP,
   description TEXT,
-  order INTEGER,
+  sequence INTEGER,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   list INTEGER,
   FOREIGN KEY (creator) REFERENCES user(id) ON DELETE CASCADE,
