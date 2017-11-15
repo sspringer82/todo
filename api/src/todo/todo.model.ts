@@ -20,14 +20,30 @@ const model = {
         t.created,
         t.due,
         t.description,
+        t.sequence,
         l.title as list
       FROM todo AS t 
-      LEFT JOIN list AS l ON t.list = l.id`;
+      LEFT JOIN list AS l ON t.list = l.id
+      ORDER BY t.sequence`;
     return todoAPI.all(query);
   },
   create(todo: Todo, userId: number): Promise<Todo> {
-    const query =
-      'INSERT INTO todo (title, status, created, list, due, description) VALUES (?, ?, ?, (SELECT id FROM list WHERE title = ? and owner = ?), ?, ?)';
+    const query = `INSERT INTO todo (
+         title,
+         status, 
+         created, 
+         list, 
+         due, 
+         description, 
+         sequence
+       ) VALUES (
+         ?, 
+         ?, 
+         ?, 
+         (SELECT id FROM list WHERE title = ? and owner = ?), 
+         ?, 
+         ?, 
+         (SELECT MAX(sequence) +1 FROM todo WHERE list = (SELECT id FROM list WHERE title = ? and owner = ?)))`;
     return todoAPI
       .run(query, [
         todo.title,
@@ -37,12 +53,22 @@ const model = {
         userId,
         todo.due,
         todo.description,
+        todo.list,
+        userId,
       ])
-      .then((data: RunResult) => ({ ...todo, id: data.lastID }));
+      .then((data: RunResult) => this.getOne(data.lastID));
   },
   update(todo: Todo, userId: number): Promise<Todo> {
-    const query =
-      'UPDATE todo SET title = ?, status = ?, list = (SELECT id FROM list WHERE title = ? and owner = ?), due = ?, description = ? WHERE id = ?';
+    const query = `UPDATE 
+         todo 
+       SET 
+         title = ?, 
+         status = ?, 
+         list = (SELECT id FROM list WHERE title = ? and owner = ?), 
+         due = ?, 
+         description = ?, 
+         sequence = ? 
+       WHERE id = ?`;
     return todoAPI
       .run(query, [
         todo.title,
@@ -51,6 +77,7 @@ const model = {
         userId,
         todo.due,
         todo.description,
+        todo.sequence,
         todo.id,
       ])
       .then(() => todo);
