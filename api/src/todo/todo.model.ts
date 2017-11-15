@@ -44,19 +44,22 @@ const model = {
          ?, 
          ?, 
          (SELECT MAX(sequence) +1 FROM todo WHERE list = (SELECT id FROM list WHERE title = ? and owner = ?)))`;
-    return todoAPI
-      .run(query, [
-        todo.title,
-        todo.status,
-        todo.created,
-        todo.list,
-        userId,
-        todo.due,
-        todo.description,
-        todo.list,
-        userId,
-      ])
-      .then((data: RunResult) => this.getOne(data.lastID));
+    return (
+      todoAPI
+        .run(query, [
+          todo.title,
+          todo.status,
+          todo.created,
+          todo.list,
+          userId,
+          todo.due,
+          todo.description,
+          todo.list,
+          userId,
+        ])
+        // @todo list has to be a string not a number
+        .then((data: RunResult) => this.getOne(data.lastID))
+    );
   },
   update(todo: Todo, userId: number): Promise<Todo> {
     const query = `UPDATE 
