@@ -14,6 +14,7 @@ export class ListItemComponent implements OnInit {
   @Output() public onStatusChange = new EventEmitter();
   @Output() public onDelete = new EventEmitter();
 
+  public isDrawerClosed = true;
   public Status = Status;
   constructor(public dialog: MatDialog) {}
 
@@ -40,5 +41,9 @@ export class ListItemComponent implements OnInit {
       width: '250px',
       data: { todo: this.todo },
     });
+  }
+
+  toggleDrawer() {
+    this.isDrawerClosed = !this.isDrawerClosed;
   }
 }

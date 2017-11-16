@@ -20,14 +20,21 @@
         <i class="open material-icons">clear</i>
       </button>
     </div>
-    <div>
-      <button mat-button [routerLink]="['/todo/edit', todo.id]">
-        <i class="material-icons">mode_edit</i>
-      </button>
+    <div class="drawer" [ngClass]="{'closed': isDrawerClosed}">
+      <div>
+        <button mat-button [routerLink]=" [ '/todo/edit', todo.id] ">
+          <i class="material-icons">mode_edit</i>
+        </button>
+      </div>
+      <div>
+        <button mat-button (click)="delete(todo) ">
+          <i class="material-icons">delete</i>
+        </button>
+      </div>
     </div>
     <div>
-      <button mat-button (click)="delete(todo)">
-        <i class="material-icons">delete</i>
+      <button mat-button (click)="toggleDrawer()" class="toggleDrawer">
+        <i class="material-icons">more_vert</i>
       </button>
     </div>
   </div>
