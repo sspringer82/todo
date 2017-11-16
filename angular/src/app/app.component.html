@@ -10,6 +10,9 @@
       <mat-list-item *ngIf="isAdmin">
         <button mat-button [routerLink]="['/user/list']" routerLinkActive="active-link" (click)="sidenav.close()">Users</button>
       </mat-list-item>
+      <mat-list-item>
+        <button mat-button (click)="doLogout(sidenav)">Logout</button>
+      </mat-list-item>
     </mat-list>
   </mat-sidenav>
 

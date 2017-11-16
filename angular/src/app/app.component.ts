@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { LoginService } from './services/login.service';
+import { MatSidenav } from '@angular/material';
 
 @Component({
   selector: 'todo-root',
@@ -23,5 +24,10 @@ export class AppComponent {
           this.isAdmin = !!(user && user.isAdmin);
         }
       });
+  }
+  doLogout(sidenav: MatSidenav) {
+    this.loginService.doLogout();
+    sidenav.close();
+    this.router.navigate(['/']);
   }
 }
