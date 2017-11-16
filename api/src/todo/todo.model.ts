@@ -9,7 +9,19 @@ const listAPI = new DbApi<List>(db);
 
 const model = {
   getOne(id: number): Promise<Todo> {
-    const query = 'SELECT * FROM todo WHERE id = ?';
+    const query = `SELECT 
+    t.id,
+    t.title AS title,
+    t.status,
+    t.created,
+    t.due,
+    t.description,
+    t.sequence,
+    l.title as list
+  FROM todo AS t 
+  LEFT JOIN list AS l ON t.list = l.id
+  WHERE t.id = ?
+  ORDER BY t.sequence`;
     return todoAPI.get(query, [id]);
   },
   getAll(): Promise<Todo[]> {
@@ -44,22 +56,19 @@ const model = {
          ?, 
          ?, 
          (SELECT MAX(sequence) +1 FROM todo WHERE list = (SELECT id FROM list WHERE title = ? and owner = ?)))`;
-    return (
-      todoAPI
-        .run(query, [
-          todo.title,
-          todo.status,
-          todo.created,
-          todo.list,
-          userId,
-          todo.due,
-          todo.description,
-          todo.list,
-          userId,
-        ])
-        // @todo list has to be a string not a number
-        .then((data: RunResult) => this.getOne(data.lastID))
-    );
+    return todoAPI
+      .run(query, [
+        todo.title,
+        todo.status,
+        todo.created,
+        todo.list,
+        userId,
+        todo.due,
+        todo.description,
+        todo.list,
+        userId,
+      ])
+      .then((data: RunResult) => this.getOne(data.lastID));
   },
   update(todo: Todo, userId: number): Promise<Todo> {
     const query = `UPDATE 
