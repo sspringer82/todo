@@ -22,17 +22,22 @@ export class LoginService {
     });
   }
 
+  doLogout() {
+    sessionStorage.removeItem('token');
+  }
+
   getToken() {
-    return this.token;
+    return sessionStorage.getItem('token');
   }
 
   setToken(token: string) {
-    this.token = token;
+    sessionStorage.setItem('token', token);
   }
 
   getUser(): User | null {
-    if (this.token) {
-      return jwtDecode(this.token);
+    const token = this.getToken();
+    if (token) {
+      return jwtDecode(token);
     }
     return null;
   }
