@@ -1,13 +1,13 @@
 import * as express from 'express';
-import * as jwt from 'express-jwt';
+import jwtHelper from '../shared/jwt-helper';
 import controller from './list.controller';
 
 const router = express.Router();
 
-router.get('/', jwt({ secret: 'secret' }), controller.getAllAction);
-router.get('/:id', jwt({ secret: 'secret' }), controller.getOneAction);
-router.post('/', jwt({ secret: 'secret' }), controller.createAction);
-router.put('/:id', jwt({ secret: 'secret' }), controller.updateAction);
-router.delete('/:id', jwt({ secret: 'secret' }), controller.deleteAction);
+router.get('/', jwtHelper, controller.getAllAction);
+router.get('/:id', jwtHelper, controller.getOneAction);
+router.post('/', jwtHelper, controller.createAction);
+router.put('/:id', jwtHelper, controller.updateAction);
+router.delete('/:id', jwtHelper, controller.deleteAction);
 
 export default router;
