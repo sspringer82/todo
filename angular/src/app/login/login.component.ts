@@ -28,6 +28,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
   };
 
   constructor(private loginService: LoginService, private router: Router) {
+    if (this.loginService.getToken()) {
+      this.router.navigate(['/todo/list']);
+    }
     this.user = { ...this.initialCredentials };
   }
 
