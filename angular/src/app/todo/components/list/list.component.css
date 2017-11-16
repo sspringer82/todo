@@ -11,9 +11,19 @@
 
 .controls {
   display: flex;
-  align-items: center;
+  justify-content: space-around;
 }
 
 .controls > div {
   flex-grow: 1;
+  text-align: center;
+}
+
+div.header {
+  display: flex;
+  justify-content: center;
+}
+
+mat-select.list {
+  font-size: 42px;
 }

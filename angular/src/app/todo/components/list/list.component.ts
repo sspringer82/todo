@@ -20,6 +20,8 @@ export class ListComponent implements OnInit {
   public lists: Observable<List[]>;
   public showOnlyOpen = new FormControl();
   public listSelect = new FormControl();
+  public orderSelect = new FormControl();
+  public orders = ['order', 'due today', 'due next'];
 
   constructor(
     private todoService: TodoService,
@@ -56,6 +58,7 @@ export class ListComponent implements OnInit {
       this.listSelect.setValue(list[0].title);
       return list;
     });
+    this.orderSelect.setValue('order');
   }
 
   changeStatus(todo: Todo) {

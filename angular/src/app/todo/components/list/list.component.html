@@ -1,6 +1,14 @@
 <div class="container">
 
-  <h1>Your todos</h1>
+  <div class="header">
+    <mat-form-field>
+      <mat-select placeholder="List" name="list" [formControl]="listSelect" class="list">
+        <mat-option *ngFor="let list of lists |async" [value]="list.title">
+          {{list.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
   <div class="controls">
     <div>
@@ -10,9 +18,9 @@
 
     <div>
       <mat-form-field>
-        <mat-select placeholder="List" name="list" [formControl]="listSelect">
-          <mat-option *ngFor="let list of lists |async" [value]="list.title">
-            {{list.title}}
+        <mat-select placeholder="Order" name="order" [formControl]="orderSelect">
+          <mat-option *ngFor="let order of orders" [value]="order">
+            {{order}}
           </mat-option>
         </mat-select>
       </mat-form-field>
