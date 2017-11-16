@@ -29,9 +29,13 @@ i.open {
   font-weight: bold;
 }
 
+mat-card {
+  margin: 3px;
+}
+
 mat-card.done {
-  background-color: #bdecb6;
+  background-color: rgba(0, 255, 0, 0.1);
 }
 mat-card.notDone {
-  background-color: #ff7878;
+  background-color: rgba(255, 0, 0, 0.1);
 }
