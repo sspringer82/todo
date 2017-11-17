@@ -10,4 +10,5 @@ export class Todo {
   list: string;
   due: number;
   description: string;
+  sequence: number;
 }
