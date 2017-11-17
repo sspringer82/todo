@@ -16,6 +16,11 @@ app.use('/login', authRouter);
 app.use('/todo', todoRouter);
 app.use('/list', listRouter);
 app.use('/user', userRouter);
+app.use(
+  (err: any, req: express.Request, res: express.Response, next: Function) => {
+    res.redirect('/');
+  },
+);
 
 const options = {
   cert: readFileSync('./certs/certificate.pem'),
