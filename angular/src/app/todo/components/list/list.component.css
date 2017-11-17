@@ -12,6 +12,12 @@
 .controls {
   display: flex;
   justify-content: space-around;
+  transition: height 0.5s ease-in-out;
+  height: 66px;
+  overflow: hidden;
+}
+.controls.closed {
+  height: 0px;
 }
 
 .controls > div {
@@ -20,8 +26,15 @@
 }
 
 div.header {
+  position: relative;
   display: flex;
   justify-content: center;
+}
+
+.toggleControls {
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 mat-select.list {

@@ -8,9 +8,14 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <button mat-button (click)="toggleControls()" class="toggleControls">
+      <i class="material-icons">more_vert</i>
+    </button>
   </div>
 
-  <div class="controls">
+
+
+  <div class="controls" [ngClass]="{'closed': isControlsClosed}">
     <div>
       <div [hidden]="orderSelect.value !== 'order'">
         Show only open todos:

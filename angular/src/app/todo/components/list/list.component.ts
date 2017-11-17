@@ -24,6 +24,7 @@ export class ListComponent implements OnInit {
   public listSelect = new FormControl();
   public orderSelect = new FormControl();
   public orders = ['order', 'due today', 'due next'];
+  public isControlsClosed = true;
 
   constructor(
     private todoService: TodoService,
@@ -107,5 +108,9 @@ export class ListComponent implements OnInit {
 
   delete(todo: Todo) {
     this.todoService.delete(todo).subscribe(null, e => this.handleError(e));
+  }
+
+  public toggleControls() {
+    this.isControlsClosed = !this.isControlsClosed;
   }
 }
