@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListComponent } from './components/list/list.component';
 import { FormComponent } from './components/form/form.component';
+import { RegisterComponent } from './components/register/register.component';
 import {
   MatTableModule,
   MatInputModule,
@@ -15,7 +16,7 @@ import {
 import { UserService } from './services/user.service';
 
 @NgModule({
-  declarations: [ListComponent, FormComponent],
+  declarations: [ListComponent, FormComponent, RegisterComponent],
   imports: [
     UserRoutingModule,
     HttpClientModule,
