@@ -46,6 +46,15 @@ const controller = {
     res.json(true);
     return true;
   },
+  async registerAction(
+    req: express.Request,
+    res: express.Response,
+  ): Promise<User> {
+    const data = { ...req.body, isAdmin: 0, isActive: 0 };
+    const user = await userModel.create(data);
+    res.json(user);
+    return user;
+  },
 };
 
 export default controller;

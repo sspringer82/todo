@@ -8,6 +8,7 @@ const router = express.Router();
 router.get('/', jwtHelper, isAdmin, controller.getAllAction);
 router.get('/:id', jwtHelper, isAdmin, controller.getOneAction);
 router.post('/', jwtHelper, isAdmin, controller.createAction);
+router.post('/register', controller.registerAction);
 router.put('/:id', jwtHelper, isAdmin, controller.updateAction);
 router.delete('/:id', jwtHelper, isAdmin, controller.deleteAction);
 
