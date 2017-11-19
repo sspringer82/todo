@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'todo-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css'],
+  styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnInit, AfterViewInit {
   @ViewChild('title') private titleField: ElementRef;

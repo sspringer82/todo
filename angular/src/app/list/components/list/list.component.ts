@@ -8,7 +8,7 @@ import { ListDataSource } from '../../models/list-data-source';
 @Component({
   selector: 'todo-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css'],
+  styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
   public lists: Observable<List[]>;
