@@ -5,7 +5,7 @@ import { UserService } from '../../services/user.service';
 @Component({
   selector: 'todo-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
   public register = {
