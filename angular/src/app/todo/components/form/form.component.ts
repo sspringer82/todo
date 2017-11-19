@@ -21,7 +21,7 @@ import { ListService } from '../../../list/services/list.service';
 @Component({
   selector: 'todo-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css'],
+  styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnInit, AfterViewInit {
   @ViewChild('title') private titleField: ElementRef;

@@ -5,7 +5,7 @@ import { Todo } from '../../models/todo';
 @Component({
   selector: 'todo-description-dialog',
   templateUrl: './description-dialog.component.html',
-  styleUrls: ['./description-dialog.component.css'],
+  styleUrls: ['./description-dialog.component.scss'],
 })
 export class DescriptionDialogComponent implements OnInit {
   constructor(
