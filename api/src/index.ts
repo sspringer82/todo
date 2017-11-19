@@ -12,6 +12,7 @@ const app: express.Application = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use('static', express.static('public'));
 app.use('/login', authRouter);
 app.use('/todo', todoRouter);
 app.use('/list', listRouter);
