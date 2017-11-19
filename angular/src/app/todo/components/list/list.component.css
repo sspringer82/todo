@@ -1,5 +1,7 @@
-.container {
-  margin: 25px 25%;
+@media (min-width: 768px) {
+  .container {
+    margin: 25px 25%;
+  }
 }
 
 .addButton {
