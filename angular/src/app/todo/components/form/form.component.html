@@ -2,7 +2,7 @@
   <form #todoForm="ngForm" (ngSubmit)="save()">
     <div>
       <mat-form-field>
-        <input matInput placeholder="Title" type="text" [(ngModel)]="todo.title" #title name="title">
+        <input matInput placeholder="Title" type="text" [(ngModel)]="todo.title" #title name="title" required>
       </mat-form-field>
     </div>
     <div>
@@ -14,7 +14,7 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <mat-select placeholder="List" name="list" [(ngModel)]="todo.list">
+        <mat-select placeholder="List" name="list" [(ngModel)]="todo.list" required>
           <mat-option *ngFor="let list of lists|async" [value]="list.title">
             {{list.title}}
           </mat-option>
@@ -28,7 +28,7 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Created" type="text" [(ngModel)]="todo.created" readonly name="created">
+        <input matInput placeholder="Created" type="text" [value]="todo.created | date: 'short'" readonly name="created">
       </mat-form-field>
     </div>
     <div>
@@ -37,7 +37,7 @@
       </mat-form-field>
     </div>
     <div>
-      <button mat-raised-button type="submit">save</button>
+      <button mat-raised-button type="submit" [disabled]="!todoForm.form.valid">save</button>
       <button mat-raised-button [routerLink]="['/todo/list']">cancel</button>
     </div>
   </form>
