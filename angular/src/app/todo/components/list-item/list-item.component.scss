@@ -33,11 +33,11 @@ mat-card {
   margin: 3px;
 }
 
-mat-card.done {
-  background-color: rgba(0, 255, 0, 0.1);
-}
-mat-card.notDone {
+mat-card {
   background-color: rgba(255, 0, 0, 0.1);
+  &.done {
+    background-color: rgba(0, 255, 0, 0.1);
+  }
 }
 
 .drawer {
