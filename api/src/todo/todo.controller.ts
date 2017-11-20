@@ -26,17 +26,29 @@ const controller = {
     req: express.Request,
     res: express.Response,
   ): Promise<Todo> {
-    const todo = await todoModel.create(req.body, req.user.id);
-    res.json(todo);
-    return todo;
+    const todo = <Todo>req.body;
+    if (todo.title === '' || todo.list === '') {
+      res.statusCode = 400;
+      res.send();
+      return todo;
+    }
+    const newTodo = await todoModel.create(todo, req.user.id);
+    res.json(newTodo);
+    return newTodo;
   },
   async updateAction(
     req: express.Request,
     res: express.Response,
   ): Promise<Todo> {
-    const todo = await todoModel.update(req.body, req.user.id);
-    res.json(todo);
-    return todo;
+    const todo = <Todo>req.body;
+    if (todo.title === '' || todo.list === '') {
+      res.statusCode = 400;
+      res.send();
+      return todo;
+    }
+    const updatedTodo = await todoModel.update(req.body, req.user.id);
+    res.json(updatedTodo);
+    return updatedTodo;
   },
   async deleteAction(
     req: express.Request,
