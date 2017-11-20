@@ -20,7 +20,7 @@ module.exports = gulp => {
     );
   });
   gulp.task('exec:run', cb => {
-    exec('cd dist; npm start', (err, stdout, stderr) => {
+    exec('cd dist/dist; node index.js', (err, stdout, stderr) => {
       console.log(stdout);
       console.log(stderr);
       cb(err);

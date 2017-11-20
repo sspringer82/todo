@@ -19,6 +19,7 @@ gulp.task(
     'clean:dist',
     'copy:api',
     'exec:tsc',
+    'copy:certs',
     'copy:angularSrc',
     'exec:ngBuild',
     'copy:angularDist',
