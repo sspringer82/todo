@@ -1,3 +1,15 @@
-.container {
-  margin: 25px 25%;
+@import '../../../shared/styles/variables.scss';
+
+h1 {
+  text-align: center;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+@media (min-width: $screen-sm-min) {
+  .container {
+    margin: 25px 25%;
+  }
 }
