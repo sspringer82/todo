@@ -26,6 +26,7 @@ import { ListService } from '../../../list/services/list.service';
 export class FormComponent implements OnInit, AfterViewInit {
   @ViewChild('title') private titleField: ElementRef;
 
+  public header = 'Create a new todo';
   public todo = new Todo();
   public due: Date;
   public Status = Status;
@@ -42,6 +43,7 @@ export class FormComponent implements OnInit, AfterViewInit {
     const id = parseInt(this.route.snapshot.paramMap.get('id'), 10);
     this.lists = this.listService.getLists();
     if (!isNaN(id)) {
+      this.header = 'Update your todo';
       this.todoService.load();
       this.todoService.items.subscribe((todos: Todo[]) => {
         Observable.from(todos)
