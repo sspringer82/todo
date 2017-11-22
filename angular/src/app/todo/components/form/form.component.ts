@@ -52,7 +52,9 @@ export class FormComponent implements OnInit, AfterViewInit {
           })
           .subscribe((todo: Todo) => {
             this.todo = todo;
-            this.due = new Date(this.todo.due);
+            if (this.todo.due) {
+              this.due = new Date(this.todo.due);
+            }
           });
       });
     } else {
