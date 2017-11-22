@@ -92,7 +92,9 @@ export class ListComponent implements OnInit {
 
     this.todoService.load().subscribe(null, e => this.handleError(e));
     this.lists = this.listService.getLists().map((list: List[]) => {
-      this.listSelect.setValue(list[0].title);
+      if (list.length > 0) {
+        this.listSelect.setValue(list[0].title);
+      }
       return list;
     });
     Promise.resolve().then(() => this.orderSelect.setValue('order'));
