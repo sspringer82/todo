@@ -24,6 +24,7 @@ import {
 } from '@angular/material';
 import { UserModule } from './user/user.module';
 import { AdminAuthGuard } from './shared/services/admin-auth-guard.service';
+import { ConfigService } from './services/config.service';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent],
@@ -45,7 +46,7 @@ import { AdminAuthGuard } from './shared/services/admin-auth-guard.service';
     UserModule,
     AppRoutingModule,
   ],
-  providers: [LoginService, AdminAuthGuard],
+  providers: [LoginService, AdminAuthGuard, ConfigService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
