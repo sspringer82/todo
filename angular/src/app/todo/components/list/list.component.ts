@@ -11,6 +11,7 @@ import { ListService } from '../../../list/services/list.service';
 import { List } from '../../../list/models/list';
 
 import * as moment from 'moment';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   selector: 'todo-list',
@@ -30,6 +31,7 @@ export class ListComponent implements OnInit {
     private todoService: TodoService,
     private router: Router,
     private listService: ListService,
+    private configService: ConfigService,
   ) {}
 
   handleError(err: HttpErrorResponse) {
@@ -41,6 +43,10 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.listSelect.valueChanges.subscribe((list: string) => {
+      this.configService.selectedList = list;
+    });
+
     this.todos = this.todoService.items
       .combineLatest(
         this.listSelect.valueChanges,
@@ -93,7 +99,9 @@ export class ListComponent implements OnInit {
     this.todoService.load().subscribe(null, e => this.handleError(e));
     this.lists = this.listService.getLists().map((list: List[]) => {
       if (list.length > 0) {
-        this.listSelect.setValue(list[0].title);
+        this.listSelect.setValue(
+          this.configService.selectedList || list[0].title,
+        );
       }
       return list;
     });
