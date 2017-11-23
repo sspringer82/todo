@@ -17,6 +17,7 @@ import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
 import { List } from '../../../list/models/list';
 import { ListService } from '../../../list/services/list.service';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   selector: 'todo-form',
@@ -37,6 +38,7 @@ export class FormComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private todoService: TodoService,
     private listService: ListService,
+    private configService: ConfigService,
   ) {}
 
   ngOnInit() {
@@ -58,6 +60,7 @@ export class FormComponent implements OnInit, AfterViewInit {
           });
       });
     } else {
+      this.todo.list = this.configService.selectedList;
       this.todo.status = Status.open;
       this.todo.created = Date.now();
     }
