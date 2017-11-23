@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  align-items: center;
 }
 
 .title {
@@ -17,9 +18,22 @@ i.done {
   font-weight: bold;
 }
 
-i.open {
-  color: red;
-  font-weight: bold;
+button.changeStatus {
+  display: flex;
+  justify-content: center;
+}
+.square {
+  display: flex;
+  height: 24px;
+  width: 24px;
+  border-radius: 3px;
+  border: 1px solid grey;
+  i {
+    visibility: hidden;
+    &.done {
+      visibility: visible;
+    }
+  }
 }
 
 .due {
