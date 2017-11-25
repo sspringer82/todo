@@ -39,6 +39,15 @@ CREATE TABLE role (
   role TEXT
 );
 
+DROP TABLE IF EXISTS config;
+CREATE TABLE config (
+  id INTEGER PRIMARY KEY,
+  user INTEGER,
+  selectedList INTEGER,
+  FOREIGN KEY (user) REFERENCES user(id) ON DELETE CASCADE,
+  FOREIGN KEY (selectedList) REFERENCES list(id) ON DELETE CASCADE
+);
+
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (
   id INTEGER PRIMARY KEY,
@@ -59,6 +68,9 @@ INSERT INTO todostatus (status) VALUES
 INSERT INTO list (title, owner) VALUES
 ('private', (SELECT id FROM user WHERE username = 'basti')),
 ('work', (SELECT id FROM user WHERE username = 'basti'));
+
+INSERT INTO config (user, selectedList) VALUES
+((SELECT id FROM user WHERE username = 'basti'), (SELECT id FROM list WHERE title = 'private'));
 
 INSERT INTO todo (title, status, list, due, sequence) VALUES
 ('aufstehen', (SELECT id FROM todostatus WHERE status = 'done'), (SELECT id FROM list WHERE title = 'private'), 1510085891651, 1),
