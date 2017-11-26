@@ -1,25 +1,20 @@
-<div class="container">
-
-  <div class="header">
-    <div *ngIf=" lists | async; let items">
-      <div *ngIf="items.length === 0">
-        Currently you don't have any lists.
-        <a [routerLink]="['/list/form']">Go and create one.</a>
-      </div>
-      <mat-form-field *ngIf="items.length > 0">
-        <mat-select placeholder="List" name="list" [formControl]="listSelect" class="list">
-          <mat-option *ngFor="let list of lists |async" [value]="list.title">
-            {{list.title}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+<div class="header">
+  <div *ngIf=" lists | async; let items">
+    <div *ngIf="items.length === 0">
+      Currently you don't have any lists.
+      <a [routerLink]="['/list/form']">Go and create one.</a>
     </div>
-
-    <button mat-button (click)="toggleControls()" class="toggleControls">
-      <i class="material-icons">more_vert</i>
-    </button>
+    <mat-form-field *ngIf="items.length > 0">
+      <mat-select placeholder="List" name="list" [formControl]="listSelect" class="list">
+        <mat-option *ngFor="let list of lists |async" [value]="list.title">
+          {{list.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
-
+  <button mat-button (click)="toggleControls()" class="toggleControls">
+    <i class="material-icons">more_vert</i>
+  </button>
   <div class="controls" [ngClass]="{'closed': isControlsClosed}">
     <div>
       <div [hidden]="orderSelect.value !== 'order'">
@@ -38,7 +33,8 @@
       </mat-form-field>
     </div>
   </div>
-
+</div>
+<div class="container">
   <div *ngIf=" todos | async; let items">
     <todo-list-item *ngFor="let todo of items " [todo]="todo" (onStatusChange)="changeStatus($event)" (onDelete)="delete($event)">
     </todo-list-item>

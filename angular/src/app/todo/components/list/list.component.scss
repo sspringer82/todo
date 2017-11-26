@@ -5,6 +5,9 @@
     margin: 16px;
   }
 }
+.container {
+  margin-top: 90px;
+}
 
 .noItemsContainer {
   text-align: center;
@@ -34,9 +37,15 @@
 }
 
 div.header {
-  position: relative;
+  position: fixed;
+  background-color: white;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: center;
+  box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.2);
 }
 
 .toggleControls {
