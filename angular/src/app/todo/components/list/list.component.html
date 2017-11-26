@@ -1,5 +1,5 @@
 <div class="header">
-  <div *ngIf=" lists | async; let items">
+  <div *ngIf=" lists | async; let items" class="listHeader">
     <div *ngIf="items.length === 0">
       Currently you don't have any lists.
       <a [routerLink]="['/list/form']">Go and create one.</a>
