@@ -10,10 +10,8 @@
     "start": "ts-node src/index.ts",
     "watch": "nodemon -e ts -w ./src -x npm run watch:serve",
     "watch:serve": "ts-node src/index.ts",
-    "backupdb":
-      "_now=$(date +\"%Y_%m_%d\"); _file=\"backup_$_now.sqlite3\"; cp db/database.sqlite3 db/$_file",
-    "recreatedb":
-      "npm run backupdb && sqlite3 db/database.sqlite3 < db/structure.sql"
+    "backupdb": "_now=$(date +\"%Y_%m_%d\"); _file=\"backup_$_now.sqlite3\"; cp db/database.sqlite3 db/$_file",
+    "recreatedb": "npm run backupdb && sqlite3 db/database.sqlite3 < db/structure.sql"
   },
   "author": "",
   "license": "ISC",
@@ -26,7 +24,7 @@
     "jsonwebtoken": "^8.1.0",
     "spdy": "^3.4.7",
     "sqlite3": "^3.1.13",
-    "typescript": "^2.6.1"
+    "typescript": "^2.6.2"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.8",
