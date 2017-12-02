@@ -1,8 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import { render } from 'react-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+import { todoApp } from './todo/reducers';
+import { TodoList } from './todo/components/list-container.component';
+
+const store = createStore(todoApp);
+
+render(
+  <Provider store={store}>
+    <TodoList />
+  </Provider>,
+  document.getElementById('root'),
+);
