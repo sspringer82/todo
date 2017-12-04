@@ -21,6 +21,10 @@
     </div>
     <div class="drawer" [ngClass]="{'closed': isDrawerClosed}">
       <div>
+        <span (click)="move('up', todo)">up</span>
+        <span (click)="move('down', todo)">down</span>
+      </div>
+      <div>
         <button mat-button [routerLink]=" [ '/todo/edit', todo.id] ">
           <i class="material-icons">mode_edit</i>
         </button>

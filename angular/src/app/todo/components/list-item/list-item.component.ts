@@ -13,6 +13,7 @@ export class ListItemComponent implements OnInit {
   @Input() public todo: Todo;
   @Output() public onStatusChange = new EventEmitter();
   @Output() public onDelete = new EventEmitter();
+  @Output() public onMove = new EventEmitter();
 
   public isDrawerClosed = true;
   public Status = Status;
@@ -34,6 +35,13 @@ export class ListItemComponent implements OnInit {
 
   delete(todo: Todo) {
     this.onDelete.emit(todo);
+  }
+
+  move(direction, todo) {
+    this.onMove.emit({
+      direction,
+      todo,
+    });
   }
 
   openDialog() {
