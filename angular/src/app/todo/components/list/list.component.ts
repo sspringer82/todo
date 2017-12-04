@@ -120,6 +120,12 @@ export class ListComponent implements OnInit {
     this.todoService.delete(todo).subscribe(null, e => this.handleError(e));
   }
 
+  move(event: { direction: string; todo: Todo }) {
+    this.todoService
+      .move(event.direction, event.todo)
+      .subscribe(null, e => this.handleError(e));
+  }
+
   public toggleControls() {
     this.isControlsClosed = !this.isControlsClosed;
   }
