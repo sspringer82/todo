@@ -17,4 +17,22 @@ export class TodoService extends BaseService<Todo> {
   ) {
     super(http, loginService);
   }
+
+  move(direction: string, todo: Todo) {
+    let prevTodo;
+    if (direction === 'up') {
+      prevTodo = this.dataStore.items.find(
+        (item: Todo) => todo.sequence - 1 === item.sequence,
+      );
+      todo.sequence -= 1;
+      prevTodo.sequence += 1;
+    } else {
+      prevTodo = this.dataStore.items.find(
+        (item: Todo) => todo.sequence + 1 === item.sequence,
+      );
+      todo.sequence += 1;
+      prevTodo.sequence -= 1;
+    }
+    return this.update(todo).combineLatest(this.update(prevTodo));
+  }
 }
