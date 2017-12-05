@@ -20,19 +20,32 @@ export class TodoService extends BaseService<Todo> {
 
   move(direction: string, todo: Todo) {
     let prevTodo;
-    if (direction === 'up') {
+    const numOfListItems = this.dataStore.items.reduce(
+      (prev: number, curr: Todo) => {
+        return curr.list === todo.list ? ++prev : prev;
+      },
+      0,
+    );
+
+    if (direction === 'up' && todo.sequence > 1) {
       prevTodo = this.dataStore.items.find(
-        (item: Todo) => todo.sequence - 1 === item.sequence,
+        (item: Todo) =>
+          todo.sequence - 1 === item.sequence && todo.list === item.list,
       );
       todo.sequence -= 1;
       prevTodo.sequence += 1;
-    } else {
+    } else if (direction === 'down' && todo.sequence < numOfListItems) {
       prevTodo = this.dataStore.items.find(
-        (item: Todo) => todo.sequence + 1 === item.sequence,
+        (item: Todo) =>
+          todo.sequence + 1 === item.sequence && todo.list === item.list,
       );
       todo.sequence += 1;
       prevTodo.sequence -= 1;
     }
-    return this.update(todo).combineLatest(this.update(prevTodo));
+    const observable = Observable.of();
+    if (prevTodo) {
+      return observable.combineLatest(this.update(todo), this.update(prevTodo));
+    }
+    return observable;
   }
 }
