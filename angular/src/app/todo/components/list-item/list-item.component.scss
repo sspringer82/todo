@@ -18,6 +18,12 @@ i.done {
   font-weight: bold;
 }
 
+.move {
+  i {
+    cursor: pointer;
+  }
+}
+
 button.changeStatus {
   display: flex;
   justify-content: center;
