@@ -26,6 +26,8 @@ export class ListComponent implements OnInit {
   public orderSelect = new FormControl();
   public orders = ['order', 'due today', 'due next'];
   public isControlsClosed = true;
+  private moveItems = true;
+  public drawerOpen?: number;
 
   constructor(
     private todoService: TodoService,
@@ -53,6 +55,9 @@ export class ListComponent implements OnInit {
         this.showOnlyOpen.valueChanges.startWith(false),
         this.orderSelect.valueChanges,
       )
+      .do(([todos, list, showOnlyOpen, order]) => {
+        this.moveItems = showOnlyOpen === false && order === 'order';
+      })
       .map(([todos, list, showOnlyOpen, order]) => {
         return todos
           .filter((todo: Todo) => {
@@ -128,5 +133,13 @@ export class ListComponent implements OnInit {
 
   public toggleControls() {
     this.isControlsClosed = !this.isControlsClosed;
+  }
+
+  toggleDrawer(todo: Todo) {
+    if (this.drawerOpen === todo.id) {
+      this.drawerOpen = null;
+    } else {
+      this.drawerOpen = todo.id;
+    }
   }
 }

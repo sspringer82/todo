@@ -36,8 +36,8 @@
 </div>
 <div class="container">
   <div *ngIf=" todos | async; let items">
-    <todo-list-item *ngFor="let todo of items " [todo]="todo" (onStatusChange)="changeStatus($event)" (onDelete)="delete($event)"
-      (onMove)="move($event)">
+    <todo-list-item *ngFor="let todo of items " [todo]="todo" [showMove]="moveItems" [isDrawerClosed]="drawerOpen !== todo.id"
+      (onStatusChange)="changeStatus($event)" (onDelete)="delete($event)" (onMove)="move($event)" (onToggleDrawer)="toggleDrawer($event)">
     </todo-list-item>
     <mat-card class="noItemsContainer" *ngIf="items.length === 0">Currently you don't have any todos.
       <a [routerLink]="['/todo/form']">Go and create one.</a>
