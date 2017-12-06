@@ -20,7 +20,7 @@
       </button>
     </div>
     <div class="drawer" [ngClass]="{'closed': isDrawerClosed}">
-      <div class="move">
+      <div *ngIf="showMove" class="move">
         <i (click)="move('up', todo)" class="material-icons">expand_less</i>
         <i (click)="move('down', todo)" class="material-icons">expand_more</i>
       </div>

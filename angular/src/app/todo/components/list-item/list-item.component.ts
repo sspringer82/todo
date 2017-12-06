@@ -11,11 +11,13 @@ import { DescriptionDialogComponent } from '../description-dialog/description-di
 })
 export class ListItemComponent implements OnInit {
   @Input() public todo: Todo;
+  @Input() public showMove: boolean;
+  @Input() public isDrawerClosed: boolean;
   @Output() public onStatusChange = new EventEmitter();
   @Output() public onDelete = new EventEmitter();
   @Output() public onMove = new EventEmitter();
+  @Output() public onToggleDrawer = new EventEmitter();
 
-  public isDrawerClosed = true;
   public Status = Status;
   constructor(public dialog: MatDialog) {}
 
@@ -52,6 +54,6 @@ export class ListItemComponent implements OnInit {
   }
 
   toggleDrawer() {
-    this.isDrawerClosed = !this.isDrawerClosed;
+    this.onToggleDrawer.emit(this.todo);
   }
 }
