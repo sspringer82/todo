@@ -1,10 +1,11 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
-export class Form extends React.Component {
+class Form extends React.Component {
   constructor() {
     super();
     this.state = {
-      title: 'my fancy title',
+      title: '',
     };
   }
 
@@ -18,7 +19,8 @@ export class Form extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
+    this.props.onCreateTodo(this.state);
+    this.props.history.push('/list');
   }
 
   render() {
@@ -39,3 +41,5 @@ export class Form extends React.Component {
     );
   }
 }
+
+export const FormWithRouter = withRouter(Form);
