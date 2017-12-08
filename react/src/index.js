@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 
 import { todoApp } from './todo/reducers';
 import { TodoList } from './todo/components/list-container.component';
-import { Form as TodoForm } from './todo/components/form.component';
+import { Form as TodoForm } from './todo/components/form-container.component';
 
 const store = createStore(todoApp);
 
