@@ -4,6 +4,7 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
+  HostListener,
 } from '@angular/core';
 import { Todo, Status } from '../../models/todo';
 import {
@@ -40,6 +41,14 @@ export class FormComponent implements OnInit, AfterViewInit {
     private listService: ListService,
     private configService: ConfigService,
   ) {}
+
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown($event: KeyboardEvent) {
+    if ($event.code === 'Escape') {
+      $event.preventDefault();
+      this.router.navigate(['/todo/list']);
+    }
+  }
 
   ngOnInit() {
     const id = parseInt(this.route.snapshot.paramMap.get('id'), 10);
