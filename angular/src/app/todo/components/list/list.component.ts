@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { Todo, Status } from '../../models/todo';
@@ -35,6 +35,14 @@ export class ListComponent implements OnInit {
     private listService: ListService,
     private configService: ConfigService,
   ) {}
+
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown($event: KeyboardEvent) {
+    if ($event.code === 'KeyN') {
+      $event.preventDefault();
+      this.router.navigate(['/todo/form']);
+    }
+  }
 
   handleError(err: HttpErrorResponse) {
     if (err.status === 401) {
