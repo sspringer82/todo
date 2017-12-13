@@ -25,6 +25,8 @@ import {
 import { UserModule } from './user/user.module';
 import { AdminAuthGuard } from './shared/services/admin-auth-guard.service';
 import { ConfigService } from './services/config.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/http.interceptor';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent],
@@ -46,7 +48,16 @@ import { ConfigService } from './services/config.service';
     UserModule,
     AppRoutingModule,
   ],
-  providers: [LoginService, AdminAuthGuard, ConfigService],
+  providers: [
+    LoginService,
+    AdminAuthGuard,
+    ConfigService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
