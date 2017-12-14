@@ -3,6 +3,10 @@
   align-items: center;
 }
 
+.active {
+  border: 1px solid grey;
+}
+
 .title {
   flex-grow: 1;
   display: flex;
