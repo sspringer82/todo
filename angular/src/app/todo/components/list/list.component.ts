@@ -28,6 +28,7 @@ export class ListComponent implements OnInit {
   public isControlsClosed = true;
   private moveItems = true;
   public drawerOpen?: number;
+  public activeTodo: Todo;
 
   constructor(
     private todoService: TodoService,
@@ -148,6 +149,14 @@ export class ListComponent implements OnInit {
       this.drawerOpen = null;
     } else {
       this.drawerOpen = todo.id;
+    }
+  }
+
+  activate(todo: Todo) {
+    if (this.activeTodo === todo) {
+      this.activeTodo = null;
+    } else {
+      this.activeTodo = todo;
     }
   }
 }
