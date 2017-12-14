@@ -47,6 +47,9 @@ export class ListComponent implements OnInit {
       $event.preventDefault();
       this.router.navigate(['/todo/edit', this.activeTodo.id]);
     }
+    if ($event.code === 'KeyD' && this.activeTodo) {
+      this.delete(this.activeTodo);
+    }
   }
 
   handleError(err: HttpErrorResponse) {
@@ -135,7 +138,9 @@ export class ListComponent implements OnInit {
   }
 
   delete(todo: Todo) {
-    this.todoService.delete(todo).subscribe(null, e => this.handleError(e));
+    if (confirm('sure?')) {
+      this.todoService.delete(todo).subscribe(null, e => this.handleError(e));
+    }
   }
 
   move(event: { direction: string; todo: Todo }) {
