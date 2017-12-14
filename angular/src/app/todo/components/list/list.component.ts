@@ -43,6 +43,10 @@ export class ListComponent implements OnInit {
       $event.preventDefault();
       this.router.navigate(['/todo/form']);
     }
+    if ($event.code === 'KeyE' && this.activeTodo) {
+      $event.preventDefault();
+      this.router.navigate(['/todo/edit', this.activeTodo.id]);
+    }
   }
 
   handleError(err: HttpErrorResponse) {
