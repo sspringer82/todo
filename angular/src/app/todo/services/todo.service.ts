@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { BaseService } from '../../shared/services/base.service';
 
+import { combineLatest } from 'rxjs/operators';
+
 @Injectable()
 export class TodoService extends BaseService<Todo> {
   protected baseUrl = '/todo';
@@ -40,7 +42,9 @@ export class TodoService extends BaseService<Todo> {
     }
     const observable = Observable.of();
     if (prevTodo) {
-      return observable.combineLatest(this.update(todo), this.update(prevTodo));
+      return observable.pipe(
+        combineLatest(this.update(todo), this.update(prevTodo)),
+      );
     }
     return observable;
   }

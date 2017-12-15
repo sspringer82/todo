@@ -13,6 +13,8 @@ import { List } from '../../../list/models/list';
 import * as moment from 'moment';
 import { ConfigService } from '../../../services/config.service';
 
+import { combineLatest, map, filter, startWith, tap } from 'rxjs/operators';
+
 @Component({
   selector: 'todo-list',
   templateUrl: './list.component.html',
@@ -65,16 +67,16 @@ export class ListComponent implements OnInit {
       this.configService.selectedList = list;
     });
 
-    this.todos = this.todoService.items
-      .combineLatest(
+    this.todos = this.todoService.items.pipe(
+      combineLatest(
         this.listSelect.valueChanges,
-        this.showOnlyOpen.valueChanges.startWith(false),
+        this.showOnlyOpen.valueChanges,
         this.orderSelect.valueChanges,
-      )
-      .do(([todos, list, showOnlyOpen, order]) => {
+      ),
+      tap(([todos, list, showOnlyOpen, order]) => {
         this.moveItems = showOnlyOpen === false && order === 'order';
-      })
-      .map(([todos, list, showOnlyOpen, order]) => {
+      }),
+      map(([todos, list, showOnlyOpen, order]) => {
         return todos
           .filter((todo: Todo) => {
             if (
@@ -115,7 +117,8 @@ export class ListComponent implements OnInit {
           })
           .filter((todo: Todo) => todo.list === list)
           .sort((t1: Todo, t2: Todo) => t1.sequence - t2.sequence);
-      });
+      }),
+    );
 
     this.todoService.load().subscribe(null, e => this.handleError(e));
     this.lists = this.listService.getLists().map((list: List[]) => {
@@ -127,6 +130,7 @@ export class ListComponent implements OnInit {
       return list;
     });
     Promise.resolve().then(() => this.orderSelect.setValue('order'));
+    Promise.resolve().then(() => this.showOnlyOpen.setValue(false));
   }
 
   changeStatus(todo: Todo) {

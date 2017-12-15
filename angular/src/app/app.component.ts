@@ -4,6 +4,9 @@ import { Observable } from 'rxjs/Observable';
 import { LoginService } from './services/login.service';
 import { MatSidenav } from '@angular/material';
 
+import { filter, map } from 'rxjs/operators';
+import 'rxjs/add/operator/filter';
+
 @Component({
   selector: 'todo-root',
   templateUrl: './app.component.html',
@@ -14,8 +17,10 @@ export class AppComponent {
   public isAdmin = false;
   constructor(private router: Router, private loginService: LoginService) {
     router.events
-      .filter(event => event instanceof NavigationEnd)
-      .map(() => this.router.routerState.snapshot)
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        map(() => this.router.routerState.snapshot),
+      )
       .subscribe(event => {
         this.isNavHidden = event.url === '/login';
 

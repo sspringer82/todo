@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 
 import { mergeMap, map } from 'rxjs/operators';
+import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/of';
 
 export abstract class BaseService<T extends { id: number }> {
   protected abstract baseUrl: string;
@@ -21,20 +23,21 @@ export abstract class BaseService<T extends { id: number }> {
   }
 
   load() {
-    return Observable.of(!this.loaded)
-      .mergeMap(loaded => {
+    return Observable.from([!this.loaded]).pipe(
+      mergeMap(loaded => {
         if (loaded) {
           return this.http.get(this.baseUrl);
         } else {
           return Observable.of(this.dataStore.items);
         }
-      })
-      .map((items: T[]) => {
+      }),
+      map((items: T[]) => {
         this.loaded = true;
         this.dataStore.items = items;
         this._items.next([...this.dataStore.items]);
         return items;
-      });
+      }),
+    );
   }
   add(item: T): Observable<T> {
     return this.http.post(this.baseUrl, item).map((newItem: T): T => {

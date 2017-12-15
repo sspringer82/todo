@@ -14,11 +14,14 @@ import {
   NavigationEnd,
 } from '@angular/router';
 import { TodoService } from '../../services/todo.service';
-import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
 import { List } from '../../../list/models/list';
 import { ListService } from '../../../list/services/list.service';
 import { ConfigService } from '../../../services/config.service';
+
+import { Observable } from 'rxjs/Observable';
+import { filter } from 'rxjs/operators';
+import { from } from 'rxjs/Observable/from';
 
 @Component({
   selector: 'todo-form',
