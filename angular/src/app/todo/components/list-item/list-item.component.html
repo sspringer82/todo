@@ -4,7 +4,7 @@
     <div class="title">
       {{todo.title}}
       <span *ngIf="!!todo.due" [ngClass]="{'due': isDue(), 'notDue': !isDue()}">
-        ({{todo.due | date:short}})
+        &nbsp;({{todo.due | date:short}})
       </span>
     </div>
     <div *ngIf="todo.description">
