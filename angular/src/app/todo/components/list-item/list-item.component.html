@@ -1,6 +1,7 @@
 <mat-card [ngClass]="{'done': isDone(), 'active': isActive}">
 
   <div class="container" (click)="activate(todo)">
+    <div class="indicator"></div>
     <div class="title">
       {{todo.title}}
       <span *ngIf="!!todo.due" [ngClass]="{'due': isDue(), 'notDue': !isDue()}">
