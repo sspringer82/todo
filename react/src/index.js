@@ -1,14 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
+import configureStore from './configureStore';
 import { Provider } from 'react-redux';
 
-import { todoApp } from './todo/reducers';
 import { TodoList } from './todo/components/list-container.component';
 import { Form as TodoForm } from './todo/components/form-container.component';
 
-const store = createStore(todoApp);
+const store = configureStore();
 
 render(
   <Provider store={store}>
