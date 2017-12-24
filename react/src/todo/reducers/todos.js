@@ -1,3 +1,5 @@
+import { ADD_TODO } from '../actions/index';
+
 const defaultState = {
   todos: [
     { id: 1, title: 'eat' },
@@ -9,7 +11,7 @@ const defaultState = {
 
 export const todos = (state = defaultState, action) => {
   switch (action.type) {
-    case 'ADD_TODO':
+    case ADD_TODO:
       const id =
         state.todos.reduce(
           (prev, curr) => (curr.id > prev ? curr.id : prev),
