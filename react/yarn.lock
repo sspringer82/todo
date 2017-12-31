@@ -5605,6 +5605,12 @@ run-async@^2.2.0:
   dependencies:
     is-promise "^2.1.0"
 
+rx-dom@^7.0.3:
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/rx-dom/-/rx-dom-7.0.3.tgz#f876f398453ffc346ac65187edd6e717ed11fe09"
+  dependencies:
+    rx "*"
+
 rx-lite-aggregates@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/rx-lite-aggregates/-/rx-lite-aggregates-4.0.8.tgz#753b87a89a11c95467c4ac1626c4efc4e05c67be"
@@ -5614,6 +5620,10 @@ rx-lite-aggregates@^4.0.8:
 rx-lite@*, rx-lite@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-4.0.8.tgz#0b1e11af8bc44836f04a6407e92da42467b79444"
+
+rx@*:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/rx/-/rx-4.1.0.tgz#a5f13ff79ef3b740fe30aa803fb09f98805d4782"
 
 rxjs@^5.5.5:
   version "5.5.5"
