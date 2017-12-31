@@ -15,7 +15,7 @@ export const loginEpic = (action$, store) => {
         .post('/login', action.payload)
         .pipe(
           map(
-            response => loginSuccess(response),
+            response => loginSuccess(response.response.token),
             catchError(e => console.log(e)),
           ),
         ),
