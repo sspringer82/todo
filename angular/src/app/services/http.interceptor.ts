@@ -22,12 +22,15 @@ export class AuthInterceptor implements HttpInterceptor {
     if (!this.loginService) {
       this.loginService = this.inj.get(LoginService);
     }
-    return next.handle(
-      request.clone({
+    const token = this.loginService.getToken();
+    let auth;
+    if (token) {
+      auth = {
         setHeaders: {
-          Authorization: `Bearer ${this.loginService.getToken()}`,
+          Authorization: `Bearer ${token}`,
         },
-      }),
-    );
+      };
+    }
+    return next.handle(request.clone(auth));
   }
 }
