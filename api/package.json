@@ -30,7 +30,7 @@
     "@types/jsonwebtoken": "^7.2.5",
     "@types/node": "^8.5.2",
     "@types/sqlite3": "^3.1.1",
-    "nodemon": "^1.14.3",
+    "nodemon": "^1.14.7",
     "ts-node": "^4.1.0",
     "typescript": "^2.6.2"
   }
