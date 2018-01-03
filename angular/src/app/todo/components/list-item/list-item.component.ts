@@ -16,6 +16,7 @@ export class ListItemComponent implements OnInit {
   @Input() public isDrawerClosed: boolean;
   @Output() public onStatusChange = new EventEmitter();
   @Output() public onDelete = new EventEmitter();
+  @Output() public onArchive = new EventEmitter();
   @Output() public onMove = new EventEmitter();
   @Output() public onToggleDrawer = new EventEmitter();
   @Output() public onActivate = new EventEmitter();
@@ -39,6 +40,10 @@ export class ListItemComponent implements OnInit {
 
   delete(todo: Todo) {
     this.onDelete.emit(todo);
+  }
+
+  archive(todo: Todo) {
+    this.onArchive.emit(todo);
   }
 
   move(direction, todo) {
