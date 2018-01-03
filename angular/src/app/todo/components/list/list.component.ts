@@ -147,6 +147,12 @@ export class ListComponent implements OnInit {
     }
   }
 
+  archive(todo: Todo) {
+    if (confirm('archive?')) {
+      this.todoService.archive(todo).subscribe(null, e => this.handleError(e));
+    }
+  }
+
   move(event: { direction: string; todo: Todo }) {
     this.todoService
       .move(event.direction, event.todo)

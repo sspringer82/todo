@@ -16,6 +16,11 @@ export class TodoService extends BaseService<Todo> {
     super(http);
   }
 
+  archive(todo: Todo) {
+    // @todo implement
+    // this.update({ ...todo, ...{ archived: true } });
+  }
+
   move(direction: string, todo: Todo) {
     let prevTodo;
     const numOfListItems = this.dataStore.items.reduce(
