@@ -11,4 +11,5 @@ export class Todo {
   due: Date;
   description: string;
   sequence: number;
+  archived: boolean;
 }

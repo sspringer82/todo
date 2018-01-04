@@ -17,6 +17,7 @@ const model = {
     t.due,
     t.description,
     t.sequence,
+    t.archived,
     l.title as list
   FROM todo AS t 
   LEFT JOIN list AS l ON t.list = l.id
@@ -33,6 +34,7 @@ const model = {
         t.due,
         t.description,
         t.sequence,
+        t.archived,
         l.title as list
       FROM todo AS t 
       LEFT JOIN list AS l ON t.list = l.id
@@ -47,7 +49,8 @@ const model = {
          list, 
          due, 
          description, 
-         sequence
+         sequence,
+         archived,
        ) VALUES (
          ?, 
          ?, 
@@ -55,7 +58,8 @@ const model = {
          (SELECT id FROM list WHERE title = ? and owner = ?), 
          ?, 
          ?, 
-         (SELECT MAX(sequence) +1 FROM todo WHERE list = (SELECT id FROM list WHERE title = ? and owner = ?)))`;
+         (SELECT MAX(sequence) +1 FROM todo WHERE list = (SELECT id FROM list WHERE title = ? and owner = ?))),
+         ?`;
     return todoAPI
       .run(query, [
         todo.title,
@@ -67,6 +71,7 @@ const model = {
         todo.description,
         todo.list,
         userId,
+        todo.archived,
       ])
       .then((data: RunResult) => this.getOne(data.lastID));
   },
@@ -79,7 +84,8 @@ const model = {
          list = (SELECT id FROM list WHERE title = ? and owner = ?), 
          due = ?, 
          description = ?, 
-         sequence = ? 
+         sequence = ?,
+         archived = ?
        WHERE id = ?`;
     return todoAPI
       .run(query, [
@@ -90,6 +96,7 @@ const model = {
         todo.due,
         todo.description,
         todo.sequence,
+        todo.archived,
         todo.id,
       ])
       .then(() => todo);
