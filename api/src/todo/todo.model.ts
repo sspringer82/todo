@@ -51,7 +51,7 @@ const model = {
          due, 
          description, 
          sequence,
-         archived,
+         archived
        ) VALUES (
          ?, 
          ?, 
@@ -59,8 +59,8 @@ const model = {
          (SELECT id FROM list WHERE title = ? and owner = ?), 
          ?, 
          ?, 
-         (SELECT MAX(sequence) +1 FROM todo WHERE list = (SELECT id FROM list WHERE title = ? and owner = ?))),
-         ?`;
+         (SELECT MAX(sequence) +1 FROM todo WHERE list = (SELECT id FROM list WHERE title = ? and owner = ?)),
+         ?)`;
     return todoAPI
       .run(query, [
         todo.title,
