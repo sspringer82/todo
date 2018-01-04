@@ -8,6 +8,8 @@ import userRouter from './user/router';
 
 import { readFileSync } from 'fs';
 
+process.on('unhandledRejection', e => console.log(e));
+
 const app: express.Application = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
