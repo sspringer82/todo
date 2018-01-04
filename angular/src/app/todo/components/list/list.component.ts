@@ -52,6 +52,9 @@ export class ListComponent implements OnInit {
     if ($event.code === 'KeyD' && this.activeTodo) {
       this.delete(this.activeTodo);
     }
+    if ($event.code === 'KeyA' && this.activeTodo) {
+      this.archive(this.activeTodo);
+    }
   }
 
   handleError(err: HttpErrorResponse) {
