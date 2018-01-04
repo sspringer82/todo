@@ -38,6 +38,7 @@ const model = {
         l.title as list
       FROM todo AS t 
       LEFT JOIN list AS l ON t.list = l.id
+      WHERE t.archived = 0
       ORDER BY t.sequence`;
     return todoAPI.all(query);
   },

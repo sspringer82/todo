@@ -13,6 +13,7 @@ CREATE TABLE todo (
   due TIMESTAMP,
   description TEXT,
   sequence INTEGER,
+  archived INTEGER,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   list INTEGER,
   FOREIGN KEY (creator) REFERENCES user(id) ON DELETE CASCADE,
@@ -72,8 +73,8 @@ INSERT INTO list (title, owner) VALUES
 INSERT INTO config (user, selectedList) VALUES
 ((SELECT id FROM user WHERE username = 'basti'), (SELECT id FROM list WHERE title = 'private'));
 
-INSERT INTO todo (title, status, list, due, sequence) VALUES
-('aufstehen', (SELECT id FROM todostatus WHERE status = 'done'), (SELECT id FROM list WHERE title = 'private'), 1510085891651, 1),
-('essen', (SELECT id FROM todostatus WHERE status = 'done'), (SELECT id FROM list WHERE title = 'private'), 1510085891651, 3),
-('schlafen gehen', (SELECT id FROM todostatus WHERE status = 'open'), (SELECT id FROM list WHERE title = 'private'), 1510085891651, 2),
-('Büroschlaf!', (SELECT id FROM todostatus WHERE status = 'open'), (SELECT id FROM list WHERE title = 'work'), 1510085891651, 1);
+INSERT INTO todo (title, status, list, due, sequence, archived) VALUES
+('aufstehen', (SELECT id FROM todostatus WHERE status = 'done'), (SELECT id FROM list WHERE title = 'private'), 1510085891651, 1, 0),
+('essen', (SELECT id FROM todostatus WHERE status = 'done'), (SELECT id FROM list WHERE title = 'private'), 1510085891651, 3, 0),
+('schlafen gehen', (SELECT id FROM todostatus WHERE status = 'open'), (SELECT id FROM list WHERE title = 'private'), 1510085891651, 2, 0),
+('Büroschlaf!', (SELECT id FROM todostatus WHERE status = 'open'), (SELECT id FROM list WHERE title = 'work'), 1510085891651, 1, 0);
