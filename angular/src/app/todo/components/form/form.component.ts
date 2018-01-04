@@ -89,6 +89,7 @@ export class FormComponent implements OnInit, AfterViewInit {
       this.todo.due = this.due.getTime();
     }
     if (!this.todo.id) {
+      this.todo.archived = 0;
       observable = this.todoService.add(this.todo);
     } else {
       observable = this.todoService.update(this.todo);

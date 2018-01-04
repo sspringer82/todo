@@ -11,5 +11,5 @@ export class Todo {
   due: number;
   description: string;
   sequence: number;
-  archived: boolean;
+  archived: number;
 }

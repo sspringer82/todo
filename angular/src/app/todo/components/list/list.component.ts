@@ -78,6 +78,7 @@ export class ListComponent implements OnInit {
       }),
       map(([todos, list, showOnlyOpen, order]) => {
         return todos
+          .filter((todo: Todo) => todo.archived === 0)
           .filter((todo: Todo) => {
             if (
               (order === 'order' && showOnlyOpen) ||

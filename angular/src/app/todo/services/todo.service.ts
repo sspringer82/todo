@@ -17,7 +17,7 @@ export class TodoService extends BaseService<Todo> {
   }
 
   archive(todo: Todo) {
-    return this.update({ ...todo, ...{ archived: true } });
+    return this.update({ ...todo, ...{ archived: 1 } });
   }
 
   move(direction: string, todo: Todo) {
