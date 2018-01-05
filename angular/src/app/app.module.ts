@@ -26,7 +26,7 @@ import { UserModule } from './user/user.module';
 import { AdminAuthGuard } from './shared/services/admin-auth-guard.service';
 import { ConfigService } from './services/config.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './services/http.interceptor';
+import { AuthInterceptor } from './interceptors/http.interceptor';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent],
