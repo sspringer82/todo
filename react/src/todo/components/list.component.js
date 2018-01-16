@@ -1,7 +1,8 @@
 import React from 'react';
 import { ListItem } from './list-item.component';
+import { withRouter } from 'react-router-dom';
 
-export class List extends React.Component {
+class List extends React.Component {
   render() {
     return (
       <ul>
@@ -10,3 +11,5 @@ export class List extends React.Component {
     );
   }
 }
+
+export const ListWithRouter = withRouter(List);

@@ -1,11 +1,11 @@
 import { ajax } from 'rxjs/observable/dom/ajax';
+import { push } from 'react-router-redux';
 
 import { ofType } from 'redux-observable';
-import { mergeMap, map, catchError } from 'rxjs/operators';
-import { LOGIN } from '../actions/index';
+import { mergeMap, map, catchError, mapTo, tap } from 'rxjs/operators';
+import { LOGIN, LOGIN_SUCCESS } from '../actions/index';
 
 import { loginSuccess } from '../actions';
-import 'rxjs/add/observable/of';
 
 export const loginEpic = (action$, store) => {
   return action$.pipe(
@@ -21,4 +21,8 @@ export const loginEpic = (action$, store) => {
         ),
     ),
   );
+};
+
+export const loginSuccessEpic = (action$, store) => {
+  return action$.pipe(ofType(LOGIN_SUCCESS), mapTo(push('/form')));
 };

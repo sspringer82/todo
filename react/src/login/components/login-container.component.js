@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { LoginComponent as Login } from './login.component';
+import { LoginWithRouter } from './login.component';
 import { login } from '../actions/index';
 
 const mapDispatchToProps = dispatch => {
@@ -10,4 +10,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export const LoginComponent = connect(null, mapDispatchToProps)(Login);
+export const LoginComponent = connect(null, mapDispatchToProps)(
+  LoginWithRouter,
+);
