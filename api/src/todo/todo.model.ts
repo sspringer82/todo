@@ -2,6 +2,7 @@ import { Database, RunResult } from 'sqlite3';
 import { DbApi } from '../shared/db-api';
 import { List } from './../shared/list.type';
 import { Todo } from './../shared/todo.type';
+import { reorder } from './todo.helper';
 
 const db = new Database('db/database.sqlite3');
 const todoAPI = new DbApi<Todo>(db);
@@ -59,7 +60,7 @@ const model = {
          (SELECT id FROM list WHERE title = ? and owner = ?), 
          ?, 
          ?, 
-         (SELECT MAX(sequence) +1 FROM todo WHERE list = (SELECT id FROM list WHERE title = ? and owner = ?)),
+         (SELECT IFNULL(MAX(sequence) + 1, 1) FROM todo WHERE list = (SELECT id FROM list WHERE title = ? and owner = ?)),
          ?)`;
     return todoAPI
       .run(query, [
@@ -102,9 +103,12 @@ const model = {
       ])
       .then(() => todo);
   },
-  delete(id: number): Promise<RunResult> {
+  async delete(id: number, userId: number): Promise<void> {
+    const todo = await this.getOne(id);
+
     const query = 'DELETE FROM todo WHERE id = ?';
-    return todoAPI.run(query, [id]);
+    await todoAPI.run(query, [id]);
+    await reorder(todo.list, userId);
   },
 };
 
