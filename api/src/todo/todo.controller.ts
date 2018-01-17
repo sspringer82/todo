@@ -55,7 +55,7 @@ const controller = {
     res: express.Response,
   ): Promise<boolean> {
     const id = parseInt(req.params.id, 10);
-    const result = await todoModel.delete(id);
+    await todoModel.delete(id, req.user.id);
     res.json(true);
     return true;
   },
