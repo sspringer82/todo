@@ -77,7 +77,18 @@ const model = {
       ])
       .then((data: RunResult) => this.getOne(data.lastID));
   },
-  update(todo: Todo, userId: number): Promise<Todo> {
+  async update(todo: Todo, userId: number): Promise<Todo> {
+    const oldTodo = await this.getOne(todo.id);
+
+    if (oldTodo.list !== todo.list) {
+      const query = `SELECT 
+        IFNULL(MAX(sequence) + 1, 0) 
+      FROM todo 
+      WHERE list = (SELECT id FROM list WHERE title = ? and owner = ?)`;
+      const sequence = await todoAPI.get(query, [todo.list, userId]);
+      todo.sequence = sequence.sequence + 1;
+    }
+
     const query = `UPDATE 
          todo 
        SET 
@@ -89,19 +100,22 @@ const model = {
          sequence = ?,
          archived = ?
        WHERE id = ?`;
-    return todoAPI
-      .run(query, [
-        todo.title,
-        todo.status,
-        todo.list,
-        userId,
-        todo.due,
-        todo.description,
-        todo.sequence,
-        todo.archived,
-        todo.id,
-      ])
-      .then(() => todo);
+    await todoAPI.run(query, [
+      todo.title,
+      todo.status,
+      todo.list,
+      userId,
+      todo.due,
+      todo.description,
+      todo.sequence,
+      todo.archived,
+      todo.id,
+    ]);
+    await reorder(todo.list, userId);
+    if (oldTodo.list !== todo.list) {
+      await reorder(oldTodo.list, userId);
+    }
+    return todo;
   },
   async delete(id: number, userId: number): Promise<void> {
     const todo = await this.getOne(id);
