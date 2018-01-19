@@ -5,6 +5,7 @@ import authRouter from './auth';
 import todoRouter from './todo/router';
 import listRouter from './list/router';
 import userRouter from './user/router';
+import { logger } from './shared/logger';
 
 import { readFileSync } from 'fs';
 
@@ -32,5 +33,5 @@ const options = {
 
 const server = createServer(options, app);
 server.listen(8080, () => {
-  console.info('Server started');
+  logger.info('Server started');
 });
