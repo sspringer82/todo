@@ -1,10 +1,10 @@
 import * as express from 'express';
 import { createServer } from 'spdy';
 import * as bodyParser from 'body-parser';
-import authRouter from './auth';
-import todoRouter from './todo/router';
-import listRouter from './list/router';
-import userRouter from './user/router';
+import { router as authRouter } from './auth';
+import { router as todoRouter } from './todo/router';
+import { router as listRouter } from './list/router';
+import { router as userRouter } from './user/router';
 import { logger } from './shared/logger';
 
 import { readFileSync } from 'fs';

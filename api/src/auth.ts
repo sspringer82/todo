@@ -26,4 +26,4 @@ router.post('/', async (req: express.Request, res: express.Response) => {
   }
 });
 
-export default router;
+export { router };

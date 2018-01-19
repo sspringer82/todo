@@ -10,4 +10,4 @@ router.post('/', jwtHelper, controller.createAction);
 router.put('/:id', jwtHelper, controller.updateAction);
 router.delete('/:id', jwtHelper, controller.deleteAction);
 
-export default router;
+export { router };

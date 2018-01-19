@@ -12,4 +12,4 @@ router.post('/register', controller.registerAction);
 router.put('/:id', jwtHelper, isAdmin, controller.updateAction);
 router.delete('/:id', jwtHelper, isAdmin, controller.deleteAction);
 
-export default router;
+export { router };
