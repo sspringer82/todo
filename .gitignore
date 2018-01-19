@@ -2,5 +2,4 @@ node_modules
 dist/
 dist/**/*.js
 certs/*.pem
-logs/access.log
-logs/app.log
+logs/*.log
