@@ -26,7 +26,7 @@ const model = {
   ORDER BY t.sequence`;
     return todoAPI.get(query, [id]);
   },
-  getAll(): Promise<Todo[]> {
+  getAll(list = ''): Promise<Todo[]> {
     const query = `SELECT 
         t.id,
         t.title AS title,
@@ -40,7 +40,11 @@ const model = {
       FROM todo AS t 
       LEFT JOIN list AS l ON t.list = l.id
       WHERE t.archived = 0
+      ${list ? ' AND l.title = ? ' : ''}
       ORDER BY t.sequence`;
+    if (list) {
+      return todoAPI.all(query, [list]);
+    }
     return todoAPI.all(query);
   },
   create(todo: Todo, userId: number): Promise<Todo> {
