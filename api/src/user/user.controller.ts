@@ -1,9 +1,9 @@
 import * as express from 'express';
 import { User } from './../shared/user.type';
 
-import userModel from './user.model';
+import { model as userModel } from './user.model';
 
-const controller = {
+export const controller = {
   async getAllAction(
     req: express.Request,
     res: express.Response,
@@ -56,5 +56,3 @@ const controller = {
     return user;
   },
 };
-
-export default controller;

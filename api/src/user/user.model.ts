@@ -2,12 +2,12 @@ import { Database, RunResult } from 'sqlite3';
 import { DbApi } from '../shared/db-api';
 import { User } from '../shared/user.type';
 import { PassThrough } from 'stream';
-import listModel from '../list/list.model';
+import { model as listModel } from '../list/list.model';
 
 const db = new Database('db/database.sqlite3');
 const dbAPI = new DbApi<User>(db);
 
-const userModel = {
+export const model = {
   getOneByCredentials(username: string, pasword: string): Promise<User> {
     const query = 'SELECT * FROM user WHERE username = ? AND password = ?';
     return dbAPI.get(query, [username, pasword]);
@@ -73,5 +73,3 @@ const userModel = {
     return dbAPI.run(query, [id]);
   },
 };
-
-export default userModel;

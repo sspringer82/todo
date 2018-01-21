@@ -5,7 +5,7 @@ import { List } from './../shared/list.type';
 const db = new Database('db/database.sqlite3');
 const listAPI = new DbApi<List>(db);
 
-const model = {
+export const model = {
   getOne(id: number, userId: number): Promise<List> {
     const query = 'SELECT * FROM list WHERE id = ? AND owner = ?';
     return listAPI.get(query, [id, userId]);
@@ -29,5 +29,3 @@ const model = {
     return listAPI.run(query, [id, userId]);
   },
 };
-
-export default model;

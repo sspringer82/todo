@@ -8,7 +8,7 @@ const db = new Database('db/database.sqlite3');
 const todoAPI = new DbApi<Todo>(db);
 const listAPI = new DbApi<List>(db);
 
-const model = {
+export const model = {
   getOne(id: number): Promise<Todo> {
     const query = `SELECT 
     t.id,
@@ -129,5 +129,3 @@ const model = {
     await reorder(todo.list, userId);
   },
 };
-
-export default model;

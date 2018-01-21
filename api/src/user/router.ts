@@ -1,6 +1,6 @@
 import * as express from 'express';
-import jwtHelper from '../shared/jwt-helper';
-import controller from './user.controller';
+import { jwtHelper } from '../shared/jwt-helper';
+import { controller } from './user.controller';
 import { isAdmin } from '../shared/is-admin';
 
 const router = express.Router();

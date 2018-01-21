@@ -2,9 +2,9 @@ import * as express from 'express';
 import { Todo } from './../shared/todo.type';
 import { List } from './../shared/list.type';
 
-import todoModel from './todo.model';
+import { model as todoModel } from './todo.model';
 
-const controller = {
+export const controller = {
   async getAllAction(
     req: express.Request,
     res: express.Response,
@@ -60,5 +60,3 @@ const controller = {
     return true;
   },
 };
-
-export default controller;

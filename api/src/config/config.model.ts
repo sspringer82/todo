@@ -5,7 +5,7 @@ import { Config } from './../shared/config.type';
 const db = new Database('db/database.sqlite3');
 const configAPI = new DbApi<Config>(db);
 
-const model = {
+export const model = {
   get(userId: number): Promise<Config> {
     const query = 'SELECT * FROM config WHERE user = ?';
     return configAPI.get(query, [userId]);
@@ -27,5 +27,3 @@ const model = {
     return configAPI.run(query, [id, userId]);
   },
 };
-
-export default model;

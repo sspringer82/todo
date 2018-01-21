@@ -1,6 +1,6 @@
 import * as express from 'express';
-import jwtHelper from '../shared/jwt-helper';
-import controller from './todo.controller';
+import { jwtHelper } from '../shared/jwt-helper';
+import { controller } from './todo.controller';
 
 const router = express.Router();
 

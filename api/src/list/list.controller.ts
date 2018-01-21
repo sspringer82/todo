@@ -2,9 +2,9 @@ import * as express from 'express';
 
 import { List } from '../shared/list.type';
 
-import listModel from './list.model';
+import { model as listModel } from './list.model';
 
-const controller = {
+export const controller = {
   async getAllAction(
     req: express.Request,
     res: express.Response,
@@ -48,5 +48,3 @@ const controller = {
     return true;
   },
 };
-
-export default controller;

@@ -2,9 +2,9 @@ import * as express from 'express';
 
 import { Config } from '../shared/config.type';
 
-import configModel from './config.model';
+import { model as configModel } from './config.model';
 
-const controller = {
+export const controller = {
   async getAction(
     req: express.Request,
     res: express.Response,
@@ -39,5 +39,3 @@ const controller = {
     return true;
   },
 };
-
-export default controller;

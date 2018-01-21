@@ -1,6 +1,6 @@
 import * as express from 'express';
-import * as jwt from 'express-jwt';
+import * as expressJwt from 'express-jwt';
 
-export default jwt({
+export const jwtHelper = expressJwt({
   secret: 'secret',
 });
