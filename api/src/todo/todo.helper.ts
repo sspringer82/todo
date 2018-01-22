@@ -1,4 +1,4 @@
-import model from './todo.model';
+import { model } from './todo.model';
 import { Todo } from '../shared/todo.type';
 
 export const reorder = async (list: string, userId: number) => {
