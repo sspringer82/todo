@@ -26,6 +26,8 @@ export class ListComponent implements OnInit {
   }
 
   public delete(listItem: List) {
-    this.listService.delete(listItem).subscribe(null, e => console.log(e));
+    if (confirm(`Delete ${listItem.title}?`)) {
+      this.listService.delete(listItem).subscribe(null, e => console.log(e));
+    }
   }
 }
