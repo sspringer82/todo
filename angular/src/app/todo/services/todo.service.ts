@@ -44,12 +44,21 @@ export class TodoService extends BaseService<Todo> {
       todo.sequence += 1;
       prevTodo.sequence -= 1;
     }
-    const observable = Observable.of();
     if (prevTodo) {
-      return observable.pipe(
-        combineLatest(this.update(todo), this.update(prevTodo)),
-      );
+      const data = [todo, prevTodo];
+      return this.http.put(`${this.baseUrl}/update`, data).map((): Todo[] => {
+        let index = this.dataStore.items.findIndex(
+          existingItem => existingItem.id === todo.id,
+        );
+        this.dataStore.items[index] = todo;
+        index = this.dataStore.items.findIndex(
+          existingItem => existingItem.id === prevTodo.id,
+        );
+        this.dataStore.items[index] = prevTodo;
+        this._items.next([...this.dataStore.items]);
+        return data;
+      });
     }
-    return observable;
+    return Observable.of();
   }
 }
