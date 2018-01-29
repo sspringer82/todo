@@ -36,6 +36,7 @@ export const controller = {
     res.json(newTodo);
     return newTodo;
   },
+
   async updateAction(
     req: express.Request,
     res: express.Response,
@@ -58,5 +59,20 @@ export const controller = {
     await todoModel.delete(id, req.user.id);
     res.json(true);
     return true;
+  },
+
+  async moveAction(
+    req: express.Request,
+    res: express.Response,
+  ): Promise<Todo[]> {
+    const todos = <Todo[]>req.body;
+    if (todos.length < 2) {
+      res.statusCode = 400;
+      res.send();
+      return todos;
+    }
+    await todoModel.move(todos, req.user.id);
+    res.json(todos);
+    return todos;
   },
 };

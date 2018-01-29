@@ -81,7 +81,11 @@ export const model = {
       ])
       .then((data: RunResult) => this.getOne(data.lastID));
   },
-  async update(todo: Todo, userId: number): Promise<Todo> {
+  async update(
+    todo: Todo,
+    userId: number,
+    preventReorder = false,
+  ): Promise<Todo> {
     const oldTodo = await this.getOne(todo.id);
 
     if (oldTodo.list !== todo.list) {
@@ -115,12 +119,23 @@ export const model = {
       todo.archived,
       todo.id,
     ]);
-    await reorder(todo.list, userId);
-    if (oldTodo.list !== todo.list) {
-      await reorder(oldTodo.list, userId);
+    if (!preventReorder) {
+      await reorder(todo.list, userId);
+      if (oldTodo.list !== todo.list) {
+        await reorder(oldTodo.list, userId);
+      }
     }
     return todo;
   },
+
+  async move(todos: Todo[], userId: number): Promise<Todo[]> {
+    todos.forEach(async (todo: Todo) => {
+      const query = 'UPDATE todo SET sequence = ? WHERE id = ?';
+      await todoAPI.run(query, [todo.sequence, todo.id]);
+    });
+    return todos;
+  },
+
   async delete(id: number, userId: number): Promise<void> {
     const todo = await this.getOne(id);
 

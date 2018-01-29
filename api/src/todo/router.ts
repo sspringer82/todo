@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/', jwtHelper, controller.getAllAction);
 router.get('/:id', jwtHelper, controller.getOneAction);
 router.post('/', jwtHelper, controller.createAction);
+router.put('/update', jwtHelper, controller.moveAction);
 router.put('/:id', jwtHelper, controller.updateAction);
 router.delete('/:id', jwtHelper, controller.deleteAction);
 
