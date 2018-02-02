@@ -7,7 +7,6 @@ export const reorder = async (list: string, userId: number) => {
   let sequence = 0;
   allTodos.forEach(async (todo: Todo) => {
     sequence += 1;
-    console.log('sequence: ', todo.sequence, sequence);
     if (todo.sequence !== sequence) {
       todo.sequence = sequence;
       await model.update(todo, userId, true);
