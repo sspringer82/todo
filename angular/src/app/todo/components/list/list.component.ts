@@ -146,13 +146,13 @@ export class ListComponent implements OnInit {
   }
 
   delete(todo: Todo) {
-    if (confirm('sure?')) {
+    if (confirm(`Delete ${todo.title}?`)) {
       this.todoService.delete(todo).subscribe(null, e => this.handleError(e));
     }
   }
 
   archive(todo: Todo) {
-    if (confirm('archive?')) {
+    if (confirm(`Archive ${todo.title}?`)) {
       this.todoService.archive(todo).subscribe(null, e => this.handleError(e));
     }
   }
