@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as jwt from 'jsonwebtoken';
-import userModel from './user/user.model';
+import { model as userModel } from './user/user.model';
 import { User } from './shared/user.type';
 
 const router = express.Router();
