@@ -14,6 +14,7 @@ import * as moment from 'moment';
 import { ConfigService } from '../../../services/config.service';
 
 import { combineLatest, map, filter, startWith, tap } from 'rxjs/operators';
+import { ErrorService } from '../../../services/error.service';
 
 @Component({
   selector: 'todo-list',
@@ -37,6 +38,7 @@ export class ListComponent implements OnInit {
     private router: Router,
     private listService: ListService,
     private configService: ConfigService,
+    private errorService: ErrorService,
   ) {}
 
   @HostListener('window:keydown', ['$event'])
@@ -54,14 +56,6 @@ export class ListComponent implements OnInit {
     }
     if ($event.code === 'KeyA' && this.activeTodo) {
       this.archive(this.activeTodo);
-    }
-  }
-
-  handleError(err: HttpErrorResponse) {
-    if (err.status === 401) {
-      this.router.navigate(['/login']);
-    } else {
-      console.log('Whoops an error occured');
     }
   }
 
@@ -124,7 +118,9 @@ export class ListComponent implements OnInit {
       }),
     );
 
-    this.todoService.load().subscribe(null, e => this.handleError(e));
+    this.todoService.load().subscribe(null, e => {
+      this.errorService.handleError(e);
+    });
     this.lists = this.listService.getLists().map((list: List[]) => {
       if (list.length > 0) {
         this.listSelect.setValue(
@@ -142,25 +138,29 @@ export class ListComponent implements OnInit {
     cloneTodo.status = todo.status === Status.open ? Status.done : Status.open;
     this.todoService
       .update(cloneTodo)
-      .subscribe(null, e => this.handleError(e));
+      .subscribe(null, e => this.errorService.handleError(e));
   }
 
   delete(todo: Todo) {
     if (confirm(`Delete ${todo.title}?`)) {
-      this.todoService.delete(todo).subscribe(null, e => this.handleError(e));
+      this.todoService
+        .delete(todo)
+        .subscribe(null, e => this.errorService.handleError(e));
     }
   }
 
   archive(todo: Todo) {
     if (confirm(`Archive ${todo.title}?`)) {
-      this.todoService.archive(todo).subscribe(null, e => this.handleError(e));
+      this.todoService
+        .archive(todo)
+        .subscribe(null, e => this.errorService.handleError(e));
     }
   }
 
   move(event: { direction: string; todo: Todo }) {
     this.todoService
       .move(event.direction, event.todo)
-      .subscribe(null, e => this.handleError(e));
+      .subscribe(null, e => this.errorService.handleError(e));
   }
 
   public toggleControls() {

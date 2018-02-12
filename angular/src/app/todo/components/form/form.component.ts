@@ -22,6 +22,7 @@ import { ConfigService } from '../../../services/config.service';
 import { Observable } from 'rxjs/Observable';
 import { filter } from 'rxjs/operators';
 import { from } from 'rxjs/Observable/from';
+import { ErrorService } from '../../../services/error.service';
 
 @Component({
   selector: 'todo-form',
@@ -43,6 +44,7 @@ export class FormComponent implements OnInit, AfterViewInit {
     private todoService: TodoService,
     private listService: ListService,
     private configService: ConfigService,
+    private errorService: ErrorService,
   ) {}
 
   @HostListener('window:keydown', ['$event'])
@@ -95,8 +97,11 @@ export class FormComponent implements OnInit, AfterViewInit {
       observable = this.todoService.update(this.todo);
     }
 
-    observable.subscribe(() => {
-      this.router.navigate(['/todo/list']);
-    });
+    observable.subscribe(
+      () => {
+        this.router.navigate(['/todo/list']);
+      },
+      e => this.errorService.handleError(e),
+    );
   }
 }
