@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { ErrorService } from '../../../services/error.service';
 
 @Component({
   selector: 'todo-register',
@@ -18,7 +19,11 @@ export class RegisterComponent implements OnInit {
     created: 0,
   };
 
-  constructor(private router: Router, private userService: UserService) {}
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private errorService: ErrorService,
+  ) {}
 
   ngOnInit() {}
 
@@ -31,9 +36,12 @@ export class RegisterComponent implements OnInit {
       delete user.confirmPassword;
       const observable = this.userService.register(user);
 
-      observable.subscribe(() => {
-        this.router.navigate(['/login']);
-      });
+      observable.subscribe(
+        () => {
+          this.router.navigate(['/login']);
+        },
+        e => this.errorService.handleError(e),
+      );
     }
   }
 }

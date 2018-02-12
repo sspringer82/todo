@@ -9,6 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../../model/user';
+import { ErrorService } from '../../../services/error.service';
 
 @Component({
   selector: 'todo-form',
@@ -24,21 +25,25 @@ export class FormComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserService,
+    private errorService: ErrorService,
   ) {}
 
   ngOnInit() {
     const id = parseInt(this.route.snapshot.paramMap.get('id'), 10);
     if (!isNaN(id)) {
       this.userService.load();
-      this.userService.items.subscribe((users: User[]) => {
-        Observable.from(users)
-          .filter((user: User) => {
-            return user.id === id;
-          })
-          .subscribe((user: User) => {
-            this.user = user;
-          });
-      });
+      this.userService.items.subscribe(
+        (users: User[]) => {
+          Observable.from(users)
+            .filter((user: User) => {
+              return user.id === id;
+            })
+            .subscribe((user: User) => {
+              this.user = user;
+            });
+        },
+        e => this.errorService.handleError(e),
+      );
     }
   }
 
@@ -56,8 +61,11 @@ export class FormComponent implements OnInit, AfterViewInit {
       observable = this.userService.update(this.user);
     }
 
-    observable.subscribe(() => {
-      this.router.navigate(['/user/list']);
-    });
+    observable.subscribe(
+      () => {
+        this.router.navigate(['/user/list']);
+      },
+      e => this.errorService.handleError(e),
+    );
   }
 }
