@@ -27,6 +27,7 @@ import { AdminAuthGuard } from './shared/services/admin-auth-guard.service';
 import { ConfigService } from './services/config.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/http.interceptor';
+import { ErrorService } from './services/error.service';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent],
@@ -50,6 +51,10 @@ import { AuthInterceptor } from './interceptors/http.interceptor';
   ],
   providers: [
     LoginService,
+    {
+      provide: ErrorService,
+      useClass: ErrorService,
+    },
     AdminAuthGuard,
     ConfigService,
     {
