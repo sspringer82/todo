@@ -9,6 +9,7 @@ import { List } from '../../models/list';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ListService } from '../../services/list.service';
 import { Observable } from 'rxjs/Observable';
+import { ErrorService } from '../../../services/error.service';
 
 @Component({
   selector: 'todo-form',
@@ -24,21 +25,25 @@ export class FormComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private listService: ListService,
+    private errorService: ErrorService,
   ) {}
 
   ngOnInit() {
     const id = parseInt(this.route.snapshot.paramMap.get('id'), 10);
     if (!isNaN(id)) {
       this.listService.load();
-      this.listService.items.subscribe((lists: List[]) => {
-        Observable.from(lists)
-          .filter((list: List) => {
-            return list.id === id;
-          })
-          .subscribe((list: List) => {
-            this.list = list;
-          });
-      });
+      this.listService.items.subscribe(
+        (lists: List[]) => {
+          Observable.from(lists)
+            .filter((list: List) => {
+              return list.id === id;
+            })
+            .subscribe((list: List) => {
+              this.list = list;
+            });
+        },
+        e => this.errorService.handleError(e),
+      );
     }
   }
 
@@ -54,8 +59,11 @@ export class FormComponent implements OnInit, AfterViewInit {
       observable = this.listService.update(this.list);
     }
 
-    observable.subscribe(() => {
-      this.router.navigate(['/list/list']);
-    });
+    observable.subscribe(
+      () => {
+        this.router.navigate(['/list/list']);
+      },
+      e => this.errorService.handleError(e),
+    );
   }
 }
