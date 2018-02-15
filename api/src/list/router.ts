@@ -4,10 +4,12 @@ import { controller } from './list.controller';
 
 const router = express.Router();
 
-router.get('/', jwtHelper, controller.getAllAction);
-router.get('/:id', jwtHelper, controller.getOneAction);
-router.post('/', jwtHelper, controller.createAction);
-router.put('/:id', jwtHelper, controller.updateAction);
-router.delete('/:id', jwtHelper, controller.deleteAction);
+router.use(jwtHelper);
+
+router.get('/', controller.getAllAction);
+router.get('/:id', controller.getOneAction);
+router.post('/', controller.createAction);
+router.put('/:id', controller.updateAction);
+router.delete('/:id', controller.deleteAction);
 
 export { router };
