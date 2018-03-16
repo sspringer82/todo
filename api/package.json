@@ -17,11 +17,11 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "express": "^4.16.2",
+    "express": "^4.16.3",
     "express-jwt": "^5.3.1",
     "jsonwebtoken": "^8.2.0",
     "spdy": "^3.4.7",
-    "sqlite3": "^3.1.13",
+    "sqlite3": "^4.0.0",
     "winston": "^3.0.0-rc2"
   },
   "devDependencies": {
@@ -32,7 +32,7 @@
     "@types/node": "^9.4.7",
     "@types/sqlite3": "^3.1.1",
     "@types/winston": "^2.3.8",
-    "nodemon": "^1.17.1",
+    "nodemon": "^1.17.2",
     "ts-node": "^5.0.1",
     "typescript": "^2.7.2"
   }
