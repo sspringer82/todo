@@ -34,6 +34,6 @@
     "@types/winston": "^2.3.8",
     "nodemon": "^1.17.2",
     "ts-node": "^5.0.1",
-    "typescript": "^2.7.2"
+    "typescript": "^2.8.1"
   }
 }
