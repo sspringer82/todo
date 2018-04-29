@@ -19,6 +19,6 @@
   "devDependencies": {
     "del": "^3.0.0",
     "gulp": "^3.9.1",
-    "gulp-sequence": "^0.4.6"
+    "gulp-sequence": "^1.0.0"
   }
 }
