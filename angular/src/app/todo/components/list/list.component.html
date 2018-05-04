@@ -37,7 +37,7 @@
 <div class="container">
   <div *ngIf=" todos | async; let items">
     <todo-list-item *ngFor="let todo of items" [isActive]="activeTodo === todo" [todo]="todo" [showMove]="moveItems" [isDrawerClosed]="drawerOpen !== todo.id"
-      (onStatusChange)="changeStatus($event)" (onArchive)="archive($event)" (onDelete)="delete($event)" (onMove)="move($event)"
+      (onStatusChange)="changeSangtatus($event)" (onArchive)="archive($event)" (onDelete)="delete($event)" (onMove)="move($event)"
       (onToggleDrawer)="toggleDrawer($event)" (onActivate)="activate($event)">
     </todo-list-item>
     <mat-card class="noItemsContainer" *ngIf="items.length === 0">Currently you don't have any todos.
