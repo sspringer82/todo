@@ -1,4 +1,5 @@
-import * as winston from 'winston';
+// @todo move back to import after winston has fixed typings
+const winston = require('winston');
 
 const logger = new winston.createLogger({
   format: winston.format.simple(),
