@@ -28,6 +28,7 @@
     "jwt-decode": "^2.2.0",
     "moment": "^2.22.1",
     "rxjs": "^6.1.0",
+    "rxjs-compat": "^6.1.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
