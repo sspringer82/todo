@@ -1,5 +1,1 @@
 node_modules
-dist/
-dist/**/*.js
-certs/*.pem
-logs/*.log
