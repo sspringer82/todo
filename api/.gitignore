@@ -1,6 +1,0 @@
-node_modules
-db/database.sqlite3
-db/backup*
-certs/certificate.pem
-certs/key.pem
-logs/*.log
