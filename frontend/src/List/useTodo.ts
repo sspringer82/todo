@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Todo } from './Todo';
+import { Todo } from '../shared/Todo';
 
 export default function(): Todo[] {
   const [todos, setTodos] = useState<Todo[]>([]);
+  console.log(process.env.REACT_APP_SERVER);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch('http://localhost:3001/todos');
+      const response = await fetch(`${process.env.REACT_APP_SERVER}/todos`);
       const data = await response.json();
       setTodos(data);
     }
