@@ -3,7 +3,6 @@ import { Todo } from '../shared/Todo';
 
 export default function(): Todo[] {
   const [todos, setTodos] = useState<Todo[]>([]);
-  console.log(process.env.REACT_APP_SERVER);
 
   useEffect(() => {
     async function fetchData() {
