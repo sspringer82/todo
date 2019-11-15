@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { FormContainer, NewButton, Input, SaveButton } from './Form.styles';
 
 interface Props {
   onSave: (title: string) => void;
 }
 
 const Form: React.FC<Props> = ({ onSave }) => {
+  const inputEl = useRef<HTMLInputElement>(null);
   const [title, setTitle] = useState('');
   const [isButtonVisible, setButtonVisible] = useState(true);
 
@@ -15,15 +17,24 @@ const Form: React.FC<Props> = ({ onSave }) => {
   }
 
   return (
-    <div>
+    <FormContainer>
       {isButtonVisible && (
-        <button onClick={() => setButtonVisible(false)}>Neue Aufgabe</button>
+        <NewButton
+          onClick={() => {
+            setTimeout(() => inputEl.current && inputEl.current!.focus());
+            setButtonVisible(false);
+          }}
+        >
+          Neue Aufgabe
+        </NewButton>
       )}
       {!isButtonVisible && (
-        <div>
-          <input
+        <>
+          <Input
+            ref={inputEl}
             type="text"
             value={title}
+            placeholder="Neue Aufgabe"
             onChange={e => setTitle(e.currentTarget.value)}
             onBlur={e => {
               if (title === '') {
@@ -35,17 +46,17 @@ const Form: React.FC<Props> = ({ onSave }) => {
           />
 
           {title !== '' && (
-            <button
+            <SaveButton
               onClick={() => {
                 handleSave();
               }}
             >
               speichern
-            </button>
+            </SaveButton>
           )}
-        </div>
+        </>
       )}
-    </div>
+    </FormContainer>
   );
 };
 
