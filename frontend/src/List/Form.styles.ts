@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 
 export const FormContainer = styled.div`
   border: 1px solid black;
@@ -43,5 +44,9 @@ export const SaveButton = styled.button`
 `;
 
 export const AddIcon = styled(AddCircleOutlineIcon)`
+  margin-left: 5px;
+`;
+
+export const NotDoneIcon = styled(RadioButtonUncheckedIcon)`
   margin-left: 5px;
 `;

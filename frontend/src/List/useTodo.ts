@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Todo } from "../shared/Todo";
+import axios from "axios";
+import update from "immutability-helper";
 
-export default function(): Todo[] {
+export default function(): [Todo[], (title: string) => void] {
   const [todos, setTodos] = useState<Todo[]>([]);
 
   useEffect(() => {
@@ -13,5 +15,13 @@ export default function(): Todo[] {
     fetchData();
   }, []);
 
-  return todos;
+  async function save(title: string) {
+    const { data } = await axios.post(`${process.env.REACT_APP_SERVER}/todos`, {
+      title,
+      done: false
+    });
+    setTodos(prevTodos => update(prevTodos, { $push: [data] }));
+  }
+
+  return [todos, save];
 }

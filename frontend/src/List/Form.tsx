@@ -4,7 +4,8 @@ import {
   NewButton,
   Input,
   SaveButton,
-  AddIcon
+  AddIcon,
+  NotDoneIcon
 } from "./Form.styles";
 
 interface Props {
@@ -24,24 +25,28 @@ const Form: React.FC<Props> = ({ onSave }) => {
 
   return (
     <FormContainer>
-      <AddIcon />
       {isButtonVisible && (
-        <NewButton
-          onClick={() => {
-            setTimeout(() => inputEl.current && inputEl.current!.focus());
-            setButtonVisible(false);
-          }}
-        >
-          Neue Aufgabe
-        </NewButton>
+        <>
+          <AddIcon />
+          <NewButton
+            onClick={() => {
+              setTimeout(() => inputEl.current && inputEl.current!.focus());
+              setButtonVisible(false);
+            }}
+          >
+            Neue Aufgabe
+          </NewButton>
+        </>
       )}
       {!isButtonVisible && (
         <>
+          <NotDoneIcon />
           <Input
             ref={inputEl}
             type="text"
             value={title}
             placeholder="Neue Aufgabe"
+            onKeyDown={e => e.key === "Enter" && handleSave()}
             onChange={e => setTitle(e.currentTarget.value)}
             onBlur={e => {
               if (title === "") {
