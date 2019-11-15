@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ListItem = styled.li`
   border: 1px solid black;
@@ -8,4 +8,9 @@ export const ListItem = styled.li`
   display: flex;
   align-items: center;
   padding-left: 5px;
+`;
+
+export const Title = styled.div`
+  padding-left: 5px;
+  flex-grow: 1;
 `;

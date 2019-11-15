@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 
 export const FormContainer = styled.div`
   border: 1px solid black;
@@ -39,4 +40,8 @@ export const Input = styled.input`
 export const SaveButton = styled.button`
   position: absolute;
   right: 5px;
+`;
+
+export const AddIcon = styled(AddCircleOutlineIcon)`
+  margin-left: 5px;
 `;

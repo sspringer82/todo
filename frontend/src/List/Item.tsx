@@ -1,8 +1,9 @@
 import React from "react";
 import { Todo } from "../shared/Todo";
-import { ListItem } from "./Item.styles";
+import { ListItem, Title } from "./Item.styles";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 interface Props {
   todo: Todo;
@@ -13,7 +14,8 @@ const Item: React.FC<Props> = ({ todo }) => {
     <ListItem>
       {!todo.done && <RadioButtonUncheckedIcon />}
       {todo.done && <CheckCircleOutlineIcon />}
-      {todo.title}
+      <Title>{todo.title}</Title>
+      <MoreVertIcon />
     </ListItem>
   );
 };

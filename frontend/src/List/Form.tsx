@@ -1,5 +1,11 @@
-import React, { useState, useRef } from 'react';
-import { FormContainer, NewButton, Input, SaveButton } from './Form.styles';
+import React, { useState, useRef } from "react";
+import {
+  FormContainer,
+  NewButton,
+  Input,
+  SaveButton,
+  AddIcon
+} from "./Form.styles";
 
 interface Props {
   onSave: (title: string) => void;
@@ -7,17 +13,18 @@ interface Props {
 
 const Form: React.FC<Props> = ({ onSave }) => {
   const inputEl = useRef<HTMLInputElement>(null);
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
   const [isButtonVisible, setButtonVisible] = useState(true);
 
   function handleSave() {
     onSave(title);
-    setTitle('');
+    setTitle("");
     setButtonVisible(true);
   }
 
   return (
     <FormContainer>
+      <AddIcon />
       {isButtonVisible && (
         <NewButton
           onClick={() => {
@@ -37,7 +44,7 @@ const Form: React.FC<Props> = ({ onSave }) => {
             placeholder="Neue Aufgabe"
             onChange={e => setTitle(e.currentTarget.value)}
             onBlur={e => {
-              if (title === '') {
+              if (title === "") {
                 setButtonVisible(true);
               } else {
                 handleSave();
@@ -45,7 +52,7 @@ const Form: React.FC<Props> = ({ onSave }) => {
             }}
           />
 
-          {title !== '' && (
+          {title !== "" && (
             <SaveButton
               onClick={() => {
                 handleSave();
