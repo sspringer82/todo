@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Todo } from '../shared/Todo';
+import { useState, useEffect } from "react";
+import { Todo } from "../shared/Todo";
 
 export default function(): Todo[] {
   const [todos, setTodos] = useState<Todo[]>([]);
