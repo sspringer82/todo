@@ -6,12 +6,17 @@ import { List as StyledList } from "./List.styles";
 import Form from "./Form";
 
 const List: React.FC = () => {
-  const [todos, save, toggleStatus] = useTodo();
+  const [todos, save, toggleStatus, remove] = useTodo();
 
   return (
     <StyledList>
       {todos.map((todo: Todo) => (
-        <Item todo={todo} key={todo.id} onToggleStatus={toggleStatus} />
+        <Item
+          todo={todo}
+          key={todo.id}
+          onToggleStatus={toggleStatus}
+          onRemove={remove}
+        />
       ))}
       <Form onSave={(title: string) => save(title)} />
     </StyledList>

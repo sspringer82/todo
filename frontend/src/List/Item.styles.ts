@@ -14,3 +14,9 @@ export const Title = styled.div`
   padding-left: 5px;
   flex-grow: 1;
 `;
+
+export const MenuContainer = styled.div`
+  transition: width 0.2s ease-in-out;
+  overflow: hidden;
+  padding-right: 5px;
+`;

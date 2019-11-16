@@ -6,6 +6,7 @@ import update from "immutability-helper";
 export default function(): [
   Todo[],
   (title: string) => void,
+  (todo: Todo) => void,
   (todo: Todo) => void
 ] {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -48,5 +49,15 @@ export default function(): [
     );
   }
 
-  return [todos, save, toggleStatus];
+  async function remove(todo: Todo) {
+    await axios.delete(`${process.env.REACT_APP_SERVER}/todos/${todo.id}`);
+
+    setTodos(prevTodos =>
+      update(prevTodos, {
+        $apply: (t: Todo[]) => t.filter(x => x.id !== todo.id)
+      })
+    );
+  }
+
+  return [todos, save, toggleStatus, remove];
 }
