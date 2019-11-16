@@ -23,19 +23,17 @@ const Form: React.FC<Props> = ({ onSave }) => {
     setButtonVisible(true);
   }
 
+  function handleCreate() {
+    setTimeout(() => inputEl.current && inputEl.current!.focus());
+    setButtonVisible(false);
+  }
+
   return (
     <FormContainer>
       {isButtonVisible && (
         <>
-          <AddIcon />
-          <NewButton
-            onClick={() => {
-              setTimeout(() => inputEl.current && inputEl.current!.focus());
-              setButtonVisible(false);
-            }}
-          >
-            Neue Aufgabe
-          </NewButton>
+          <AddIcon onClick={handleCreate} />
+          <NewButton onClick={handleCreate}>Neue Aufgabe</NewButton>
         </>
       )}
       {!isButtonVisible && (
