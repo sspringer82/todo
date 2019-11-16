@@ -3,7 +3,11 @@ import { Todo } from "../shared/Todo";
 import axios from "axios";
 import update from "immutability-helper";
 
-export default function(): [Todo[], (title: string) => void] {
+export default function(): [
+  Todo[],
+  (title: string) => void,
+  (todo: Todo) => void
+] {
   const [todos, setTodos] = useState<Todo[]>([]);
 
   useEffect(() => {
@@ -23,5 +27,26 @@ export default function(): [Todo[], (title: string) => void] {
     setTodos(prevTodos => update(prevTodos, { $push: [data] }));
   }
 
-  return [todos, save];
+  async function toggleStatus(todo: Todo) {
+    const { data } = await axios.put(
+      `${process.env.REACT_APP_SERVER}/todos/${todo.id}`,
+      {
+        ...todo,
+        done: !todo.done
+      }
+    );
+    setTodos(prevTodos =>
+      update(prevTodos, {
+        $apply: (t: Todo[]) =>
+          t.map(x => {
+            if (x.id === data.id) {
+              return data;
+            }
+            return x;
+          })
+      })
+    );
+  }
+
+  return [todos, save, toggleStatus];
 }

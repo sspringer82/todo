@@ -7,13 +7,18 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 interface Props {
   todo: Todo;
+  onToggleStatus: (todo: Todo) => void;
 }
 
-const Item: React.FC<Props> = ({ todo }) => {
+const Item: React.FC<Props> = ({ todo, onToggleStatus }) => {
   return (
     <ListItem>
-      {!todo.done && <RadioButtonUncheckedIcon />}
-      {todo.done && <CheckCircleOutlineIcon />}
+      {!todo.done && (
+        <RadioButtonUncheckedIcon onClick={() => onToggleStatus(todo)} />
+      )}
+      {todo.done && (
+        <CheckCircleOutlineIcon onClick={() => onToggleStatus(todo)} />
+      )}
       <Title>{todo.title}</Title>
       <MoreVertIcon />
     </ListItem>
