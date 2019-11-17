@@ -13,6 +13,7 @@
     "immutability-helper": "^3.0.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "styled-components": "^4.4.1",
     "typeface-roboto": "^0.0.75",
@@ -40,6 +41,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-router-dom": "^5.1.2",
     "@types/styled-components": "^4.4.0"
   }
 }

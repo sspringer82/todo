@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ListItem = styled.li`
   border: 1px solid black;
@@ -19,4 +19,5 @@ export const MenuContainer = styled.div`
   transition: width 0.2s ease-in-out;
   overflow: hidden;
   padding-right: 5px;
+  white-space: nowrap;
 `;

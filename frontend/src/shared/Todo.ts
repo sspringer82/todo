@@ -3,3 +3,9 @@ export interface Todo {
   title: string;
   done: boolean;
 }
+
+export interface InputTypeTodo {
+  id?: number;
+  title: string;
+  done: boolean;
+}
