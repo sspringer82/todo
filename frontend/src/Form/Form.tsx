@@ -8,16 +8,14 @@ import {
   Button,
   TextField,
 } from '@material-ui/core';
-import { InputTypeTodo } from '../shared/Todo';
-import useTodo from '../List/useTodo';
+import { InputTypeTodo, Todo } from '../shared/Todo';
 
 interface Props {
+  todos: Todo[];
   onSave: (todo: InputTypeTodo) => void;
 }
 
-const Form: React.FC<Props> = () => {
-  const { todos, save } = useTodo();
-
+const Form: React.FC<Props> = ({ todos, onSave }) => {
   const params = useParams<{ id: string }>();
   const history = useHistory();
   function handleClose() {
@@ -72,7 +70,7 @@ const Form: React.FC<Props> = () => {
         <div>
           <Button
             onClick={() => {
-              save(todo);
+              onSave(todo);
               handleClose();
             }}
           >
