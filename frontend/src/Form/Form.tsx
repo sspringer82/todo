@@ -1,5 +1,5 @@
-import React, { useState, ChangeEvent } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, ChangeEvent, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import update from 'immutability-helper';
 import {
   Switch,
@@ -9,10 +9,16 @@ import {
   TextField,
 } from '@material-ui/core';
 import { InputTypeTodo } from '../shared/Todo';
+import useTodo from '../List/useTodo';
 
-interface Props {}
+interface Props {
+  onSave: (todo: InputTypeTodo) => void;
+}
 
 const Form: React.FC<Props> = () => {
+  const { todos, save } = useTodo();
+
+  const params = useParams<{ id: string }>();
   const history = useHistory();
   function handleClose() {
     history.push('/');
@@ -22,6 +28,12 @@ const Form: React.FC<Props> = () => {
     title: '',
     done: false,
   });
+  useEffect(() => {
+    const todo = todos.find(todo => todo.id === parseInt(params.id, 10));
+    if (todo) {
+      setTodo(todo);
+    }
+  }, [params.id, todos]);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const field = e.currentTarget.name;
@@ -58,7 +70,14 @@ const Form: React.FC<Props> = () => {
           />
         </div>
         <div>
-          <Button>speichern</Button>
+          <Button
+            onClick={() => {
+              save(todo);
+              handleClose();
+            }}
+          >
+            speichern
+          </Button>
           <Button color="secondary" onClick={handleClose}>
             abbrechen
           </Button>

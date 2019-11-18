@@ -38,7 +38,7 @@ const Item: React.FC<Props> = ({ todo, onToggleStatus, onRemove }) => {
             setShowMenu(false);
           }}
         />
-        <Link to="/edit">
+        <Link to={`/edit/${todo.id}`}>
           <EditIcon onClick={() => setShowMenu(false)} />
         </Link>
       </MenuContainer>

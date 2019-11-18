@@ -1,12 +1,12 @@
-import React from "react";
-import useTodo from "./useTodo";
-import Item from "./Item";
-import { Todo } from "../shared/Todo";
-import { List as StyledList } from "./List.styles";
-import Form from "./Form";
+import React from 'react';
+import useTodo from './useTodo';
+import Item from './Item';
+import { Todo } from '../shared/Todo';
+import { List as StyledList } from './List.styles';
+import Form from './Form';
 
 const List: React.FC = () => {
-  const [todos, save, toggleStatus, remove] = useTodo();
+  const { todos, save, toggleStatus, remove } = useTodo();
 
   return (
     <StyledList>
@@ -18,7 +18,7 @@ const List: React.FC = () => {
           onRemove={remove}
         />
       ))}
-      <Form onSave={(title: string) => save(title)} />
+      <Form onSave={save} />
     </StyledList>
   );
 };

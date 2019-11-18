@@ -1,26 +1,31 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef } from 'react';
 import {
   FormContainer,
   NewButton,
   Input,
   SaveButton,
   AddIcon,
-  NotDoneIcon
-} from "./Form.styles";
+  NotDoneIcon,
+} from './Form.styles';
+import { InputTypeTodo } from '../shared/Todo';
 
 interface Props {
-  onSave: (title: string) => void;
+  onSave: (todo: InputTypeTodo) => void;
 }
 
 const Form: React.FC<Props> = ({ onSave }) => {
   const inputEl = useRef<HTMLInputElement>(null);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState('');
   const [isButtonVisible, setButtonVisible] = useState(true);
 
-  function handleSave() {
-    onSave(title);
-    setTitle("");
+  function reset() {
+    setTitle('');
     setButtonVisible(true);
+  }
+
+  function handleSave() {
+    onSave({ title, done: false });
+    reset();
   }
 
   function handleCreate() {
@@ -44,10 +49,10 @@ const Form: React.FC<Props> = ({ onSave }) => {
             type="text"
             value={title}
             placeholder="Neue Aufgabe"
-            onKeyDown={e => e.key === "Enter" && handleSave()}
+            onKeyDown={e => e.key === 'Enter' && handleSave()}
             onChange={e => setTitle(e.currentTarget.value)}
             onBlur={e => {
-              if (title === "") {
+              if (title === '') {
                 setButtonVisible(true);
               } else {
                 handleSave();
@@ -55,7 +60,7 @@ const Form: React.FC<Props> = ({ onSave }) => {
             }}
           />
 
-          {title !== "" && (
+          {title !== '' && (
             <SaveButton
               onClick={() => {
                 handleSave();

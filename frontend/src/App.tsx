@@ -9,8 +9,8 @@ const App: React.FC = () => {
       <Router>
         <List />
         <Switch>
-          <Route path="/edit">
-            <Form />
+          <Route path="/edit/:id">
+            <Form onSave={() => {}} />
           </Route>
         </Switch>
       </Router>
