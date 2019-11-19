@@ -7,6 +7,9 @@ import {
   Dialog,
   Button,
   TextField,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
 } from '@material-ui/core';
 import { InputTypeTodo, Todo } from '../shared/Todo';
 
@@ -45,28 +48,33 @@ const Form: React.FC<Props> = ({ todos, onSave }) => {
 
   return (
     <Dialog onClose={handleClose} open={true}>
-      <form>
-        <div>
-          <TextField
-            label="Aufgabe"
-            name="title"
-            onChange={handleChange}
-            value={todo.title}
-          />
-        </div>
-        <div>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={todo.done}
-                onChange={handleChange}
-                value={true}
-                name="done"
-              />
-            }
-            label="Erledigt"
-          />
-        </div>
+      <DialogTitle>Aufgabe bearbeiten</DialogTitle>
+      <DialogContent>
+        <form>
+          <div>
+            <TextField
+              label="Aufgabe"
+              name="title"
+              onChange={handleChange}
+              value={todo.title}
+            />
+          </div>
+          <div>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={todo.done}
+                  onChange={handleChange}
+                  value={true}
+                  name="done"
+                />
+              }
+              label="Erledigt"
+            />
+          </div>
+        </form>
+      </DialogContent>
+      <DialogActions>
         <div>
           <Button
             onClick={() => {
@@ -80,7 +88,7 @@ const Form: React.FC<Props> = ({ todos, onSave }) => {
             abbrechen
           </Button>
         </div>
-      </form>
+      </DialogActions>
     </Dialog>
   );
 };
