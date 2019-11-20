@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { AppBar as MUIAppBar } from '@material-ui/core';
+import { AppBar as MUIAppBar, IconButton } from '@material-ui/core';
 
 export const AppBar = styled(MUIAppBar)`
   && {
@@ -10,5 +10,12 @@ export const AppBar = styled(MUIAppBar)`
   & h1 {
     flex-grow: 1;
     text-align: center;
+    font-size: 1.5em;
+  }
+`;
+
+export const MenuButton = styled(IconButton)`
+  && {
+    margin-left: 8px;
   }
 `;
