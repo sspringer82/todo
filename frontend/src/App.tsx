@@ -3,6 +3,7 @@ import List from './List/List';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Form from './Form/Form';
 import useTodo from './List/useTodo';
+import Menu from './Menu/Menu';
 
 const App: React.FC = () => {
   const { todos, save, toggleStatus, remove } = useTodo();
@@ -10,6 +11,7 @@ const App: React.FC = () => {
   return (
     <>
       <Router>
+        <Menu />
         <List
           todos={todos}
           onSave={save}
