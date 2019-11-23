@@ -24,10 +24,10 @@ export const loadTodosSuccessAction = createAction(LOAD_TODOS_SUCCESS)<
   Todo[]
 >();
 
-export const saveTodosAction = createAction(SAVE_TODO)<InputTypeTodo>();
-export const saveTodosSuccessAction = createAction(SAVE_TODO_SUCCESS)<Todo>();
+export const saveTodoAction = createAction(SAVE_TODO)<InputTypeTodo>();
+export const saveTodoSuccessAction = createAction(SAVE_TODO_SUCCESS)<Todo>();
 
-export const deleteTodosAction = createAction(DELETE_TODO)<Todo>();
-export const deleteTodosSuccessAction = createAction(DELETE_TODO_SUCCESS)<
+export const deleteTodoAction = createAction(DELETE_TODO)<Todo>();
+export const deleteTodoSuccessAction = createAction(DELETE_TODO_SUCCESS)<
   Todo
 >();

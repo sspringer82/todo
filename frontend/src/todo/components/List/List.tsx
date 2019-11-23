@@ -1,28 +1,25 @@
 import React from 'react';
 import Item from './Item';
-import { Todo, InputTypeTodo } from '../../../shared/Todo';
+import { Todo } from '../../../shared/Todo';
 import { List as StyledList } from './List.styles';
 import Form from './Form';
+import useTodoList from './useTodoList';
 
-interface Props {
-  todos: Todo[];
-  onToggleStatus: (todo: Todo) => void;
-  onRemove: (todo: Todo) => void;
-  onSave: (todo: InputTypeTodo) => void;
-}
+const List: React.FC = () => {
+  const { todos, handleSave, handleDelete } = useTodoList();
 
-const List: React.FC<Props> = ({ todos, onToggleStatus, onRemove, onSave }) => {
+  console.log(todos);
   return (
     <StyledList>
       {todos.map((todo: Todo) => (
         <Item
           todo={todo}
           key={todo.id}
-          onToggleStatus={onToggleStatus}
-          onRemove={onRemove}
+          onStatusChange={handleSave}
+          onRemove={handleDelete}
         />
       ))}
-      <Form onSave={onSave} />
+      <Form onSave={handleSave} />
     </StyledList>
   );
 };

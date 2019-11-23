@@ -10,18 +10,13 @@ import configureStore from './store/configureStore';
 const store = configureStore();
 
 const App: React.FC = () => {
-  const { todos, save, toggleStatus, remove } = useTodo();
+  const { todos, save } = useTodo();
 
   return (
     <Provider store={store}>
       <Router>
         <Menu />
-        <List
-          todos={todos}
-          onSave={save}
-          onToggleStatus={toggleStatus}
-          onRemove={remove}
-        />
+        <List />
         <Switch>
           <Route path="/edit/:id">
             <Form todos={todos} onSave={save} />

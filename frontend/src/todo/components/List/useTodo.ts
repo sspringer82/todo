@@ -11,14 +11,14 @@ export default function(): {
 } {
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetch(`${process.env.REACT_APP_SERVER}/todos`);
-      const data = await response.json();
-      setTodos(data);
-    }
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const response = await fetch(`${process.env.REACT_APP_SERVER}/todos`);
+  //     const data = await response.json();
+  //     setTodos(data);
+  //   }
+  //   fetchData();
+  // }, []);
 
   async function save(todo: InputTypeTodo) {
     if (!todo.id) {

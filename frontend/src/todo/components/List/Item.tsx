@@ -10,20 +10,24 @@ import { Link } from 'react-router-dom';
 
 interface Props {
   todo: Todo;
-  onToggleStatus: (todo: Todo) => void;
+  onStatusChange: (todo: Todo) => void;
   onRemove: (todo: Todo) => void;
 }
 
-const Item: React.FC<Props> = ({ todo, onToggleStatus, onRemove }) => {
+const Item: React.FC<Props> = ({ todo, onStatusChange, onRemove }) => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
     <ListItem>
       {!todo.done && (
-        <RadioButtonUncheckedIcon onClick={() => onToggleStatus(todo)} />
+        <RadioButtonUncheckedIcon
+          onClick={() => onStatusChange({ ...todo, done: true })}
+        />
       )}
       {todo.done && (
-        <CheckCircleOutlineIcon onClick={() => onToggleStatus(todo)} />
+        <CheckCircleOutlineIcon
+          onClick={() => onStatusChange({ ...todo, done: false })}
+        />
       )}
       <Title>{todo.title}</Title>
       <MoreVertIcon
