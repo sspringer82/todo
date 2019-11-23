@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Todo } from '../shared/Todo';
+import { Todo } from '../../../shared/Todo';
 import { ListItem, Title, MenuContainer } from './Item.styles';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';

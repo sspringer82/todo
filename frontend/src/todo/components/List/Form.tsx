@@ -7,7 +7,7 @@ import {
   AddIcon,
   NotDoneIcon,
 } from './Form.styles';
-import { InputTypeTodo } from '../shared/Todo';
+import { InputTypeTodo } from '../../../shared/Todo';
 
 interface Props {
   onSave: (todo: InputTypeTodo) => void;

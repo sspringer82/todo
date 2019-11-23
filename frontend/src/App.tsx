@@ -1,15 +1,19 @@
 import React from 'react';
-import List from './List/List';
+import List from './todo/components/List/List';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Form from './Form/Form';
-import useTodo from './List/useTodo';
+import Form from './todo/components/Form/Form';
+import useTodo from './todo/components/List/useTodo';
 import Menu from './Menu/Menu';
+import { Provider } from 'react-redux';
+import configureStore from './store/configureStore';
+
+const store = configureStore();
 
 const App: React.FC = () => {
   const { todos, save, toggleStatus, remove } = useTodo();
 
   return (
-    <>
+    <Provider store={store}>
       <Router>
         <Menu />
         <List
@@ -24,7 +28,7 @@ const App: React.FC = () => {
           </Route>
         </Switch>
       </Router>
-    </>
+    </Provider>
   );
 };
 

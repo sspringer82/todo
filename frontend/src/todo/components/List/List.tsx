@@ -1,6 +1,6 @@
 import React from 'react';
 import Item from './Item';
-import { Todo, InputTypeTodo } from '../shared/Todo';
+import { Todo, InputTypeTodo } from '../../../shared/Todo';
 import { List as StyledList } from './List.styles';
 import Form from './Form';
 

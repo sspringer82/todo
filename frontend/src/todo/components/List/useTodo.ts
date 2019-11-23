@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Todo, InputTypeTodo } from '../shared/Todo';
 import axios from 'axios';
 import update from 'immutability-helper';
+import { Todo, InputTypeTodo } from '../../../shared/Todo';
 
 export default function(): {
   todos: Todo[];

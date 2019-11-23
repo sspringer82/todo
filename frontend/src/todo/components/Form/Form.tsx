@@ -11,7 +11,7 @@ import {
   DialogActions,
   DialogContent,
 } from '@material-ui/core';
-import { InputTypeTodo, Todo } from '../shared/Todo';
+import { InputTypeTodo, Todo } from '../../../shared/Todo';
 
 interface Props {
   todos: Todo[];
