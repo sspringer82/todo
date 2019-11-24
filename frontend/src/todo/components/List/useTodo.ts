@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import update from 'immutability-helper';
 import { Todo, InputTypeTodo } from '../../../shared/Todo';
