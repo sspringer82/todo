@@ -1,6 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import update from 'immutability-helper';
+import React from 'react';
 import {
   Switch,
   FormControlLabel,
@@ -12,40 +10,15 @@ import {
   DialogContent,
 } from '@material-ui/core';
 import { InputTypeTodo, Todo } from '../../../shared/Todo';
+import useForm from './useForm';
 
 interface Props {
   todos: Todo[];
   onSave: (todo: InputTypeTodo) => void;
 }
 
-const Form: React.FC<Props> = ({ todos, onSave }) => {
-  const params = useParams<{ id: string }>();
-  const history = useHistory();
-  function handleClose() {
-    history.push('/');
-  }
-
-  const [todo, setTodo] = useState<InputTypeTodo>({
-    title: '',
-    done: false,
-  });
-  useEffect(() => {
-    const todo = todos.find(todo => todo.id === parseInt(params.id, 10));
-    if (todo) {
-      setTodo(todo);
-    }
-  }, [params.id, todos]);
-
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    const field = e.currentTarget.name;
-    const value =
-      field === 'done' ? e.currentTarget.checked : e.currentTarget.value;
-
-    setTodo((prevTodo: InputTypeTodo) =>
-      update(prevTodo, { [field]: { $set: value } })
-    );
-  }
-
+const Form: React.FC<Props> = () => {
+  const { todo, handleChange, handleClose, handleSave } = useForm();
   return (
     <Dialog onClose={handleClose} open={true}>
       <DialogTitle>Aufgabe bearbeiten</DialogTitle>
@@ -78,7 +51,7 @@ const Form: React.FC<Props> = ({ todos, onSave }) => {
         <div>
           <Button
             onClick={() => {
-              onSave(todo);
+              handleSave(todo);
               handleClose();
             }}
           >
