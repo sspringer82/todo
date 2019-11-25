@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Drawer, List, ListItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { AppBar, MenuButton } from './Menu.styles';
+import Search from '../todo/components/Search/Search';
 
 const Menu: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,6 +17,7 @@ const Menu: React.FC = () => {
         >
           <MenuIcon />
         </MenuButton>
+        <Search />
         <h1>Todo App</h1>
       </AppBar>
       <Drawer open={menuOpen} onClose={() => setMenuOpen(false)}>
