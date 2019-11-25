@@ -9,15 +9,9 @@ import {
   DialogActions,
   DialogContent,
 } from '@material-ui/core';
-import { InputTypeTodo, Todo } from '../../../shared/Todo';
 import useForm from './useForm';
 
-interface Props {
-  todos: Todo[];
-  onSave: (todo: InputTypeTodo) => void;
-}
-
-const Form: React.FC<Props> = () => {
+const Form: React.FC = () => {
   const { todo, handleChange, handleClose, handleSave } = useForm();
   return (
     <Dialog onClose={handleClose} open={true}>

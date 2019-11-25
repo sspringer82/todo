@@ -16,8 +16,13 @@ export default function() {
 
   const todos = useSelector((state: AppState) => state.todo.todos);
 
-  const handleSave = (todo: InputTypeTodo) => dispatch(saveTodoAction(todo));
-  const handleDelete = (todo: Todo) => dispatch(deleteTodoAction(todo));
-
-  return { todos, handleSave, handleDelete };
+  return {
+    todos,
+    handleSave(todo: InputTypeTodo) {
+      dispatch(saveTodoAction(todo));
+    },
+    handleDelete(todo: Todo) {
+      dispatch(deleteTodoAction(todo));
+    },
+  };
 }
