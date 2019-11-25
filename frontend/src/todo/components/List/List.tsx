@@ -8,7 +8,6 @@ import useTodoList from './useTodoList';
 const List: React.FC = () => {
   const { todos, handleSave, handleDelete } = useTodoList();
 
-  console.log(todos);
   return (
     <StyledList>
       {todos.map((todo: Todo) => (
