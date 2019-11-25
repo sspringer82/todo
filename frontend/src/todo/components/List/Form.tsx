@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   FormContainer,
   NewButton,
@@ -28,8 +28,11 @@ const Form: React.FC<Props> = ({ onSave }) => {
     reset();
   }
 
+  useEffect(() => {
+    inputEl.current && inputEl.current!.focus();
+  }, [isButtonVisible]);
+
   function handleCreate() {
-    setTimeout(() => inputEl.current && inputEl.current!.focus());
     setButtonVisible(false);
   }
 
