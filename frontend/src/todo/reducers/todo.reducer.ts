@@ -3,15 +3,18 @@ import {
   LOAD_TODOS_SUCCESS,
   SAVE_TODO_SUCCESS,
   DELETE_TODO_SUCCESS,
+  SEARCH,
 } from '../actions/todo.actions';
 import update from 'immutability-helper';
 
 export interface State {
   todos: Todo[];
+  search: string;
 }
 
 const initialState: State = {
   todos: [],
+  search: '',
 };
 
 export default function(state: State = initialState, action: any): State {
@@ -32,6 +35,8 @@ export default function(state: State = initialState, action: any): State {
         todo => todo.id === action.payload.id
       );
       return update(state, { todos: { $splice: [[deleteIndex, 1]] } });
+    case SEARCH:
+      return update(state, { search: { $set: action.payload } });
     default:
       return state;
   }

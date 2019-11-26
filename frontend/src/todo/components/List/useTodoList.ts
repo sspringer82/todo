@@ -14,7 +14,11 @@ export default function() {
     dispatch(loadTodosAction());
   }, [dispatch]);
 
-  const todos = useSelector((state: AppState) => state.todo.todos);
+  const todos = useSelector((state: AppState) =>
+    state.todo.todos.filter(todo =>
+      todo.title.toLowerCase().includes(state.todo.search.toLowerCase())
+    )
+  );
 
   return {
     todos,

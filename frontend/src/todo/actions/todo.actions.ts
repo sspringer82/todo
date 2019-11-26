@@ -19,6 +19,8 @@ export type DELETE_TODO = typeof DELETE_TODO;
 export const DELETE_TODO_SUCCESS = 'DELETE_TODO_SUCCESS';
 export type DELETE_TODO_SUCCESS = typeof DELETE_TODO_SUCCESS;
 
+export const SEARCH = 'SEARCH';
+
 export const loadTodosAction = createAction(LOAD_TODOS)<void>();
 export const loadTodosSuccessAction = createAction(LOAD_TODOS_SUCCESS)<
   Todo[]
@@ -31,3 +33,5 @@ export const deleteTodoAction = createAction(DELETE_TODO)<Todo>();
 export const deleteTodoSuccessAction = createAction(DELETE_TODO_SUCCESS)<
   Todo
 >();
+
+export const searchAction = createAction(SEARCH)<string>();
