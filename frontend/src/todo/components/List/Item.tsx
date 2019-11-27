@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { Todo } from '../../../shared/Todo';
-import { ListItem, Title, MenuContainer } from './Item.styles';
+import {
+  ListItem,
+  Title,
+  MenuContainer,
+  CheckCircleOutlineIcon,
+} from './Item.styles';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -29,7 +33,7 @@ const Item: React.FC<Props> = ({ todo, onStatusChange, onRemove }) => {
           onClick={() => onStatusChange({ ...todo, done: false })}
         />
       )}
-      <Title>{todo.title}</Title>
+      <Title done={todo.done}>{todo.title}</Title>
       <MoreVertIcon
         onClick={() => {
           setShowMenu(!showMenu);
