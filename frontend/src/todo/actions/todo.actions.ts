@@ -20,6 +20,7 @@ export const DELETE_TODO_SUCCESS = 'DELETE_TODO_SUCCESS';
 export type DELETE_TODO_SUCCESS = typeof DELETE_TODO_SUCCESS;
 
 export const SEARCH = 'SEARCH';
+export const HIDE_DONE = 'HIDE_DONE';
 
 export const loadTodosAction = createAction(LOAD_TODOS)<void>();
 export const loadTodosSuccessAction = createAction(LOAD_TODOS_SUCCESS)<
@@ -35,3 +36,4 @@ export const deleteTodoSuccessAction = createAction(DELETE_TODO_SUCCESS)<
 >();
 
 export const searchAction = createAction(SEARCH)<string>();
+export const hideDoneAction = createAction(HIDE_DONE)<boolean>();

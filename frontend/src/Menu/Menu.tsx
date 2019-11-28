@@ -3,6 +3,7 @@ import { Drawer, List, ListItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { AppBar, MenuButton } from './Menu.styles';
 import Search from '../todo/components/Search/Search';
+import Done from './Done';
 
 const Menu: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,7 +23,9 @@ const Menu: React.FC = () => {
       </AppBar>
       <Drawer open={menuOpen} onClose={() => setMenuOpen(false)}>
         <List>
-          <ListItem>xxx</ListItem>
+          <ListItem>
+            <Done />
+          </ListItem>
         </List>
       </Drawer>
     </>

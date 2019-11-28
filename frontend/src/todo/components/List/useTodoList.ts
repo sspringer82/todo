@@ -5,8 +5,8 @@ import {
   saveTodoAction,
   deleteTodoAction,
 } from '../../actions/todo.actions';
-import { AppState } from '../../../reducers/rootReducer';
 import { InputTypeTodo, Todo } from '../../../shared/Todo';
+import { findTodos } from '../../selectors/todo.selector';
 
 export default function() {
   const dispatch = useDispatch();
@@ -14,14 +14,8 @@ export default function() {
     dispatch(loadTodosAction());
   }, [dispatch]);
 
-  const todos = useSelector((state: AppState) =>
-    state.todo.todos.filter(todo =>
-      todo.title.toLowerCase().includes(state.todo.search.toLowerCase())
-    )
-  );
-
   return {
-    todos,
+    todos: useSelector(findTodos),
     handleSave(todo: InputTypeTodo) {
       dispatch(saveTodoAction(todo));
     },
