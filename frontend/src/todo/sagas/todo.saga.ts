@@ -15,7 +15,7 @@ import { ActionType } from 'typesafe-actions';
 
 function* loadTodos() {
   const { data } = yield axios.get<Todo[]>(
-    `${process.env.REACT_APP_SERVER}/todos`
+    `${process.env.REACT_APP_SERVER}/todo`
   );
   yield put(loadTodosSuccessAction(data));
 }
@@ -24,12 +24,12 @@ function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {
   let response: AxiosResponse<Todo>;
   if (todo.id) {
     response = yield axios.put<Todo>(
-      `${process.env.REACT_APP_SERVER}/todos/${todo.id}`,
+      `${process.env.REACT_APP_SERVER}/todo/${todo.id}`,
       todo
     );
   } else {
     response = yield axios.post<Todo>(
-      `${process.env.REACT_APP_SERVER}/todos/`,
+      `${process.env.REACT_APP_SERVER}/todo/`,
       todo
     );
   }
@@ -37,7 +37,7 @@ function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {
 }
 
 function* remove({ payload: todo }: ActionType<typeof deleteTodoAction>) {
-  yield axios.delete(`${process.env.REACT_APP_SERVER}/todos/${todo.id}`);
+  yield axios.delete(`${process.env.REACT_APP_SERVER}/todo/${todo.id}`);
   yield put(deleteTodoSuccessAction(todo));
 }
 

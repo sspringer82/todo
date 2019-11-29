@@ -1,0 +1,6 @@
+{
+  "type": "sqlite",
+  "database": "db/data.sqlite3",
+  "entities": ["dist/**/*.entity{.ts,.js}"],
+  "synchronize": true
+}
