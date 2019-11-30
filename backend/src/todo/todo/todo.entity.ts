@@ -17,6 +17,9 @@ export class Todo {
   @Column()
   done: boolean;
 
+  @Column({ default: 0 })
+  starred: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 

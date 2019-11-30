@@ -24,7 +24,7 @@ const Form: React.FC<Props> = ({ onSave }) => {
   }
 
   function handleSave() {
-    onSave({ title, done: false });
+    onSave({ title, done: false, starred: false });
     reset();
   }
 

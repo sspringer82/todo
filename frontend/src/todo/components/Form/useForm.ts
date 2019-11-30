@@ -14,6 +14,7 @@ export default function() {
   let initialTodo: InputTypeTodo = {
     title: '',
     done: false,
+    starred: false,
   };
 
   const foundTodo = useSelector((state: AppState) =>

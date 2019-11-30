@@ -14,7 +14,7 @@ const List: React.FC = () => {
         <Item
           todo={todo}
           key={todo.id}
-          onStatusChange={handleSave}
+          onChange={handleSave}
           onRemove={handleDelete}
         />
       ))}

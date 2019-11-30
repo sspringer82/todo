@@ -36,3 +36,5 @@ export const MenuContainer = styled.div`
 export const CheckCircleOutlineIcon = styled(MuiCheckCircleOutlineIcon)`
   color: grey;
 `;
+
+export const StarContainer = styled.div``;

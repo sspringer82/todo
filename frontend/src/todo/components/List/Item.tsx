@@ -5,35 +5,43 @@ import {
   Title,
   MenuContainer,
   CheckCircleOutlineIcon,
+  StarContainer,
 } from './Item.styles';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
+import StarIcon from '@material-ui/icons/Star';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 interface Props {
   todo: Todo;
-  onStatusChange: (todo: Todo) => void;
+  onChange: (todo: Todo) => void;
   onRemove: (todo: Todo) => void;
 }
 
-const Item: React.FC<Props> = ({ todo, onStatusChange, onRemove }) => {
+const Item: React.FC<Props> = ({ todo, onChange, onRemove }) => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
     <ListItem>
       {!todo.done && (
         <RadioButtonUncheckedIcon
-          onClick={() => onStatusChange({ ...todo, done: true })}
+          onClick={() => onChange({ ...todo, done: true })}
         />
       )}
       {todo.done && (
         <CheckCircleOutlineIcon
-          onClick={() => onStatusChange({ ...todo, done: false })}
+          onClick={() => onChange({ ...todo, done: false })}
         />
       )}
       <Title done={todo.done}>{todo.title}</Title>
+      <StarContainer
+        onClick={() => onChange({ ...todo, starred: !todo.starred })}
+      >
+        {todo.starred ? <StarIcon /> : <StarBorderIcon />}
+      </StarContainer>
       <MoreVertIcon
         onClick={() => {
           setShowMenu(!showMenu);
