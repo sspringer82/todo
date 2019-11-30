@@ -4,6 +4,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { AppBar, MenuButton } from './Menu.styles';
 import Search from '../todo/components/Search/Search';
 import Done from './Done';
+import ShowOnlyStars from './Star';
 
 const Menu: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -25,6 +26,9 @@ const Menu: React.FC = () => {
         <List>
           <ListItem>
             <Done />
+          </ListItem>
+          <ListItem>
+            <ShowOnlyStars />
           </ListItem>
         </List>
       </Drawer>
