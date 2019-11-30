@@ -11,7 +11,7 @@ export default function() {
   const params = useParams<{ id: string }>();
   const history = useHistory();
 
-  let initialTodo = {
+  let initialTodo: InputTypeTodo = {
     title: '',
     done: false,
   };
@@ -21,7 +21,7 @@ export default function() {
   );
 
   if (foundTodo) {
-    initialTodo = foundTodo;
+    initialTodo = foundTodo as InputTypeTodo;
   }
   const [todo, setTodo] = useState<InputTypeTodo>(initialTodo);
 

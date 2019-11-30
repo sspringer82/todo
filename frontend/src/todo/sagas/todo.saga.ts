@@ -14,10 +14,11 @@ import {
 import { ActionType } from 'typesafe-actions';
 
 function* loadTodos() {
-  const { data } = yield axios.get<Todo[]>(
+  const { data: todos } = yield axios.get<Todo[]>(
     `${process.env.REACT_APP_SERVER}/todo`
   );
-  yield put(loadTodosSuccessAction(data));
+
+  yield put(loadTodosSuccessAction(todos));
 }
 
 function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {

@@ -10,6 +10,7 @@ import {
   DialogContent,
 } from '@material-ui/core';
 import useForm from './useForm';
+import moment from 'moment';
 
 const Form: React.FC = () => {
   const { todo, handleChange, handleClose, handleSave } = useForm();
@@ -39,6 +40,7 @@ const Form: React.FC = () => {
               label="Erledigt"
             />
           </div>
+          <div>{moment(todo.createdAt).format('DD.MM.YYYY hh:mm:ss')}</div>
         </form>
       </DialogContent>
       <DialogActions>
