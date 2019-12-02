@@ -10,7 +10,7 @@ export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    private readonly userRepository: Repository<User>
   ) {}
 
   async createToken(user: { username: string; password: string }) {

@@ -1,8 +1,16 @@
 import { combineReducers } from 'redux';
 import todoReducer from '../todo/reducers/todo.reducer';
+import loginReducer from '../login/reducers/login.reducer';
+import { connectRouter } from 'connected-react-router';
+import { History } from 'history';
 
-const rootReducer = combineReducers({ todo: todoReducer });
+const createRootReducer = (history: History) =>
+  combineReducers({
+    todo: todoReducer,
+    login: loginReducer,
+    router: connectRouter(history),
+  });
 
-export type AppState = ReturnType<typeof rootReducer>;
+export type AppState = ReturnType<ReturnType<typeof createRootReducer>>;
 
-export default rootReducer;
+export default createRootReducer;
