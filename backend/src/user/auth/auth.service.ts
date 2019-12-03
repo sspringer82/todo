@@ -18,7 +18,7 @@ export class AuthService {
       where: { username: user.username, password: user.password },
     });
     if (dbUser) {
-      const payload: JwtPayload = { username: user.username };
+      const payload: JwtPayload = { id: dbUser.id, username: user.username };
       return this.jwtService.sign(payload, { expiresIn: 3600 });
     } else {
       throw new BadRequestException();
