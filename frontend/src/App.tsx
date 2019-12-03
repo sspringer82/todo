@@ -7,6 +7,8 @@ import configureStore, { history } from './store/configureStore';
 import Login from './login/components/Login';
 import { getToken } from './login/selectors/login.selector';
 import { ConnectedRouter } from 'connected-react-router';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
 
 const store = configureStore();
 
@@ -25,16 +27,18 @@ const App: React.FC = () => {
 
   return (
     <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <Switch>
-          <Route path="/login" component={Login}></Route>
-          <Route path="/list">{mainPage}</Route>
-          <Route path="/edit/:id">{mainPage}</Route>
-          <Route path="/" exact>
-            <Redirect to="/list" />
-          </Route>
-        </Switch>
-      </ConnectedRouter>
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route path="/login" component={Login}></Route>
+            <Route path="/list">{mainPage}</Route>
+            <Route path="/edit/:id">{mainPage}</Route>
+            <Route path="/" exact>
+              <Redirect to="/list" />
+            </Route>
+          </Switch>
+        </ConnectedRouter>
+      </MuiPickersUtilsProvider>
     </Provider>
   );
 };

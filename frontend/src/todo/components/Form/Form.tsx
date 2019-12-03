@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import {
   Switch,
   FormControlLabel,
@@ -10,10 +10,12 @@ import {
   DialogContent,
 } from '@material-ui/core';
 import useForm from './useForm';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
+import { DateTimePicker } from '@material-ui/pickers';
 
 const Form: React.FC = () => {
   const { todo, handleChange, handleClose, handleSave } = useForm();
+
   return (
     <Dialog onClose={handleClose} open={true}>
       <DialogTitle>Aufgabe bearbeiten</DialogTitle>
@@ -40,6 +42,22 @@ const Form: React.FC = () => {
               label="Erledigt"
             />
           </div>
+          <hr />
+          <DateTimePicker
+            clearable
+            value={todo.due}
+            onChange={(date: Moment | null) =>
+              handleChange(({
+                currentTarget: {
+                  name: 'due',
+                  value: date ? date.format() : null,
+                },
+              } as unknown) as ChangeEvent<HTMLInputElement>)
+            }
+            name="due"
+            helperText="Zu erledigen bis"
+          />
+          <hr />
           <div>{moment(todo.createdAt).format('DD.MM.YYYY hh:mm:ss')}</div>
         </form>
       </DialogContent>

@@ -15,6 +15,7 @@ export default function() {
     title: '',
     done: false,
     starred: false,
+    due: null,
   };
 
   const foundTodo = useSelector((state: AppState) =>

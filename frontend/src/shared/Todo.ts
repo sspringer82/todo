@@ -7,6 +7,7 @@ export interface Todo {
   starred: boolean;
   createdAt?: string;
   updatedAt?: string;
+  due?: Date | null;
 }
 
 export interface InputTypeTodo {
@@ -16,4 +17,5 @@ export interface InputTypeTodo {
   starred: boolean;
   createdAt?: string;
   updatedAt?: string;
+  due?: Date | null;
 }

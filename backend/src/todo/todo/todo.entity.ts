@@ -19,6 +19,9 @@ export class Todo {
   @Column()
   done: boolean;
 
+  @Column({ nullable: true, default: null })
+  due: Date;
+
   @Column({ default: 0 })
   starred: boolean;
 
