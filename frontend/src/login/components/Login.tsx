@@ -1,6 +1,6 @@
-import React, { useState, ChangeEvent } from 'react';
-import { TextField, Button } from '@material-ui/core';
-import { LoginContainer } from './Login.styles';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { Button, Grid, Hidden } from '@material-ui/core';
+import { LoginContainer, TextField } from './Login.styles';
 import { User } from '../../shared/User';
 import update from 'immutability-helper';
 import { useDispatch } from 'react-redux';
@@ -18,7 +18,8 @@ const Login: React.FC = () => {
     setUser(prevUser => update(prevUser, { [field]: { $set: value } }));
   }
 
-  function handleLogin() {
+  function handleLogin(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     dispatch(loginAction(user));
   }
 
@@ -27,25 +28,37 @@ const Login: React.FC = () => {
   }
 
   return (
-    <LoginContainer>
-      <TextField
-        label="Username"
-        name="username"
-        onChange={handleChange}
-        value={user.username}
-      />
-      <TextField
-        label="Passwort"
-        name="password"
-        onChange={handleChange}
-        type="password"
-        value={user.password}
-      />
-      <Button onClick={handleLogin}>speichern</Button>
-      <Button color="secondary" onClick={handleCancel}>
-        abbrechen
-      </Button>
-    </LoginContainer>
+    <Grid container>
+      <Hidden smDown>
+        <Grid item md={4} />
+      </Hidden>
+      <Grid item xs={12} md={4}>
+        <LoginContainer onSubmit={handleLogin}>
+          <TextField
+            label="Username"
+            name="username"
+            onChange={handleChange}
+            value={user.username}
+          />
+          <TextField
+            label="Passwort"
+            name="password"
+            onChange={handleChange}
+            type="password"
+            value={user.password}
+          />
+          <div>
+            <Button type="submit">anmelden</Button>
+            <Button color="secondary" onClick={handleCancel}>
+              abbrechen
+            </Button>
+          </div>
+        </LoginContainer>
+      </Grid>
+      <Hidden smDown>
+        <Grid item md={4} />
+      </Hidden>
+    </Grid>
   );
 };
 
