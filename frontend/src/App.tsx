@@ -1,7 +1,6 @@
 import React from 'react';
 import List from './todo/components/List/List';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Form from './todo/components/Form/Form';
 import Menu from './Menu/Menu';
 import { Provider } from 'react-redux';
 import configureStore, { history } from './store/configureStore';
