@@ -25,10 +25,10 @@ export class AuthService {
     }
   }
 
-  async validateUser(payload: JwtPayload): Promise<boolean> {
+  async validateUser(payload: JwtPayload): Promise<User> {
     const dbUser = await this.userRepository.findOne({
       where: { username: payload.username },
     });
-    return !!dbUser;
+    return dbUser;
   }
 }

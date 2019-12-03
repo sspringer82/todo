@@ -7,6 +7,7 @@ import {
   Delete,
   Param,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { Todo } from './todo.entity';
@@ -18,14 +19,15 @@ export class TodoController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  getAll() {
-    return this.todoService.getAll();
+  getAll(@Req() request) {
+    return this.todoService.getAll(request.user);
   }
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
-  create(@Body() todo: Todo) {
-    return this.todoService.save(todo);
+  create(@Body() todo: Todo, @Req() request) {
+    const todoToBeSaved = { ...todo, creator: request.user };
+    return this.todoService.save(todoToBeSaved);
   }
 
   @Put(':id')
