@@ -5,6 +5,7 @@ import {
   saveTodoAction,
   deleteTodoAction,
 } from '../../actions/todo.actions';
+import { loadListsAction } from '../../actions/list.actions';
 import { InputTypeTodo, Todo } from '../../../shared/Todo';
 import { findTodos } from '../../selectors/todo.selector';
 
@@ -12,6 +13,7 @@ export default function() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadTodosAction());
+    dispatch(loadListsAction());
   }, [dispatch]);
 
   return {

@@ -6,7 +6,8 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
-import { User } from 'src/user/user/user.entity';
+import { User } from '../../user/user/user.entity';
+import { List } from '../list/list.entity';
 
 @Entity()
 export class Todo {
@@ -36,4 +37,11 @@ export class Todo {
     user => user.todos
   )
   creator: User;
+
+  @ManyToOne(
+    type => List,
+    list => list.todos,
+    { nullable: true }
+  )
+  list: List;
 }
