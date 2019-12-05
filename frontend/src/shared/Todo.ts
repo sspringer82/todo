@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { List } from './List';
 
 export interface Todo {
   id: number;
@@ -8,6 +9,7 @@ export interface Todo {
   createdAt?: string;
   updatedAt?: string;
   due?: Date | null;
+  list?: List;
 }
 
 export interface InputTypeTodo {
@@ -18,4 +20,5 @@ export interface InputTypeTodo {
   createdAt?: string;
   updatedAt?: string;
   due?: Date | null;
+  list?: List;
 }

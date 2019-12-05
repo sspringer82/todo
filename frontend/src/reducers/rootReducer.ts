@@ -3,7 +3,7 @@ import todoReducer from '../todo/reducers/todo.reducer';
 import loginReducer from '../login/reducers/login.reducer';
 import { connectRouter } from 'connected-react-router';
 import { History } from 'history';
-import listReducer from '../todo/reducers/list.reducer';
+import listReducer from '../list/reducers/list.reducer';
 
 const createRootReducer = (history: History) =>
   combineReducers({

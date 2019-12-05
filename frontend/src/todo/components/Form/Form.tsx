@@ -8,19 +8,29 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
+  Select,
+  InputLabel,
+  MenuItem,
 } from '@material-ui/core';
 import useForm from './useForm';
 import moment, { Moment } from 'moment';
 import { DateTimePicker } from '@material-ui/pickers';
+import { useSelector } from 'react-redux';
+import { getLists } from '../../../list/selectors/list.selector';
 
 const Form: React.FC = () => {
   const { todo, handleChange, handleClose, handleSave } = useForm();
 
   return (
     <Dialog onClose={handleClose} open={true}>
-      <DialogTitle>Aufgabe bearbeiten</DialogTitle>
-      <DialogContent>
-        <form>
+      <form
+        onSubmit={() => {
+          handleSave(todo);
+          handleClose();
+        }}
+      >
+        <DialogTitle>Aufgabe bearbeiten</DialogTitle>
+        <DialogContent>
           <div>
             <TextField
               label="Aufgabe"
@@ -57,25 +67,38 @@ const Form: React.FC = () => {
             name="due"
             helperText="Zu erledigen bis"
           />
-          <hr />
-          <div>{moment(todo.createdAt).format('DD.MM.YYYY hh:mm:ss')}</div>
-        </form>
-      </DialogContent>
-      <DialogActions>
-        <div>
-          <Button
-            onClick={() => {
-              handleSave(todo);
-              handleClose();
+          <InputLabel id="list-label">Liste</InputLabel>
+          <Select
+            labelId="list-label"
+            value={todo.list ? todo.list.id : null}
+            name="list"
+            onChange={e => {
+              handleChange({
+                currentTarget: {
+                  name: e.target.name as string,
+                  value: e.target.value as string,
+                },
+              });
             }}
           >
-            speichern
-          </Button>
-          <Button color="secondary" onClick={handleClose}>
-            abbrechen
-          </Button>
-        </div>
-      </DialogActions>
+            {useSelector(getLists).map(list => (
+              <MenuItem value={list.id} key={list.id}>
+                {list.name}
+              </MenuItem>
+            ))}
+          </Select>
+          <hr />
+          <div>{moment(todo.createdAt).format('DD.MM.YYYY hh:mm:ss')}</div>
+        </DialogContent>
+        <DialogActions>
+          <div>
+            <Button type="submit">speichern</Button>
+            <Button color="secondary" onClick={handleClose}>
+              abbrechen
+            </Button>
+          </div>
+        </DialogActions>
+      </form>
     </Dialog>
   );
 };

@@ -33,6 +33,8 @@ const App: React.FC = () => {
             <Route path="/login" component={Login}></Route>
             <Route path="/list">{mainPage}</Route>
             <Route path="/edit/:id">{mainPage}</Route>
+            <Route path="/list/edit/:id">{mainPage}</Route>
+            <Route path="/list/new">{mainPage}</Route>
             <Route path="/" exact>
               <Redirect to="/list" />
             </Route>

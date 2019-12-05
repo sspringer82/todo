@@ -29,10 +29,16 @@ export default function() {
 
   return {
     todo,
-    handleChange(e: ChangeEvent<HTMLInputElement>) {
-      const field = e.currentTarget.name;
+    handleChange(
+      e:
+        | ChangeEvent<HTMLInputElement>
+        | { currentTarget: { name: string; value: string } }
+    ) {
+      const field = e.currentTarget.name as string;
       const value =
-        field === 'done' ? e.currentTarget.checked : e.currentTarget.value;
+        field === 'done'
+          ? (e.currentTarget as HTMLInputElement).checked
+          : e.currentTarget.value;
 
       setTodo((prevTodo: InputTypeTodo) =>
         update(prevTodo, { [field]: { $set: value } })

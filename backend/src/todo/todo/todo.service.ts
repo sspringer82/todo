@@ -12,7 +12,10 @@ export class TodoService {
   ) {}
 
   getAll(user: User) {
-    return this.todoRepository.find({ where: { creator: user } });
+    return this.todoRepository.find({
+      where: { creator: user },
+      relations: ['list'],
+    });
   }
 
   getOne(id: number) {

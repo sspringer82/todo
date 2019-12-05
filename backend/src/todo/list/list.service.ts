@@ -12,4 +12,16 @@ export class ListService {
   getAll() {
     return this.listRepository.find();
   }
+
+  getOne(id: number) {
+    return this.listRepository.findOne({ id });
+  }
+
+  save(list: List) {
+    return this.listRepository.save(list);
+  }
+
+  async remove(id: number) {
+    return this.listRepository.remove(await this.getOne(id));
+  }
 }
