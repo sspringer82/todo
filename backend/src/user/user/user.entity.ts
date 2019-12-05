@@ -10,6 +10,12 @@ export class User {
   username: string;
 
   @Column('text')
+  firstname: string;
+
+  @Column('text')
+  lastname: string;
+
+  @Column('text')
   password: string;
 
   @OneToMany(
