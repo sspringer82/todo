@@ -22,6 +22,7 @@ export class ListService {
   }
 
   async remove(id: number) {
-    return this.listRepository.remove(await this.getOne(id));
+    const list = await this.getOne(id);
+    return this.listRepository.remove(list);
   }
 }

@@ -41,7 +41,7 @@ export class Todo {
   @ManyToOne(
     type => List,
     list => list.todos,
-    { nullable: true }
+    { nullable: true, onDelete: 'SET NULL' }
   )
   list: List;
 }

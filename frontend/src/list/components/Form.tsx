@@ -14,7 +14,11 @@ import { InputTypeList, List } from '../../shared/List';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../../reducers/rootReducer';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { deleteListAction, saveListAction } from '../actions/list.actions';
+import {
+  deleteListAction,
+  saveListAction,
+  selectListAction,
+} from '../actions/list.actions';
 
 const Form: React.FC = () => {
   const params = useParams<{ id: string }>();
@@ -56,6 +60,7 @@ const Form: React.FC = () => {
 
   function handleDelete() {
     dispatch(deleteListAction(list as List));
+    dispatch(selectListAction(null));
     handleClose();
   }
 

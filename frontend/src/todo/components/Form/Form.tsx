@@ -70,7 +70,7 @@ const Form: React.FC = () => {
           <InputLabel id="list-label">Liste</InputLabel>
           <Select
             labelId="list-label"
-            value={todo.list ? todo.list.id : null}
+            value={todo.list && todo.list.id ? todo.list.id : ''}
             name="list"
             onChange={e => {
               handleChange({
