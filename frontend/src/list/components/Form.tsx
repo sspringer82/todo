@@ -39,7 +39,7 @@ const Form: React.FC = () => {
   };
 
   const foundList = useSelector((state: AppState) =>
-    state.list.lists.find((list: List) => parseInt(params.id, 10))
+    state.list.lists.find((list: List) => list.id === parseInt(params.id, 10))
   );
 
   if (foundList) {
