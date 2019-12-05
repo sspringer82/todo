@@ -8,6 +8,8 @@ import {
   NotDoneIcon,
 } from './Form.styles';
 import { InputTypeTodo } from '../../../shared/Todo';
+import { getActiveList } from '../../../list/selectors/list.selector';
+import { useSelector } from 'react-redux';
 
 interface Props {
   onSave: (todo: InputTypeTodo) => void;
@@ -17,6 +19,7 @@ const Form: React.FC<Props> = ({ onSave }) => {
   const inputEl = useRef<HTMLInputElement>(null);
   const [title, setTitle] = useState('');
   const [isButtonVisible, setButtonVisible] = useState(true);
+  const activeList = useSelector(getActiveList);
 
   function reset() {
     setTitle('');
@@ -24,7 +27,17 @@ const Form: React.FC<Props> = ({ onSave }) => {
   }
 
   function handleSave() {
-    onSave({ title, done: false, starred: false });
+    const todoToBeSaved: InputTypeTodo = {
+      title,
+      done: false,
+      starred: false,
+    };
+
+    if (activeList) {
+      todoToBeSaved['list'] = activeList;
+    }
+
+    onSave(todoToBeSaved);
     reset();
   }
 
