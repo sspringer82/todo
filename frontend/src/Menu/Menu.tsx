@@ -15,6 +15,7 @@ import TodoList from './List';
 import Form from '../list/components/Form';
 import { Route } from 'react-router';
 import { Link } from 'react-router-dom';
+import { List as ListType } from '../shared/List';
 
 const Menu: React.FC = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,10 @@ const Menu: React.FC = () => {
   }, [dispatch]);
   const lists = useSelector(getLists);
   const [menuOpen, setMenuOpen] = useState(false);
+  function handleSelect(list: ListType | null) {
+    dispatch(selectListAction(list));
+    setMenuOpen(false);
+  }
   return (
     <>
       <Route path="/list/edit/:id">
@@ -52,11 +57,19 @@ const Menu: React.FC = () => {
             <ShowOnlyStars />
           </ListItem>
           <Divider />
-          <ListItem onClick={() => dispatch(selectListAction(null))}>
-            Alle
-          </ListItem>
+
+          <TodoList
+            list={{ id: 0, name: 'Alle' }}
+            isAll={true}
+            onSelect={handleSelect}
+          />
           {lists.map(list => (
-            <TodoList key={list.id} list={list} />
+            <TodoList
+              key={list.id}
+              list={list}
+              isAll={false}
+              onSelect={handleSelect}
+            />
           ))}
           <ListItem>
             <Link to="/list/new">
