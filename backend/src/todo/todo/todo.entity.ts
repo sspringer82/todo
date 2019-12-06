@@ -5,6 +5,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { User } from '../../user/user/user.entity';
 import { List } from '../list/list.entity';
@@ -44,4 +46,8 @@ export class Todo {
     { nullable: true, onDelete: 'SET NULL' }
   )
   list: List;
+
+  @ManyToMany(type => User)
+  @JoinTable()
+  sharedWith: User[];
 }
