@@ -7,7 +7,6 @@ import {
   DialogContent,
   Tabs,
   Tab,
-  Typography,
 } from '@material-ui/core';
 import useForm from './useForm';
 import General from './General';

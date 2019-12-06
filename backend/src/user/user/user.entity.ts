@@ -9,10 +9,10 @@ export class User {
   @Column('text')
   username: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   firstname: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   lastname: string;
 
   @Column('text')

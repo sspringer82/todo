@@ -36,7 +36,8 @@ export class Todo {
 
   @ManyToOne(
     type => User,
-    user => user.todos
+    user => user.todos,
+    { nullable: true, onDelete: 'SET NULL' }
   )
   creator: User;
 
@@ -47,7 +48,7 @@ export class Todo {
   )
   list: List;
 
-  @ManyToMany(type => User)
+  @ManyToMany(type => User, { nullable: true })
   @JoinTable()
   sharedWith: User[];
 }
