@@ -10,7 +10,7 @@ import {
   loadListsAction,
   selectListAction,
 } from '../list/actions/list.actions';
-import { getLists } from '../list/selectors/list.selector';
+import { getLists, getActiveList } from '../list/selectors/list.selector';
 import TodoList from './List';
 import Form from '../list/components/Form';
 import { Route } from 'react-router';
@@ -23,6 +23,7 @@ const Menu: React.FC = () => {
     dispatch(loadListsAction());
   }, [dispatch]);
   const lists = useSelector(getLists);
+  const currentList = useSelector(getActiveList);
   const [menuOpen, setMenuOpen] = useState(false);
   function handleSelect(list: ListType | null) {
     dispatch(selectListAction(list));
@@ -46,7 +47,7 @@ const Menu: React.FC = () => {
           <MenuIcon />
         </MenuButton>
         <Search />
-        <h1>Todo App</h1>
+        <h1>{currentList !== null ? currentList.name : 'Todo List'}</h1>
       </AppBar>
       <Drawer open={menuOpen} onClose={() => setMenuOpen(false)}>
         <List>
