@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadUsersAction } from '../../../user/actions/user.actions';
+import { getUsers } from '../../../user/selectors/user.selector';
 
 interface Props {
   tabIndex: number;
@@ -7,6 +10,11 @@ interface Props {
 }
 
 const Sharing: React.FC<Props> = ({ tab, tabIndex }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadUsersAction());
+  }, [dispatch]);
+  const users = useSelector(getUsers);
   return (
     <Typography
       component="div"
@@ -15,7 +23,9 @@ const Sharing: React.FC<Props> = ({ tab, tabIndex }) => {
       id={`simple-tabpanel-${tabIndex}`}
       aria-labelledby={`simple-tab-${tabIndex}`}
     >
-      Sharing
+      {users.map(user => (
+        <div key={user.id}>{user.username}</div>
+      ))}
     </Typography>
   );
 };
