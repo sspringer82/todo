@@ -19,7 +19,7 @@ export class ListController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  getAll(@Req() request) {
+  getAll() {
     return this.listService.getAll();
   }
 
