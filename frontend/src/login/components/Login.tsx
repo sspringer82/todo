@@ -1,21 +1,23 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { Button, Grid, Hidden } from '@material-ui/core';
 import { LoginContainer, TextField } from './Login.styles';
-import { User } from '../../shared/User';
+import { Login as LoginType } from '../../shared/User';
 import update from 'immutability-helper';
 import { useDispatch } from 'react-redux';
 import { loginAction } from '../actions/login.actions';
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
-  const initalState: User = { username: '', password: '' };
+  const initalState: LoginType = { username: '', password: '' };
 
-  const [user, setUser] = useState<User>(initalState);
+  const [user, setUser] = useState<LoginType>(initalState);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const field = e.currentTarget.name;
     const value = e.currentTarget.value;
-    setUser(prevUser => update(prevUser, { [field]: { $set: value } }));
+    setUser((prevUser: LoginType) =>
+      update(prevUser, { [field]: { $set: value } })
+    );
   }
 
   function handleLogin(e: FormEvent<HTMLFormElement>) {
