@@ -1,5 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Todo } from 'src/todo/todo/todo.entity';
+import { Settings } from 'src/settings/settings/settings.entity';
 
 @Entity()
 export class User {
@@ -23,4 +31,12 @@ export class User {
     todo => todo.creator
   )
   todos: Todo[];
+
+  @OneToOne(
+    type => Settings,
+    settings => settings.user,
+    { nullable: true }
+  )
+  @JoinColumn()
+  settings: Settings;
 }
