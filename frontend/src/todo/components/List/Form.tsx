@@ -31,6 +31,7 @@ const Form: React.FC<Props> = ({ onSave }) => {
       title,
       done: false,
       starred: false,
+      sharedWith: [],
     };
 
     if (activeList) {

@@ -39,7 +39,12 @@ const Form: React.FC = () => {
             tab={tab}
             handleChange={handleChange}
           />
-          <Sharing tabIndex={1} tab={tab} />
+          <Sharing
+            tabIndex={1}
+            tab={tab}
+            todo={todo}
+            handleChange={handleChange}
+          />
           <Subtasks tabIndex={2} tab={tab} />
         </DialogContent>
         <DialogActions>
