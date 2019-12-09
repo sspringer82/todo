@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, FormEvent } from 'react';
+import React, { ChangeEvent, useState, FormEvent, useEffect } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -7,6 +7,11 @@ import {
   TextField,
   Button,
   IconButton,
+  FormControl,
+  InputLabel,
+  Select,
+  Input,
+  MenuItem,
 } from '@material-ui/core';
 import { useHistory, useParams } from 'react-router';
 import update from 'immutability-helper';
@@ -19,11 +24,21 @@ import {
   saveListAction,
   selectListAction,
 } from '../actions/list.actions';
+import { getUsers } from '../../user/selectors/user.selector';
+import { loadUsersAction } from '../../user/actions/user.actions';
 
 const Form: React.FC = () => {
   const params = useParams<{ id: string }>();
   const history = useHistory();
   const dispatch = useDispatch();
+  const users = useSelector(getUsers);
+
+  let initialList: InputTypeList = {
+    name: '',
+    sharedWith: [],
+  };
+
+  const [list, setList] = useState<InputTypeList>(initialList);
 
   function handleClose() {
     history.push('/');
@@ -38,9 +53,16 @@ const Form: React.FC = () => {
     );
   }
 
-  let initialList: InputTypeList = {
-    name: '',
-  };
+  function handleShared(
+    e: ChangeEvent<{ name?: string | undefined; value: unknown }>
+  ) {
+    const data = users.filter(user =>
+      ((e.target.value as unknown) as number[])!.includes(user.id)
+    );
+    setList((prevTodo: InputTypeList) =>
+      update(prevTodo, { sharedWith: { $set: data } })
+    );
+  }
 
   const foundList = useSelector((state: AppState) =>
     state.list.lists.find((list: List) => list.id === parseInt(params.id, 10))
@@ -50,7 +72,9 @@ const Form: React.FC = () => {
     initialList = foundList as InputTypeList;
   }
 
-  const [list, setList] = useState<InputTypeList>(initialList);
+  useEffect(() => {
+    dispatch(loadUsersAction());
+  }, [dispatch]);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -77,6 +101,24 @@ const Form: React.FC = () => {
               value={list.name}
             />
           </div>
+          <FormControl>
+            <InputLabel id="demo-mutiple-name-label">Name</InputLabel>
+            <Select
+              labelId="demo-mutiple-name-label"
+              id="demo-mutiple-name"
+              name="sharedWith"
+              multiple
+              value={list.sharedWith && list.sharedWith!.map(user => user.id)}
+              onChange={handleShared}
+              input={<Input />}
+            >
+              {users.map(user => (
+                <MenuItem key={user.id} value={user.id}>
+                  {user.username}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </DialogContent>
         <DialogActions>
           {list.id && (

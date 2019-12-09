@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core';
 import useForm from './useForm';
 import General from './General';
-import Sharing from './Sharing';
 import Subtasks from './Subtasks';
 
 const Form: React.FC = () => {
@@ -29,8 +28,7 @@ const Form: React.FC = () => {
         <DialogTitle>Aufgabe bearbeiten</DialogTitle>
         <Tabs value={tab} onChange={(e, value) => setTab(value)}>
           <Tab label="Allgemein" id="simple-tab-0" />
-          <Tab label="Sharing" id="simple-tab-1" />
-          <Tab label="Subtasks" id="simple-tab-2" />
+          <Tab label="Subtasks" id="simple-tab-1" />
         </Tabs>
         <DialogContent>
           <General
@@ -39,13 +37,7 @@ const Form: React.FC = () => {
             tab={tab}
             handleChange={handleChange}
           />
-          <Sharing
-            tabIndex={1}
-            tab={tab}
-            todo={todo}
-            handleChange={handleChange}
-          />
-          <Subtasks tabIndex={2} tab={tab} />
+          <Subtasks tabIndex={1} tab={tab} />
         </DialogContent>
         <DialogActions>
           <div>
