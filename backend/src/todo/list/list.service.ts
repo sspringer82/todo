@@ -10,7 +10,7 @@ export class ListService {
   ) {}
 
   getAll() {
-    return this.listRepository.find();
+    return this.listRepository.find({ relations: ['sharedWith'] });
   }
 
   getOne(id: number) {

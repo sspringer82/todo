@@ -14,7 +14,7 @@ export class TodoService {
   getAll(user: User) {
     return this.todoRepository.find({
       where: { creator: user },
-      relations: ['list', 'sharedWith'],
+      relations: ['list'],
     });
   }
 
