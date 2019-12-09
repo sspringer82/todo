@@ -38,6 +38,14 @@ const Form: React.FC = () => {
     sharedWith: [],
   };
 
+  const foundList = useSelector((state: AppState) =>
+    state.list.lists.find((list: List) => list.id === parseInt(params.id, 10))
+  );
+
+  if (foundList) {
+    initialList = foundList as InputTypeList;
+  }
+
   const [list, setList] = useState<InputTypeList>(initialList);
 
   function handleClose() {
@@ -62,14 +70,6 @@ const Form: React.FC = () => {
     setList((prevTodo: InputTypeList) =>
       update(prevTodo, { sharedWith: { $set: data } })
     );
-  }
-
-  const foundList = useSelector((state: AppState) =>
-    state.list.lists.find((list: List) => list.id === parseInt(params.id, 10))
-  );
-
-  if (foundList) {
-    initialList = foundList as InputTypeList;
   }
 
   useEffect(() => {
