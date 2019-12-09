@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { ListItem } from './List.styles';
 import { getActiveList } from '../list/selectors/list.selector';
 import classnames from 'classnames';
+import ShareIcon from '@material-ui/icons/Share';
 
 interface Props {
   list: ListType;
@@ -36,6 +37,7 @@ const List: React.FC<Props> = ({ list, isAll, onSelect }) => {
           <SettingsIcon />
         </Link>
       )}
+      {list.sharedWith && list.sharedWith.length > 0 && <ShareIcon />}
     </ListItem>
   );
 };
