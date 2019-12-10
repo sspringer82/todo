@@ -8,6 +8,7 @@ import {
   Param,
   UseGuards,
   Req,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { Todo } from './todo.entity';
@@ -19,8 +20,9 @@ export class TodoController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  getAll(@Req() request) {
-    return this.todoService.getAll(request.user);
+  async getAll(@Req() request) {
+    const result = await this.todoService.getAll(request.user);
+    return result;
   }
 
   @Post()
@@ -32,13 +34,20 @@ export class TodoController {
 
   @Put(':id')
   @UseGuards(AuthGuard('jwt'))
-  update(@Body() todo: Todo) {
-    return this.todoService.save(todo);
+  update(@Body() todo: Todo, @Req() request) {
+    if (this.todoService.isAllowedToModify(request.user.id, todo.id)) {
+      return this.todoService.save(todo);
+    }
+    throw UnauthorizedException;
   }
 
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
-  remove(@Param('id') id: string) {
-    this.todoService.remove(parseInt(id, 10));
+  remove(@Param('id') id: string, @Req() request) {
+    const todoId = parseInt(id, 10);
+    if (this.todoService.isAllowedToModify(request.user.id, todoId)) {
+      this.todoService.remove(todoId);
+    }
+    throw UnauthorizedException;
   }
 }

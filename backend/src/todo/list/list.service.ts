@@ -18,11 +18,6 @@ export class ListService {
       .where('list.creator = :creator', { creator: currentUser.id })
       .orWhere('u.id = :sharedWith', { sharedWith: currentUser.id })
       .getMany();
-
-    return this.listRepository.find({
-      where: [{ creator: currentUser }, { sharedWith: currentUser }],
-      relations: ['sharedWith'],
-    });
   }
 
   getOne(id: number) {
@@ -36,5 +31,25 @@ export class ListService {
   async remove(id: number) {
     const list = await this.getOne(id);
     return this.listRepository.remove(list);
+  }
+
+  async isAllowedToModify(userId: number, listId: number) {
+    return (
+      (
+        await this.listRepository
+          .createQueryBuilder('list')
+          .leftJoinAndSelect(
+            'list_shared_with_user',
+            'lu',
+            'list.id = lu.listId'
+          )
+          .leftJoinAndSelect('user', 'u', 'lu.userId = u.id')
+          .where('list.creator = :userId OR u.id = :userId', {
+            userId,
+          })
+          .andWhere('list.id = :listId', { listId })
+          .getMany()
+      ).length > 0
+    );
   }
 }

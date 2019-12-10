@@ -23,9 +23,7 @@ function dealWithDone(todos: Todo[], hideDone: boolean) {
 
 function dealWithActiveList(todos: Todo[], activeList: List | null) {
   if (activeList) {
-    return todos.filter(
-      todo => todo.list !== null && todo.list!.id === activeList.id
-    );
+    return todos.filter(todo => todo.list && todo.list!.id === activeList.id);
   }
   return todos;
 }

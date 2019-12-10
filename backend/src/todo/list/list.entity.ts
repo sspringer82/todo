@@ -8,11 +8,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  BaseEntity,
 } from 'typeorm';
 import { Todo } from '../todo/todo.entity';
 import { User } from 'src/user/user/user.entity';
 @Entity()
-export class List {
+export class List extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

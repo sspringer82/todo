@@ -31,6 +31,7 @@ interface Props {
 }
 
 const General: React.FC<Props> = ({ todo, tabIndex, tab, handleChange }) => {
+  const lists = useSelector(getLists);
   return (
     <Typography
       component="div"
@@ -84,12 +85,14 @@ const General: React.FC<Props> = ({ todo, tabIndex, tab, handleChange }) => {
           handleChange({
             currentTarget: {
               name: e.target.name as string,
-              value: e.target.value as string,
+              value: (lists.find(
+                list => list.id === parseInt(e.target.value as string, 10)
+              ) as unknown) as string,
             },
           });
         }}
       >
-        {useSelector(getLists).map(list => (
+        {lists.map(list => (
           <MenuItem value={list.id} key={list.id}>
             {list.name}
           </MenuItem>
