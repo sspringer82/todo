@@ -46,8 +46,6 @@ const Form: React.FC = () => {
     initialList = foundList as InputTypeList;
   }
 
-  console.log(initialList);
-
   const [list, setList] = useState<InputTypeList>(initialList);
 
   function handleClose() {
