@@ -46,6 +46,8 @@ const Form: React.FC = () => {
     initialList = foundList as InputTypeList;
   }
 
+  console.log(initialList);
+
   const [list, setList] = useState<InputTypeList>(initialList);
 
   function handleClose() {
@@ -108,7 +110,9 @@ const Form: React.FC = () => {
               id="demo-mutiple-name"
               name="sharedWith"
               multiple
-              value={list.sharedWith && list.sharedWith!.map(user => user.id)}
+              value={
+                (list.sharedWith && list.sharedWith!.map(user => user.id)) || []
+              }
               onChange={handleShared}
               input={<Input />}
             >
