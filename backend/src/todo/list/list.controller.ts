@@ -19,8 +19,8 @@ export class ListController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  getAll() {
-    return this.listService.getAll();
+  getAll(@Req() request) {
+    return this.listService.getAll(request.user);
   }
 
   @Post()
