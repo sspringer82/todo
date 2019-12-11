@@ -19,7 +19,7 @@ export class TodoService {
       .leftJoinAndSelect('list', 'l', 'todo.listId = l.id')
       .leftJoin('list_shared_with_user', 'lu', 'l.id = lu.listId')
       .leftJoin('user', 'u', 'lu.userId = u.id')
-      .leftJoin('subtasks', 's', 'l.id = s.todoId')
+      .leftJoin('subtask', 's', 'l.id = s.todoId')
       .where('todo.creator = :creator', { creator: user.id })
       .orWhere('l.creator = :creator', { creator: user.id })
       .orWhere('u.id = :sharedWith', { sharedWith: user.id })
@@ -33,7 +33,7 @@ export class TodoService {
       }, {});
 
     const todosWithSubtasks = raw
-      .filter(rawTodo => rawTodo.subtasks.length > 0)
+      .filter(rawTodo => rawTodo.subtasks && rawTodo.subtasks.length > 0)
       .reduce((prev, current) => {
         prev[current.todo_id] = current;
         return prev;
