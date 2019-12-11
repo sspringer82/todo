@@ -37,8 +37,9 @@ export class TodoController {
   update(@Body() todo: Todo, @Req() request) {
     if (this.todoService.isAllowedToModify(request.user.id, todo.id)) {
       return this.todoService.save(todo);
+    } else {
+      throw new UnauthorizedException();
     }
-    throw UnauthorizedException;
   }
 
   @Delete(':id')
@@ -46,8 +47,9 @@ export class TodoController {
   remove(@Param('id') id: string, @Req() request) {
     const todoId = parseInt(id, 10);
     if (this.todoService.isAllowedToModify(request.user.id, todoId)) {
-      this.todoService.remove(todoId);
+      return this.todoService.remove(todoId);
+    } else {
+      throw new UnauthorizedException();
     }
-    throw UnauthorizedException;
   }
 }

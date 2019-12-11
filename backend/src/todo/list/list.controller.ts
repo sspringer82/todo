@@ -36,8 +36,9 @@ export class ListController {
   update(@Body() list: List, @Req() request) {
     if (this.listService.isAllowedToModify(request.user.id, list.id)) {
       return this.listService.save(list);
+    } else {
+      throw new UnauthorizedException();
     }
-    throw UnauthorizedException;
   }
 
   @Delete(':id')
@@ -46,7 +47,8 @@ export class ListController {
     const listId = parseInt(id, 10);
     if (this.listService.isAllowedToModify(request.user.id, listId)) {
       return this.listService.remove(listId);
+    } else {
+      throw new UnauthorizedException();
     }
-    throw UnauthorizedException;
   }
 }
