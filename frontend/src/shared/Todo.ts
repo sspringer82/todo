@@ -13,13 +13,6 @@ export interface Todo {
   list?: List;
 }
 
-export interface InputTypeTodo {
+export interface InputTypeTodo extends Omit<Todo, 'id'> {
   id?: number;
-  title: string;
-  done: boolean;
-  starred: boolean;
-  createdAt?: string;
-  updatedAt?: string;
-  due?: Date | null;
-  list?: List;
 }

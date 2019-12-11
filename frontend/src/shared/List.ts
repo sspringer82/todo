@@ -6,8 +6,6 @@ export interface List {
   sharedWith?: User[];
 }
 
-export interface InputTypeList {
+export interface InputTypeList extends Omit<List, 'id'> {
   id?: number;
-  name: string;
-  sharedWith?: User[];
 }
