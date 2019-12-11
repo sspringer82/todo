@@ -6,10 +6,12 @@ import { Todo } from './todo/todo.entity';
 import { ListController } from './list/list.controller';
 import { ListService } from './list/list.service';
 import { List } from './list/list.entity';
+import { SubtaskController } from './subtask/subtask.controller';
+import { SubtaskService } from './subtask/subtask.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Todo, List])],
-  controllers: [TodoController, ListController],
-  providers: [TodoService, ListService],
+  controllers: [TodoController, ListController, SubtaskController],
+  providers: [TodoService, ListService, SubtaskService],
 })
 export class TodoModule {}

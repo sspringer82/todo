@@ -4,6 +4,7 @@ import { Todo } from './todo.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/user/user/user.entity';
 import { List } from '../list/list.entity';
+import { Subtask } from '../subtask/subtask.entity';
 
 @Injectable()
 export class TodoService {
@@ -18,6 +19,7 @@ export class TodoService {
       .leftJoinAndSelect('list', 'l', 'todo.listId = l.id')
       .leftJoin('list_shared_with_user', 'lu', 'l.id = lu.listId')
       .leftJoin('user', 'u', 'lu.userId = u.id')
+      .leftJoin('subtasks', 's', 'l.id = s.todoId')
       .where('todo.creator = :creator', { creator: user.id })
       .orWhere('l.creator = :creator', { creator: user.id })
       .orWhere('u.id = :sharedWith', { sharedWith: user.id })
@@ -25,6 +27,13 @@ export class TodoService {
 
     const todosWithList = raw
       .filter(rawTodo => rawTodo.l_id !== null)
+      .reduce((prev, current) => {
+        prev[current.todo_id] = current;
+        return prev;
+      }, {});
+
+    const todosWithSubtasks = raw
+      .filter(rawTodo => rawTodo.subtasks.length > 0)
       .reduce((prev, current) => {
         prev[current.todo_id] = current;
         return prev;
@@ -39,6 +48,10 @@ export class TodoService {
           createdAt: l.l_createdAt,
           updatedAt: l.l_updatedAt,
         });
+      }
+      if (todosWithSubtasks[todoEntity.id]) {
+        const t = todosWithSubtasks[todoEntity.id];
+        todoEntity.subtasks = t.subtasks.map(st => Subtask.create(st));
       }
       return todoEntity;
     });
@@ -55,7 +68,7 @@ export class TodoService {
   }
 
   async remove(id: number) {
-    return this.todoRepository.remove(await this.getOne(id));
+    return (await this.getOne(id)).remove();
   }
 
   async isAllowedToModify(userId: number, todoId: number) {

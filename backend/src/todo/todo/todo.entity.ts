@@ -5,12 +5,15 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
+  BaseEntity,
 } from 'typeorm';
 import { User } from '../../user/user/user.entity';
 import { List } from '../list/list.entity';
+import { Subtask } from '../subtask/subtask.entity';
 
 @Entity()
-export class Todo {
+export class Todo extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -45,4 +48,10 @@ export class Todo {
     { nullable: true, onDelete: 'SET NULL' }
   )
   list: List;
+
+  @OneToMany(
+    type => Subtask,
+    subtask => subtask.id
+  )
+  subtasks: Subtask[];
 }

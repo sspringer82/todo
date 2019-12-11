@@ -16,7 +16,7 @@ import { AuthGuard } from '@nestjs/passport';
 
 @Controller('todo')
 export class TodoController {
-  constructor(private todoService: TodoService) {}
+  constructor(private readonly todoService: TodoService) {}
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
@@ -29,7 +29,7 @@ export class TodoController {
   @UseGuards(AuthGuard('jwt'))
   create(@Body() todo: Todo, @Req() request) {
     const todoToBeSaved = { ...todo, creator: request.user };
-    return this.todoService.save(todoToBeSaved);
+    return this.todoService.save(Todo.create(todoToBeSaved));
   }
 
   @Put(':id')

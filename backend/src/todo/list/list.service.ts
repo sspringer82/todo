@@ -29,8 +29,7 @@ export class ListService {
   }
 
   async remove(id: number) {
-    const list = await this.getOne(id);
-    return this.listRepository.remove(list);
+    return (await this.getOne(id)).remove();
   }
 
   async isAllowedToModify(userId: number, listId: number) {
