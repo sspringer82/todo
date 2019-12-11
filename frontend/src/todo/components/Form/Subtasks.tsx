@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
+import List from '../Subtask/List';
 
 interface Props {
   tabIndex: number;
@@ -15,7 +16,7 @@ const Subtasks: React.FC<Props> = ({ tab, tabIndex }) => {
       id={`simple-tabpanel-${tabIndex}`}
       aria-labelledby={`simple-tab-${tabIndex}`}
     >
-      Subtasks
+      <List subtasks={[]} />
     </Typography>
   );
 };
