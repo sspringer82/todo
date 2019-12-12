@@ -11,6 +11,7 @@ import {
 import useForm from './useForm';
 import General from './General';
 import Subtasks from './Subtasks';
+import { Todo } from '../../../shared/Todo';
 
 const Form: React.FC = () => {
   const { todo, handleChange, handleClose, handleSave } = useForm();
@@ -28,7 +29,8 @@ const Form: React.FC = () => {
         <DialogTitle>Aufgabe bearbeiten</DialogTitle>
         <Tabs value={tab} onChange={(e, value) => setTab(value)}>
           <Tab label="Allgemein" id="simple-tab-0" />
-          <Tab label="Subtasks" id="simple-tab-1" />
+
+          {todo.id && <Tab label="Subtasks" id="simple-tab-1" />}
         </Tabs>
         <DialogContent>
           <General
@@ -37,7 +39,7 @@ const Form: React.FC = () => {
             tab={tab}
             handleChange={handleChange}
           />
-          <Subtasks tabIndex={1} tab={tab} />
+          {todo.id && <Subtasks tabIndex={1} tab={tab} todo={todo as Todo} />}
         </DialogContent>
         <DialogActions>
           <div>

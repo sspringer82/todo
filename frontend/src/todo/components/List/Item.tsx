@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 import { Todo } from '../../../shared/Todo';
-import {
-  ListItem,
-  Title,
-  MenuContainer,
-  CheckCircleOutlineIcon,
-  StarContainer,
-} from './Item.styles';
+import { MenuContainer, StarContainer } from './Item.styles';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -14,12 +8,19 @@ import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import {
+  CheckCircleOutlineIcon,
+  Title,
+  ListItem,
+} from '../../../shared/components/Item/Item.styles';
 
 interface Props {
   todo: Todo;
   onChange: (todo: Todo) => void;
   onRemove: (todo: Todo) => void;
 }
+
+const MENU_WIDTH = 53;
 
 const Item: React.FC<Props> = ({ todo, onChange, onRemove }) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -47,7 +48,7 @@ const Item: React.FC<Props> = ({ todo, onChange, onRemove }) => {
           setShowMenu(!showMenu);
         }}
       />
-      <MenuContainer style={{ width: showMenu ? 53 : 0 }}>
+      <MenuContainer style={{ width: showMenu ? MENU_WIDTH : 0 }}>
         <DeleteIcon
           onClick={() => {
             onRemove(todo);
