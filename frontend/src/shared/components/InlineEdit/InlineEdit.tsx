@@ -6,20 +6,27 @@ import {
   SaveButton,
   AddIcon,
   NotDoneIcon,
-} from './Form.styles';
-import { InputTypeTodo } from '../../../shared/Todo';
-import { getActiveList } from '../../../list/selectors/list.selector';
-import { useSelector } from 'react-redux';
+} from './InlineEdit.styles';
 
-interface Props {
-  onSave: (todo: InputTypeTodo) => void;
+interface Task {
+  title: string;
 }
 
-const Form: React.FC<Props> = ({ onSave }) => {
+interface Props {
+  task?: Task;
+  onSave: (task: Task) => void;
+}
+
+const InlineEdit: React.FC<Props> = ({ onSave, task }) => {
   const inputEl = useRef<HTMLInputElement>(null);
   const [title, setTitle] = useState('');
   const [isButtonVisible, setButtonVisible] = useState(true);
-  const activeList = useSelector(getActiveList);
+
+  useEffect(() => {
+    if (task) {
+      setTitle(task.title);
+    }
+  }, [task]);
 
   function reset() {
     setTitle('');
@@ -27,17 +34,7 @@ const Form: React.FC<Props> = ({ onSave }) => {
   }
 
   function handleSave() {
-    const todoToBeSaved: InputTypeTodo = {
-      title,
-      done: false,
-      starred: false,
-    };
-
-    if (activeList) {
-      todoToBeSaved['list'] = activeList;
-    }
-
-    onSave(todoToBeSaved);
+    onSave({ title });
     reset();
   }
 
@@ -91,4 +88,4 @@ const Form: React.FC<Props> = ({ onSave }) => {
   );
 };
 
-export default Form;
+export default InlineEdit;

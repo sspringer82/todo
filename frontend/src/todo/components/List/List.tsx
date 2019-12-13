@@ -1,14 +1,17 @@
 import React from 'react';
 import Item from './Item';
-import { Todo } from '../../../shared/Todo';
+import { Todo, InputTypeTodo } from '../../../shared/Todo';
 import { List as StyledList } from './List.styles';
-import Form from './Form';
 import FormDialog from '../Form/Form';
 import useTodoList from './useTodoList';
 import { Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { getActiveList } from '../../../list/selectors/list.selector';
+import InlineEdit from '../../../shared/components/InlineEdit/InlineEdit';
 
 const List: React.FC = () => {
   const { todos, handleSave, handleDelete } = useTodoList();
+  const activeList = useSelector(getActiveList);
 
   return (
     <>
@@ -24,7 +27,19 @@ const List: React.FC = () => {
             onRemove={handleDelete}
           />
         ))}
-        <Form onSave={handleSave} />
+        <InlineEdit
+          onSave={({ title }) => {
+            const newTodo: InputTypeTodo = {
+              title,
+              done: false,
+              starred: false,
+            };
+            if (activeList) {
+              newTodo['list'] = activeList;
+            }
+            handleSave(newTodo);
+          }}
+        />
       </StyledList>
     </>
   );

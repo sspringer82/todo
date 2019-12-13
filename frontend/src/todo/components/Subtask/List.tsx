@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Subtask, InputTypeSubtask } from '../../../shared/Subtask';
+import { Subtask } from '../../../shared/Subtask';
 import Item from './Item';
-import Form from './Form';
 import { Todo } from '../../../shared/Todo';
+import InlineEdit from '../../../shared/components/InlineEdit/InlineEdit';
 
 interface Props {
   subtasks: Subtask[];
@@ -16,12 +16,12 @@ const List: React.FC<Props> = ({ subtasks, todo }) => {
     <div>
       {subtasks.map(subtask =>
         subtask.id === inEditMode ? (
-          <Form
-            todo={todo}
-            subtask={subtask}
-            key={subtask.id}
-            onSave={(subtask: InputTypeSubtask) => console.log(subtask)}
-            onCancel={() => setInEditMode(null)}
+          <InlineEdit
+            task={subtask}
+            onSave={({ title }) => {
+              setInEditMode(null);
+              console.log(title);
+            }}
           />
         ) : (
           <Item
@@ -34,10 +34,11 @@ const List: React.FC<Props> = ({ subtasks, todo }) => {
       )}
 
       {inEditMode === null && (
-        <Form
-          todo={todo}
-          onSave={(subtask: InputTypeSubtask) => console.log(subtask)}
-          onCancel={() => setInEditMode(null)}
+        <InlineEdit
+          onSave={({ title }) => {
+            setInEditMode(null);
+            console.log(title);
+          }}
         />
       )}
     </div>
