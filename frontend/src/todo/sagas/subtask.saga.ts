@@ -2,11 +2,12 @@ import { Subtask } from '../../shared/Subtask';
 import { ActionType } from 'typesafe-actions';
 import {
   saveSubtaskAction,
-  saveSubtaskSuccessAction,
   deleteSubtaskAction,
   deleteSubtaskSuccessAction,
   SAVE_SUBTASK,
   DELETE_SUBTASK,
+  updateSubtaskSuccessAction,
+  createSubtaskSuccessAction,
 } from '../actions/subtask.actions';
 import { getToken } from '../../login/selectors/login.selector';
 import axios, { AxiosResponse } from 'axios';
@@ -25,6 +26,7 @@ function* save({ payload: subtask }: ActionType<typeof saveSubtaskAction>) {
         },
       }
     );
+    yield put(updateSubtaskSuccessAction(response.data));
   } else {
     response = yield axios.post<Subtask>(
       `${process.env.REACT_APP_SERVER}/subtask/`,
@@ -35,8 +37,8 @@ function* save({ payload: subtask }: ActionType<typeof saveSubtaskAction>) {
         },
       }
     );
+    yield put(createSubtaskSuccessAction(response.data));
   }
-  yield put(saveSubtaskSuccessAction(response.data));
 }
 
 function* remove({ payload: subtask }: ActionType<typeof deleteSubtaskAction>) {

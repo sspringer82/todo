@@ -1,6 +1,5 @@
-import moment from 'moment';
 import { List } from './List';
-import { User } from './User';
+import { Subtask } from './Subtask';
 
 export interface Todo {
   id: number;
@@ -11,6 +10,7 @@ export interface Todo {
   updatedAt?: string;
   due?: Date | null;
   list?: List;
+  subtasks?: Subtask[];
 }
 
 export interface InputTypeTodo extends Omit<Todo, 'id'> {

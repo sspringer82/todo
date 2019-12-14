@@ -9,11 +9,17 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 interface Props {
   subtask: Subtask;
-  onEdit: () => void;
+  onEdit: (subtask: Subtask) => void;
   onStateChange: (subtask: Subtask) => void;
+  onDelete: (subtask: Subtask) => void;
 }
 
-const Item: React.FC<Props> = ({ subtask, onEdit, onStateChange }) => {
+const Item: React.FC<Props> = ({
+  subtask,
+  onEdit,
+  onStateChange,
+  onDelete,
+}) => {
   return (
     <ListItem>
       {!subtask.done && (
@@ -28,8 +34,8 @@ const Item: React.FC<Props> = ({ subtask, onEdit, onStateChange }) => {
       )}
       <Title done={subtask.done}>{subtask.title}</Title>
       {subtask.title}
-      <EditIcon onClick={onEdit} />
-      <DeleteIcon />
+      <EditIcon onClick={() => onEdit(subtask)} />
+      <DeleteIcon onClick={() => onDelete(subtask)} />
     </ListItem>
   );
 };

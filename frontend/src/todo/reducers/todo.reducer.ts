@@ -8,6 +8,7 @@ import {
   SHOW_ONLY_STARS,
 } from '../actions/todo.actions';
 import update from 'immutability-helper';
+import { CREATE_SUBTASK_SUCCESS } from '../actions/subtask.actions';
 
 export interface State {
   todos: Todo[];
@@ -47,6 +48,13 @@ export default function(state: State = initialState, action: any): State {
       return update(state, { hideDone: { $set: action.payload } });
     case SHOW_ONLY_STARS:
       return update(state, { showOnlyStars: { $set: action.payload } });
+    case CREATE_SUBTASK_SUCCESS:
+      const todoIndex = state.todos.findIndex(
+        todo => todo.id === action.payload.todo.id
+      );
+      return update(state, {
+        todos: { [todoIndex]: { subtasks: { $push: [action.payload] } } },
+      });
     default:
       return state;
   }
