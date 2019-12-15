@@ -34,7 +34,7 @@ export class SubtaskController {
     if (this.todoService.isAllowedToModify(request.user.id, subtask.todo.id)) {
       return this.subtaskService.save(subtask);
     }
-    throw UnauthorizedException;
+    throw new UnauthorizedException();
   }
 
   @Delete(':id')
@@ -45,6 +45,6 @@ export class SubtaskController {
     if (this.todoService.isAllowedToModify(request.user.id, subtask.todo.id)) {
       this.subtaskService.remove(subtaskId);
     }
-    throw UnauthorizedException;
+    throw new UnauthorizedException();
   }
 }

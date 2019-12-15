@@ -12,7 +12,7 @@ export class SubtaskService {
   ) {}
 
   getOne(id: number) {
-    return this.subtaskRepository.findOne({ id });
+    return this.subtaskRepository.findOne({ id }, { relations: ['todo'] });
   }
 
   save(subtask: Subtask) {
