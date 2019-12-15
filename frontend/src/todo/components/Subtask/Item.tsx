@@ -33,7 +33,6 @@ const Item: React.FC<Props> = ({
         />
       )}
       <Title done={subtask.done}>{subtask.title}</Title>
-      {subtask.title}
       <EditIcon onClick={() => onEdit(subtask)} />
       <DeleteIcon onClick={() => onDelete(subtask)} />
     </ListItem>

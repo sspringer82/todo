@@ -18,7 +18,7 @@ const Subtasks: React.FC<Props> = ({ tab, tabIndex, todo }) => {
       id={`simple-tabpanel-${tabIndex}`}
       aria-labelledby={`simple-tab-${tabIndex}`}
     >
-      <List subtasks={[]} todo={todo} />
+      <List subtasks={todo.subtasks} todo={todo} />
     </Typography>
   );
 };

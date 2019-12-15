@@ -11,7 +11,7 @@ import {
 import update from 'immutability-helper';
 
 interface Props {
-  subtasks: Subtask[];
+  subtasks?: Subtask[];
   todo: Todo;
 }
 
@@ -21,29 +21,30 @@ const List: React.FC<Props> = ({ subtasks, todo }) => {
 
   return (
     <div>
-      {subtasks.map(subtask =>
-        subtask.id === inEditMode ? (
-          <InlineEdit
-            task={subtask}
-            onSave={({ title }) => {
-              setInEditMode(null);
-              dispatch(
-                saveSubtaskAction(update(subtask, { title: { $set: title } }))
-              );
-            }}
-          />
-        ) : (
-          <Item
-            subtask={subtask}
-            key={subtask.id}
-            onEdit={(subtask: Subtask) => setInEditMode(subtask.id)}
-            onStateChange={(subtask: Subtask) => console.log(subtask)}
-            onDelete={(subtask: Subtask) =>
-              dispatch(deleteSubtaskAction(subtask))
-            }
-          />
-        )
-      )}
+      {subtasks &&
+        subtasks.map(subtask =>
+          subtask.id === inEditMode ? (
+            <InlineEdit
+              task={subtask}
+              onSave={({ title }) => {
+                setInEditMode(null);
+                dispatch(
+                  saveSubtaskAction(update(subtask, { title: { $set: title } }))
+                );
+              }}
+            />
+          ) : (
+            <Item
+              subtask={subtask}
+              key={subtask.id}
+              onEdit={(subtask: Subtask) => setInEditMode(subtask.id)}
+              onStateChange={(subtask: Subtask) => console.log(subtask)}
+              onDelete={(subtask: Subtask) =>
+                dispatch(deleteSubtaskAction(subtask))
+              }
+            />
+          )
+        )}
 
       {inEditMode === null && (
         <InlineEdit

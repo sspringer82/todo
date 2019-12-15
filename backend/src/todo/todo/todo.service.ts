@@ -17,9 +17,9 @@ export class TodoService {
     const { raw, entities } = await this.todoRepository
       .createQueryBuilder('todo')
       .leftJoinAndSelect('list', 'l', 'todo.listId = l.id')
+      .leftJoinAndSelect('subtask', 's', 'todo.id = s.todoId')
       .leftJoin('list_shared_with_user', 'lu', 'l.id = lu.listId')
       .leftJoin('user', 'u', 'lu.userId = u.id')
-      .leftJoin('subtask', 's', 'l.id = s.todoId')
       .where('todo.creator = :creator', { creator: user.id })
       .orWhere('l.creator = :creator', { creator: user.id })
       .orWhere('u.id = :sharedWith', { sharedWith: user.id })
@@ -32,12 +32,31 @@ export class TodoService {
         return prev;
       }, {});
 
-    const todosWithSubtasks = raw
-      .filter(rawTodo => rawTodo.subtasks && rawTodo.subtasks.length > 0)
+    const subtasks = raw
+      .filter(rawTodo => rawTodo.s_id !== null)
       .reduce((prev, current) => {
-        prev[current.todo_id] = current;
+        prev[current.s_id] = Subtask.create({
+          id: current.s_id,
+          title: current.s_title,
+          done: !!current.s_done,
+          createdAt: current.s_createdAt,
+          updatedAt: current.s_updatedAt,
+          todo: current.s_todoId,
+        });
         return prev;
       }, {});
+
+    const subtasksToTodos = Object.values(subtasks).reduce(
+      (prev, current: any) => {
+        if (prev[current.todo]) {
+          prev[current.todo].push(current);
+        } else {
+          prev[current.todo] = [current];
+        }
+        return prev;
+      },
+      {}
+    );
 
     const enrichedTodos = entities.map(todoEntity => {
       if (todosWithList[todoEntity.id]) {
@@ -49,9 +68,8 @@ export class TodoService {
           updatedAt: l.l_updatedAt,
         });
       }
-      if (todosWithSubtasks[todoEntity.id]) {
-        const t = todosWithSubtasks[todoEntity.id];
-        todoEntity.subtasks = t.subtasks.map(st => Subtask.create(st));
+      if (subtasksToTodos[todoEntity.id]) {
+        todoEntity.subtasks = subtasksToTodos[todoEntity.id];
       }
       return todoEntity;
     });

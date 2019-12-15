@@ -52,9 +52,15 @@ export default function(state: State = initialState, action: any): State {
       const todoIndex = state.todos.findIndex(
         todo => todo.id === action.payload.todo.id
       );
-      return update(state, {
-        todos: { [todoIndex]: { subtasks: { $push: [action.payload] } } },
-      });
+      if (state.todos[todoIndex].subtasks) {
+        return update(state, {
+          todos: { [todoIndex]: { subtasks: { $push: [action.payload] } } },
+        });
+      } else {
+        return update(state, {
+          todos: { [todoIndex]: { subtasks: { $set: [action.payload] } } },
+        });
+      }
     default:
       return state;
   }
