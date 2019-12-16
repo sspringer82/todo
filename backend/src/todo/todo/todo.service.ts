@@ -94,17 +94,13 @@ export class TodoService {
       (
         await this.todoRepository
           .createQueryBuilder('todo')
-          .leftJoinAndSelect('list', 'list', 'todo.listId = list.id')
-          .leftJoinAndSelect(
-            'list_shared_with_user',
-            'lu',
-            'list.id = lu.listId'
-          )
-          .leftJoinAndSelect('user', 'u', 'lu.userId = u.id')
-          .where('list.creator = :userId OR u.id = :userId', {
+          .leftJoin('list', 'list', 'todo.listId = list.id')
+          .leftJoin('list_shared_with_user', 'lu', 'list.id = lu.listId')
+          .leftJoin('user', 'u', 'lu.userId = u.id')
+          .where('todo.id = :todoId', { todoId })
+          .andWhere('(todo.creatorId = :userId OR u.id = :userId)', {
             userId,
           })
-          .andWhere('todo.id = :todoId', { todoId })
           .getMany()
       ).length > 0
     );

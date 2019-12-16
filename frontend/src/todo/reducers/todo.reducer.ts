@@ -8,7 +8,10 @@ import {
   SHOW_ONLY_STARS,
 } from '../actions/todo.actions';
 import update from 'immutability-helper';
-import { CREATE_SUBTASK_SUCCESS } from '../actions/subtask.actions';
+import {
+  CREATE_SUBTASK_SUCCESS,
+  DELETE_SUBTASK,
+} from '../actions/subtask.actions';
 
 export interface State {
   todos: Todo[];
@@ -49,9 +52,10 @@ export default function(state: State = initialState, action: any): State {
     case SHOW_ONLY_STARS:
       return update(state, { showOnlyStars: { $set: action.payload } });
     case CREATE_SUBTASK_SUCCESS:
-      const todoIndex = state.todos.findIndex(
-        todo => todo.id === action.payload.todo.id
-      );
+      const todoId = action.payload.todo.id
+        ? action.payload.todo.id
+        : action.payload.todo;
+      const todoIndex = state.todos.findIndex(todo => todo.id === todoId);
       if (state.todos[todoIndex].subtasks) {
         return update(state, {
           todos: { [todoIndex]: { subtasks: { $push: [action.payload] } } },
@@ -61,6 +65,17 @@ export default function(state: State = initialState, action: any): State {
           todos: { [todoIndex]: { subtasks: { $set: [action.payload] } } },
         });
       }
+    case DELETE_SUBTASK:
+      const todoId2 = action.payload.todo.id
+        ? action.payload.todo.id
+        : action.payload.todo;
+      const todoIndex2 = state.todos.findIndex(todo => todo.id === todoId2);
+      const subtaskIndex = state.todos[todoIndex2].subtasks!.findIndex(
+        subtask => subtask.id === action.payload.id
+      );
+      return update(state, {
+        todos: { [todoIndex2]: { subtasks: { $splice: [[subtaskIndex, 1]] } } },
+      });
     default:
       return state;
   }

@@ -39,3 +39,7 @@ export function findTodos(state: AppState) {
     todo.title.toLowerCase().includes(state.todo.search.toLowerCase())
   );
 }
+
+export function getTodo(id: number) {
+  return (state: AppState) => state.todo.todos.find(todo => todo.id === id);
+}

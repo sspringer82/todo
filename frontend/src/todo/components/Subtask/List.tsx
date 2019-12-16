@@ -3,21 +3,22 @@ import { Subtask } from '../../../shared/Subtask';
 import Item from './Item';
 import { Todo } from '../../../shared/Todo';
 import InlineEdit from '../../../shared/components/InlineEdit/InlineEdit';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteSubtaskAction,
   saveSubtaskAction,
 } from '../../actions/subtask.actions';
 import update from 'immutability-helper';
+import { getSubtasks } from '../../selectors/subtask.selector';
 
 interface Props {
-  subtasks?: Subtask[];
   todo: Todo;
 }
 
-const List: React.FC<Props> = ({ subtasks, todo }) => {
+const List: React.FC<Props> = ({ todo }) => {
   const dispatch = useDispatch();
   const [inEditMode, setInEditMode] = useState<number | null>(null);
+  const subtasks = useSelector(getSubtasks(todo.id));
 
   return (
     <div>

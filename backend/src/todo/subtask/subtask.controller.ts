@@ -42,8 +42,10 @@ export class SubtaskController {
   async remove(@Param('id') id: string, @Req() request) {
     const subtaskId = parseInt(id, 10);
     const subtask = await this.subtaskService.getOne(subtaskId);
-    if (this.todoService.isAllowedToModify(request.user.id, subtask.todo.id)) {
-      this.subtaskService.remove(subtaskId);
+    if (
+      await this.todoService.isAllowedToModify(request.user.id, subtask.todo.id)
+    ) {
+      return this.subtaskService.remove(subtaskId);
     }
     throw new UnauthorizedException();
   }
