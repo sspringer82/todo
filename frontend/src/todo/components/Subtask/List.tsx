@@ -40,7 +40,9 @@ const List: React.FC<Props> = ({ todo }) => {
               subtask={subtask}
               key={subtask.id}
               onEdit={(subtask: Subtask) => setInEditMode(subtask.id)}
-              onStateChange={(subtask: Subtask) => console.log(subtask)}
+              onStateChange={(subtask: Subtask) =>
+                dispatch(saveSubtaskAction(subtask))
+              }
               onDelete={(subtask: Subtask) =>
                 dispatch(deleteSubtaskAction(subtask))
               }
