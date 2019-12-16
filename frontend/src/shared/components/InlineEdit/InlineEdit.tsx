@@ -25,6 +25,7 @@ const InlineEdit: React.FC<Props> = ({ onSave, task }) => {
   useEffect(() => {
     if (task) {
       setTitle(task.title);
+      setButtonVisible(false);
     }
   }, [task]);
 

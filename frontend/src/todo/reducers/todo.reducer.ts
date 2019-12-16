@@ -11,6 +11,7 @@ import update from 'immutability-helper';
 import {
   CREATE_SUBTASK_SUCCESS,
   DELETE_SUBTASK,
+  UPDATE_SUBTASK_SUCCESS,
 } from '../actions/subtask.actions';
 
 export interface State {
@@ -65,6 +66,20 @@ export default function(state: State = initialState, action: any): State {
           todos: { [todoIndex]: { subtasks: { $set: [action.payload] } } },
         });
       }
+    case UPDATE_SUBTASK_SUCCESS:
+      const todoIndex3 = state.todos.findIndex(
+        todo => todo.id === action.payload.todo
+      );
+      const subtaskIndex2 = state.todos[todoIndex3].subtasks!.findIndex(
+        subtask => subtask.id === action.payload.id
+      );
+      return update(state, {
+        todos: {
+          [todoIndex3]: {
+            subtasks: { [subtaskIndex2]: { $set: action.payload } },
+          },
+        },
+      });
     case DELETE_SUBTASK:
       const todoId2 = action.payload.todo.id
         ? action.payload.todo.id

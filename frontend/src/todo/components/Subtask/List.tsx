@@ -27,6 +27,7 @@ const List: React.FC<Props> = ({ todo }) => {
           subtask.id === inEditMode ? (
             <InlineEdit
               task={subtask}
+              key={subtask.id}
               onSave={({ title }) => {
                 setInEditMode(null);
                 dispatch(
