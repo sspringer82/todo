@@ -13,6 +13,7 @@ import {
 } from '../actions/todo.actions';
 import { ActionType } from 'typesafe-actions';
 import { getToken } from '../../login/selectors/login.selector';
+import update from 'immutability-helper';
 
 function* loadTodos() {
   const token = yield select(getToken);
@@ -24,8 +25,15 @@ function* loadTodos() {
       },
     }
   );
+  const todosWithSubtasks = todos.map((todo: Todo) => {
+    if (todo.subtasks) {
+      return todo;
+    } else {
+      return update(todo, { subtasks: { $set: [] } });
+    }
+  });
 
-  yield put(loadTodosSuccessAction(todos));
+  yield put(loadTodosSuccessAction(todosWithSubtasks));
 }
 
 function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {

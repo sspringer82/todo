@@ -10,7 +10,7 @@ export interface Todo {
   updatedAt?: string;
   due?: Date | null;
   list?: List;
-  subtasks?: Subtask[];
+  subtasks: Subtask[];
 }
 
 export interface InputTypeTodo extends Omit<Todo, 'id'> {

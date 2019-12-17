@@ -33,6 +33,7 @@ const List: React.FC = () => {
               title,
               done: false,
               starred: false,
+              subtasks: [],
             };
             if (activeList) {
               newTodo['list'] = activeList;
