@@ -29,13 +29,14 @@ export class TodoController {
   @UseGuards(AuthGuard('jwt'))
   create(@Body() todo: Todo, @Req() request) {
     const todoToBeSaved = { ...todo, creator: request.user };
+    // is allowed to create in List?
     return this.todoService.save(Todo.create(todoToBeSaved));
   }
 
   @Put(':id')
   @UseGuards(AuthGuard('jwt'))
-  update(@Body() todo: Todo, @Req() request) {
-    if (this.todoService.isAllowedToModify(request.user.id, todo.id)) {
+  async update(@Body() todo: Todo, @Req() request) {
+    if (await this.todoService.isAllowedToModify(request.user.id, todo.id)) {
       return this.todoService.save(todo);
     } else {
       throw new UnauthorizedException();
@@ -44,9 +45,9 @@ export class TodoController {
 
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
-  remove(@Param('id') id: string, @Req() request) {
+  async remove(@Param('id') id: string, @Req() request) {
     const todoId = parseInt(id, 10);
-    if (this.todoService.isAllowedToModify(request.user.id, todoId)) {
+    if (await this.todoService.isAllowedToModify(request.user.id, todoId)) {
       return this.todoService.remove(todoId);
     } else {
       throw new UnauthorizedException();
