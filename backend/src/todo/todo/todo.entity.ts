@@ -51,7 +51,7 @@ export class Todo extends BaseEntity {
 
   @OneToMany(
     type => Subtask,
-    subtask => subtask.id
+    subtask => subtask.todo
   )
   subtasks: Subtask[];
 }
