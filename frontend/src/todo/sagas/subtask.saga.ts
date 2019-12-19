@@ -10,6 +10,7 @@ import {
   createSubtaskSuccessAction,
   UPDATE_SUBTASK_SUCCESS,
   CREATE_SUBTASK_SUCCESS,
+  DELETE_SUBTASK_SUCCESS,
 } from '../actions/subtask.actions';
 import { getToken } from '../../login/selectors/login.selector';
 import axios, { AxiosResponse } from 'axios';
@@ -63,10 +64,14 @@ function* remove({ payload: subtask }: ActionType<typeof deleteSubtaskAction>) {
 
 function* toggleTodoStatusDependingOnSubtasks({
   payload: subtask,
+  type,
 }: ActionType<
-  typeof updateSubtaskSuccessAction | typeof createSubtaskSuccessAction
+  | typeof updateSubtaskSuccessAction
+  | typeof createSubtaskSuccessAction
+  | typeof deleteSubtaskSuccessAction
 >) {
   let id: Todo | number = subtask.todo;
+  debugger;
   if (typeof id !== 'number' && subtask.todo.id) {
     id = subtask.todo.id;
   }
@@ -75,10 +80,17 @@ function* toggleTodoStatusDependingOnSubtasks({
   const subtaskIndex = subtasks.findIndex(
     (st: Subtask) => st.id === subtask.id
   );
-  if (subtaskIndex > -1) {
-    subtasks[subtaskIndex] = subtask;
-  }
 
+  if (type === CREATE_SUBTASK_SUCCESS && subtaskIndex === -1) {
+    subtasks.push(subtask);
+  } else if (type === UPDATE_SUBTASK_SUCCESS && subtaskIndex > -1) {
+    subtasks[subtaskIndex] = subtask;
+  } else if (type === DELETE_SUBTASK_SUCCESS && subtaskIndex > -1) {
+    subtasks.splice(subtaskIndex, 1);
+    if (subtasks.length === 0) {
+      return;
+    }
+  }
   const allDone = subtasks.every((st: Subtask) => st.done);
 
   yield put(saveTodoAction(update(todo, { done: { $set: allDone } })));
@@ -88,7 +100,7 @@ export default function* todoSaga() {
   yield takeLatest(SAVE_SUBTASK, save);
   yield takeLatest(DELETE_SUBTASK, remove);
   yield takeLatest(
-    [UPDATE_SUBTASK_SUCCESS, CREATE_SUBTASK_SUCCESS],
+    [UPDATE_SUBTASK_SUCCESS, CREATE_SUBTASK_SUCCESS, DELETE_SUBTASK_SUCCESS],
     toggleTodoStatusDependingOnSubtasks
   );
 }
