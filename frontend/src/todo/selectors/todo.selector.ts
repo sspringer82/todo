@@ -41,5 +41,7 @@ export function findTodos(state: AppState) {
 }
 
 export function getTodo(id: number) {
-  return (state: AppState) => state.todo.todos.find(todo => todo.id === id);
+  return (state: AppState) => {
+    return state.todo.todos.find(todo => todo.id === id);
+  };
 }
