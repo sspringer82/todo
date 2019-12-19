@@ -37,7 +37,22 @@ const Item: React.FC<Props> = ({ todo, onChange, onRemove }) => {
           onClick={() => onChange({ ...todo, done: false })}
         />
       )}
-      <Title done={todo.done}>{todo.title}</Title>
+      <Title done={todo.done}>
+        {todo.title}
+
+        {todo.subtasks.length > 0 && (
+          <span>
+            &nbsp;(
+            {todo.subtasks.reduce((prev, curr) => {
+              if (curr.done) {
+                return prev + 1;
+              }
+              return prev;
+            }, 0)}{' '}
+            / {todo.subtasks.length})
+          </span>
+        )}
+      </Title>
       <StarContainer
         onClick={() => onChange({ ...todo, starred: !todo.starred })}
       >

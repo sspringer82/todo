@@ -44,10 +44,6 @@ function* save({ payload: subtask }: ActionType<typeof saveSubtaskAction>) {
         },
       }
     );
-
-    // check if there was a check or uncheck
-    // check if all other subtasks are done or not => mark parent todo as done/undone as well
-
     yield put(createSubtaskSuccessAction(response.data));
   }
 }
@@ -71,7 +67,6 @@ function* toggleTodoStatusDependingOnSubtasks({
   | typeof deleteSubtaskSuccessAction
 >) {
   let id: Todo | number = subtask.todo;
-  debugger;
   if (typeof id !== 'number' && subtask.todo.id) {
     id = subtask.todo.id;
   }
