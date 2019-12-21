@@ -10,9 +10,6 @@ import { User } from 'src/user/user/user.entity';
 import { List } from 'src/todo/list/list.entity';
 @Entity()
 export class Settings {
-  @PrimaryGeneratedColumn()
-  id: number;
-
   @Column({ default: 0 })
   hideDone: boolean;
 

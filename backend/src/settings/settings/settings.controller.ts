@@ -1,6 +1,7 @@
-import { Controller, Get, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, UseGuards, Req, Post, Body } from '@nestjs/common';
 import { SettingsService } from './settings.service';
 import { AuthGuard } from '@nestjs/passport';
+import { Settings } from './settings.entity';
 
 @Controller('settings')
 export class SettingsController {
@@ -8,8 +9,13 @@ export class SettingsController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  async getAll(@Req() request) {
-    const result = await this.settingsService.getByUserId(request.user.id);
-    return result;
+  getAll(@Req() request) {
+    return this.settingsService.getByUserId(request.user.id);
+  }
+
+  @Post()
+  @UseGuards(AuthGuard('jwt'))
+  save(@Body() settings: Settings, @Req() request) {
+    return this.settingsService.save(settings);
   }
 }
