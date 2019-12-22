@@ -16,6 +16,7 @@ export class SettingsController {
   @Post()
   @UseGuards(AuthGuard('jwt'))
   save(@Body() settings: Settings, @Req() request) {
+    settings.user = request.user;
     return this.settingsService.save(settings);
   }
 }

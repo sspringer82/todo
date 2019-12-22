@@ -14,7 +14,11 @@ export class SettingsService {
     return this.settingsRepository.findOne({ where: { userId: id } });
   }
 
-  save(settings: Settings) {
+  async save(settings: Settings) {
+    const existingSettings = await this.getByUserId(settings.user.id);
+    if (existingSettings) {
+      settings.id = existingSettings.id;
+    }
     return this.settingsRepository.save(settings);
   }
 }
