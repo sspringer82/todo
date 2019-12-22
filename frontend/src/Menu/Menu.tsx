@@ -16,11 +16,18 @@ import Form from '../list/components/Form';
 import { Route } from 'react-router';
 import { Link } from 'react-router-dom';
 import { List as ListType } from '../shared/List';
+import { getSettings } from '../settings/selectors/settings.selector';
+import {
+  saveSettingsAction,
+  loadSettingsAction,
+} from '../settings/actions/settings.actions';
+import update from 'immutability-helper';
 
 const Menu: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadListsAction());
+    dispatch(loadSettingsAction());
   }, [dispatch]);
   const lists = useSelector(getLists);
   const currentList = useSelector(getActiveList);
@@ -29,6 +36,7 @@ const Menu: React.FC = () => {
     dispatch(selectListAction(list));
     setMenuOpen(false);
   }
+  const settings = useSelector(getSettings);
   return (
     <>
       <Route path="/list/edit/:id">
@@ -52,7 +60,17 @@ const Menu: React.FC = () => {
       <Drawer open={menuOpen} onClose={() => setMenuOpen(false)}>
         <List>
           <ListItem>
-            <Done />
+            <Done
+              hideDone={settings.hideDone}
+              onChange={(hideDone: boolean) => {
+                debugger;
+                dispatch(
+                  saveSettingsAction(
+                    update(settings, { hideDone: { $set: hideDone } })
+                  )
+                );
+              }}
+            />
           </ListItem>
           <ListItem>
             <ShowOnlyStars />

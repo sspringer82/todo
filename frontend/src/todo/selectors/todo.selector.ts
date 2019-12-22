@@ -32,7 +32,7 @@ export function findTodos(state: AppState) {
   return dealWithActiveList(
     dealWithDone(
       dealWithStars(state.todo.todos, state.todo.showOnlyStars),
-      state.todo.hideDone
+      state.settings.hideDone
     ),
     getActiveList(state)
   ).filter((todo: Todo) =>
