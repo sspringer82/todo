@@ -10,8 +10,17 @@ export class SettingsService {
     private readonly settingsRepository: Repository<Settings>
   ) {}
 
-  getByUserId(id: number) {
-    return this.settingsRepository.findOne({ where: { userId: id } });
+  async getByUserId(id: number) {
+    const userSettings = await this.settingsRepository.findOne({
+      where: { userId: id },
+    });
+    if (userSettings) {
+      return userSettings;
+    }
+    return {
+      hideDone: false,
+      onlyStars: false,
+    };
   }
 
   save(settings: Settings) {

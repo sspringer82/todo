@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 import { takeLatest, put, select } from '@redux-saga/core/effects';
 import { getToken } from '../../login/selectors/login.selector';
@@ -27,15 +27,28 @@ function* loadSettings() {
 
 function* save({ payload: settings }: ActionType<typeof saveSettingsAction>) {
   const token = yield select(getToken);
-  const response = yield axios.post<Settings>(
-    `${process.env.REACT_APP_SERVER}/settings/`,
-    settings,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  let response: AxiosResponse<Settings>;
+  if (settings.id) {
+    response = yield axios.put<Settings>(
+      `${process.env.REACT_APP_SERVER}/settings/${settings.id}`,
+      settings,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } else {
+    response = yield axios.post<Settings>(
+      `${process.env.REACT_APP_SERVER}/settings/`,
+      settings,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  }
   yield put(saveSettingsSuccessAction(response.data));
 }
 

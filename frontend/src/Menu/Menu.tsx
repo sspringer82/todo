@@ -63,7 +63,6 @@ const Menu: React.FC = () => {
             <Done
               hideDone={settings.hideDone}
               onChange={(hideDone: boolean) => {
-                debugger;
                 dispatch(
                   saveSettingsAction(
                     update(settings, { hideDone: { $set: hideDone } })
