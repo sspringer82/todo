@@ -31,7 +31,7 @@ function dealWithActiveList(todos: Todo[], activeList: List | null) {
 export function findTodos(state: AppState) {
   return dealWithActiveList(
     dealWithDone(
-      dealWithStars(state.todo.todos, state.todo.showOnlyStars),
+      dealWithStars(state.todo.todos, state.settings.onlyStars),
       state.settings.hideDone
     ),
     getActiveList(state)

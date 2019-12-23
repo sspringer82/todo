@@ -72,7 +72,16 @@ const Menu: React.FC = () => {
             />
           </ListItem>
           <ListItem>
-            <ShowOnlyStars />
+            <ShowOnlyStars
+              onlyStars={settings.onlyStars}
+              onChange={(onlyStars: boolean) => {
+                dispatch(
+                  saveSettingsAction(
+                    update(settings, { onlyStars: { $set: onlyStars } })
+                  )
+                );
+              }}
+            />
           </ListItem>
           <Divider />
 
