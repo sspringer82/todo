@@ -28,6 +28,9 @@ export class SettingsService {
   }
 
   save(settings: Settings) {
+    if (!settings.list) {
+      settings.list = null;
+    }
     return this.settingsRepository.save(settings);
   }
 }
