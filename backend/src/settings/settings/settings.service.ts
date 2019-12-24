@@ -13,8 +13,12 @@ export class SettingsService {
   async getByUserId(id: number) {
     const userSettings = await this.settingsRepository.findOne({
       where: { userId: id },
+      relations: ['list'],
     });
     if (userSettings) {
+      if (userSettings.list) {
+        userSettings.list = userSettings.list.id as any;
+      }
       return userSettings;
     }
     return {
