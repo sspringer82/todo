@@ -6,8 +6,8 @@ import FormDialog from '../Form/Form';
 import useTodoList from './useTodoList';
 import { Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getActiveList } from '../../../list/selectors/list.selector';
 import InlineEdit from '../../../shared/components/InlineEdit/InlineEdit';
+import { getActiveList } from '../../../settings/selectors/settings.selector';
 
 const List: React.FC = () => {
   const { todos, handleSave, handleDelete } = useTodoList();

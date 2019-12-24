@@ -19,13 +19,11 @@ import { InputTypeList, List } from '../../shared/List';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../../reducers/rootReducer';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {
-  deleteListAction,
-  saveListAction,
-  selectListAction,
-} from '../actions/list.actions';
+import { deleteListAction, saveListAction } from '../actions/list.actions';
 import { getUsers } from '../../user/selectors/user.selector';
 import { loadUsersAction } from '../../user/actions/user.actions';
+import { getSettings } from '../../settings/selectors/settings.selector';
+import { saveSettingsAction } from '../../settings/actions/settings.actions';
 
 const Form: React.FC = () => {
   const params = useParams<{ id: string }>();
@@ -82,9 +80,12 @@ const Form: React.FC = () => {
     handleClose();
   }
 
+  const settings = useSelector(getSettings);
   function handleDelete() {
     dispatch(deleteListAction(list as List));
-    dispatch(selectListAction(null));
+    dispatch(
+      saveSettingsAction(update(settings, { list: { $set: undefined } }))
+    );
     handleClose();
   }
 

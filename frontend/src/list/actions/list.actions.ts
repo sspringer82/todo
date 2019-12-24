@@ -19,9 +19,6 @@ export type DELETE_LIST = typeof DELETE_LIST;
 export const DELETE_LIST_SUCCESS = 'DELETE_LIST_SUCCESS';
 export type DELETE_LIST_SUCCESS = typeof DELETE_LIST_SUCCESS;
 
-export const SELECT_LIST = 'SELECT_LIST';
-export type SELECT_LIST = typeof SELECT_LIST;
-
 export const loadListsAction = createAction(LOAD_LISTS)<void>();
 export const loadListsSuccessAction = createAction(LOAD_LISTS_SUCCESS)<
   List[]
@@ -34,5 +31,3 @@ export const deleteListAction = createAction(DELETE_LIST)<List>();
 export const deleteListSuccessAction = createAction(DELETE_LIST_SUCCESS)<
   List
 >();
-
-export const selectListAction = createAction(SELECT_LIST)<List | null>();

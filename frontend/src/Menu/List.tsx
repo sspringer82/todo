@@ -5,7 +5,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ListItem } from './List.styles';
-import { getActiveList } from '../list/selectors/list.selector';
+import { getActiveList } from '../settings/selectors/settings.selector';
 import classnames from 'classnames';
 import ShareIcon from '@material-ui/icons/Share';
 

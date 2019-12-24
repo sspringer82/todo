@@ -4,6 +4,8 @@ export function getLists(state: AppState) {
   return state.list.lists;
 }
 
-export function getActiveList(state: AppState) {
-  return state.list.activeList;
+export function getListById(id?: number) {
+  return (state: AppState) => {
+    return getLists(state).find(list => list.id === id) || null;
+  };
 }

@@ -1,7 +1,7 @@
 import { AppState } from '../../reducers/rootReducer';
 import { Todo } from '../../shared/Todo';
 import { List } from '../../shared/List';
-import { getActiveList } from '../../list/selectors/list.selector';
+import { getActiveList } from '../../settings/selectors/settings.selector';
 
 function dealWithStars(todos: Todo[], showOnlyStars: boolean) {
   return todos.filter(todo => {

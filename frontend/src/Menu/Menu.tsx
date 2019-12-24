@@ -6,17 +6,17 @@ import Search from '../todo/components/Search/Search';
 import Done from './Done';
 import ShowOnlyStars from './Star';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  loadListsAction,
-  selectListAction,
-} from '../list/actions/list.actions';
-import { getLists, getActiveList } from '../list/selectors/list.selector';
+import { loadListsAction } from '../list/actions/list.actions';
+import { getLists } from '../list/selectors/list.selector';
 import TodoList from './List';
 import Form from '../list/components/Form';
 import { Route } from 'react-router';
 import { Link } from 'react-router-dom';
 import { List as ListType } from '../shared/List';
-import { getSettings } from '../settings/selectors/settings.selector';
+import {
+  getSettings,
+  getActiveList,
+} from '../settings/selectors/settings.selector';
 import {
   saveSettingsAction,
   loadSettingsAction,
@@ -33,7 +33,12 @@ const Menu: React.FC = () => {
   const currentList = useSelector(getActiveList);
   const [menuOpen, setMenuOpen] = useState(false);
   function handleSelect(list: ListType | null) {
-    dispatch(selectListAction(list));
+    dispatch(
+      saveSettingsAction(
+        update(settings, { list: { $set: (list && list.id) || undefined } })
+      )
+    );
+    // dispatch(selectListAction(list));
     setMenuOpen(false);
   }
   const settings = useSelector(getSettings);
