@@ -9,6 +9,7 @@ import { getToken } from './login/selectors/login.selector';
 import { ConnectedRouter } from 'connected-react-router';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 
 const store = configureStore();
 
@@ -27,6 +28,7 @@ const App: React.FC = () => {
 
   return (
     <Provider store={store}>
+      <AssignmentTurnedInIcon fontSize="large" />
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <ConnectedRouter history={history}>
           <Switch>
