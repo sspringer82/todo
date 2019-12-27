@@ -11,6 +11,7 @@ import {
   DELETE_SUBTASK,
   UPDATE_SUBTASK_SUCCESS,
 } from '../actions/subtask.actions';
+import db from '../../db/db';
 
 export interface State {
   todos: Todo[];
@@ -25,6 +26,8 @@ const initialState: State = {
 export default function(state: State = initialState, action: any): State {
   switch (action.type) {
     case LOAD_TODOS_SUCCESS:
+      db.table('todo').clear();
+      db.table('todo').bulkAdd(action.payload);
       return update(state, { todos: { $set: action.payload } });
     case SAVE_TODO_SUCCESS:
       const index = state.todos.findIndex(
