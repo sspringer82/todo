@@ -5,6 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import 'typeface-roboto';
 import './index.css';
 
+// eslint-disable-next-line
 import db from './db/db';
 
 ReactDOM.render(<App />, document.getElementById('root'));
