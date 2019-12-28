@@ -14,7 +14,7 @@ const store = configureStore();
 
 const App: React.FC = () => {
   const mainPage = () => {
-    if (getToken(store.getState()) === '') {
+    if (navigator.onLine && getToken(store.getState()) === '') {
       return <Redirect to="/login" />;
     }
     return (
@@ -30,7 +30,15 @@ const App: React.FC = () => {
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <ConnectedRouter history={history}>
           <Switch>
-            <Route path="/login" component={Login}></Route>
+            <Route path="/login">
+              {() => {
+                if (navigator.onLine) {
+                  return <Login />;
+                } else {
+                  return <Redirect to="/list" />;
+                }
+              }}
+            </Route>
             <Route path="/list">{mainPage}</Route>
             <Route path="/edit/:id">{mainPage}</Route>
             <Route path="/list/edit/:id">{mainPage}</Route>
