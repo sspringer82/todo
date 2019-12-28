@@ -6,7 +6,6 @@ import 'typeface-roboto';
 import './index.css';
 
 import db from './db/db';
-console.log(db);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
