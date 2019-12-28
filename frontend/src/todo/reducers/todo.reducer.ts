@@ -26,8 +26,10 @@ const initialState: State = {
 export default function(state: State = initialState, action: any): State {
   switch (action.type) {
     case LOAD_TODOS_SUCCESS:
-      db.table('todo').clear();
-      db.table('todo').bulkAdd(action.payload);
+      if (navigator.onLine) {
+        db.table('todo').clear();
+        db.table('todo').bulkAdd(action.payload);
+      }
       return update(state, { todos: { $set: action.payload } });
     case SAVE_TODO_SUCCESS:
       const index = state.todos.findIndex(

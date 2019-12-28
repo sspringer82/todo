@@ -14,26 +14,32 @@ import {
 import { ActionType } from 'typesafe-actions';
 import { getToken } from '../../login/selectors/login.selector';
 import update from 'immutability-helper';
+import db from '../../db/db';
 
 function* loadTodos() {
-  const token = yield select(getToken);
-  const { data: todos } = yield axios.get<Todo[]>(
-    `${process.env.REACT_APP_SERVER}/todo`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  const todosWithSubtasks = todos.map((todo: Todo) => {
-    if (todo.subtasks) {
-      return todo;
-    } else {
-      return update(todo, { subtasks: { $set: [] } });
-    }
-  });
+  if (navigator.onLine) {
+    const token = yield select(getToken);
+    const { data: todos } = yield axios.get<Todo[]>(
+      `${process.env.REACT_APP_SERVER}/todo`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const todosWithSubtasks = todos.map((todo: Todo) => {
+      if (todo.subtasks) {
+        return todo;
+      } else {
+        return update(todo, { subtasks: { $set: [] } });
+      }
+    });
 
-  yield put(loadTodosSuccessAction(todosWithSubtasks));
+    yield put(loadTodosSuccessAction(todosWithSubtasks));
+  } else {
+    const todosWithSubtasks = yield db.table('todo').toArray();
+    yield put(loadTodosSuccessAction(todosWithSubtasks));
+  }
 }
 
 function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {
