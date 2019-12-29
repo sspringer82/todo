@@ -21,7 +21,7 @@ export default function(state: State = initialState, action: any): State {
     case LOAD_SETTINGS_SUCCESS:
       if (navigator.onLine) {
         db.table('settings').clear();
-        db.table('settings').bulkAdd(action.payload);
+        db.table('settings').add(action.payload);
       }
       return action.payload;
     default:
