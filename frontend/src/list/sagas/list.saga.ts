@@ -13,17 +13,21 @@ import axios, { AxiosResponse } from 'axios';
 import { getToken } from '../../login/selectors/login.selector';
 import { List } from '../../shared/List';
 import { ActionType } from 'typesafe-actions';
+import db from '../../db/db';
 
 function* loadLists() {
-  const token = yield select(getToken);
-  const { data: lists } = yield axios.get<List[]>(
-    `${process.env.REACT_APP_SERVER}/list`,
-    {
+  let lists: List[] = [];
+
+  if (navigator.onLine) {
+    const token = yield select(getToken);
+    lists = (yield axios.get<List[]>(`${process.env.REACT_APP_SERVER}/list`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
-  );
+    })).data;
+  } else {
+    lists = yield db.table('list').toArray();
+  }
 
   yield put(loadListsSuccessAction(lists));
 }
