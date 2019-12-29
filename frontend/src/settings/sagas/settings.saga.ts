@@ -11,17 +11,23 @@ import {
 } from '../actions/settings.actions';
 import { Settings } from '../../shared/Settings';
 import { ActionType } from 'typesafe-actions';
+import db from '../../db/db';
 
 function* loadSettings() {
-  const token = yield select(getToken);
-  const { data: settings } = yield axios.get<Settings>(
-    `${process.env.REACT_APP_SERVER}/settings`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  let settings: Settings;
+  if (navigator.onLine) {
+    const token = yield select(getToken);
+    settings = (yield axios.get<Settings>(
+      `${process.env.REACT_APP_SERVER}/settings`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )).data;
+  } else {
+    settings = (yield db.table('settings').toArray()).pop();
+  }
   yield put(loadSettingsSuccessAction(settings));
 }
 
