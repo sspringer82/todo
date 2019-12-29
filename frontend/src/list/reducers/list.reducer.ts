@@ -5,6 +5,7 @@ import {
   SAVE_LIST_SUCCESS,
 } from '../actions/list.actions';
 import update from 'immutability-helper';
+import db from '../../db/db';
 
 export interface State {
   activeList: null | List;
@@ -19,6 +20,10 @@ const initialState: State = {
 export default function(state: State = initialState, action: any): State {
   switch (action.type) {
     case LOAD_LISTS_SUCCESS:
+      if (navigator.onLine) {
+        db.table('list').clear();
+        db.table('list').bulkAdd(action.payload);
+      }
       return update(state, { lists: { $set: action.payload } });
     case SAVE_LIST_SUCCESS:
       const index = state.lists.findIndex(
