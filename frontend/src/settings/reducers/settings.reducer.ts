@@ -2,6 +2,7 @@ import {
   LOAD_SETTINGS_SUCCESS,
   SAVE_SETTINGS_SUCCESS,
 } from '../actions/settings.actions';
+import db from '../../db/db';
 
 export interface State {
   hideDone: boolean;
@@ -18,6 +19,10 @@ export default function(state: State = initialState, action: any): State {
   switch (action.type) {
     case SAVE_SETTINGS_SUCCESS:
     case LOAD_SETTINGS_SUCCESS:
+      if (navigator.onLine) {
+        db.table('settings').clear();
+        db.table('settings').bulkAdd(action.payload);
+      }
       return action.payload;
     default:
       return state;
