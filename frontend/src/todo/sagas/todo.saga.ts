@@ -17,6 +17,7 @@ import update from 'immutability-helper';
 import db from '../../db/db';
 
 function* loadTodos() {
+  let todosWithSubtasks: Todo[] = [];
   if (navigator.onLine) {
     const token = yield select(getToken);
     const { data: todos } = yield axios.get<Todo[]>(
@@ -27,19 +28,17 @@ function* loadTodos() {
         },
       }
     );
-    const todosWithSubtasks = todos.map((todo: Todo) => {
+    todosWithSubtasks = todos.map((todo: Todo) => {
       if (todo.subtasks) {
         return todo;
       } else {
         return update(todo, { subtasks: { $set: [] } });
       }
     });
-
-    yield put(loadTodosSuccessAction(todosWithSubtasks));
   } else {
-    const todosWithSubtasks = yield db.table('todo').toArray();
-    yield put(loadTodosSuccessAction(todosWithSubtasks));
+    todosWithSubtasks = yield db.table('todo').toArray();
   }
+  yield put(loadTodosSuccessAction(todosWithSubtasks));
 }
 
 function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {
