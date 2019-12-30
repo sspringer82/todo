@@ -43,19 +43,24 @@ function* loadTodos() {
 
 function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {
   const token = yield select(getToken);
-  let response: AxiosResponse<Todo>;
+  let responseTodo: Todo;
   if (todo.id) {
-    response = yield axios.put<Todo>(
-      `${process.env.REACT_APP_SERVER}/todo/${todo.id}`,
-      todo,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    if (navigator.onLine) {
+      responseTodo = (yield axios.put<Todo>(
+        `${process.env.REACT_APP_SERVER}/todo/${todo.id}`,
+        todo,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )).data;
+    } else {
+      yield db.table('todo').update(todo.id, todo);
+      responseTodo = todo as Todo;
+    }
   } else {
-    response = yield axios.post<Todo>(
+    responseTodo = (yield axios.post<Todo>(
       `${process.env.REACT_APP_SERVER}/todo/`,
       todo,
       {
@@ -63,9 +68,9 @@ function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {
           Authorization: `Bearer ${token}`,
         },
       }
-    );
+    )).data;
   }
-  yield put(saveTodoSuccessAction(response.data));
+  yield put(saveTodoSuccessAction(responseTodo));
 }
 
 function* remove({ payload: todo }: ActionType<typeof deleteTodoAction>) {
