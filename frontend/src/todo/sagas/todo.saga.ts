@@ -72,7 +72,6 @@ function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {
       )).data;
     } else {
       const id = yield db.table('todo').add(todo);
-      console.error('___' + id + '___');
       responseTodo = update(todo, { id: { $set: id } }) as Todo;
     }
   }
