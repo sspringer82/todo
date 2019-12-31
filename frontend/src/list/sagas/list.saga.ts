@@ -9,11 +9,12 @@ import {
   DELETE_LIST,
 } from '../actions/list.actions';
 import { takeLatest, put, select } from '@redux-saga/core/effects';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { getToken } from '../../login/selectors/login.selector';
 import { List } from '../../shared/List';
 import { ActionType } from 'typesafe-actions';
 import db from '../../db/db';
+import update from 'immutability-helper';
 
 function* loadLists() {
   let lists: List[] = [];
@@ -34,29 +35,39 @@ function* loadLists() {
 
 function* save({ payload: list }: ActionType<typeof saveListAction>) {
   const token = yield select(getToken);
-  let response: AxiosResponse<List>;
+  let responseList: List;
   if (list.id) {
-    response = yield axios.put<List>(
-      `${process.env.REACT_APP_SERVER}/list/${list.id}`,
-      list,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    if (navigator.onLine) {
+      responseList = (yield axios.put<List>(
+        `${process.env.REACT_APP_SERVER}/list/${list.id}`,
+        list,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )).data;
+    } else {
+      yield db.table('list').update(list.id, list);
+      responseList = list as List;
+    }
   } else {
-    response = yield axios.post<List>(
-      `${process.env.REACT_APP_SERVER}/list/`,
-      list,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    if (navigator.onLine) {
+      responseList = (yield axios.post<List>(
+        `${process.env.REACT_APP_SERVER}/list/`,
+        list,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )).data;
+    } else {
+      const id = yield db.table('list').add(list);
+      responseList = update(list, { id: { $set: id } }) as List;
+    }
   }
-  yield put(saveListSuccessAction(response.data));
+  yield put(saveListSuccessAction(responseList));
 }
 
 function* remove({ payload: list }: ActionType<typeof deleteListAction>) {
