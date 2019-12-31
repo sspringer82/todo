@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { takeLatest, put, select } from '@redux-saga/core/effects';
 import { Todo } from '../../shared/Todo';
 import {
