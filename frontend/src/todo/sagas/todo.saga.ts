@@ -60,15 +60,21 @@ function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {
       responseTodo = todo as Todo;
     }
   } else {
-    responseTodo = (yield axios.post<Todo>(
-      `${process.env.REACT_APP_SERVER}/todo/`,
-      todo,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )).data;
+    if (navigator.onLine) {
+      responseTodo = (yield axios.post<Todo>(
+        `${process.env.REACT_APP_SERVER}/todo/`,
+        todo,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )).data;
+    } else {
+      const id = yield db.table('todo').add(todo);
+      console.error('___' + id + '___');
+      responseTodo = update(todo, { id: { $set: id } }) as Todo;
+    }
   }
   yield put(saveTodoSuccessAction(responseTodo));
 }
