@@ -79,12 +79,16 @@ function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {
 }
 
 function* remove({ payload: todo }: ActionType<typeof deleteTodoAction>) {
-  const token = yield select(getToken);
-  yield axios.delete(`${process.env.REACT_APP_SERVER}/todo/${todo.id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  if (navigator.onLine) {
+    const token = yield select(getToken);
+    yield axios.delete(`${process.env.REACT_APP_SERVER}/todo/${todo.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } else {
+    yield db.table('todo').delete(todo.id);
+  }
   yield put(deleteTodoSuccessAction(todo));
 }
 
