@@ -71,12 +71,16 @@ function* save({ payload: list }: ActionType<typeof saveListAction>) {
 }
 
 function* remove({ payload: list }: ActionType<typeof deleteListAction>) {
-  const token = yield select(getToken);
-  yield axios.delete(`${process.env.REACT_APP_SERVER}/list/${list.id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  if (navigator.onLine) {
+    const token = yield select(getToken);
+    yield axios.delete(`${process.env.REACT_APP_SERVER}/list/${list.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } else {
+    yield db.table('list').delete(list.id);
+  }
   yield put(deleteListSuccessAction(list));
 }
 
