@@ -37,6 +37,7 @@ const Login: React.FC = () => {
       <Grid item xs={12} md={4}>
         <LoginContainer onSubmit={handleLogin}>
           <TextField
+            autoFocus
             label="Username"
             name="username"
             onChange={handleChange}
