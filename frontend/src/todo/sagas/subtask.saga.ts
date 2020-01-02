@@ -19,6 +19,7 @@ import { getTodo } from '../selectors/todo.selector';
 import { saveTodoAction } from '../actions/todo.actions';
 import update from 'immutability-helper';
 import { Todo } from '../../shared/Todo';
+import db from '../../db/db';
 
 function* save({ payload: subtask }: ActionType<typeof saveSubtaskAction>) {
   const token = yield select(getToken);
@@ -49,12 +50,27 @@ function* save({ payload: subtask }: ActionType<typeof saveSubtaskAction>) {
 }
 
 function* remove({ payload: subtask }: ActionType<typeof deleteSubtaskAction>) {
-  const token = yield select(getToken);
-  yield axios.delete(`${process.env.REACT_APP_SERVER}/subtask/${subtask.id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  if (navigator.onLine) {
+    const token = yield select(getToken);
+    yield axios.delete(
+      `${process.env.REACT_APP_SERVER}/subtask/${subtask.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } else {
+    const id = subtask.todo.id ? subtask.todo.id : subtask.todo;
+    const todo = yield db.table('todo').get(id);
+    const subtaskIndex = todo.subtasks.findIndex(
+      (st: Subtask) => st.id === subtask.id
+    );
+    db.table('todo').update(
+      id,
+      update(todo, { subtasks: { $splice: [[subtaskIndex, 1]] } })
+    );
+  }
   yield put(deleteSubtaskSuccessAction(subtask));
 }
 
