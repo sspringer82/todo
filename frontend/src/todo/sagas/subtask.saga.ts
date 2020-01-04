@@ -23,29 +23,60 @@ import db from '../../db/db';
 
 function* save({ payload: subtask }: ActionType<typeof saveSubtaskAction>) {
   const token = yield select(getToken);
-  let response: AxiosResponse<Subtask>;
+  let responseSubtask: Subtask;
   if (subtask.id) {
-    response = yield axios.put<Subtask>(
-      `${process.env.REACT_APP_SERVER}/subtask/${subtask.id}`,
-      subtask,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    yield put(updateSubtaskSuccessAction(response.data));
+    if (navigator.onLine) {
+      responseSubtask = (yield axios.put<Subtask>(
+        `${process.env.REACT_APP_SERVER}/subtask/${subtask.id}`,
+        subtask,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )).data;
+    } else {
+      const id = subtask.todo.id ? subtask.todo.id : subtask.todo;
+      const todo = yield db.table('todo').get(id);
+      const subtaskIndex = todo.subtasks.findIndex(
+        (st: Subtask) => st.id === subtask.id
+      );
+      db.table('todo').update(
+        id,
+        update(todo, { subtasks: { [subtaskIndex]: { $set: subtask } } })
+      );
+      responseSubtask = subtask as Subtask;
+    }
+    yield put(updateSubtaskSuccessAction(responseSubtask));
   } else {
-    response = yield axios.post<Subtask>(
-      `${process.env.REACT_APP_SERVER}/subtask/`,
-      subtask,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    yield put(createSubtaskSuccessAction(response.data));
+    if (navigator.onLine) {
+      responseSubtask = (yield axios.post<Subtask>(
+        `${process.env.REACT_APP_SERVER}/subtask/`,
+        subtask,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )).data;
+    } else {
+      const id = subtask.todo.id ? subtask.todo.id : subtask.todo;
+      const todo = yield db.table('todo').get(id);
+      const subtaskIndex =
+        (id as number) * 1000 +
+        Math.max.apply(
+          null,
+          todo.subtasks.map((st: Subtask) => st.id)
+        ) +
+        1;
+      const subtaskWithIndex = update(subtask, { id: { $set: subtaskIndex } });
+      db.table('todo').update(
+        id,
+        update(todo, { subtasks: { $push: [subtaskWithIndex] } })
+      );
+      responseSubtask = subtaskWithIndex as Subtask;
+    }
+    yield put(createSubtaskSuccessAction(responseSubtask));
   }
 }
 
