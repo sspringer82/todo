@@ -15,6 +15,7 @@ import { ActionType } from 'typesafe-actions';
 import { getToken } from '../../login/selectors/login.selector';
 import update from 'immutability-helper';
 import db from '../../db/db';
+import { addChangeAction } from '../../changes/actions/changes.actions';
 
 function* loadTodos() {
   let todosWithSubtasks: Todo[] = [];
@@ -41,7 +42,8 @@ function* loadTodos() {
   yield put(loadTodosSuccessAction(todosWithSubtasks));
 }
 
-function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {
+function* save(action: ActionType<typeof saveTodoAction>) {
+  const { payload: todo } = action;
   const token = yield select(getToken);
   let responseTodo: Todo;
   if (todo.id) {
@@ -56,6 +58,7 @@ function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {
         }
       )).data;
     } else {
+      yield put(addChangeAction({ action }));
       yield db.table('todo').update(todo.id, todo);
       responseTodo = todo as Todo;
     }
@@ -71,6 +74,7 @@ function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {
         }
       )).data;
     } else {
+      yield put(addChangeAction({ action }));
       const id = yield db.table('todo').add(todo);
       responseTodo = update(todo, { id: { $set: id } }) as Todo;
     }
