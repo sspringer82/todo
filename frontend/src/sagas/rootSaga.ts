@@ -5,6 +5,7 @@ import listSaga from '../list/sagas/list.saga';
 import loginSaga from '../login/sagas/login.saga';
 import userSaga from '../user/sagas/user.saga';
 import settingsSaga from '../settings/sagas/settings.saga';
+import changesSaga from '../changes/sagas/changes.saga';
 
 export default function* rootSaga() {
   yield all([
@@ -14,5 +15,6 @@ export default function* rootSaga() {
     userSaga(),
     subtaskSaga(),
     settingsSaga(),
+    changesSaga(),
   ]);
 }
