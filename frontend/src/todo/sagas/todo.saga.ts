@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { takeLatest, put, select } from '@redux-saga/core/effects';
-import { Todo } from '../../shared/Todo';
+import { Todo, InputTypeTodo } from '../../shared/Todo';
 import {
   loadTodosSuccessAction,
   LOAD_TODOS,
@@ -42,41 +42,50 @@ function* loadTodos() {
   yield put(loadTodosSuccessAction(todosWithSubtasks));
 }
 
+function* updateOnline(todo: Todo) {
+  (yield axios.put<Todo>(
+    `${process.env.REACT_APP_SERVER}/todo/${todo.id}`,
+    todo,
+    {
+      headers: {
+        Authorization: `Bearer ${yield select(getToken)}`,
+      },
+    }
+  )).data;
+}
+
+function* updateOffline(action: ActionType<typeof saveTodoAction>) {
+  yield put(addChangeAction({ action }));
+  yield db.table('todo').update(action.payload.id, action.payload);
+}
+
+function* createOnline(todo: InputTypeTodo) {
+  (yield axios.post<Todo>(`${process.env.REACT_APP_SERVER}/todo/`, todo, {
+    headers: {
+      Authorization: `Bearer ${yield select(getToken)}`,
+    },
+  })).data;
+}
+
+function* createOffline(action: ActionType<typeof saveTodoAction>) {
+  yield put(addChangeAction({ action }));
+  const id = yield db.table('todo').add(action.payload);
+  return update(action.payload, { id: { $set: id } }) as Todo;
+}
+
 function* save(action: ActionType<typeof saveTodoAction>) {
-  const { payload: todo } = action;
-  const token = yield select(getToken);
   let responseTodo: Todo;
-  if (todo.id) {
+  if (action.payload.id) {
     if (navigator.onLine) {
-      responseTodo = (yield axios.put<Todo>(
-        `${process.env.REACT_APP_SERVER}/todo/${todo.id}`,
-        todo,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )).data;
+      responseTodo = yield updateOnline(action.payload as Todo);
     } else {
-      yield put(addChangeAction({ action }));
-      yield db.table('todo').update(todo.id, todo);
-      responseTodo = todo as Todo;
+      responseTodo = yield updateOffline(action);
     }
   } else {
     if (navigator.onLine) {
-      responseTodo = (yield axios.post<Todo>(
-        `${process.env.REACT_APP_SERVER}/todo/`,
-        todo,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )).data;
+      responseTodo = yield createOnline(action.payload as InputTypeTodo);
     } else {
-      yield put(addChangeAction({ action }));
-      const id = yield db.table('todo').add(todo);
-      responseTodo = update(todo, { id: { $set: id } }) as Todo;
+      responseTodo = yield createOffline(action);
     }
   }
   yield put(saveTodoSuccessAction(responseTodo));
