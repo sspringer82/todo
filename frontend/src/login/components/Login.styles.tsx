@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { TextField as MuiTextField } from '@material-ui/core';
+import { Form } from 'formik';
 
 export const TextField = styled(MuiTextField)`
   && {
@@ -11,7 +12,7 @@ export const TextField = styled(MuiTextField)`
   }
 `;
 
-export const LoginContainer = styled.form`
+export const LoginContainer = styled(Form)`
   display: flex;
   flex-direction: column;
   height: 100vh;
