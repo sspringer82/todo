@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 import { takeLatest, put, select } from '@redux-saga/core/effects';
 import { getToken } from '../../login/selectors/login.selector';
@@ -34,7 +34,6 @@ function* loadSettings() {
 
 function* save({ payload: settings }: ActionType<typeof saveSettingsAction>) {
   const token = yield select(getToken);
-  let response: AxiosResponse<Settings>;
   let responseSettings: Settings;
   if (settings.id) {
     if (navigator.onLine) {
