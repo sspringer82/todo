@@ -43,7 +43,7 @@ function* loadTodos() {
 }
 
 function* updateOnline(todo: Todo) {
-  (yield axios.put<Todo>(
+  return (yield axios.put<Todo>(
     `${process.env.REACT_APP_SERVER}/todo/${todo.id}`,
     todo,
     {
@@ -60,11 +60,15 @@ function* updateOffline(action: ActionType<typeof saveTodoAction>) {
 }
 
 function* createOnline(todo: InputTypeTodo) {
-  (yield axios.post<Todo>(`${process.env.REACT_APP_SERVER}/todo/`, todo, {
-    headers: {
-      Authorization: `Bearer ${yield select(getToken)}`,
-    },
-  })).data;
+  return (yield axios.post<Todo>(
+    `${process.env.REACT_APP_SERVER}/todo/`,
+    todo,
+    {
+      headers: {
+        Authorization: `Bearer ${yield select(getToken)}`,
+      },
+    }
+  )).data;
 }
 
 function* createOffline(action: ActionType<typeof saveTodoAction>) {

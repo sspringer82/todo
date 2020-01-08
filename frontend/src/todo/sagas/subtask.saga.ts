@@ -13,7 +13,7 @@ import {
   DELETE_SUBTASK_SUCCESS,
 } from '../actions/subtask.actions';
 import { getToken } from '../../login/selectors/login.selector';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { takeLatest, put, select } from '@redux-saga/core/effects';
 import { getTodo } from '../selectors/todo.selector';
 import { saveTodoAction } from '../actions/todo.actions';
