@@ -59,4 +59,28 @@ describe('Login', () => {
     const passwordError = await queryByTestId('passwordError');
     expect(passwordError).not.toBeNull();
   });
+
+  it('should clear the form on cancel', async () => {
+    const { getByTestId } = render(
+      <Login hasLoginError={false} onLogin={jest.fn()} />
+    );
+    const usernameInput = getByTestId!('username');
+    const passwordInput = getByTestId!('password');
+    const cancelButton = getByTestId!('cancel');
+    await wait(() => {
+      fireEvent.change(usernameInput, {
+        target: { value: 'testuser' },
+      });
+    });
+    await wait(() => {
+      fireEvent.change(passwordInput, {
+        target: { value: 'testpassword' },
+      });
+    });
+    await wait(() => {
+      fireEvent.click(cancelButton);
+    });
+    expect(usernameInput.value).toBe('');
+    expect(passwordInput.value).toBe('');
+  });
 });
