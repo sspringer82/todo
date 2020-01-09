@@ -2,15 +2,16 @@ import React from 'react';
 import { Button, Grid, Hidden } from '@material-ui/core';
 import { LoginContainer, TextField } from './Login.styles';
 import { Login as LoginType } from '../../shared/User';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginAction } from '../actions/login.actions';
-import { hasLoginError as hasLoginErrorSelector } from '../selectors/login.selector';
+
 import * as Yup from 'yup';
 import { Formik, Field, FieldProps, ErrorMessage } from 'formik';
 
-const Login: React.FC = () => {
-  const hasLoginError = useSelector(hasLoginErrorSelector);
-  const dispatch = useDispatch();
+interface Props {
+  hasLoginError: boolean;
+  onLogin: (login: LoginType) => void;
+}
+
+const Login: React.FC<Props> = ({ hasLoginError, onLogin }) => {
   const initialState: LoginType = {
     username: '',
     password: '',
@@ -20,9 +21,6 @@ const Login: React.FC = () => {
     password: Yup.string().required(),
   });
 
-  function handleLogin(login: LoginType) {
-    dispatch(loginAction(login));
-  }
   return (
     <Grid container>
       <Hidden smDown>
@@ -33,7 +31,7 @@ const Login: React.FC = () => {
           initialValues={initialState}
           validationSchema={validationSchema}
           onSubmit={(values, actions) => {
-            handleLogin(values);
+            onLogin(values);
             actions.setSubmitting(false);
           }}
         >
@@ -42,6 +40,9 @@ const Login: React.FC = () => {
               <Field name="username">
                 {({ field }: FieldProps) => (
                   <TextField
+                    inputProps={{
+                      'data-testid': 'username',
+                    }}
                     autoFocus
                     {...field}
                     label="Username"
@@ -53,6 +54,9 @@ const Login: React.FC = () => {
               <Field name="password">
                 {({ field }: FieldProps) => (
                   <TextField
+                    inputProps={{
+                      'data-testid': 'password',
+                    }}
                     {...field}
                     label="Passwort"
                     type="password"
@@ -62,16 +66,24 @@ const Login: React.FC = () => {
               </Field>
               <ErrorMessage name="password" />
               {hasLoginError && (
-                <div>
+                <div data-testid="loginError">
                   Bei der Anmeldung ist ein Fehler aufgetreten, bitte versuchen
                   Sie es erneut
                 </div>
               )}
               <div>
-                <Button type="submit" disabled={isSubmitting}>
+                <Button
+                  type="submit"
+                  data-testid="submit"
+                  disabled={isSubmitting}
+                >
                   anmelden
                 </Button>
-                <Button color="secondary" onClick={() => resetForm()}>
+                <Button
+                  color="secondary"
+                  data-testid="cancel"
+                  onClick={() => resetForm()}
+                >
                   abbrechen
                 </Button>
               </div>

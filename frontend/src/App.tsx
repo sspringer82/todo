@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Menu from './Menu/Menu';
 import { Provider } from 'react-redux';
 import configureStore, { history } from './store/configureStore';
-import Login from './login/components/Login';
+import Login from './login/components/Login.container';
 import { getToken } from './login/selectors/login.selector';
 import { ConnectedRouter } from 'connected-react-router';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
