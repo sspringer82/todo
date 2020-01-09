@@ -50,7 +50,9 @@ const Login: React.FC<Props> = ({ hasLoginError, onLogin }) => {
                   />
                 )}
               </Field>
-              <ErrorMessage name="username" />
+              <ErrorMessage name="username">
+                {(msg: string) => <div data-testid="usernameError">{msg}</div>}
+              </ErrorMessage>
               <Field name="password">
                 {({ field }: FieldProps) => (
                   <TextField
@@ -64,7 +66,9 @@ const Login: React.FC<Props> = ({ hasLoginError, onLogin }) => {
                   />
                 )}
               </Field>
-              <ErrorMessage name="password" />
+              <ErrorMessage name="password">
+                {(msg: string) => <div data-testid="passwordError"> {msg}</div>}
+              </ErrorMessage>
               {hasLoginError && (
                 <div data-testid="loginError">
                   Bei der Anmeldung ist ein Fehler aufgetreten, bitte versuchen

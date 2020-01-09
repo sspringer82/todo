@@ -39,4 +39,24 @@ describe('Login', () => {
     const errorMessage = queryByTestId!('loginError');
     expect(errorMessage).not.toBeNull();
   });
+
+  it('should show an error if the validation fails', async () => {
+    const { getByTestId, queryByTestId } = render(
+      <Login hasLoginError={false} onLogin={jest.fn()} />
+    );
+    const usernameInput = getByTestId!('username');
+    const passwordInput = getByTestId!('password');
+    await wait(() => {
+      fireEvent.blur(usernameInput);
+    });
+    await wait(() => {
+      fireEvent.blur(passwordInput);
+    });
+
+    const usernameError = await queryByTestId('usernameError');
+    expect(usernameError).not.toBeNull();
+
+    const passwordError = await queryByTestId('passwordError');
+    expect(passwordError).not.toBeNull();
+  });
 });
