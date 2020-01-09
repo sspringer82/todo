@@ -31,4 +31,12 @@ describe('Login', () => {
       password: 'testpassword',
     });
   });
+
+  it('should show an error if the hasLoginError prop is set', () => {
+    const { queryByTestId } = render(
+      <Login hasLoginError={true} onLogin={() => {}} />
+    );
+    const errorMessage = queryByTestId!('loginError');
+    expect(errorMessage).not.toBeNull();
+  });
 });
