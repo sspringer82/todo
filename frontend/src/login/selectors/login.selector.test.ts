@@ -10,5 +10,11 @@ describe('Login Selector', () => {
       const token = getToken(state);
       expect(token).toBe('');
     });
+    it('should return the correct value of a changed token', () => {
+      const rootReducer = createRootReducer({} as any);
+      const state = rootReducer(undefined, loginSuccessAction('token'));
+      const token = getToken(state);
+      expect(token).toBe('token');
+    });
   });
 });
