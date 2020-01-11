@@ -1,10 +1,8 @@
 import React from 'react';
 import { List as ListType } from '../shared/List';
-import { Button } from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { ListItem } from './List.styles';
+import { ListItem, EditLink, ItemButton } from './List.styles';
 import { getActiveList } from '../settings/selectors/settings.selector';
 import classnames from 'classnames';
 import ShareIcon from '@material-ui/icons/Share';
@@ -31,11 +29,13 @@ const List: React.FC<Props> = ({ list, isAll, onSelect }) => {
       })}
       button={true}
     >
-      <Button onClick={() => onSelect(isAll ? null : list)}>{list.name}</Button>
+      <ItemButton onClick={() => onSelect(isAll ? null : list)}>
+        {list.name}
+      </ItemButton>
       {!isAll && (
-        <Link to={`/list/edit/${list.id}`}>
+        <EditLink to={`/list/edit/${list.id}`}>
           <SettingsIcon />
-        </Link>
+        </EditLink>
       )}
       {list.sharedWith && list.sharedWith.length > 0 && <ShareIcon />}
     </ListItem>
