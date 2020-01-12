@@ -4,14 +4,22 @@ import {
   SAVE_TODO_SUCCESS,
   DELETE_TODO_SUCCESS,
   SEARCH,
+  loadTodosSuccessAction,
+  saveTodoSuccessAction,
+  deleteTodoSuccessAction,
+  searchAction,
 } from '../actions/todo.actions';
 import update from 'immutability-helper';
 import {
   CREATE_SUBTASK_SUCCESS,
   DELETE_SUBTASK,
   UPDATE_SUBTASK_SUCCESS,
+  createSubtaskSuccessAction,
+  updateSubtaskSuccessAction,
+  deleteSubtaskAction,
 } from '../actions/subtask.actions';
 import db from '../../db/db';
+import { ActionType } from 'typesafe-actions';
 
 export interface State {
   todos: Todo[];
@@ -23,7 +31,18 @@ const initialState: State = {
   search: '',
 };
 
-export default function(state: State = initialState, action: any): State {
+export default function(
+  state: State = initialState,
+  action: ActionType<
+    | typeof loadTodosSuccessAction
+    | typeof saveTodoSuccessAction
+    | typeof deleteTodoSuccessAction
+    | typeof createSubtaskSuccessAction
+    | typeof updateSubtaskSuccessAction
+    | typeof deleteSubtaskAction
+    | typeof searchAction
+  >
+): State {
   switch (action.type) {
     case LOAD_TODOS_SUCCESS:
       if (navigator.onLine) {
@@ -53,14 +72,14 @@ export default function(state: State = initialState, action: any): State {
         : action.payload.todo;
       const todoIndex = state.todos.findIndex(todo => todo.id === todoId);
       const subtask = update(action.payload, {
-        todo: { $set: action.payload.todo.id },
+        todo: { $set: action.payload.todo.id as any },
       });
       return update(state, {
         todos: { [todoIndex]: { subtasks: { $push: [subtask] } } },
       });
     case UPDATE_SUBTASK_SUCCESS:
       const todoIndex3 = state.todos.findIndex(
-        todo => todo.id === action.payload.todo
+        todo => todo.id === (action.payload.todo as any)
       );
       const subtaskIndex2 = state.todos[todoIndex3].subtasks!.findIndex(
         subtask => subtask.id === action.payload.id
