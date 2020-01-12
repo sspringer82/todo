@@ -3,9 +3,13 @@ import {
   LOAD_LISTS_SUCCESS,
   DELETE_LIST_SUCCESS,
   SAVE_LIST_SUCCESS,
+  loadListsSuccessAction,
+  saveListSuccessAction,
+  deleteListSuccessAction,
 } from '../actions/list.actions';
 import update from 'immutability-helper';
 import db from '../../db/db';
+import { ActionType } from 'typesafe-actions';
 
 export interface State {
   activeList: null | List;
@@ -17,7 +21,14 @@ const initialState: State = {
   lists: [],
 };
 
-export default function(state: State = initialState, action: any): State {
+export default function(
+  state: State = initialState,
+  action: ActionType<
+    | typeof loadListsSuccessAction
+    | typeof saveListSuccessAction
+    | typeof deleteListSuccessAction
+  >
+): State {
   switch (action.type) {
     case LOAD_LISTS_SUCCESS:
       if (navigator.onLine) {
