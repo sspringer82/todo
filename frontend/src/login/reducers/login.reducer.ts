@@ -1,5 +1,11 @@
-import { LOGIN_SUCCESS, LOGIN_ERROR } from '../actions/login.actions';
+import {
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+  loginSuccessAction,
+  loginErrorAction,
+} from '../actions/login.actions';
 import update from 'immutability-helper';
+import { ActionType } from 'typesafe-actions';
 
 export interface State {
   token: string;
@@ -11,7 +17,10 @@ const initialState: State = {
   error: false,
 };
 
-export default function(state: State = initialState, action: any): State {
+export default function(
+  state: State = initialState,
+  action: ActionType<typeof loginSuccessAction | typeof loginErrorAction>
+): State {
   switch (action.type) {
     case LOGIN_SUCCESS:
       return update(state, {
