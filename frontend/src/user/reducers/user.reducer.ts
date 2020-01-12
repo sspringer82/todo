@@ -1,7 +1,11 @@
 import { User } from '../../shared/User';
-import { LOAD_USERS_SUCCESS } from '../actions/user.actions';
+import {
+  LOAD_USERS_SUCCESS,
+  loadUsersSuccessAction,
+} from '../actions/user.actions';
 import update from 'immutability-helper';
 import db from '../../db/db';
+import { ActionType } from 'typesafe-actions';
 
 export interface State {
   users: User[];
@@ -11,7 +15,10 @@ const initialState: State = {
   users: [],
 };
 
-export default function(state: State = initialState, action: any): State {
+export default function(
+  state: State = initialState,
+  action: ActionType<typeof loadUsersSuccessAction>
+): State {
   switch (action.type) {
     case LOAD_USERS_SUCCESS:
       if (navigator.onLine) {
