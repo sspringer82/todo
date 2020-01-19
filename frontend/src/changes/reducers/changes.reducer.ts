@@ -10,7 +10,7 @@ export interface State {
 }
 
 const initialState: State = {
-  connection: true,
+  connection: navigator.onLine,
 };
 
 export default function(
