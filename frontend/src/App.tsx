@@ -9,16 +9,12 @@ import { getToken } from './login/selectors/login.selector';
 import { ConnectedRouter } from 'connected-react-router';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
-import { onlineAction, offlineAction } from './changes/actions/changes.actions';
+import { onlineAction } from './changes/actions/changes.actions';
 
 const store = configureStore();
 
 window.addEventListener('online', () => {
   store.dispatch(onlineAction());
-});
-
-window.addEventListener('offline', () => {
-  store.dispatch(offlineAction());
 });
 
 const App: React.FC = () => {
