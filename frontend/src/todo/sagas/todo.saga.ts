@@ -15,11 +15,14 @@ import { ActionType } from 'typesafe-actions';
 import { getToken } from '../../login/selectors/login.selector';
 import update from 'immutability-helper';
 import db from '../../db/db';
-import { addChangeAction } from '../../changes/actions/changes.actions';
+import {
+  addChangeAction,
+  onlineAction,
+} from '../../changes/actions/changes.actions';
 
 function* loadTodos() {
   let todosWithSubtasks: Todo[] = [];
-  if (navigator.onLine) {
+  try {
     const token = yield select(getToken);
     const { data: todos } = yield axios.get<Todo[]>(
       `${process.env.REACT_APP_SERVER}/todo`,
@@ -36,8 +39,11 @@ function* loadTodos() {
         return update(todo, { subtasks: { $set: [] } });
       }
     });
-  } else {
-    todosWithSubtasks = yield db.table('todo').toArray();
+    yield put(onlineAction());
+  } catch (e) {
+    if (e.message === 'Network Error') {
+      todosWithSubtasks = yield db.table('todo').toArray();
+    }
   }
   yield put(loadTodosSuccessAction(todosWithSubtasks));
 }

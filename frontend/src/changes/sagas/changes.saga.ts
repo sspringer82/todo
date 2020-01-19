@@ -2,8 +2,8 @@ import { ActionType } from 'typesafe-actions';
 import {
   addChangeAction,
   ADD_CHANGE,
-  APPLY_CHANGES,
   CLEAR_CHANGES,
+  ONLINE,
 } from '../actions/changes.actions';
 
 import { takeLatest } from '@redux-saga/core/effects';
@@ -18,7 +18,7 @@ function* applyChanges() {}
 function* clearChanges() {}
 
 export default function* changesSaga() {
+  yield takeLatest(ONLINE, applyChanges);
   yield takeLatest(ADD_CHANGE, addChange);
-  yield takeLatest(APPLY_CHANGES, applyChanges);
   yield takeLatest(CLEAR_CHANGES, clearChanges);
 }
