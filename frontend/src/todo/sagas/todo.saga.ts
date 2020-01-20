@@ -86,16 +86,28 @@ function* createOffline(action: ActionType<typeof saveTodoAction>) {
 function* save(action: ActionType<typeof saveTodoAction>) {
   let responseTodo: Todo;
   if (action.payload.id) {
-    if (navigator.onLine) {
+    try {
       responseTodo = yield updateOnline(action.payload as Todo);
-    } else {
-      responseTodo = yield updateOffline(action);
+      yield put(onlineAction());
+    } catch (e) {
+      if (e.message === 'Network Error') {
+        responseTodo = yield updateOffline(action);
+      } else {
+        // @todo error action
+        return;
+      }
     }
   } else {
-    if (navigator.onLine) {
+    try {
       responseTodo = yield createOnline(action.payload as InputTypeTodo);
-    } else {
-      responseTodo = yield createOffline(action);
+      yield put(onlineAction());
+    } catch (e) {
+      if (e.message === 'Network Error') {
+        responseTodo = yield createOffline(action);
+      } else {
+        // @todo error action
+        return;
+      }
     }
   }
   yield put(saveTodoSuccessAction(responseTodo));
