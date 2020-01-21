@@ -114,15 +114,21 @@ function* save(action: ActionType<typeof saveTodoAction>) {
 }
 
 function* remove({ payload: todo }: ActionType<typeof deleteTodoAction>) {
-  if (navigator.onLine) {
+  try {
     const token = yield select(getToken);
     yield axios.delete(`${process.env.REACT_APP_SERVER}/todo/${todo.id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-  } else {
-    yield db.table('todo').delete(todo.id);
+    yield put(onlineAction());
+  } catch (e) {
+    if (e.message === 'Network Error') {
+      yield db.table('todo').delete(todo.id);
+    } else {
+      // @todo error action
+      return;
+    }
   }
   yield put(deleteTodoSuccessAction(todo));
 }
