@@ -62,7 +62,8 @@ function* updateOnline(todo: Todo) {
 
 function* updateOffline(action: ActionType<typeof saveTodoAction>) {
   yield put(addChangeAction({ action }));
-  yield db.table('todo').update(action.payload.id, action.payload);
+  db.table('todo').update(action.payload.id, action.payload);
+  yield action.payload;
 }
 
 function* createOnline(todo: InputTypeTodo) {
@@ -92,6 +93,7 @@ function* save(action: ActionType<typeof saveTodoAction>) {
     } catch (e) {
       if (e.message === 'Network Error') {
         responseTodo = yield updateOffline(action);
+        console.log(responseTodo);
       } else {
         // @todo error action
         return;
