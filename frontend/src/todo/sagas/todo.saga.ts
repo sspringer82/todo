@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { takeLatest, put, select } from '@redux-saga/core/effects';
+import { takeLatest, put, select, all } from '@redux-saga/core/effects';
 import { Todo, InputTypeTodo } from '../../shared/Todo';
 import {
   loadTodosSuccessAction,
@@ -10,6 +10,9 @@ import {
   deleteTodoAction,
   DELETE_TODO,
   deleteTodoSuccessAction,
+  loadTodosErrorAction,
+  LOAD_TODOS_OFFLINE,
+  loadTodosOfflineAction,
 } from '../actions/todo.actions';
 import { ActionType } from 'typesafe-actions';
 import { getToken } from '../../login/selectors/login.selector';
@@ -21,7 +24,6 @@ import {
 } from '../../changes/actions/changes.actions';
 
 function* loadTodos() {
-  let todosWithSubtasks: Todo[] = [];
   try {
     const token = yield select(getToken);
     const { data: todos } = yield axios.get<Todo[]>(
@@ -32,19 +34,28 @@ function* loadTodos() {
         },
       }
     );
-    todosWithSubtasks = todos.map((todo: Todo) => {
+    const todosWithSubtasks = todos.map((todo: Todo) => {
       if (todo.subtasks) {
         return todo;
       } else {
         return update(todo, { subtasks: { $set: [] } });
       }
     });
-    yield put(onlineAction());
+    yield all([
+      put(onlineAction()),
+      put(loadTodosSuccessAction(todosWithSubtasks)),
+    ]);
   } catch (e) {
     if (e.message === 'Network Error') {
-      todosWithSubtasks = yield db.table('todo').toArray();
+      yield put(loadTodosOfflineAction());
+    } else {
+      yield put(loadTodosErrorAction(e));
     }
   }
+}
+
+function* loadOffline() {
+  const todosWithSubtasks = yield db.table('todo').toArray();
   yield put(loadTodosSuccessAction(todosWithSubtasks));
 }
 
@@ -139,4 +150,5 @@ export default function* todoSaga() {
   yield takeLatest(LOAD_TODOS, loadTodos);
   yield takeLatest(SAVE_TODO, save);
   yield takeLatest(DELETE_TODO, remove);
+  yield takeLatest(LOAD_TODOS_OFFLINE, loadOffline);
 }
