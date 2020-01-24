@@ -45,43 +45,6 @@ function* loadSettings() {
   yield put(loadSettingsSuccessAction(settings));
 }
 
-/*function* save({ payload: settings }: ActionType<typeof saveSettingsAction>) {
-  const token = yield select(getToken);
-  let responseSettings: Settings;
-  if (settings.id) {
-    if (navigator.onLine) {
-      responseSettings = (yield axios.put<Settings>(
-        `${process.env.REACT_APP_SERVER}/settings/${settings.id}`,
-        settings,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )).data;
-    } else {
-      yield db.table('settings').update(settings.id, settings);
-      responseSettings = settings;
-    }
-  } else {
-    if (navigator.onLine) {
-      responseSettings = (yield axios.post<Settings>(
-        `${process.env.REACT_APP_SERVER}/settings/`,
-        settings,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )).data;
-    } else {
-      const id = yield db.table('settings').add(settings);
-      responseSettings = update(settings, { id: { $set: id } });
-    }
-  }
-  yield put(saveSettingsSuccessAction(responseSettings));
-}*/
-
 function* createSettings({
   payload: settings,
 }: ActionType<typeof createSettingsAction>) {
