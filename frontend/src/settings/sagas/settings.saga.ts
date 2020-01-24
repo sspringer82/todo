@@ -102,9 +102,9 @@ function* createSettings({
     ]);
   } catch (e) {
     if (e.message === 'Network Error') {
-      put(createSettingsOfflineAction(settings));
+      yield put(createSettingsOfflineAction(settings));
     } else {
-      put(saveSettingsErrorAction(e.message));
+      yield put(saveSettingsErrorAction(e.message));
     }
   }
 }
@@ -129,9 +129,9 @@ function* updateSettings({
     ]);
   } catch (e) {
     if (e.message === 'Network Error') {
-      put(updateSettingsOfflineAction(settings));
+      yield put(updateSettingsOfflineAction(settings));
     } else {
-      put(saveSettingsErrorAction(e.message));
+      yield put(saveSettingsErrorAction(e.message));
     }
   }
 }
