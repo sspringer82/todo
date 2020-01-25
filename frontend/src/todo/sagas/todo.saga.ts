@@ -17,6 +17,11 @@ import {
   createTodoAction,
   createTodoOfflineAction,
   saveTodoErrorAction,
+  updateTodoOfflineAction,
+  CREATE_TODO,
+  CREATE_TODO_OFFLINE,
+  UPDATE_TODO,
+  UPDATE_TODO_OFFLINE,
 } from '../actions/todo.actions';
 import { ActionType } from 'typesafe-actions';
 import { getToken } from '../../login/selectors/login.selector';
@@ -63,25 +68,36 @@ function* loadOffline() {
   yield put(loadTodosSuccessAction(todosWithSubtasks));
 }
 
-function* updateOnline(todo: Todo) {
-  return (yield axios.put<Todo>(
-    `${process.env.REACT_APP_SERVER}/todo/${todo.id}`,
-    todo,
-    {
-      headers: {
-        Authorization: `Bearer ${yield select(getToken)}`,
-      },
+function* updateOnline({ payload: todo }: ActionType<typeof updateTodoAction>) {
+  try {
+    const responseTodo = (yield axios.put<Todo>(
+      `${process.env.REACT_APP_SERVER}/todo/${todo.id}`,
+      todo,
+      {
+        headers: {
+          Authorization: `Bearer ${yield select(getToken)}`,
+        },
+      }
+    )).data;
+    yield all([put(onlineAction()), put(saveTodoSuccessAction(responseTodo))]);
+  } catch (e) {
+    if (e.message === 'Network Error') {
+      yield put(updateTodoOfflineAction(todo));
+    } else {
+      yield put(saveTodoErrorAction(e.message));
     }
-  )).data;
+  }
 }
 
 function* updateOffline(action: ActionType<typeof saveTodoAction>) {
-  yield put(addChangeAction({ action }));
   db.table('todo').update(action.payload.id, action.payload);
-  yield action.payload;
+  yield all([
+    put(addChangeAction({ action })),
+    put(saveTodoSuccessAction(action.payload as Todo)),
+  ]);
 }
 
-function* createOnline(todo: InputTypeTodo) {
+function* createOnline({ payload: todo }: ActionType<typeof createTodoAction>) {
   try {
     const responseTodo = (yield axios.post<Todo>(
       `${process.env.REACT_APP_SERVER}/todo/`,
@@ -100,13 +116,15 @@ function* createOnline(todo: InputTypeTodo) {
       yield put(saveTodoErrorAction(e.message));
     }
   }
-  return;
 }
 
 function* createOffline(action: ActionType<typeof saveTodoAction>) {
-  yield put(addChangeAction({ action }));
   const id = yield db.table('todo').add(action.payload);
-  return update(action.payload, { id: { $set: id } }) as Todo;
+  const responseTodo = update(action.payload, { id: { $set: id } }) as Todo;
+  yield all([
+    put(addChangeAction({ action })),
+    put(saveTodoSuccessAction(responseTodo)),
+  ]);
 }
 
 function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {
@@ -115,36 +133,6 @@ function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {
   } else {
     yield put(createTodoAction(todo));
   }
-  /*
-  let responseTodo: Todo;
-  if (action.payload.id) {
-    try {
-      responseTodo = yield updateOnline(action.payload as Todo);
-      yield put(onlineAction());
-    } catch (e) {
-      if (e.message === 'Network Error') {
-        responseTodo = yield updateOffline(action);
-        console.log(responseTodo);
-      } else {
-        // @todo error action
-        return;
-      }
-    }
-  } else {
-    try {
-      responseTodo = yield createOnline(action.payload as InputTypeTodo);
-      yield put(onlineAction());
-    } catch (e) {
-      if (e.message === 'Network Error') {
-        responseTodo = yield createOffline(action);
-      } else {
-        // @todo error action
-        return;
-      }
-    }
-  }
-  yield put(saveTodoSuccessAction(responseTodo));
-  */
 }
 
 function* remove({ payload: todo }: ActionType<typeof deleteTodoAction>) {
@@ -169,7 +157,11 @@ function* remove({ payload: todo }: ActionType<typeof deleteTodoAction>) {
 
 export default function* todoSaga() {
   yield takeLatest(LOAD_TODOS, loadTodos);
-  yield takeLatest(SAVE_TODO, save);
-  yield takeLatest(DELETE_TODO, remove);
   yield takeLatest(LOAD_TODOS_OFFLINE, loadOffline);
+  yield takeLatest(SAVE_TODO, save);
+  yield takeLatest(CREATE_TODO, createOnline);
+  yield takeLatest(CREATE_TODO_OFFLINE, createOffline);
+  yield takeLatest(UPDATE_TODO, updateOnline);
+  yield takeLatest(UPDATE_TODO_OFFLINE, updateOffline);
+  yield takeLatest(DELETE_TODO, remove);
 }
