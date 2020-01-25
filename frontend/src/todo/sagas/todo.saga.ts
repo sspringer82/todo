@@ -13,6 +13,10 @@ import {
   loadTodosErrorAction,
   LOAD_TODOS_OFFLINE,
   loadTodosOfflineAction,
+  updateTodoAction,
+  createTodoAction,
+  createTodoOfflineAction,
+  saveTodoErrorAction,
 } from '../actions/todo.actions';
 import { ActionType } from 'typesafe-actions';
 import { getToken } from '../../login/selectors/login.selector';
@@ -78,15 +82,25 @@ function* updateOffline(action: ActionType<typeof saveTodoAction>) {
 }
 
 function* createOnline(todo: InputTypeTodo) {
-  return (yield axios.post<Todo>(
-    `${process.env.REACT_APP_SERVER}/todo/`,
-    todo,
-    {
-      headers: {
-        Authorization: `Bearer ${yield select(getToken)}`,
-      },
+  try {
+    const responseTodo = (yield axios.post<Todo>(
+      `${process.env.REACT_APP_SERVER}/todo/`,
+      todo,
+      {
+        headers: {
+          Authorization: `Bearer ${yield select(getToken)}`,
+        },
+      }
+    )).data;
+    yield all([put(onlineAction()), put(saveTodoSuccessAction(responseTodo))]);
+  } catch (e) {
+    if (e.message === 'Network Error') {
+      yield put(createTodoOfflineAction(todo));
+    } else {
+      yield put(saveTodoErrorAction(e.message));
     }
-  )).data;
+  }
+  return;
 }
 
 function* createOffline(action: ActionType<typeof saveTodoAction>) {
@@ -95,7 +109,13 @@ function* createOffline(action: ActionType<typeof saveTodoAction>) {
   return update(action.payload, { id: { $set: id } }) as Todo;
 }
 
-function* save(action: ActionType<typeof saveTodoAction>) {
+function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {
+  if (todo.id) {
+    yield put(updateTodoAction(todo as Todo));
+  } else {
+    yield put(createTodoAction(todo));
+  }
+  /*
   let responseTodo: Todo;
   if (action.payload.id) {
     try {
@@ -124,6 +144,7 @@ function* save(action: ActionType<typeof saveTodoAction>) {
     }
   }
   yield put(saveTodoSuccessAction(responseTodo));
+  */
 }
 
 function* remove({ payload: todo }: ActionType<typeof deleteTodoAction>) {
