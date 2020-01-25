@@ -45,7 +45,7 @@ function* loadSettings() {
   yield put(loadSettingsSuccessAction(settings));
 }
 
-function* createSettings({
+function* createOnline({
   payload: settings,
 }: ActionType<typeof createSettingsAction>) {
   try {
@@ -72,7 +72,7 @@ function* createSettings({
   }
 }
 
-function* updateSettings({
+function* updateOnline({
   payload: settings,
 }: ActionType<typeof updateSettingsAction>) {
   try {
@@ -132,8 +132,8 @@ function* save({ payload: settings }: ActionType<typeof saveSettingsAction>) {
 export default function* todoSaga() {
   yield takeLatest(LOAD_SETTINGS, loadSettings);
   yield takeLatest(SAVE_SETTINGS, save);
-  yield takeLatest(CREATE_SETTINGS, createSettings);
+  yield takeLatest(CREATE_SETTINGS, createOnline);
   yield takeLatest(CREATE_SETTINGS_OFFLINE, createOffline);
-  yield takeLatest(UPDATE_SETTINGS, updateSettings);
+  yield takeLatest(UPDATE_SETTINGS, updateOnline);
   yield takeLatest(UPDATE_SETTINGS_OFFLINE, updateOffline);
 }
