@@ -22,6 +22,9 @@ import {
   CREATE_TODO_OFFLINE,
   UPDATE_TODO,
   UPDATE_TODO_OFFLINE,
+  deleteTodoErrorAction,
+  deleteTodoOfflineAction,
+  DELETE_TODO_OFFLINE,
 } from '../actions/todo.actions';
 import { ActionType } from 'typesafe-actions';
 import { getToken } from '../../login/selectors/login.selector';
@@ -143,15 +146,21 @@ function* remove({ payload: todo }: ActionType<typeof deleteTodoAction>) {
         Authorization: `Bearer ${token}`,
       },
     });
-    yield put(onlineAction());
+    yield all([put(onlineAction()), put(deleteTodoSuccessAction(todo))]);
   } catch (e) {
     if (e.message === 'Network Error') {
-      yield db.table('todo').delete(todo.id);
+      yield put(deleteTodoOfflineAction(todo));
     } else {
-      // @todo error action
+      yield put(deleteTodoErrorAction(e.message));
       return;
     }
   }
+}
+
+function* removeOffline({
+  payload: todo,
+}: ActionType<typeof deleteTodoOfflineAction>) {
+  db.table('todo').delete(todo.id);
   yield put(deleteTodoSuccessAction(todo));
 }
 
@@ -164,4 +173,5 @@ export default function* todoSaga() {
   yield takeLatest(UPDATE_TODO, updateOnline);
   yield takeLatest(UPDATE_TODO_OFFLINE, updateOffline);
   yield takeLatest(DELETE_TODO, remove);
+  yield takeLatest(DELETE_TODO_OFFLINE, removeOffline);
 }

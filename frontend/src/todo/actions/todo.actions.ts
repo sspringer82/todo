@@ -38,8 +38,14 @@ export type SAVE_TODO_SUCCESS = typeof SAVE_TODO_SUCCESS;
 export const DELETE_TODO = 'DELETE_TODO';
 export type DELETE_TODO = typeof DELETE_TODO;
 
+export const DELETE_TODO_OFFLINE = 'DELETE_TODO_OFFLINE';
+export type DELETE_TODO_OFFLINE = typeof DELETE_TODO_OFFLINE;
+
 export const DELETE_TODO_SUCCESS = 'DELETE_TODO_SUCCESS';
 export type DELETE_TODO_SUCCESS = typeof DELETE_TODO_SUCCESS;
+
+export const DELETE_TODO_ERROR = 'DELETE_TODO_ERROR';
+export type DELETE_TODO_ERROR = typeof DELETE_TODO_ERROR;
 
 export const SEARCH = 'SEARCH';
 
@@ -63,6 +69,10 @@ export const updateTodoOfflineAction = createAction(UPDATE_TODO_OFFLINE)<
 export const saveTodoSuccessAction = createAction(SAVE_TODO_SUCCESS)<Todo>();
 
 export const deleteTodoAction = createAction(DELETE_TODO)<Todo>();
+export const deleteTodoOfflineAction = createAction(DELETE_TODO_OFFLINE)<
+  Todo
+>();
+export const deleteTodoErrorAction = createAction(DELETE_TODO_ERROR)<string>();
 export const deleteTodoSuccessAction = createAction(DELETE_TODO_SUCCESS)<
   Todo
 >();
