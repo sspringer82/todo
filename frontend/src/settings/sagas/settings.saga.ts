@@ -17,6 +17,9 @@ import {
   UPDATE_SETTINGS,
   UPDATE_SETTINGS_OFFLINE,
   updateSettingsOfflineAction,
+  loadSettingsErrorAction,
+  loadSettingsOfflineAction,
+  LOAD_SETTINGS_OFFLINE,
 } from '../actions/settings.actions';
 import { Settings } from '../../shared/Settings';
 import { ActionType } from 'typesafe-actions';
@@ -28,10 +31,9 @@ import {
 } from '../../changes/actions/changes.actions';
 
 function* loadSettings() {
-  let settings: Settings;
-  if (navigator.onLine) {
+  try {
     const token = yield select(getToken);
-    settings = (yield axios.get<Settings>(
+    const settings = (yield axios.get<Settings>(
       `${process.env.REACT_APP_SERVER}/settings`,
       {
         headers: {
@@ -39,9 +41,18 @@ function* loadSettings() {
         },
       }
     )).data;
-  } else {
-    settings = (yield db.table('settings').toArray()).pop();
+    yield all([put(onlineAction()), put(loadSettingsSuccessAction(settings))]);
+  } catch (e) {
+    if (e.message === 'Network Error') {
+      yield put(loadSettingsOfflineAction());
+    } else {
+      yield put(loadSettingsErrorAction(e.message));
+    }
   }
+}
+
+function* loadOffline() {
+  const settings = (yield db.table('settings').toArray()).pop();
   yield put(loadSettingsSuccessAction(settings));
 }
 
@@ -131,6 +142,7 @@ function* save({ payload: settings }: ActionType<typeof saveSettingsAction>) {
 
 export default function* todoSaga() {
   yield takeLatest(LOAD_SETTINGS, loadSettings);
+  yield takeLatest(LOAD_SETTINGS_OFFLINE, loadOffline);
   yield takeLatest(SAVE_SETTINGS, save);
   yield takeLatest(CREATE_SETTINGS, createOnline);
   yield takeLatest(CREATE_SETTINGS_OFFLINE, createOffline);

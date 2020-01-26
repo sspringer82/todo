@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { takeLatest, put, select, all } from '@redux-saga/core/effects';
-import { Todo, InputTypeTodo } from '../../shared/Todo';
+import { Todo } from '../../shared/Todo';
 import {
   loadTodosSuccessAction,
   LOAD_TODOS,
