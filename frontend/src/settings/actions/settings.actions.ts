@@ -4,6 +4,12 @@ import { Settings } from '../../shared/Settings';
 export const LOAD_SETTINGS = 'LOAD_SETTINGS';
 export type LOAD_SETTINGS = typeof LOAD_SETTINGS;
 
+export const LOAD_SETTINGS_OFFLINE = 'LOAD_SETTINGS_OFFLINE';
+export type LOAD_SETTINGS_OFFLINE = typeof LOAD_SETTINGS_OFFLINE;
+
+export const LOAD_SETTINGS_ERROR = 'LOAD_SETTINGS_ERROR';
+export type LOAD_SETTINGS_ERROR = typeof LOAD_SETTINGS_ERROR;
+
 export const LOAD_SETTINGS_SUCCESS = 'LOAD_SETTINGS_SUCCESS';
 export type LOAD_SETTINGS_SUCCESS = typeof LOAD_SETTINGS_SUCCESS;
 
@@ -29,6 +35,12 @@ export const UPDATE_SETTINGS_OFFLINE = 'UPDATE_SETTINGS_OFFLINE';
 export type UPDATE_SETTINGS_OFFLINE = typeof UPDATE_SETTINGS_OFFLINE;
 
 export const loadSettingsAction = createAction(LOAD_SETTINGS)<void>();
+export const loadSettingsOfflineAction = createAction(LOAD_SETTINGS_OFFLINE)<
+  void
+>();
+export const loadSettingsErrorAction = createAction(LOAD_SETTINGS_ERROR)<
+  void
+>();
 export const loadSettingsSuccessAction = createAction(LOAD_SETTINGS_SUCCESS)<
   Settings
 >();
