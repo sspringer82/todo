@@ -34,6 +34,7 @@ import {
   addChangeAction,
   onlineAction,
 } from '../../changes/actions/changes.actions';
+import isNetworkError from '../../shared/helpers/isNetworkError';
 
 function* loadTodos() {
   try {
@@ -58,7 +59,7 @@ function* loadTodos() {
       put(loadTodosSuccessAction(todosWithSubtasks)),
     ]);
   } catch (e) {
-    if (e.message === 'Network Error') {
+    if (isNetworkError(e)) {
       yield put(loadTodosOfflineAction());
     } else {
       yield put(loadTodosErrorAction(e));
@@ -84,7 +85,7 @@ function* updateOnline({ payload: todo }: ActionType<typeof updateTodoAction>) {
     )).data;
     yield all([put(onlineAction()), put(saveTodoSuccessAction(responseTodo))]);
   } catch (e) {
-    if (e.message === 'Network Error') {
+    if (isNetworkError(e)) {
       yield put(updateTodoOfflineAction(todo));
     } else {
       yield put(saveTodoErrorAction(e.message));
@@ -113,7 +114,7 @@ function* createOnline({ payload: todo }: ActionType<typeof createTodoAction>) {
     )).data;
     yield all([put(onlineAction()), put(saveTodoSuccessAction(responseTodo))]);
   } catch (e) {
-    if (e.message === 'Network Error') {
+    if (isNetworkError(e)) {
       yield put(createTodoOfflineAction(todo));
     } else {
       yield put(saveTodoErrorAction(e.message));
@@ -148,7 +149,7 @@ function* remove({ payload: todo }: ActionType<typeof deleteTodoAction>) {
     });
     yield all([put(onlineAction()), put(deleteTodoSuccessAction(todo))]);
   } catch (e) {
-    if (e.message === 'Network Error') {
+    if (isNetworkError(e)) {
       yield put(deleteTodoOfflineAction(todo));
     } else {
       yield put(deleteTodoErrorAction(e.message));
