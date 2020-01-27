@@ -29,6 +29,7 @@ import {
   onlineAction,
   addChangeAction,
 } from '../../changes/actions/changes.actions';
+import isNetworkError from '../../shared/helpers/isNetworkError';
 
 function* loadSettings() {
   try {
@@ -43,7 +44,7 @@ function* loadSettings() {
     )).data;
     yield all([put(onlineAction()), put(loadSettingsSuccessAction(settings))]);
   } catch (e) {
-    if (e.message === 'Network Error') {
+    if (isNetworkError(e)) {
       yield put(loadSettingsOfflineAction());
     } else {
       yield put(loadSettingsErrorAction(e.message));
@@ -75,7 +76,7 @@ function* createOnline({
       put(saveSettingsSuccessAction(responseSettings)),
     ]);
   } catch (e) {
-    if (e.message === 'Network Error') {
+    if (isNetworkError(e)) {
       yield put(createSettingsOfflineAction(settings));
     } else {
       yield put(saveSettingsErrorAction(e.message));
@@ -102,7 +103,7 @@ function* updateOnline({
       put(saveSettingsSuccessAction(responseSettings)),
     ]);
   } catch (e) {
-    if (e.message === 'Network Error') {
+    if (isNetworkError(e)) {
       yield put(updateSettingsOfflineAction(settings));
     } else {
       yield put(saveSettingsErrorAction(e.message));
