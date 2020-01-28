@@ -19,6 +19,8 @@ import {
   createListOfflineAction,
   saveListErrorAction,
   updateListOfflineAction,
+  deleteListOfflineAction,
+  deleteListErrorAction,
 } from '../actions/list.actions';
 import { takeLatest, put, select, all } from '@redux-saga/core/effects';
 import axios from 'axios';
@@ -128,16 +130,27 @@ function* updateOffline(action: ActionType<typeof updateListOfflineAction>) {
 }
 
 function* remove({ payload: list }: ActionType<typeof deleteListAction>) {
-  if (navigator.onLine) {
+  try {
     const token = yield select(getToken);
     yield axios.delete(`${process.env.REACT_APP_SERVER}/list/${list.id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-  } else {
-    yield db.table('list').delete(list.id);
+    yield all([put(onlineAction()), put(deleteListSuccessAction(list))]);
+  } catch (e) {
+    if (isNetworkError(e)) {
+      yield put(deleteListOfflineAction(list));
+    } else {
+      yield put(deleteListErrorAction(e.message));
+    }
   }
+}
+
+function* removeOffline({
+  payload: list,
+}: ActionType<typeof deleteListOfflineAction>) {
+  db.table('list').delete(list.id);
   yield put(deleteListSuccessAction(list));
 }
 

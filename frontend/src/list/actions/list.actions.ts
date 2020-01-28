@@ -37,6 +37,12 @@ export type SAVE_LIST_SUCCESS = typeof SAVE_LIST_SUCCESS;
 export const DELETE_LIST = 'DELETE_LIST';
 export type DELETE_LIST = typeof DELETE_LIST;
 
+export const DELETE_LIST_OFFLINE = 'DELETE_LIST_OFFLINE';
+export type DELETE_LIST_OFFLINE = typeof DELETE_LIST_OFFLINE;
+
+export const DELETE_LIST_ERROR = 'DELETE_LIST_ERROR';
+export type DELETE_LIST_ERROR = typeof DELETE_LIST_ERROR;
+
 export const DELETE_LIST_SUCCESS = 'DELETE_LIST_SUCCESS';
 export type DELETE_LIST_SUCCESS = typeof DELETE_LIST_SUCCESS;
 
@@ -62,6 +68,10 @@ export const saveListErrorAction = createAction(SAVE_LIST_ERROR)<
 export const saveListSuccessAction = createAction(SAVE_LIST_SUCCESS)<List>();
 
 export const deleteListAction = createAction(DELETE_LIST)<List>();
+export const deleteListOfflineAction = createAction(DELETE_LIST_OFFLINE)<
+  List
+>();
+export const deleteListErrorAction = createAction(DELETE_LIST_ERROR)<string>();
 export const deleteListSuccessAction = createAction(DELETE_LIST_SUCCESS)<
   List
 >();
