@@ -11,77 +11,140 @@ import {
   UPDATE_SUBTASK_SUCCESS,
   CREATE_SUBTASK_SUCCESS,
   DELETE_SUBTASK_SUCCESS,
+  createSubtaskAction,
+  updateSubtaskAction,
+  createSubtaskOfflineAction,
+  saveSubtaskErrorAction,
+  CREATE_SUBTASK,
+  CREATE_SUBTASK_OFFLINE,
+  updateSubtaskOfflineAction,
+  UPDATE_SUBTASK,
+  UPDATE_SUBTASK_OFFLINE,
+  deleteSubtaskOfflineAction,
+  deleteSubtaskErrorAction,
+  DELETE_SUBTASK_OFFLINE,
 } from '../actions/subtask.actions';
 import { getToken } from '../../login/selectors/login.selector';
 import axios from 'axios';
-import { takeLatest, put, select } from '@redux-saga/core/effects';
+import { takeLatest, put, select, all } from '@redux-saga/core/effects';
 import { getTodo } from '../selectors/todo.selector';
 import { saveTodoAction } from '../actions/todo.actions';
 import update from 'immutability-helper';
 import { Todo } from '../../shared/Todo';
 import db from '../../db/db';
+import isNetworkError from '../../shared/helpers/isNetworkError';
+import {
+  onlineAction,
+  addChangeAction,
+} from '../../changes/actions/changes.actions';
 
 function* save({ payload: subtask }: ActionType<typeof saveSubtaskAction>) {
-  const token = yield select(getToken);
-  let responseSubtask: Subtask;
   if (subtask.id) {
-    if (navigator.onLine) {
-      responseSubtask = (yield axios.put<Subtask>(
-        `${process.env.REACT_APP_SERVER}/subtask/${subtask.id}`,
-        subtask,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )).data;
-    } else {
-      const id = subtask.todo.id ? subtask.todo.id : subtask.todo;
-      const todo = yield db.table('todo').get(id);
-      const subtaskIndex = todo.subtasks.findIndex(
-        (st: Subtask) => st.id === subtask.id
-      );
-      db.table('todo').update(
-        id,
-        update(todo, { subtasks: { [subtaskIndex]: { $set: subtask } } })
-      );
-      responseSubtask = subtask as Subtask;
-    }
-    yield put(updateSubtaskSuccessAction(responseSubtask));
+    yield put(updateSubtaskAction(subtask as Subtask));
   } else {
-    if (navigator.onLine) {
-      responseSubtask = (yield axios.post<Subtask>(
-        `${process.env.REACT_APP_SERVER}/subtask/`,
-        subtask,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )).data;
-    } else {
-      const id = subtask.todo.id ? subtask.todo.id : subtask.todo;
-      const todo = yield db.table('todo').get(id);
-      const subtaskIndex =
-        (id as number) * 1000 +
-        Math.max.apply(
-          null,
-          todo.subtasks.map((st: Subtask) => st.id)
-        ) +
-        1;
-      const subtaskWithIndex = update(subtask, { id: { $set: subtaskIndex } });
-      db.table('todo').update(
-        id,
-        update(todo, { subtasks: { $push: [subtaskWithIndex] } })
-      );
-      responseSubtask = subtaskWithIndex as Subtask;
-    }
-    yield put(createSubtaskSuccessAction(responseSubtask));
+    yield put(createSubtaskAction(subtask));
   }
 }
 
+function* createOnline({
+  payload: subtask,
+}: ActionType<typeof createSubtaskAction>) {
+  try {
+    const token = yield select(getToken);
+    const responseSubtask = (yield axios.post<Subtask>(
+      `${process.env.REACT_APP_SERVER}/subtask/`,
+      subtask,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )).data;
+    yield all([
+      put(onlineAction()),
+      put(createSubtaskSuccessAction(responseSubtask)),
+    ]);
+  } catch (e) {
+    if (isNetworkError(e)) {
+      yield put(createSubtaskOfflineAction(subtask));
+    } else {
+      yield put(saveSubtaskErrorAction(e.message));
+    }
+  }
+}
+
+function* createOffline(action: ActionType<typeof createSubtaskOfflineAction>) {
+  const id = action.payload.todo.id
+    ? action.payload.todo.id
+    : action.payload.todo;
+  const todo = yield db.table('todo').get(id);
+  const subtaskIndex =
+    (id as number) * 1000 +
+    Math.max.apply(
+      null,
+      todo.subtasks.map((st: Subtask) => st.id)
+    ) +
+    1;
+  const responseSubtask = update(action.payload, {
+    id: { $set: subtaskIndex },
+  });
+  db.table('todo').update(
+    id,
+    update(todo, { subtasks: { $push: [responseSubtask] } })
+  );
+  yield all([
+    put(addChangeAction({ action })),
+    put(createSubtaskSuccessAction(responseSubtask as Subtask)),
+  ]);
+}
+
+function* updateOnline({
+  payload: subtask,
+}: ActionType<typeof updateSubtaskAction>) {
+  try {
+    const token = yield select(getToken);
+    const responseSubtask = (yield axios.put<Subtask>(
+      `${process.env.REACT_APP_SERVER}/subtask/${subtask.id}`,
+      subtask,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )).data;
+    yield all([
+      put(onlineAction()),
+      put(createSubtaskSuccessAction(responseSubtask)),
+    ]);
+  } catch (e) {
+    if (isNetworkError(e)) {
+      yield put(updateSubtaskOfflineAction(subtask));
+    } else {
+      yield put(saveSubtaskErrorAction(e.message));
+    }
+  }
+}
+
+function* updateOffline(action: ActionType<typeof updateSubtaskOfflineAction>) {
+  const id = action.payload.todo.id
+    ? action.payload.todo.id
+    : action.payload.todo;
+  const todo = yield db.table('todo').get(id);
+  const subtaskIndex = todo.subtasks.findIndex(
+    (st: Subtask) => st.id === action.payload.id
+  );
+  db.table('todo').update(
+    id,
+    update(todo, { subtasks: { [subtaskIndex]: { $set: action.payload } } })
+  );
+  yield all([
+    put(addChangeAction({ action })),
+    put(createSubtaskSuccessAction(action.payload)),
+  ]);
+}
+
 function* remove({ payload: subtask }: ActionType<typeof deleteSubtaskAction>) {
-  if (navigator.onLine) {
+  try {
     const token = yield select(getToken);
     yield axios.delete(
       `${process.env.REACT_APP_SERVER}/subtask/${subtask.id}`,
@@ -91,18 +154,29 @@ function* remove({ payload: subtask }: ActionType<typeof deleteSubtaskAction>) {
         },
       }
     );
-  } else {
-    const id = subtask.todo.id ? subtask.todo.id : subtask.todo;
-    const todo = yield db.table('todo').get(id);
-    const subtaskIndex = todo.subtasks.findIndex(
-      (st: Subtask) => st.id === subtask.id
-    );
-    db.table('todo').update(
-      id,
-      update(todo, { subtasks: { $splice: [[subtaskIndex, 1]] } })
-    );
+    yield all([put(onlineAction()), put(deleteSubtaskSuccessAction(subtask))]);
+  } catch (e) {
+    if (isNetworkError(e)) {
+      yield put(deleteSubtaskOfflineAction(subtask));
+    } else {
+      yield put(deleteSubtaskErrorAction(e.message));
+    }
   }
-  yield put(deleteSubtaskSuccessAction(subtask));
+}
+
+function* removeOffline(action: ActionType<typeof deleteSubtaskOfflineAction>) {
+  const id = action.payload.todo.id
+    ? action.payload.todo.id
+    : action.payload.todo;
+  const todo = yield db.table('todo').get(id);
+  const subtaskIndex = todo.subtasks.findIndex(
+    (st: Subtask) => st.id === action.payload.id
+  );
+  db.table('todo').update(
+    id,
+    update(todo, { subtasks: { $splice: [[subtaskIndex, 1]] } })
+  );
+  yield put(deleteSubtaskSuccessAction(action.payload));
 }
 
 function* toggleTodoStatusDependingOnSubtasks({
@@ -141,6 +215,11 @@ function* toggleTodoStatusDependingOnSubtasks({
 export default function* todoSaga() {
   yield takeLatest(SAVE_SUBTASK, save);
   yield takeLatest(DELETE_SUBTASK, remove);
+  yield takeLatest(DELETE_SUBTASK_OFFLINE, removeOffline);
+  yield takeLatest(CREATE_SUBTASK, createOnline);
+  yield takeLatest(CREATE_SUBTASK_OFFLINE, createOffline);
+  yield takeLatest(UPDATE_SUBTASK, updateOnline);
+  yield takeLatest(UPDATE_SUBTASK_OFFLINE, updateOffline);
   yield takeLatest(
     [UPDATE_SUBTASK_SUCCESS, CREATE_SUBTASK_SUCCESS, DELETE_SUBTASK_SUCCESS],
     toggleTodoStatusDependingOnSubtasks
