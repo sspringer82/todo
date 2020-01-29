@@ -21,6 +21,7 @@ import {
   updateListOfflineAction,
   deleteListOfflineAction,
   deleteListErrorAction,
+  DELETE_LIST_OFFLINE,
 } from '../actions/list.actions';
 import { takeLatest, put, select, all } from '@redux-saga/core/effects';
 import axios from 'axios';
@@ -162,5 +163,6 @@ export default function* todoSaga() {
   yield takeLatest(UPDATE_LIST, updateOnline);
   yield takeLatest(UPDATE_LIST_OFFLINE, updateOffline);
   yield takeLatest(DELETE_LIST, remove);
+  yield takeLatest(DELETE_LIST_OFFLINE, removeOffline);
   yield takeLatest(LOAD_LISTS_OFFLINE, loadOffline);
 }
