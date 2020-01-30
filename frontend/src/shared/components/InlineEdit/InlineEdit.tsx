@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, ChangeEvent } from 'react';
 import {
   FormContainer,
   NewButton,
@@ -63,9 +63,11 @@ const InlineEdit: React.FC<Props> = ({ onSave, task }) => {
             type="text"
             value={title}
             placeholder="Neue Aufgabe"
-            onKeyDown={e => e.key === 'Enter' && handleSave()}
-            onChange={e => setTitle(e.currentTarget.value)}
-            onBlur={e => {
+            onKeyDown={(e: KeyboardEvent) => e.key === 'Enter' && handleSave()}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setTitle(e.currentTarget.value)
+            }
+            onBlur={() => {
               if (title === '') {
                 setButtonVisible(true);
               } else {
