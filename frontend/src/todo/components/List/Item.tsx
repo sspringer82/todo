@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Todo } from '../../../shared/Todo';
-import { MenuContainer, StarContainer } from './Item.styles';
+import { MenuContainer, StarContainer, EditIcon } from './Item.styles';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+
 import { Link } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
@@ -41,7 +41,7 @@ const Item: React.FC<Props> = ({ todo, onChange, onRemove }) => {
         {todo.title}
 
         {todo.subtasks.length > 0 && (
-          <span>
+          <>
             &nbsp;(
             {todo.subtasks.reduce((prev, curr) => {
               if (curr.done) {
@@ -50,7 +50,7 @@ const Item: React.FC<Props> = ({ todo, onChange, onRemove }) => {
               return prev;
             }, 0)}{' '}
             / {todo.subtasks.length})
-          </span>
+          </>
         )}
       </Title>
       <StarContainer

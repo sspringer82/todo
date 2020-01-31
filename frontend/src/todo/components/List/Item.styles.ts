@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import MUIEditIcon from '@material-ui/icons/Edit';
 
 export const MenuContainer = styled.div`
   transition: width 0.2s ease-in-out;
@@ -8,3 +9,7 @@ export const MenuContainer = styled.div`
 `;
 
 export const StarContainer = styled.div``;
+
+export const EditIcon = styled(MUIEditIcon)`
+  color: black;
+`;
