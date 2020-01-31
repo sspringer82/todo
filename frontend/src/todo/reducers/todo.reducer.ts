@@ -72,14 +72,14 @@ export default function(
         : action.payload.todo;
       const todoIndex = state.todos.findIndex(todo => todo.id === todoId);
       const subtask = update(action.payload, {
-        todo: { $set: action.payload.todo.id as any },
+        todo: { $set: action.payload.todo },
       });
       return update(state, {
         todos: { [todoIndex]: { subtasks: { $push: [subtask] } } },
       });
     case UPDATE_SUBTASK_SUCCESS:
       const todoIndex3 = state.todos.findIndex(
-        todo => todo.id === (action.payload.todo as any)
+        todo => todo.id === action.payload.todo.id
       );
       const subtaskIndex2 = state.todos[todoIndex3].subtasks!.findIndex(
         subtask => subtask.id === action.payload.id

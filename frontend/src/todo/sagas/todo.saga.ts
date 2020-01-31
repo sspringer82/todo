@@ -93,7 +93,7 @@ function* updateOnline({ payload: todo }: ActionType<typeof updateTodoAction>) {
   }
 }
 
-function* updateOffline(action: ActionType<typeof saveTodoAction>) {
+function* updateOffline(action: ActionType<typeof updateTodoOfflineAction>) {
   db.table('todo').update(action.payload.id, action.payload);
   yield all([
     put(addChangeAction({ action })),
@@ -122,7 +122,7 @@ function* createOnline({ payload: todo }: ActionType<typeof createTodoAction>) {
   }
 }
 
-function* createOffline(action: ActionType<typeof saveTodoAction>) {
+function* createOffline(action: ActionType<typeof createTodoOfflineAction>) {
   const id = yield db.table('todo').add(action.payload);
   const responseTodo = update(action.payload, { id: { $set: id } }) as Todo;
   yield all([

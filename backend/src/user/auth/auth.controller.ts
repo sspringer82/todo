@@ -12,7 +12,7 @@ export class AuthController {
       username: string;
       password: string;
     }
-  ): Promise<any> {
+  ): Promise<string> {
     return await this.authService.createToken(user);
   }
 }

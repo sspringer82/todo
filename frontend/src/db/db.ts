@@ -3,12 +3,13 @@ import { Settings } from '../shared/Settings';
 import { List } from '../shared/List';
 import { InputTypeTodo } from '../shared/Todo';
 import { User } from '../shared/User';
+import { Change } from '../shared/Change';
 
 export class TodoDatabase extends Dexie {
   settings: Dexie.Table<Settings, number> | undefined;
   list: Dexie.Table<List, number> | undefined;
   todo: Dexie.Table<InputTypeTodo, number> | undefined;
-  changes: Dexie.Table<any, number> | undefined;
+  changes: Dexie.Table<Change, number> | undefined;
   user: Dexie.Table<User, number> | undefined;
 
   constructor() {

@@ -47,11 +47,11 @@ export class TodoService {
       }, {});
 
     const subtasksToTodos = Object.values(subtasks).reduce(
-      (prev, current: any) => {
-        if (prev[current.todo]) {
-          prev[current.todo].push(current);
+      (prev, current: Subtask) => {
+        if (prev[current.todo.id]) {
+          prev[current.todo.id].push(current);
         } else {
-          prev[current.todo] = [current];
+          prev[current.todo.id] = [current];
         }
         return prev;
       },

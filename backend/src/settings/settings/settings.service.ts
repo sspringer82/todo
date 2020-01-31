@@ -16,9 +16,6 @@ export class SettingsService {
       relations: ['list'],
     });
     if (userSettings) {
-      if (userSettings.list) {
-        userSettings.list = userSettings.list.id as any;
-      }
       return userSettings;
     }
     return {
