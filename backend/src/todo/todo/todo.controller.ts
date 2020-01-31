@@ -13,6 +13,7 @@ import {
 import { TodoService } from './todo.service';
 import { Todo } from './todo.entity';
 import { AuthGuard } from '@nestjs/passport';
+import update from 'immutability-helper';
 
 @Controller('todo')
 export class TodoController {
@@ -28,7 +29,9 @@ export class TodoController {
   @Post()
   @UseGuards(AuthGuard('jwt'))
   create(@Body() todo: Todo, @Req() request) {
-    const todoToBeSaved = { ...todo, creator: request.user };
+    const todoToBeSaved = update(todo, {
+      creator: { $set: request.user },
+    });
     // is allowed to create in List?
     return this.todoService.save(Todo.create(todoToBeSaved));
   }

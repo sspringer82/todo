@@ -13,6 +13,7 @@ import {
 import { ListService } from './list.service';
 import { AuthGuard } from '@nestjs/passport';
 import { List } from './list.entity';
+import update from 'immutability-helper';
 
 @Controller('list')
 export class ListController {
@@ -27,7 +28,8 @@ export class ListController {
   @Post()
   @UseGuards(AuthGuard('jwt'))
   create(@Body() list: List, @Req() request) {
-    const listToBeSaved = List.create({ ...list, creator: request.user });
+    const listWithCreator = update(list, { creator: { $set: request.user } });
+    const listToBeSaved = List.create(listWithCreator);
     return this.listService.save(listToBeSaved);
   }
 
