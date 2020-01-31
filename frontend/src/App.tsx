@@ -10,8 +10,19 @@ import { ConnectedRouter } from 'connected-react-router';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import { onlineAction } from './changes/actions/changes.actions';
+import axios from 'axios';
+import isNetworkError from './shared/helpers/isNetworkError';
 
 const store = configureStore();
+
+axios.interceptors.response.use(
+  response => response,
+  error => {
+    if (!isNetworkError(error)) {
+      return Promise.reject(error);
+    }
+  }
+);
 
 window.addEventListener('online', () => {
   store.dispatch(onlineAction());
