@@ -3,6 +3,7 @@ import { TodoModule } from './todo/todo.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { SettingsModule } from './settings/settings.module';
+import { ChangesModule } from './changes/changes.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { SettingsModule } from './settings/settings.module';
     TypeOrmModule.forRoot({ keepConnectionAlive: true }),
     UserModule,
     SettingsModule,
+    ChangesModule,
   ],
 })
 export class AppModule {}
