@@ -3,6 +3,10 @@ import { TodoService } from 'src/todo/todo/todo.service';
 import { SettingsService } from 'src/settings/settings/settings.service';
 import { ListService } from 'src/todo/list/list.service';
 import { SubtaskService } from 'src/todo/subtask/subtask.service';
+import { Subtask } from 'src/todo/subtask/subtask.entity';
+import { Todo } from 'src/todo/todo/todo.entity';
+import { List } from 'src/todo/list/list.entity';
+import { Settings } from 'src/settings/settings/settings.entity';
 
 @Injectable()
 export class ChangesService {
@@ -14,12 +18,10 @@ export class ChangesService {
   ) {}
 
   applyChanges(changes: any[]) {
-    changes.forEach(change => {
-      this.passChange(change);
-    });
+    return Promise.all(changes.map(change => this.passChange(change)));
   }
 
-  passChange(change) {
+  passChange(change): Promise<Todo | Settings | List | Subtask> {
     switch (change.type) {
       case 'CREATE_TODO':
       case 'UPDATE_TODO':
