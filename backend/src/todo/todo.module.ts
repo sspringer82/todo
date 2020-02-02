@@ -14,5 +14,6 @@ import { Subtask } from './subtask/subtask.entity';
   imports: [TypeOrmModule.forFeature([Todo, List, Subtask])],
   controllers: [TodoController, ListController, SubtaskController],
   providers: [TodoService, ListService, SubtaskService],
+  exports: [TodoService, ListService, SubtaskService],
 })
 export class TodoModule {}
