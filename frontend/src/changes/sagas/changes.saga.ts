@@ -4,6 +4,7 @@ import {
   ADD_CHANGE,
   CLEAR_CHANGES,
   ONLINE,
+  clearChangesAction,
 } from '../actions/changes.actions';
 import axios from 'axios';
 
@@ -22,11 +23,11 @@ function* applyChanges() {
       Authorization: `Bearer ${yield select(getToken)}`,
     },
   });
-  yield put(clearChanges());
+  yield put(clearChangesAction());
 }
 
 function* clearChanges() {
-  db.table('changes').clear();
+  yield db.table('changes').clear();
 }
 
 export default function* changesSaga() {
