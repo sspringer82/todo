@@ -12,7 +12,7 @@ import { findTodos } from '../../selectors/todo.selector';
 export default function() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(loadTodosAction());
+    dispatch(loadTodosAction.request());
     dispatch(loadListsAction());
   }, [dispatch]);
 

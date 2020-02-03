@@ -2,7 +2,7 @@ import axios from 'axios';
 import { takeLatest, put, select, all } from '@redux-saga/core/effects';
 import { Todo } from '../../shared/Todo';
 import {
-  loadTodosSuccessAction,
+  loadTodosAction,
   LOAD_TODOS,
   SAVE_TODO,
   saveTodoAction,
@@ -10,7 +10,6 @@ import {
   deleteTodoAction,
   DELETE_TODO,
   deleteTodoSuccessAction,
-  loadTodosErrorAction,
   LOAD_TODOS_OFFLINE,
   loadTodosOfflineAction,
   updateTodoAction,
@@ -56,20 +55,20 @@ function* loadTodos() {
     });
     yield all([
       put(onlineAction()),
-      put(loadTodosSuccessAction(todosWithSubtasks)),
+      put(loadTodosAction.success(todosWithSubtasks)),
     ]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(loadTodosOfflineAction());
     } else {
-      yield put(loadTodosErrorAction(e));
+      yield put(loadTodosAction.failure(e));
     }
   }
 }
 
 function* loadOffline() {
   const todosWithSubtasks = yield db.table('todo').toArray();
-  yield put(loadTodosSuccessAction(todosWithSubtasks));
+  yield put(loadTodosAction.success(todosWithSubtasks));
 }
 
 function* updateOnline({ payload: todo }: ActionType<typeof updateTodoAction>) {

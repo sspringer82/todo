@@ -4,10 +4,10 @@ import {
   SAVE_TODO_SUCCESS,
   DELETE_TODO_SUCCESS,
   SEARCH,
-  loadTodosSuccessAction,
   saveTodoSuccessAction,
   deleteTodoSuccessAction,
   searchAction,
+  loadTodosAction,
 } from '../actions/todo.actions';
 import update from 'immutability-helper';
 import {
@@ -34,7 +34,7 @@ const initialState: State = {
 export default function(
   state: State = initialState,
   action: ActionType<
-    | typeof loadTodosSuccessAction
+    | typeof loadTodosAction.success
     | typeof saveTodoSuccessAction
     | typeof deleteTodoSuccessAction
     | typeof createSubtaskSuccessAction

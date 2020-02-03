@@ -1,4 +1,4 @@
-import { createAction } from 'typesafe-actions';
+import { createAction, createAsyncAction } from 'typesafe-actions';
 import { Todo, InputTypeTodo } from '../../shared/Todo';
 import { SAVE_SETTINGS_ERROR } from '../../settings/actions/settings.actions';
 
@@ -49,12 +49,13 @@ export type DELETE_TODO_ERROR = typeof DELETE_TODO_ERROR;
 
 export const SEARCH = 'SEARCH';
 
-export const loadTodosAction = createAction(LOAD_TODOS)<void>();
+export const loadTodosAction = createAsyncAction(
+  LOAD_TODOS,
+  LOAD_TODOS_SUCCESS,
+  LOAD_TODOS_ERROR
+)<void, Todo[], string>();
+
 export const loadTodosOfflineAction = createAction(LOAD_TODOS_OFFLINE)<void>();
-export const loadTodosSuccessAction = createAction(LOAD_TODOS_SUCCESS)<
-  Todo[]
->();
-export const loadTodosErrorAction = createAction(LOAD_TODOS_ERROR)<string>();
 
 export const saveTodoAction = createAction(SAVE_TODO)<InputTypeTodo>();
 export const saveTodoErrorAction = createAction(SAVE_SETTINGS_ERROR)<string>();
