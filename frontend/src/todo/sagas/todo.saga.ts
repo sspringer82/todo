@@ -33,7 +33,9 @@ import {
   addChangeAction,
   onlineAction,
 } from '../../changes/actions/changes.actions';
-import isNetworkError from '../../shared/helpers/isNetworkError';
+import isNetworkError, {
+  NETWORK_ERROR,
+} from '../../shared/helpers/isNetworkError';
 
 function* loadTodos() {
   try {
@@ -73,7 +75,7 @@ function* loadOffline() {
 
 function* updateOnline({ payload: todo }: ActionType<typeof updateTodoAction>) {
   try {
-    const responseTodo = (yield axios.put<Todo>(
+    const response = yield axios.put<Todo>(
       `${process.env.REACT_APP_SERVER}/todo/${todo.id}`,
       todo,
       {
@@ -81,8 +83,11 @@ function* updateOnline({ payload: todo }: ActionType<typeof updateTodoAction>) {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
-    )).data;
-    yield all([put(onlineAction()), put(saveTodoSuccessAction(responseTodo))]);
+    );
+    if (!response) {
+      throw new Error(NETWORK_ERROR);
+    }
+    yield all([put(onlineAction()), put(saveTodoSuccessAction(response.data))]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(updateTodoOfflineAction(todo));
