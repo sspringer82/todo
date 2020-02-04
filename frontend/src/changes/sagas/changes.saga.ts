@@ -18,11 +18,13 @@ function* addChange({ payload: change }: ActionType<typeof addChangeAction>) {
 
 function* applyChanges() {
   const changes = yield db.table('changes').toArray();
-  yield axios.post(`${process.env.REACT_APP_SERVER}/changes/`, changes, {
-    headers: {
-      Authorization: `Bearer ${yield select(getToken)}`,
-    },
-  });
+  if (changes.length > 0) {
+    yield axios.post(`${process.env.REACT_APP_SERVER}/changes/`, changes, {
+      headers: {
+        Authorization: `Bearer ${yield select(getToken)}`,
+      },
+    });
+  }
   yield put(clearChangesAction());
 }
 
