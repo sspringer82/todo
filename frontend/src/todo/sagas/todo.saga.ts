@@ -8,7 +8,6 @@ import {
   saveTodoAction,
   deleteTodoAction,
   DELETE_TODO,
-  deleteTodoSuccessAction,
   LOAD_TODOS_OFFLINE,
   loadTodosOfflineAction,
   updateTodoAction,
@@ -19,7 +18,6 @@ import {
   CREATE_TODO_OFFLINE,
   UPDATE_TODO,
   UPDATE_TODO_OFFLINE,
-  deleteTodoErrorAction,
   deleteTodoOfflineAction,
   DELETE_TODO_OFFLINE,
 } from '../actions/todo.actions';
@@ -144,7 +142,9 @@ function* save({ payload: todo }: ActionType<typeof saveTodoAction.request>) {
   }
 }
 
-function* remove({ payload: todo }: ActionType<typeof deleteTodoAction>) {
+function* remove({
+  payload: todo,
+}: ActionType<typeof deleteTodoAction.request>) {
   try {
     const token = yield select(getToken);
     yield axios.delete(`${process.env.REACT_APP_SERVER}/todo/${todo.id}`, {
@@ -152,12 +152,12 @@ function* remove({ payload: todo }: ActionType<typeof deleteTodoAction>) {
         Authorization: `Bearer ${token}`,
       },
     });
-    yield all([put(onlineAction()), put(deleteTodoSuccessAction(todo))]);
+    yield all([put(onlineAction()), put(deleteTodoAction.success(todo))]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(deleteTodoOfflineAction(todo));
     } else {
-      yield put(deleteTodoErrorAction(e.message));
+      yield put(deleteTodoAction.failure(e.message));
       return;
     }
   }
@@ -167,7 +167,7 @@ function* removeOffline({
   payload: todo,
 }: ActionType<typeof deleteTodoOfflineAction>) {
   db.table('todo').delete(todo.id);
-  yield put(deleteTodoSuccessAction(todo));
+  yield put(deleteTodoAction.success(todo));
 }
 
 export default function* todoSaga() {

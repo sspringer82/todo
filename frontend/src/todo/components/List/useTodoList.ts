@@ -22,7 +22,7 @@ export default function() {
       dispatch(saveTodoAction.request(todo));
     },
     handleDelete(todo: Todo) {
-      dispatch(deleteTodoAction(todo));
+      dispatch(deleteTodoAction.request(todo));
     },
   };
 }

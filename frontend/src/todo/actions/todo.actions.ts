@@ -71,11 +71,12 @@ export const updateTodoOfflineAction = createAction(UPDATE_TODO_OFFLINE)<
   Todo
 >();
 
-export const deleteTodoAction = createAction(DELETE_TODO)<Todo>();
-export const deleteTodoErrorAction = createAction(DELETE_TODO_ERROR)<string>();
-export const deleteTodoSuccessAction = createAction(DELETE_TODO_SUCCESS)<
-  Todo
->();
+export const deleteTodoAction = createAsyncAction(
+  DELETE_TODO,
+  DELETE_TODO_SUCCESS,
+  DELETE_TODO_ERROR
+)<Todo, Todo, string>();
+
 export const deleteTodoOfflineAction = createAction(DELETE_TODO_OFFLINE)<
   Todo
 >();
