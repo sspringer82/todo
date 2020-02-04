@@ -49,7 +49,7 @@ export default function() {
       history.push('/');
     },
     handleSave(todo: InputTypeTodo) {
-      dispatch(saveTodoAction(todo));
+      dispatch(saveTodoAction.request(todo));
     },
   };
 }

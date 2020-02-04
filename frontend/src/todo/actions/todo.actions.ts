@@ -1,6 +1,5 @@
 import { createAction, createAsyncAction } from 'typesafe-actions';
 import { Todo, InputTypeTodo } from '../../shared/Todo';
-import { SAVE_SETTINGS_ERROR } from '../../settings/actions/settings.actions';
 
 export const LOAD_TODOS = 'LOAD_TODOS';
 export type LOAD_TODOS = typeof LOAD_TODOS;
@@ -57,8 +56,12 @@ export const loadTodosAction = createAsyncAction(
 
 export const loadTodosOfflineAction = createAction(LOAD_TODOS_OFFLINE)<void>();
 
-export const saveTodoAction = createAction(SAVE_TODO)<InputTypeTodo>();
-export const saveTodoErrorAction = createAction(SAVE_SETTINGS_ERROR)<string>();
+export const saveTodoAction = createAsyncAction(
+  SAVE_TODO,
+  SAVE_TODO_SUCCESS,
+  SAVE_TODO_ERROR
+)<InputTypeTodo, Todo, string>();
+
 export const createTodoAction = createAction(CREATE_TODO)<InputTypeTodo>();
 export const createTodoOfflineAction = createAction(CREATE_TODO_OFFLINE)<
   InputTypeTodo
@@ -67,14 +70,13 @@ export const updateTodoAction = createAction(UPDATE_TODO)<Todo>();
 export const updateTodoOfflineAction = createAction(UPDATE_TODO_OFFLINE)<
   Todo
 >();
-export const saveTodoSuccessAction = createAction(SAVE_TODO_SUCCESS)<Todo>();
 
 export const deleteTodoAction = createAction(DELETE_TODO)<Todo>();
-export const deleteTodoOfflineAction = createAction(DELETE_TODO_OFFLINE)<
-  Todo
->();
 export const deleteTodoErrorAction = createAction(DELETE_TODO_ERROR)<string>();
 export const deleteTodoSuccessAction = createAction(DELETE_TODO_SUCCESS)<
+  Todo
+>();
+export const deleteTodoOfflineAction = createAction(DELETE_TODO_OFFLINE)<
   Todo
 >();
 

@@ -209,7 +209,7 @@ function* toggleTodoStatusDependingOnSubtasks({
   }
   const allDone = subtasks.every((st: Subtask) => st.done);
 
-  yield put(saveTodoAction(update(todo, { done: { $set: allDone } })));
+  yield put(saveTodoAction.request(update(todo, { done: { $set: allDone } })));
 }
 
 export default function* todoSaga() {

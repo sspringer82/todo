@@ -6,7 +6,6 @@ import {
   LOAD_TODOS,
   SAVE_TODO,
   saveTodoAction,
-  saveTodoSuccessAction,
   deleteTodoAction,
   DELETE_TODO,
   deleteTodoSuccessAction,
@@ -15,7 +14,6 @@ import {
   updateTodoAction,
   createTodoAction,
   createTodoOfflineAction,
-  saveTodoErrorAction,
   updateTodoOfflineAction,
   CREATE_TODO,
   CREATE_TODO_OFFLINE,
@@ -87,12 +85,15 @@ function* updateOnline({ payload: todo }: ActionType<typeof updateTodoAction>) {
     if (!response) {
       throw new Error(NETWORK_ERROR);
     }
-    yield all([put(onlineAction()), put(saveTodoSuccessAction(response.data))]);
+    yield all([
+      put(onlineAction()),
+      put(saveTodoAction.success(response.data)),
+    ]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(updateTodoOfflineAction(todo));
     } else {
-      yield put(saveTodoErrorAction(e.message));
+      yield put(saveTodoAction.failure(e.message));
     }
   }
 }
@@ -101,7 +102,7 @@ function* updateOffline(action: ActionType<typeof updateTodoOfflineAction>) {
   db.table('todo').update(action.payload.id, action.payload);
   yield all([
     put(addChangeAction({ action })),
-    put(saveTodoSuccessAction(action.payload as Todo)),
+    put(saveTodoAction.success(action.payload as Todo)),
   ]);
 }
 
@@ -116,12 +117,12 @@ function* createOnline({ payload: todo }: ActionType<typeof createTodoAction>) {
         },
       }
     )).data;
-    yield all([put(onlineAction()), put(saveTodoSuccessAction(responseTodo))]);
+    yield all([put(onlineAction()), put(saveTodoAction.success(responseTodo))]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(createTodoOfflineAction(todo));
     } else {
-      yield put(saveTodoErrorAction(e.message));
+      yield put(saveTodoAction.failure(e.message));
     }
   }
 }
@@ -131,11 +132,11 @@ function* createOffline(action: ActionType<typeof createTodoOfflineAction>) {
   const responseTodo = update(action.payload, { id: { $set: id } }) as Todo;
   yield all([
     put(addChangeAction({ action })),
-    put(saveTodoSuccessAction(responseTodo)),
+    put(saveTodoAction.success(responseTodo)),
   ]);
 }
 
-function* save({ payload: todo }: ActionType<typeof saveTodoAction>) {
+function* save({ payload: todo }: ActionType<typeof saveTodoAction.request>) {
   if (todo.id) {
     yield put(updateTodoAction(todo as Todo));
   } else {

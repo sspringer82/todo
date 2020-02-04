@@ -19,7 +19,7 @@ export default function() {
   return {
     todos: useSelector(findTodos),
     handleSave(todo: InputTypeTodo) {
-      dispatch(saveTodoAction(todo));
+      dispatch(saveTodoAction.request(todo));
     },
     handleDelete(todo: Todo) {
       dispatch(deleteTodoAction(todo));
