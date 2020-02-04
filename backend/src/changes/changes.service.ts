@@ -22,25 +22,25 @@ export class ChangesService {
   }
 
   passChange(change): Promise<Todo | Settings | List | Subtask> {
-    switch (change.type) {
-      case 'CREATE_TODO':
-      case 'UPDATE_TODO':
-        return this.todoService.save(change.payload);
-      case 'DELETE_TODO':
-        return this.todoService.remove(change.payload.id);
-      case 'CREATE_SETTINGS':
-      case 'UPDATE_SETTINGS':
-        return this.settingsService.save(change.payload);
-      case 'CREATE_LIST':
-      case 'UPDATE_LIST':
-        return this.listService.save(change.payload);
-      case 'DELETE_LIST':
-        return this.listService.remove(change.payload.id);
-      case 'CREATE_SUBTASK':
-      case 'UPDATE_SUBTASK':
-        return this.subtaskService.save(change.payload);
-      case 'DELETE_SUBTASK':
-        return this.subtaskService.remove(change.payload.id);
+    switch (change.action.type) {
+      case 'CREATE_TODO_OFFLINE':
+      case 'UPDATE_TODO_OFFLINE':
+        return this.todoService.save(change.action.payload);
+      case 'DELETE_TODO_OFFLINE':
+        return this.todoService.remove(change.action.payload.id);
+      case 'CREATE_SETTINGS_OFFLINE':
+      case 'UPDATE_SETTINGS_OFFLINE':
+        return this.settingsService.save(change.action.payload);
+      case 'CREATE_LIST_OFFLINE':
+      case 'UPDATE_LIST_OFFLINE':
+        return this.listService.save(change.action.payload);
+      case 'DELETE_LIST_OFFLINE':
+        return this.listService.remove(change.action.payload.id);
+      case 'CREATE_SUBTASK_OFFLINE':
+      case 'UPDATE_SUBTASK_OFFLINE':
+        return this.subtaskService.save(change.action.payload);
+      case 'DELETE_SUBTASK_OFFLINE':
+        return this.subtaskService.remove(change.action.payload.id);
     }
   }
 }
