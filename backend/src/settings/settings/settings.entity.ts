@@ -6,8 +6,8 @@ import {
   JoinColumn,
   ManyToOne,
 } from 'typeorm';
-import { User } from 'src/user/user/user.entity';
-import { List } from 'src/todo/list/list.entity';
+import { User } from '../../user/user/user.entity';
+import { List } from '../../todo/list/list.entity';
 @Entity()
 export class Settings {
   @PrimaryGeneratedColumn()

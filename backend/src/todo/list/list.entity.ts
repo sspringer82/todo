@@ -11,7 +11,7 @@ import {
   BaseEntity,
 } from 'typeorm';
 import { Todo } from '../todo/todo.entity';
-import { User } from 'src/user/user/user.entity';
+import { User } from '../../user/user/user.entity';
 @Entity()
 export class List extends BaseEntity {
   @PrimaryGeneratedColumn()

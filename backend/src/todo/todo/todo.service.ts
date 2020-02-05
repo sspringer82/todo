@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Todo } from './todo.entity';
 import { Repository } from 'typeorm';
-import { User } from 'src/user/user/user.entity';
+import { User } from '../../user/user/user.entity';
 import { List } from '../list/list.entity';
 import { Subtask } from '../subtask/subtask.entity';
 

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ChangesController } from './changes.controller';
 import { ChangesService } from './changes.service';
-import { TodoModule } from 'src/todo/todo.module';
-import { SettingsModule } from 'src/settings/settings.module';
+import { TodoModule } from '../todo/todo.module';
+import { SettingsModule } from '../settings/settings.module';
 
 @Module({
   controllers: [ChangesController],

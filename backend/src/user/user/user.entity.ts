@@ -7,8 +7,8 @@ import {
   JoinColumn,
   BaseEntity,
 } from 'typeorm';
-import { Todo } from 'src/todo/todo/todo.entity';
-import { Settings } from 'src/settings/settings/settings.entity';
+import { Todo } from '../../todo/todo/todo.entity';
+import { Settings } from '../../settings/settings/settings.entity';
 
 @Entity()
 export class User extends BaseEntity {

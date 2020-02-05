@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { TodoService } from 'src/todo/todo/todo.service';
-import { SettingsService } from 'src/settings/settings/settings.service';
-import { ListService } from 'src/todo/list/list.service';
-import { SubtaskService } from 'src/todo/subtask/subtask.service';
-import { Subtask } from 'src/todo/subtask/subtask.entity';
-import { Todo } from 'src/todo/todo/todo.entity';
-import { List } from 'src/todo/list/list.entity';
-import { Settings } from 'src/settings/settings/settings.entity';
+import { TodoService } from '../todo/todo/todo.service';
+import { SettingsService } from '../settings/settings/settings.service';
+import { ListService } from '../todo/list/list.service';
+import { SubtaskService } from '../todo/subtask/subtask.service';
+import { Subtask } from '../todo/subtask/subtask.entity';
+import { Todo } from '../todo/todo/todo.entity';
+import { List } from '../todo/list/list.entity';
+import { Settings } from '../settings/settings/settings.entity';
 
 @Injectable()
 export class ChangesService {
