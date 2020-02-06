@@ -15,12 +15,11 @@ import { onlineAction } from '../../changes/actions/changes.actions';
 
 function* loadUsers() {
   try {
-    const token = yield select(getToken);
     const users = (yield axios.get<User[]>(
       `${process.env.REACT_APP_SERVER}/user`,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
     )).data;

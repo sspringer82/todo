@@ -146,10 +146,9 @@ function* remove({
   payload: todo,
 }: ActionType<typeof deleteTodoAction.request>) {
   try {
-    const token = yield select(getToken);
     yield axios.delete(`${process.env.REACT_APP_SERVER}/todo/${todo.id}`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${yield select(getToken)}`,
       },
     });
     yield all([put(onlineAction()), put(deleteTodoAction.success(todo))]);

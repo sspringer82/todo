@@ -30,12 +30,11 @@ import isNetworkError from '../../shared/helpers/isNetworkError';
 
 function* loadSettings() {
   try {
-    const token = yield select(getToken);
     const settings = (yield axios.get<Settings>(
       `${process.env.REACT_APP_SERVER}/settings`,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
     )).data;
@@ -58,13 +57,12 @@ function* createOnline({
   payload: settings,
 }: ActionType<typeof createSettingsAction>) {
   try {
-    const token = yield select(getToken);
     const responseSettings = (yield axios.put<Settings>(
       `${process.env.REACT_APP_SERVER}/settings/${settings.id}`,
       settings,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
     )).data;
@@ -85,13 +83,12 @@ function* updateOnline({
   payload: settings,
 }: ActionType<typeof updateSettingsAction>) {
   try {
-    const token = yield select(getToken);
     const responseSettings = (yield axios.put<Settings>(
       `${process.env.REACT_APP_SERVER}/settings/${settings.id}`,
       settings,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
     )).data;

@@ -45,13 +45,12 @@ function* createOnline({
   payload: subtask,
 }: ActionType<typeof createSubtaskAction.request>) {
   try {
-    const token = yield select(getToken);
     const responseSubtask = (yield axios.post<Subtask>(
       `${process.env.REACT_APP_SERVER}/subtask/`,
       subtask,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
     )).data;
@@ -97,13 +96,12 @@ function* updateOnline({
   payload: subtask,
 }: ActionType<typeof updateSubtaskAction.request>) {
   try {
-    const token = yield select(getToken);
     const responseSubtask = (yield axios.put<Subtask>(
       `${process.env.REACT_APP_SERVER}/subtask/${subtask.id}`,
       subtask,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
     )).data;
@@ -142,12 +140,11 @@ function* remove({
   payload: subtask,
 }: ActionType<typeof deleteSubtaskAction.request>) {
   try {
-    const token = yield select(getToken);
     yield axios.delete(
       `${process.env.REACT_APP_SERVER}/subtask/${subtask.id}`,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
     );

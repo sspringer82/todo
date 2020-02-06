@@ -33,12 +33,11 @@ import isNetworkError from '../../shared/helpers/isNetworkError';
 
 function* loadLists() {
   try {
-    const token = yield select(getToken);
     const lists = (yield axios.get<List[]>(
       `${process.env.REACT_APP_SERVER}/list`,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
     )).data;
@@ -67,13 +66,12 @@ function* save({ payload: list }: ActionType<typeof saveListAction.request>) {
 
 function* createOnline({ payload: list }: ActionType<typeof createListAction>) {
   try {
-    const token = yield select(getToken);
     const responseList = (yield axios.post<List>(
       `${process.env.REACT_APP_SERVER}/list/`,
       list,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
     )).data;
@@ -98,13 +96,12 @@ function* createOffline(action: ActionType<typeof createListOfflineAction>) {
 
 function* updateOnline({ payload: list }: ActionType<typeof updateListAction>) {
   try {
-    const token = yield select(getToken);
     const responseList = (yield axios.put<List>(
       `${process.env.REACT_APP_SERVER}/list/${list.id}`,
       list,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
     )).data;
@@ -129,10 +126,9 @@ function* remove({
   payload: list,
 }: ActionType<typeof deleteListAction.request>) {
   try {
-    const token = yield select(getToken);
     yield axios.delete(`${process.env.REACT_APP_SERVER}/list/${list.id}`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${yield select(getToken)}`,
       },
     });
     yield all([put(onlineAction()), put(deleteListAction.success(list))]);
