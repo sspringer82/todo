@@ -1,6 +1,6 @@
 import createRootReducer from '../../reducers/rootReducer';
 import { getToken, hasLoginError } from './login.selector';
-import { loginSuccessAction, loginErrorAction } from '../actions/login.actions';
+import { loginAction } from '../actions/login.actions';
 
 describe('Login Selector', () => {
   describe('getToken', () => {
@@ -12,7 +12,7 @@ describe('Login Selector', () => {
     });
     it('should return the correct value of a changed token', () => {
       const rootReducer = createRootReducer({} as unknown);
-      const state = rootReducer(undefined, loginSuccessAction('token'));
+      const state = rootReducer(undefined, loginAction.success('token'));
       const token = getToken(state);
       expect(token).toBe('token');
     });
@@ -27,7 +27,7 @@ describe('Login Selector', () => {
     });
     it('should return the correct value of a changed error state', () => {
       const rootReducer = createRootReducer({} as unknown);
-      const state = rootReducer(undefined, loginErrorAction());
+      const state = rootReducer(undefined, loginAction.failure());
       const loginError = hasLoginError(state);
       expect(loginError).toBe(true);
     });
