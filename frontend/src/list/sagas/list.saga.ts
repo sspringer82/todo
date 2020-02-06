@@ -1,6 +1,5 @@
 import {
   LOAD_LISTS,
-  loadListsSuccessAction,
   saveListAction,
   saveListSuccessAction,
   SAVE_LIST,
@@ -8,8 +7,8 @@ import {
   deleteListSuccessAction,
   DELETE_LIST,
   LOAD_LISTS_OFFLINE,
+  loadListsAction,
   loadListsOfflineAction,
-  loadListsErrorAction,
   createListAction,
   updateListAction,
   CREATE_LIST,
@@ -47,19 +46,19 @@ function* loadLists() {
         },
       }
     )).data;
-    yield all([put(onlineAction()), put(loadListsSuccessAction(lists))]);
+    yield all([put(onlineAction()), put(loadListsAction.success(lists))]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(loadListsOfflineAction());
     } else {
-      yield put(loadListsErrorAction(e.message));
+      yield put(loadListsAction.failure(e.message));
     }
   }
 }
 
 function* loadOffline() {
   const lists = yield db.table('list').toArray();
-  put(loadListsSuccessAction(lists));
+  put(loadListsAction.success(lists));
 }
 
 function* save({ payload: list }: ActionType<typeof saveListAction>) {

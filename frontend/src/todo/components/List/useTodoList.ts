@@ -13,7 +13,7 @@ export default function() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadTodosAction.request());
-    dispatch(loadListsAction());
+    dispatch(loadListsAction.request());
   }, [dispatch]);
 
   return {

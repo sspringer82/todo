@@ -3,9 +3,9 @@ import {
   LOAD_LISTS_SUCCESS,
   DELETE_LIST_SUCCESS,
   SAVE_LIST_SUCCESS,
-  loadListsSuccessAction,
   saveListSuccessAction,
   deleteListSuccessAction,
+  loadListsAction,
 } from '../actions/list.actions';
 import update from 'immutability-helper';
 import db from '../../db/db';
@@ -24,7 +24,7 @@ const initialState: State = {
 export default function(
   state: State = initialState,
   action: ActionType<
-    | typeof loadListsSuccessAction
+    | typeof loadListsAction.success
     | typeof saveListSuccessAction
     | typeof deleteListSuccessAction
   >

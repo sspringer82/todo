@@ -1,5 +1,5 @@
 import { List, InputTypeList } from '../../shared/List';
-import { createAction } from 'typesafe-actions';
+import { createAction, createAsyncAction } from 'typesafe-actions';
 
 export const LOAD_LISTS = 'LOAD_LISTS';
 export type LOAD_LISTS = typeof LOAD_LISTS;
@@ -46,12 +46,19 @@ export type DELETE_LIST_ERROR = typeof DELETE_LIST_ERROR;
 export const DELETE_LIST_SUCCESS = 'DELETE_LIST_SUCCESS';
 export type DELETE_LIST_SUCCESS = typeof DELETE_LIST_SUCCESS;
 
-export const loadListsAction = createAction(LOAD_LISTS)<void>();
+export const loadListsAction = createAsyncAction(
+  LOAD_LISTS,
+  LOAD_LISTS_SUCCESS,
+  LOAD_LISTS_ERROR
+)<void, List[], string>();
+
+// export const loadListsAction = createAction(LOAD_LISTS)<void>();
+// export const loadListsErrorAction = createAction(LOAD_LISTS_ERROR)<string>();
+// export const loadListsSuccessAction = createAction(LOAD_LISTS_SUCCESS)<
+// List[]
+// >();
+
 export const loadListsOfflineAction = createAction(LOAD_LISTS_OFFLINE)<void>();
-export const loadListsErrorAction = createAction(LOAD_LISTS_ERROR)<string>();
-export const loadListsSuccessAction = createAction(LOAD_LISTS_SUCCESS)<
-  List[]
->();
 
 export const saveListAction = createAction(SAVE_LIST)<InputTypeList>();
 export const createListAction = createAction(CREATE_LIST)<InputTypeList>();

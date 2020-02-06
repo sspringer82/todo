@@ -26,7 +26,7 @@ import update from 'immutability-helper';
 const Menu: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(loadListsAction());
+    dispatch(loadListsAction.request());
     dispatch(loadSettingsAction());
   }, [dispatch]);
   const lists = useSelector(getLists);
