@@ -14,9 +14,9 @@ import {
   CREATE_SUBTASK_SUCCESS,
   DELETE_SUBTASK,
   UPDATE_SUBTASK_SUCCESS,
-  createSubtaskSuccessAction,
-  updateSubtaskSuccessAction,
   deleteSubtaskAction,
+  createSubtaskAction,
+  updateSubtaskAction,
 } from '../actions/subtask.actions';
 import db from '../../db/db';
 import { ActionType } from 'typesafe-actions';
@@ -37,8 +37,8 @@ export default function(
     | typeof loadTodosAction.success
     | typeof saveTodoAction.success
     | typeof deleteTodoAction.success
-    | typeof createSubtaskSuccessAction
-    | typeof updateSubtaskSuccessAction
+    | typeof createSubtaskAction.success
+    | typeof updateSubtaskAction.success
     | typeof deleteSubtaskAction
     | typeof searchAction
   >

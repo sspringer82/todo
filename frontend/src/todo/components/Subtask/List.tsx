@@ -44,7 +44,7 @@ const List: React.FC<Props> = ({ todo }) => {
                 dispatch(saveSubtaskAction(subtask))
               }
               onDelete={(subtask: Subtask) =>
-                dispatch(deleteSubtaskAction(subtask))
+                dispatch(deleteSubtaskAction.request(subtask))
               }
             />
           )

@@ -3,25 +3,20 @@ import { ActionType } from 'typesafe-actions';
 import {
   saveSubtaskAction,
   deleteSubtaskAction,
-  deleteSubtaskSuccessAction,
   SAVE_SUBTASK,
   DELETE_SUBTASK,
-  updateSubtaskSuccessAction,
-  createSubtaskSuccessAction,
   UPDATE_SUBTASK_SUCCESS,
   CREATE_SUBTASK_SUCCESS,
   DELETE_SUBTASK_SUCCESS,
   createSubtaskAction,
   updateSubtaskAction,
   createSubtaskOfflineAction,
-  saveSubtaskErrorAction,
   CREATE_SUBTASK,
   CREATE_SUBTASK_OFFLINE,
   updateSubtaskOfflineAction,
   UPDATE_SUBTASK,
   UPDATE_SUBTASK_OFFLINE,
   deleteSubtaskOfflineAction,
-  deleteSubtaskErrorAction,
   DELETE_SUBTASK_OFFLINE,
 } from '../actions/subtask.actions';
 import { getToken } from '../../login/selectors/login.selector';
@@ -40,15 +35,15 @@ import {
 
 function* save({ payload: subtask }: ActionType<typeof saveSubtaskAction>) {
   if (subtask.id) {
-    yield put(updateSubtaskAction(subtask as Subtask));
+    yield put(updateSubtaskAction.request(subtask as Subtask));
   } else {
-    yield put(createSubtaskAction(subtask));
+    yield put(createSubtaskAction.request(subtask));
   }
 }
 
 function* createOnline({
   payload: subtask,
-}: ActionType<typeof createSubtaskAction>) {
+}: ActionType<typeof createSubtaskAction.request>) {
   try {
     const token = yield select(getToken);
     const responseSubtask = (yield axios.post<Subtask>(
@@ -62,13 +57,13 @@ function* createOnline({
     )).data;
     yield all([
       put(onlineAction()),
-      put(createSubtaskSuccessAction(responseSubtask)),
+      put(createSubtaskAction.success(responseSubtask)),
     ]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(createSubtaskOfflineAction(subtask));
     } else {
-      yield put(saveSubtaskErrorAction(e.message));
+      yield put(createSubtaskAction.failure(e.message));
     }
   }
 }
@@ -94,13 +89,13 @@ function* createOffline(action: ActionType<typeof createSubtaskOfflineAction>) {
   );
   yield all([
     put(addChangeAction({ action })),
-    put(createSubtaskSuccessAction(responseSubtask as Subtask)),
+    put(createSubtaskAction.success(responseSubtask as Subtask)),
   ]);
 }
 
 function* updateOnline({
   payload: subtask,
-}: ActionType<typeof updateSubtaskAction>) {
+}: ActionType<typeof updateSubtaskAction.request>) {
   try {
     const token = yield select(getToken);
     const responseSubtask = (yield axios.put<Subtask>(
@@ -114,13 +109,13 @@ function* updateOnline({
     )).data;
     yield all([
       put(onlineAction()),
-      put(createSubtaskSuccessAction(responseSubtask)),
+      put(createSubtaskAction.success(responseSubtask)),
     ]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(updateSubtaskOfflineAction(subtask));
     } else {
-      yield put(saveSubtaskErrorAction(e.message));
+      yield put(updateSubtaskAction.failure(e.message));
     }
   }
 }
@@ -139,11 +134,13 @@ function* updateOffline(action: ActionType<typeof updateSubtaskOfflineAction>) {
   );
   yield all([
     put(addChangeAction({ action })),
-    put(createSubtaskSuccessAction(action.payload)),
+    put(createSubtaskAction.success(action.payload)),
   ]);
 }
 
-function* remove({ payload: subtask }: ActionType<typeof deleteSubtaskAction>) {
+function* remove({
+  payload: subtask,
+}: ActionType<typeof deleteSubtaskAction.request>) {
   try {
     const token = yield select(getToken);
     yield axios.delete(
@@ -154,12 +151,12 @@ function* remove({ payload: subtask }: ActionType<typeof deleteSubtaskAction>) {
         },
       }
     );
-    yield all([put(onlineAction()), put(deleteSubtaskSuccessAction(subtask))]);
+    yield all([put(onlineAction()), put(deleteSubtaskAction.success(subtask))]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(deleteSubtaskOfflineAction(subtask));
     } else {
-      yield put(deleteSubtaskErrorAction(e.message));
+      yield put(deleteSubtaskAction.failure(e.message));
     }
   }
 }
@@ -176,16 +173,16 @@ function* removeOffline(action: ActionType<typeof deleteSubtaskOfflineAction>) {
     id,
     update(todo, { subtasks: { $splice: [[subtaskIndex, 1]] } })
   );
-  yield put(deleteSubtaskSuccessAction(action.payload));
+  yield put(deleteSubtaskAction.success(action.payload));
 }
 
 function* toggleTodoStatusDependingOnSubtasks({
   payload: subtask,
   type,
 }: ActionType<
-  | typeof updateSubtaskSuccessAction
-  | typeof createSubtaskSuccessAction
-  | typeof deleteSubtaskSuccessAction
+  | typeof updateSubtaskAction.success
+  | typeof createSubtaskAction.success
+  | typeof deleteSubtaskAction.success
 >) {
   let id: Todo | number = subtask.todo;
   if (typeof id !== 'number' && subtask.todo.id) {
