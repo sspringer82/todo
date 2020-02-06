@@ -5,11 +5,8 @@ import { getToken } from '../../login/selectors/login.selector';
 import {
   LOAD_SETTINGS,
   SAVE_SETTINGS,
-  loadSettingsSuccessAction,
   saveSettingsAction,
-  saveSettingsSuccessAction,
   createSettingsAction,
-  saveSettingsErrorAction,
   createSettingsOfflineAction,
   CREATE_SETTINGS,
   CREATE_SETTINGS_OFFLINE,
@@ -17,9 +14,9 @@ import {
   UPDATE_SETTINGS,
   UPDATE_SETTINGS_OFFLINE,
   updateSettingsOfflineAction,
-  loadSettingsErrorAction,
   loadSettingsOfflineAction,
   LOAD_SETTINGS_OFFLINE,
+  loadSettingsAction,
 } from '../actions/settings.actions';
 import { Settings } from '../../shared/Settings';
 import { ActionType } from 'typesafe-actions';
@@ -42,19 +39,19 @@ function* loadSettings() {
         },
       }
     )).data;
-    yield all([put(onlineAction()), put(loadSettingsSuccessAction(settings))]);
+    yield all([put(onlineAction()), put(loadSettingsAction.success(settings))]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(loadSettingsOfflineAction());
     } else {
-      yield put(loadSettingsErrorAction(e.message));
+      yield put(loadSettingsAction.failure(e.message));
     }
   }
 }
 
 function* loadOffline() {
   const settings = (yield db.table('settings').toArray()).pop();
-  yield put(loadSettingsSuccessAction(settings));
+  yield put(loadSettingsAction.success(settings));
 }
 
 function* createOnline({
@@ -73,13 +70,13 @@ function* createOnline({
     )).data;
     yield all([
       put(onlineAction()),
-      put(saveSettingsSuccessAction(responseSettings)),
+      put(saveSettingsAction.success(responseSettings)),
     ]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(createSettingsOfflineAction(settings));
     } else {
-      yield put(saveSettingsErrorAction(e.message));
+      yield put(saveSettingsAction.failure(e.message));
     }
   }
 }
@@ -100,13 +97,13 @@ function* updateOnline({
     )).data;
     yield all([
       put(onlineAction()),
-      put(saveSettingsSuccessAction(responseSettings)),
+      put(saveSettingsAction.success(responseSettings)),
     ]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(updateSettingsOfflineAction(settings));
     } else {
-      yield put(saveSettingsErrorAction(e.message));
+      yield put(saveSettingsAction.failure(e.message));
     }
   }
 }
@@ -118,7 +115,7 @@ function* createOffline(
   const responseSettings = update(action.payload, { id: { $set: id } });
   yield all([
     put(addChangeAction({ action })),
-    put(saveSettingsSuccessAction(responseSettings)),
+    put(saveSettingsAction.success(responseSettings)),
   ]);
 }
 
@@ -129,11 +126,13 @@ function* updateOffline(
   const responseSettings = action.payload;
   yield all([
     put(addChangeAction({ action })),
-    put(saveSettingsSuccessAction(responseSettings)),
+    put(saveSettingsAction.success(responseSettings)),
   ]);
 }
 
-function* save({ payload: settings }: ActionType<typeof saveSettingsAction>) {
+function* save({
+  payload: settings,
+}: ActionType<typeof saveSettingsAction.request>) {
   if (settings.id) {
     yield put(updateSettingsAction(settings));
   } else {

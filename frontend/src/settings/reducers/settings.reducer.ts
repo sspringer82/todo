@@ -1,8 +1,8 @@
 import {
   LOAD_SETTINGS_SUCCESS,
   SAVE_SETTINGS_SUCCESS,
-  saveSettingsSuccessAction,
-  loadSettingsSuccessAction,
+  loadSettingsAction,
+  saveSettingsAction,
 } from '../actions/settings.actions';
 import db from '../../db/db';
 import { ActionType } from 'typesafe-actions';
@@ -21,7 +21,7 @@ const initialState: State = {
 export default function(
   state: State = initialState,
   action: ActionType<
-    typeof saveSettingsSuccessAction | typeof loadSettingsSuccessAction
+    typeof saveSettingsAction.success | typeof loadSettingsAction.success
   >
 ): State {
   switch (action.type) {

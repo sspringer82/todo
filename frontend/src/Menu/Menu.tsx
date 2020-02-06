@@ -27,14 +27,14 @@ const Menu: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadListsAction.request());
-    dispatch(loadSettingsAction());
+    dispatch(loadSettingsAction.request());
   }, [dispatch]);
   const lists = useSelector(getLists);
   const currentList = useSelector(getActiveList);
   const [menuOpen, setMenuOpen] = useState(false);
   function handleSelect(list: ListType | null) {
     dispatch(
-      saveSettingsAction(
+      saveSettingsAction.request(
         update(settings, { list: { $set: (list && list.id) || undefined } })
       )
     );
@@ -69,7 +69,7 @@ const Menu: React.FC = () => {
               hideDone={settings.hideDone}
               onChange={(hideDone: boolean) => {
                 dispatch(
-                  saveSettingsAction(
+                  saveSettingsAction.request(
                     update(settings, { hideDone: { $set: hideDone } })
                   )
                 );
@@ -81,7 +81,7 @@ const Menu: React.FC = () => {
               onlyStars={settings.onlyStars}
               onChange={(onlyStars: boolean) => {
                 dispatch(
-                  saveSettingsAction(
+                  saveSettingsAction.request(
                     update(settings, { onlyStars: { $set: onlyStars } })
                   )
                 );

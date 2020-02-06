@@ -84,7 +84,9 @@ const Form: React.FC = () => {
   function handleDelete() {
     dispatch(deleteListAction.request(list as List));
     dispatch(
-      saveSettingsAction(update(settings, { list: { $set: undefined } }))
+      saveSettingsAction.request(
+        update(settings, { list: { $set: undefined } })
+      )
     );
     handleClose();
   }
