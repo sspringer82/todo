@@ -5,11 +5,10 @@ import db from '../../db/db';
 import { getToken } from '../../login/selectors/login.selector';
 import { User } from '../../shared/User';
 import {
-  loadUsersSuccessAction,
   LOAD_USERS,
   LOAD_USERS_OFFLINE,
   loadUsersOfflineAction,
-  loadUsersErrorAction,
+  loadUsersAction,
 } from '../actions/user.actions';
 import isNetworkError from '../../shared/helpers/isNetworkError';
 import { onlineAction } from '../../changes/actions/changes.actions';
@@ -25,19 +24,19 @@ function* loadUsers() {
         },
       }
     )).data;
-    yield all([put(onlineAction()), put(loadUsersSuccessAction(users))]);
+    yield all([put(onlineAction()), put(loadUsersAction.success(users))]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(loadUsersOfflineAction());
     } else {
-      yield put(loadUsersErrorAction(e.message));
+      yield put(loadUsersAction.failure(e.message));
     }
   }
 }
 
 function* loadOffline() {
   const users = yield db.table('user').toArray();
-  yield put(loadUsersSuccessAction(users));
+  yield put(loadUsersAction.success(users));
 }
 
 export default function* todoSaga() {

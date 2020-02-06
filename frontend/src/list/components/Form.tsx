@@ -71,7 +71,7 @@ const Form: React.FC = () => {
   }
 
   useEffect(() => {
-    dispatch(loadUsersAction());
+    dispatch(loadUsersAction.request());
   }, [dispatch]);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
