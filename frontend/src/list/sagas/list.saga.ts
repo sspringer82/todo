@@ -1,10 +1,8 @@
 import {
   LOAD_LISTS,
   saveListAction,
-  saveListSuccessAction,
   SAVE_LIST,
   deleteListAction,
-  deleteListSuccessAction,
   DELETE_LIST,
   LOAD_LISTS_OFFLINE,
   loadListsAction,
@@ -16,10 +14,8 @@ import {
   UPDATE_LIST,
   UPDATE_LIST_OFFLINE,
   createListOfflineAction,
-  saveListErrorAction,
   updateListOfflineAction,
   deleteListOfflineAction,
-  deleteListErrorAction,
   DELETE_LIST_OFFLINE,
 } from '../actions/list.actions';
 import { takeLatest, put, select, all } from '@redux-saga/core/effects';
@@ -61,7 +57,7 @@ function* loadOffline() {
   put(loadListsAction.success(lists));
 }
 
-function* save({ payload: list }: ActionType<typeof saveListAction>) {
+function* save({ payload: list }: ActionType<typeof saveListAction.request>) {
   if (list.id) {
     yield put(updateListAction(list as List));
   } else {
@@ -81,12 +77,12 @@ function* createOnline({ payload: list }: ActionType<typeof createListAction>) {
         },
       }
     )).data;
-    yield all([put(onlineAction()), put(saveListSuccessAction(responseList))]);
+    yield all([put(onlineAction()), put(saveListAction.success(responseList))]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(createListOfflineAction(list));
     } else {
-      yield put(saveListErrorAction(e.message));
+      yield put(saveListAction.failure(e.message));
     }
   }
 }
@@ -96,7 +92,7 @@ function* createOffline(action: ActionType<typeof createListOfflineAction>) {
   const responseList = update(action.payload, { id: { $set: id } }) as List;
   yield all([
     put(addChangeAction({ action })),
-    put(saveListSuccessAction(responseList)),
+    put(saveListAction.success(responseList)),
   ]);
 }
 
@@ -112,12 +108,12 @@ function* updateOnline({ payload: list }: ActionType<typeof updateListAction>) {
         },
       }
     )).data;
-    yield all([put(onlineAction()), put(saveListSuccessAction(responseList))]);
+    yield all([put(onlineAction()), put(saveListAction.success(responseList))]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(createListOfflineAction(list));
     } else {
-      yield put(saveListErrorAction(e.message));
+      yield put(saveListAction.failure(e.message));
     }
   }
 }
@@ -125,11 +121,13 @@ function* updateOffline(action: ActionType<typeof updateListOfflineAction>) {
   db.table('list').update(action.payload.id, action.payload);
   yield all([
     put(addChangeAction({ action })),
-    put(saveListSuccessAction(action.payload)),
+    put(saveListAction.success(action.payload)),
   ]);
 }
 
-function* remove({ payload: list }: ActionType<typeof deleteListAction>) {
+function* remove({
+  payload: list,
+}: ActionType<typeof deleteListAction.request>) {
   try {
     const token = yield select(getToken);
     yield axios.delete(`${process.env.REACT_APP_SERVER}/list/${list.id}`, {
@@ -137,12 +135,12 @@ function* remove({ payload: list }: ActionType<typeof deleteListAction>) {
         Authorization: `Bearer ${token}`,
       },
     });
-    yield all([put(onlineAction()), put(deleteListSuccessAction(list))]);
+    yield all([put(onlineAction()), put(deleteListAction.success(list))]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(deleteListOfflineAction(list));
     } else {
-      yield put(deleteListErrorAction(e.message));
+      yield put(deleteListAction.failure(e.message));
     }
   }
 }
@@ -151,7 +149,7 @@ function* removeOffline({
   payload: list,
 }: ActionType<typeof deleteListOfflineAction>) {
   db.table('list').delete(list.id);
-  yield put(deleteListSuccessAction(list));
+  yield put(deleteListAction.success(list));
 }
 
 export default function* todoSaga() {

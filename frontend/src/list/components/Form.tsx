@@ -76,13 +76,13 @@ const Form: React.FC = () => {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    dispatch(saveListAction(list));
+    dispatch(saveListAction.request(list));
     handleClose();
   }
 
   const settings = useSelector(getSettings);
   function handleDelete() {
-    dispatch(deleteListAction(list as List));
+    dispatch(deleteListAction.request(list as List));
     dispatch(
       saveSettingsAction(update(settings, { list: { $set: undefined } }))
     );

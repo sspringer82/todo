@@ -52,15 +52,19 @@ export const loadListsAction = createAsyncAction(
   LOAD_LISTS_ERROR
 )<void, List[], string>();
 
-// export const loadListsAction = createAction(LOAD_LISTS)<void>();
-// export const loadListsErrorAction = createAction(LOAD_LISTS_ERROR)<string>();
-// export const loadListsSuccessAction = createAction(LOAD_LISTS_SUCCESS)<
-// List[]
-// >();
-
 export const loadListsOfflineAction = createAction(LOAD_LISTS_OFFLINE)<void>();
 
-export const saveListAction = createAction(SAVE_LIST)<InputTypeList>();
+export const saveListAction = createAsyncAction(
+  SAVE_LIST,
+  SAVE_LIST_SUCCESS,
+  SAVE_LIST_ERROR
+)<InputTypeList, List, string>();
+// export const saveListAction = createAction(SAVE_LIST)<InputTypeList>();
+// export const saveListErrorAction = createAction(SAVE_LIST_ERROR)<
+//   InputTypeList
+// >();
+// export const saveListSuccessAction = createAction(SAVE_LIST_SUCCESS)<List>();
+
 export const createListAction = createAction(CREATE_LIST)<InputTypeList>();
 export const createListOfflineAction = createAction(CREATE_LIST_OFFLINE)<
   InputTypeList
@@ -69,16 +73,20 @@ export const updateListAction = createAction(UPDATE_LIST)<List>();
 export const updateListOfflineAction = createAction(UPDATE_LIST_OFFLINE)<
   List
 >();
-export const saveListErrorAction = createAction(SAVE_LIST_ERROR)<
-  InputTypeList
->();
-export const saveListSuccessAction = createAction(SAVE_LIST_SUCCESS)<List>();
 
-export const deleteListAction = createAction(DELETE_LIST)<List>();
+export const deleteListAction = createAsyncAction(
+  DELETE_LIST,
+  DELETE_LIST_SUCCESS,
+  DELETE_LIST_ERROR
+)<List, List, string>();
+
+// export const deleteListAction = createAction(DELETE_LIST)<List>();
+// List
+// >();
+// export const deleteListErrorAction = createAction(DELETE_LIST_ERROR)<string>();
+// export const deleteListSuccessAction = createAction(DELETE_LIST_SUCCESS)<
+// List
+// >();
 export const deleteListOfflineAction = createAction(DELETE_LIST_OFFLINE)<
-  List
->();
-export const deleteListErrorAction = createAction(DELETE_LIST_ERROR)<string>();
-export const deleteListSuccessAction = createAction(DELETE_LIST_SUCCESS)<
   List
 >();
