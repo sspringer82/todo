@@ -59,11 +59,6 @@ export const saveListAction = createAsyncAction(
   SAVE_LIST_SUCCESS,
   SAVE_LIST_ERROR
 )<InputTypeList, List, string>();
-// export const saveListAction = createAction(SAVE_LIST)<InputTypeList>();
-// export const saveListErrorAction = createAction(SAVE_LIST_ERROR)<
-//   InputTypeList
-// >();
-// export const saveListSuccessAction = createAction(SAVE_LIST_SUCCESS)<List>();
 
 export const createListAction = createAction(CREATE_LIST)<InputTypeList>();
 export const createListOfflineAction = createAction(CREATE_LIST_OFFLINE)<
@@ -80,13 +75,6 @@ export const deleteListAction = createAsyncAction(
   DELETE_LIST_ERROR
 )<List, List, string>();
 
-// export const deleteListAction = createAction(DELETE_LIST)<List>();
-// List
-// >();
-// export const deleteListErrorAction = createAction(DELETE_LIST_ERROR)<string>();
-// export const deleteListSuccessAction = createAction(DELETE_LIST_SUCCESS)<
-// List
-// >();
 export const deleteListOfflineAction = createAction(DELETE_LIST_OFFLINE)<
   List
 >();

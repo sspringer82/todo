@@ -9,7 +9,7 @@ const LoginContainer: React.FC = () => {
   const hasLoginError = useSelector(hasLoginErrorSelector);
   const dispatch = useDispatch();
   function handleLogin(login: LoginType) {
-    dispatch(loginAction(login));
+    dispatch(loginAction.request(login));
   }
   return <Login hasLoginError={hasLoginError} onLogin={handleLogin} />;
 };
