@@ -29,19 +29,27 @@ import {
   onlineAction,
   addChangeAction,
 } from '../../changes/actions/changes.actions';
-import isNetworkError from '../../shared/helpers/isNetworkError';
+import isNetworkError, {
+  NETWORK_ERROR,
+} from '../../shared/helpers/isNetworkError';
 
 function* loadLists() {
   try {
-    const lists = (yield axios.get<List[]>(
+    const response = yield axios.get<List[]>(
       `${process.env.REACT_APP_SERVER}/list`,
       {
         headers: {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
-    )).data;
-    yield all([put(onlineAction()), put(loadListsAction.success(lists))]);
+    );
+    if (!response) {
+      throw new Error(NETWORK_ERROR);
+    }
+    yield all([
+      put(onlineAction()),
+      put(loadListsAction.success(response.data)),
+    ]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(loadListsOfflineAction());
@@ -66,7 +74,7 @@ function* save({ payload: list }: ActionType<typeof saveListAction.request>) {
 
 function* createOnline({ payload: list }: ActionType<typeof createListAction>) {
   try {
-    const responseList = (yield axios.post<List>(
+    const response = yield axios.post<List>(
       `${process.env.REACT_APP_SERVER}/list/`,
       list,
       {
@@ -74,8 +82,14 @@ function* createOnline({ payload: list }: ActionType<typeof createListAction>) {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
-    )).data;
-    yield all([put(onlineAction()), put(saveListAction.success(responseList))]);
+    );
+    if (!response) {
+      throw new Error(NETWORK_ERROR);
+    }
+    yield all([
+      put(onlineAction()),
+      put(saveListAction.success(response.data)),
+    ]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(createListOfflineAction(list));
@@ -96,7 +110,7 @@ function* createOffline(action: ActionType<typeof createListOfflineAction>) {
 
 function* updateOnline({ payload: list }: ActionType<typeof updateListAction>) {
   try {
-    const responseList = (yield axios.put<List>(
+    const response = yield axios.put<List>(
       `${process.env.REACT_APP_SERVER}/list/${list.id}`,
       list,
       {
@@ -104,8 +118,14 @@ function* updateOnline({ payload: list }: ActionType<typeof updateListAction>) {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
-    )).data;
-    yield all([put(onlineAction()), put(saveListAction.success(responseList))]);
+    );
+    if (!response) {
+      throw new Error(NETWORK_ERROR);
+    }
+    yield all([
+      put(onlineAction()),
+      put(saveListAction.success(response.data)),
+    ]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(createListOfflineAction(list));
@@ -126,11 +146,17 @@ function* remove({
   payload: list,
 }: ActionType<typeof deleteListAction.request>) {
   try {
-    yield axios.delete(`${process.env.REACT_APP_SERVER}/list/${list.id}`, {
-      headers: {
-        Authorization: `Bearer ${yield select(getToken)}`,
-      },
-    });
+    const response = yield axios.delete(
+      `${process.env.REACT_APP_SERVER}/list/${list.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${yield select(getToken)}`,
+        },
+      }
+    );
+    if (!response) {
+      throw new Error(NETWORK_ERROR);
+    }
     yield all([put(onlineAction()), put(deleteListAction.success(list))]);
   } catch (e) {
     if (isNetworkError(e)) {
