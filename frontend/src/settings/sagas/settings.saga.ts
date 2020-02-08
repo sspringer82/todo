@@ -26,19 +26,27 @@ import {
   onlineAction,
   addChangeAction,
 } from '../../changes/actions/changes.actions';
-import isNetworkError from '../../shared/helpers/isNetworkError';
+import isNetworkError, {
+  NETWORK_ERROR,
+} from '../../shared/helpers/isNetworkError';
 
 function* loadSettings() {
   try {
-    const settings = (yield axios.get<Settings>(
+    const response = yield axios.get<Settings>(
       `${process.env.REACT_APP_SERVER}/settings`,
       {
         headers: {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
-    )).data;
-    yield all([put(onlineAction()), put(loadSettingsAction.success(settings))]);
+    );
+    if (!response) {
+      throw new Error(NETWORK_ERROR);
+    }
+    yield all([
+      put(onlineAction()),
+      put(loadSettingsAction.success(response.data)),
+    ]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(loadSettingsOfflineAction());
@@ -57,7 +65,7 @@ function* createOnline({
   payload: settings,
 }: ActionType<typeof createSettingsAction>) {
   try {
-    const responseSettings = (yield axios.put<Settings>(
+    const response = yield axios.put<Settings>(
       `${process.env.REACT_APP_SERVER}/settings/${settings.id}`,
       settings,
       {
@@ -65,10 +73,13 @@ function* createOnline({
           Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
-    )).data;
+    );
+    if (!response) {
+      throw new Error(NETWORK_ERROR);
+    }
     yield all([
       put(onlineAction()),
-      put(saveSettingsAction.success(responseSettings)),
+      put(saveSettingsAction.success(response.data)),
     ]);
   } catch (e) {
     if (isNetworkError(e)) {
@@ -83,7 +94,7 @@ function* updateOnline({
   payload: settings,
 }: ActionType<typeof updateSettingsAction>) {
   try {
-    const responseSettings = (yield axios.put<Settings>(
+    const response = yield axios.put<Settings>(
       `${process.env.REACT_APP_SERVER}/settings/${settings.id}`,
       settings,
       {
@@ -91,10 +102,13 @@ function* updateOnline({
           Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
-    )).data;
+    );
+    if (!response) {
+      throw new Error(NETWORK_ERROR);
+    }
     yield all([
       put(onlineAction()),
-      put(saveSettingsAction.success(responseSettings)),
+      put(saveSettingsAction.success(response.data)),
     ]);
   } catch (e) {
     if (isNetworkError(e)) {
