@@ -27,7 +27,9 @@ import { saveTodoAction } from '../actions/todo.actions';
 import update from 'immutability-helper';
 import { Todo } from '../../shared/Todo';
 import db from '../../db/db';
-import isNetworkError from '../../shared/helpers/isNetworkError';
+import isNetworkError, {
+  NETWORK_ERROR,
+} from '../../shared/helpers/isNetworkError';
 import {
   onlineAction,
   addChangeAction,
@@ -45,7 +47,7 @@ function* createOnline({
   payload: subtask,
 }: ActionType<typeof createSubtaskAction.request>) {
   try {
-    const responseSubtask = (yield axios.post<Subtask>(
+    const response = yield axios.post<Subtask>(
       `${process.env.REACT_APP_SERVER}/subtask/`,
       subtask,
       {
@@ -53,10 +55,13 @@ function* createOnline({
           Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
-    )).data;
+    );
+    if (!response) {
+      throw new Error(NETWORK_ERROR);
+    }
     yield all([
       put(onlineAction()),
-      put(createSubtaskAction.success(responseSubtask)),
+      put(createSubtaskAction.success(response.data)),
     ]);
   } catch (e) {
     if (isNetworkError(e)) {
@@ -96,7 +101,7 @@ function* updateOnline({
   payload: subtask,
 }: ActionType<typeof updateSubtaskAction.request>) {
   try {
-    const responseSubtask = (yield axios.put<Subtask>(
+    const response = yield axios.put<Subtask>(
       `${process.env.REACT_APP_SERVER}/subtask/${subtask.id}`,
       subtask,
       {
@@ -104,10 +109,13 @@ function* updateOnline({
           Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
-    )).data;
+    );
+    if (!response) {
+      throw new Error(NETWORK_ERROR);
+    }
     yield all([
       put(onlineAction()),
-      put(createSubtaskAction.success(responseSubtask)),
+      put(createSubtaskAction.success(response.data)),
     ]);
   } catch (e) {
     if (isNetworkError(e)) {
@@ -140,7 +148,7 @@ function* remove({
   payload: subtask,
 }: ActionType<typeof deleteSubtaskAction.request>) {
   try {
-    yield axios.delete(
+    const response = yield axios.delete(
       `${process.env.REACT_APP_SERVER}/subtask/${subtask.id}`,
       {
         headers: {
@@ -148,6 +156,9 @@ function* remove({
         },
       }
     );
+    if (!response) {
+      throw new Error(NETWORK_ERROR);
+    }
     yield all([put(onlineAction()), put(deleteSubtaskAction.success(subtask))]);
   } catch (e) {
     if (isNetworkError(e)) {
