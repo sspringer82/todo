@@ -10,20 +10,28 @@ import {
   loadUsersOfflineAction,
   loadUsersAction,
 } from '../actions/user.actions';
-import isNetworkError from '../../shared/helpers/isNetworkError';
+import isNetworkError, {
+  NETWORK_ERROR,
+} from '../../shared/helpers/isNetworkError';
 import { onlineAction } from '../../changes/actions/changes.actions';
 
 function* loadUsers() {
   try {
-    const users = (yield axios.get<User[]>(
+    const response = yield axios.get<User[]>(
       `${process.env.REACT_APP_SERVER}/user`,
       {
         headers: {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
-    )).data;
-    yield all([put(onlineAction()), put(loadUsersAction.success(users))]);
+    );
+    if (!response) {
+      throw new Error(NETWORK_ERROR);
+    }
+    yield all([
+      put(onlineAction()),
+      put(loadUsersAction.success(response.data)),
+    ]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(loadUsersOfflineAction());
