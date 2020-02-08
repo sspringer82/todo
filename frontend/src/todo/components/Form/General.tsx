@@ -74,32 +74,37 @@ const General: React.FC<Props> = ({ todo, tabIndex, tab, handleChange }) => {
           } as unknown) as ChangeEvent<HTMLInputElement>)
         }
         name="due"
-        helperText="Zu erledigen bis"
+        label="Zu erledigen bis"
       />
-      <InputLabel id="list-label">Liste</InputLabel>
-      <Select
-        labelId="list-label"
-        value={todo.list && todo.list.id ? todo.list.id : ''}
-        name="list"
-        onChange={e => {
-          handleChange({
-            currentTarget: {
-              name: e.target.name as string,
-              value: (lists.find(
-                list => list.id === parseInt(e.target.value as string, 10)
-              ) as unknown) as string,
-            },
-          });
-        }}
-      >
-        {lists.map(list => (
-          <MenuItem value={list.id} key={list.id}>
-            {list.name}
-          </MenuItem>
-        ))}
-      </Select>
       <hr />
-      <div>{moment(todo.createdAt).format('DD.MM.YYYY hh:mm:ss')}</div>
+      <div>
+        <InputLabel id="list-label">Liste</InputLabel>
+        <Select
+          labelId="list-label"
+          value={todo.list && todo.list.id ? todo.list.id : ''}
+          name="list"
+          onChange={e => {
+            handleChange({
+              currentTarget: {
+                name: e.target.name as string,
+                value: (lists.find(
+                  list => list.id === parseInt(e.target.value as string, 10)
+                ) as unknown) as string,
+              },
+            });
+          }}
+        >
+          {lists.map(list => (
+            <MenuItem value={list.id} key={list.id}>
+              {list.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </div>
+      <hr />
+      <div>
+        Erstellt am: {moment(todo.createdAt).format('DD.MM.YYYY hh:mm')}
+      </div>
     </Typography>
   );
 };
