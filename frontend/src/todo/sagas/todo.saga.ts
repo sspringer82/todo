@@ -35,16 +35,18 @@ import isNetworkError, {
 
 function* loadTodos() {
   try {
-    const token = yield select(getToken);
-    const { data: todos } = yield axios.get<Todo[]>(
+    const response = yield axios.get<Todo[]>(
       `${process.env.REACT_APP_SERVER}/todo`,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
     );
-    const todosWithSubtasks = todos.map((todo: Todo) => {
+    if (!response) {
+      throw new Error(NETWORK_ERROR);
+    }
+    const todosWithSubtasks = response.data.map((todo: Todo) => {
       if (todo.subtasks) {
         return todo;
       } else {
@@ -106,7 +108,7 @@ function* updateOffline(action: ActionType<typeof updateTodoOfflineAction>) {
 
 function* createOnline({ payload: todo }: ActionType<typeof createTodoAction>) {
   try {
-    const responseTodo = (yield axios.post<Todo>(
+    const response = yield axios.post<Todo>(
       `${process.env.REACT_APP_SERVER}/todo/`,
       todo,
       {
@@ -114,8 +116,14 @@ function* createOnline({ payload: todo }: ActionType<typeof createTodoAction>) {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
       }
-    )).data;
-    yield all([put(onlineAction()), put(saveTodoAction.success(responseTodo))]);
+    );
+    if (!response) {
+      throw new Error(NETWORK_ERROR);
+    }
+    yield all([
+      put(onlineAction()),
+      put(saveTodoAction.success(response.data)),
+    ]);
   } catch (e) {
     if (isNetworkError(e)) {
       yield put(createTodoOfflineAction(todo));
@@ -146,11 +154,17 @@ function* remove({
   payload: todo,
 }: ActionType<typeof deleteTodoAction.request>) {
   try {
-    yield axios.delete(`${process.env.REACT_APP_SERVER}/todo/${todo.id}`, {
-      headers: {
-        Authorization: `Bearer ${yield select(getToken)}`,
-      },
-    });
+    const response = yield axios.delete(
+      `${process.env.REACT_APP_SERVER}/todo/${todo.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${yield select(getToken)}`,
+        },
+      }
+    );
+    if (!response) {
+      throw new Error(NETWORK_ERROR);
+    }
     yield all([put(onlineAction()), put(deleteTodoAction.success(todo))]);
   } catch (e) {
     if (isNetworkError(e)) {
