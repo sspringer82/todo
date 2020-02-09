@@ -14,6 +14,7 @@ import { TodoService } from './todo.service';
 import { Todo } from './todo.entity';
 import { AuthGuard } from '@nestjs/passport';
 import update from 'immutability-helper';
+import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 
 @Controller('todo')
 export class TodoController {
@@ -21,12 +22,17 @@ export class TodoController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  async getAll(@Req() request) {
-    const result = await this.todoService.getAll(request.user);
-    return result;
+  @ApiBearerAuth()
+  @ApiOkResponse({
+    description: 'Get a list of all todos.',
+    type: [Todo],
+  })
+  async getAll(@Req() request): Promise<Todo[]> {
+    return this.todoService.getAll(request.user);
   }
 
   @Post()
+  @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   create(@Body() todo: Todo, @Req() request) {
     const todoToBeSaved = update(todo, {
@@ -37,6 +43,7 @@ export class TodoController {
   }
 
   @Put(':id')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   async update(@Body() todo: Todo, @Req() request) {
     if (await this.todoService.isAllowedToModify(request.user.id, todo.id)) {
@@ -47,6 +54,7 @@ export class TodoController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   async remove(@Param('id') id: string, @Req() request) {
     const todoId = parseInt(id, 10);
