@@ -9,12 +9,19 @@ import {
   UseGuards,
   Req,
   UnauthorizedException,
+  HttpCode,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { Todo } from './todo.entity';
 import { AuthGuard } from '@nestjs/passport';
 import update from 'immutability-helper';
-import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiCreatedResponse,
+  ApiResponse,
+  ApiProperty,
+} from '@nestjs/swagger';
 
 @Controller('todo')
 export class TodoController {
@@ -34,6 +41,10 @@ export class TodoController {
   @Post()
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
+  @ApiCreatedResponse({
+    description: 'Create a new todo.',
+    type: Todo,
+  })
   create(@Body() todo: Todo, @Req() request) {
     const todoToBeSaved = update(todo, {
       creator: { $set: request.user },
@@ -45,7 +56,11 @@ export class TodoController {
   @Put(':id')
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
-  async update(@Body() todo: Todo, @Req() request) {
+  @ApiOkResponse({
+    description: 'Update an existing todo.',
+    type: Todo,
+  })
+  async update(@Param('id') id: string, @Body() todo: Todo, @Req() request) {
     if (await this.todoService.isAllowedToModify(request.user.id, todo.id)) {
       return this.todoService.save(todo);
     } else {
@@ -56,10 +71,12 @@ export class TodoController {
   @Delete(':id')
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
+  @HttpCode(204)
+  @ApiResponse({ status: 204, description: 'Delete a todo' })
   async remove(@Param('id') id: string, @Req() request) {
     const todoId = parseInt(id, 10);
     if (await this.todoService.isAllowedToModify(request.user.id, todoId)) {
-      return this.todoService.remove(todoId);
+      await this.todoService.remove(todoId);
     } else {
       throw new UnauthorizedException();
     }
