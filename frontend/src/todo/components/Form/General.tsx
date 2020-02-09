@@ -1,18 +1,17 @@
 import React, { ChangeEvent } from 'react';
 import {
   Typography,
-  TextField,
   FormControlLabel,
   Switch,
   InputLabel,
-  Select,
   MenuItem,
 } from '@material-ui/core';
-import { DateTimePicker } from '@material-ui/pickers';
+
 import moment, { Moment } from 'moment';
 import { useSelector } from 'react-redux';
 import { getLists } from '../../../list/selectors/list.selector';
 import { InputTypeTodo } from '../../../shared/Todo';
+import { Select, TextField, DateTimePicker } from './General.styles';
 
 interface Props {
   todo: InputTypeTodo;
@@ -83,7 +82,7 @@ const General: React.FC<Props> = ({ todo, tabIndex, tab, handleChange }) => {
           labelId="list-label"
           value={todo.list && todo.list.id ? todo.list.id : ''}
           name="list"
-          onChange={e => {
+          onChange={(e: ChangeEvent<HTMLSelectElement>) => {
             handleChange({
               currentTarget: {
                 name: e.target.name as string,
