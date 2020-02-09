@@ -9,6 +9,7 @@ import {
   Delete,
   Param,
   UnauthorizedException,
+  HttpCode,
 } from '@nestjs/common';
 import { ListService } from './list.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -45,10 +46,11 @@ export class ListController {
 
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
-  remove(@Param('id') id: string, @Req() request) {
+  @HttpCode(204)
+  async remove(@Param('id') id: string, @Req() request) {
     const listId = parseInt(id, 10);
     if (this.listService.isAllowedToModify(request.user.id, listId)) {
-      return this.listService.remove(listId);
+      await this.listService.remove(listId);
     } else {
       throw new UnauthorizedException();
     }

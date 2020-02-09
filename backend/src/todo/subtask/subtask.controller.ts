@@ -9,6 +9,7 @@ import {
   UnauthorizedException,
   Delete,
   Param,
+  HttpCode,
 } from '@nestjs/common';
 import { TodoService } from '../todo/todo.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -38,6 +39,7 @@ export class SubtaskController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   @UseGuards(AuthGuard('jwt'))
   async remove(@Param('id') id: string, @Req() request) {
     const subtaskId = parseInt(id, 10);
@@ -45,7 +47,7 @@ export class SubtaskController {
     if (
       await this.todoService.isAllowedToModify(request.user.id, subtask.todo.id)
     ) {
-      return this.subtaskService.remove(subtaskId);
+      await this.subtaskService.remove(subtaskId);
     }
     throw new UnauthorizedException();
   }
