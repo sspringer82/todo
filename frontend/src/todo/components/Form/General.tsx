@@ -11,7 +11,7 @@ import moment, { Moment } from 'moment';
 import { useSelector } from 'react-redux';
 import { getLists } from '../../../list/selectors/list.selector';
 import { InputTypeTodo } from '../../../shared/Todo';
-import { Select, TextField, DateTimePicker } from './General.styles';
+import { Select, TextField, DateTimePicker, Divider } from './General.styles';
 
 interface Props {
   todo: InputTypeTodo;
@@ -60,7 +60,7 @@ const General: React.FC<Props> = ({ todo, tabIndex, tab, handleChange }) => {
           label="Erledigt"
         />
       </div>
-      <hr />
+      <Divider />
       <DateTimePicker
         clearable
         value={todo.due}
@@ -75,7 +75,7 @@ const General: React.FC<Props> = ({ todo, tabIndex, tab, handleChange }) => {
         name="due"
         label="Zu erledigen bis"
       />
-      <hr />
+      <Divider />
       <div>
         <InputLabel id="list-label">Liste</InputLabel>
         <Select
@@ -100,7 +100,7 @@ const General: React.FC<Props> = ({ todo, tabIndex, tab, handleChange }) => {
           ))}
         </Select>
       </div>
-      <hr />
+      <Divider />
       <div>
         Erstellt am: {moment(todo.createdAt).format('DD.MM.YYYY hh:mm')}
       </div>

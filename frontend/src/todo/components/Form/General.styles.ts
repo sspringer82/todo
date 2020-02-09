@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import {
   Select as MUISelect,
   TextField as MUITextField,
+  Divider as MUIDivider,
 } from '@material-ui/core';
 import { DateTimePicker as MUIDateTimePicker } from '@material-ui/pickers';
 
@@ -15,4 +16,10 @@ export const TextField = styled(MUITextField)`
 
 export const DateTimePicker = styled(MUIDateTimePicker)`
   width: 100%;
+`;
+
+export const Divider = styled(MUIDivider)`
+  && {
+    margin: 10px 0;
+  }
 `;
