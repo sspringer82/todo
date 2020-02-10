@@ -4,12 +4,10 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  TextField,
   Button,
   IconButton,
-  FormControl,
-  InputLabel,
   Select,
+  InputLabel,
   Input,
   MenuItem,
 } from '@material-ui/core';
@@ -24,6 +22,7 @@ import { getUsers } from '../../user/selectors/user.selector';
 import { loadUsersAction } from '../../user/actions/user.actions';
 import { getSettings } from '../../settings/selectors/settings.selector';
 import { saveSettingsAction } from '../../settings/actions/settings.actions';
+import { TextField, FormControl } from './Form.styles';
 
 const Form: React.FC = () => {
   const params = useParams<{ id: string }>();
