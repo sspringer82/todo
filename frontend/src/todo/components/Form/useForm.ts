@@ -46,7 +46,7 @@ export default function() {
       );
     },
     handleClose() {
-      history.push('/');
+      history.push('/list');
     },
     handleSave(todo: InputTypeTodo) {
       dispatch(saveTodoAction.request(todo));
