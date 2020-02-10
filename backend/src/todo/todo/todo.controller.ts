@@ -20,7 +20,7 @@ import {
   ApiOkResponse,
   ApiCreatedResponse,
   ApiResponse,
-  ApiProperty,
+  ApiTags,
 } from '@nestjs/swagger';
 
 @Controller('todo')
@@ -34,6 +34,7 @@ export class TodoController {
     description: 'Get a list of all todos.',
     type: [Todo],
   })
+  @ApiTags('Todo')
   async getAll(@Req() request): Promise<Todo[]> {
     return this.todoService.getAll(request.user);
   }
@@ -45,6 +46,7 @@ export class TodoController {
     description: 'Create a new todo.',
     type: Todo,
   })
+  @ApiTags('Todo')
   create(@Body() todo: Todo, @Req() request) {
     const todoToBeSaved = update(todo, {
       creator: { $set: request.user },
@@ -60,6 +62,7 @@ export class TodoController {
     description: 'Update an existing todo.',
     type: Todo,
   })
+  @ApiTags('Todo')
   async update(@Param('id') id: string, @Body() todo: Todo, @Req() request) {
     if (await this.todoService.isAllowedToModify(request.user.id, todo.id)) {
       return this.todoService.save(todo);
@@ -73,6 +76,7 @@ export class TodoController {
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(204)
   @ApiResponse({ status: 204, description: 'Delete a todo' })
+  @ApiTags('Todo')
   async remove(@Param('id') id: string, @Req() request) {
     const todoId = parseInt(id, 10);
     if (await this.todoService.isAllowedToModify(request.user.id, todoId)) {

@@ -10,7 +10,6 @@ async function bootstrap() {
     .setTitle('Todo backend')
     .setDescription('The API of the todo backend')
     .setVersion('1.0')
-    .addTag('todo')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);

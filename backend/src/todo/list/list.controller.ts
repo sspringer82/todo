@@ -15,6 +15,7 @@ import { ListService } from './list.service';
 import { AuthGuard } from '@nestjs/passport';
 import { List } from './list.entity';
 import update from 'immutability-helper';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('list')
 export class ListController {
@@ -22,12 +23,14 @@ export class ListController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
+  @ApiTags('List')
   getAll(@Req() request) {
     return this.listService.getAll(request.user);
   }
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
+  @ApiTags('List')
   create(@Body() list: List, @Req() request) {
     const listWithCreator = update(list, { creator: { $set: request.user } });
     const listToBeSaved = List.create(listWithCreator);
@@ -36,6 +39,7 @@ export class ListController {
 
   @Put(':id')
   @UseGuards(AuthGuard('jwt'))
+  @ApiTags('List')
   update(@Body() list: List, @Req() request) {
     if (this.listService.isAllowedToModify(request.user.id, list.id)) {
       return this.listService.save(list);
@@ -47,6 +51,7 @@ export class ListController {
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(204)
+  @ApiTags('List')
   async remove(@Param('id') id: string, @Req() request) {
     const listId = parseInt(id, 10);
     if (this.listService.isAllowedToModify(request.user.id, listId)) {

@@ -1,6 +1,7 @@
 import { Controller, Get, UseGuards, Req } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('user')
 export class UserController {
@@ -8,6 +9,7 @@ export class UserController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
+  @ApiTags('User')
   getAll() {
     return this.userService.getAll();
   }
