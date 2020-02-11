@@ -17,6 +17,7 @@ import {
   updateListOfflineAction,
   deleteListOfflineAction,
   DELETE_LIST_OFFLINE,
+  SAVE_LIST_SUCCESS,
 } from '../actions/list.actions';
 import { takeLatest, put, select, all } from '@redux-saga/core/effects';
 import axios from 'axios';
@@ -32,6 +33,9 @@ import {
 import isNetworkError, {
   NETWORK_ERROR,
 } from '../../shared/helpers/isNetworkError';
+import { push } from 'connected-react-router';
+import { getSettings } from '../../settings/selectors/settings.selector';
+import { saveSettingsAction } from '../../settings/actions/settings.actions';
 
 function* loadLists() {
   try {
@@ -174,6 +178,14 @@ function* removeOffline({
   yield put(deleteListAction.success(list));
 }
 
+function* redirectToList({
+  payload: list,
+}: ActionType<typeof saveListAction.success>) {
+  const settings = yield select(getSettings);
+  const newSettings = update(settings, { list: { $set: list && list.id } });
+  yield put(saveSettingsAction.request(newSettings));
+}
+
 export default function* todoSaga() {
   yield takeLatest(LOAD_LISTS, loadLists);
   yield takeLatest(SAVE_LIST, save);
@@ -184,4 +196,5 @@ export default function* todoSaga() {
   yield takeLatest(DELETE_LIST, remove);
   yield takeLatest(DELETE_LIST_OFFLINE, removeOffline);
   yield takeLatest(LOAD_LISTS_OFFLINE, loadOffline);
+  yield takeLatest(SAVE_LIST_SUCCESS, redirectToList);
 }
