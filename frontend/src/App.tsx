@@ -12,6 +12,7 @@ import MomentUtils from '@date-io/moment';
 import { onlineAction } from './changes/actions/changes.actions';
 import axios from 'axios';
 import isNetworkError from './shared/helpers/isNetworkError';
+import Snackbar from './error/components/Snackbar';
 
 const store = configureStore();
 
@@ -64,6 +65,7 @@ const App: React.FC = () => {
             </Route>
           </Switch>
         </ConnectedRouter>
+        <Snackbar />
       </MuiPickersUtilsProvider>
     </Provider>
   );

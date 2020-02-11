@@ -13,5 +13,5 @@ export type LOGIN_ERROR = typeof LOGIN_ERROR;
 export const loginAction = createAsyncAction(LOGIN, LOGIN_SUCCESS, LOGIN_ERROR)<
   Login,
   string,
-  void
+  string
 >();

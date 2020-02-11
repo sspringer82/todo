@@ -12,7 +12,7 @@ function* login({ payload: user }: ActionType<typeof loginAction.request>) {
     );
     yield all([put(loginAction.success(response.data)), put(push('/'))]);
   } catch (e) {
-    yield put(loginAction.failure());
+    yield put(loginAction.failure('Anmeldung fehlgeschlagen'));
   }
 }
 
