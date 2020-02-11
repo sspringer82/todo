@@ -1,4 +1,10 @@
-import React, { ChangeEvent, useState, FormEvent, useEffect } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useState,
+  useEffect,
+  useRef,
+} from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -29,6 +35,7 @@ const Form: React.FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const users = useSelector(getUsers);
+  const listName = useRef<HTMLInputElement>(null);
 
   let initialList: InputTypeList = {
     name: '',
@@ -70,6 +77,12 @@ const Form: React.FC = () => {
   }
 
   useEffect(() => {
+    setTimeout(() => {
+      listName.current && listName.current!.focus();
+    }, 0);
+  }, []);
+
+  useEffect(() => {
     dispatch(loadUsersAction.request());
   }, [dispatch]);
 
@@ -97,10 +110,11 @@ const Form: React.FC = () => {
         <DialogContent>
           <div>
             <TextField
-              label="Aufgabe"
+              label="Liste"
               name="name"
               onChange={handleChange}
               value={list.name}
+              inputRef={listName}
             />
           </div>
           <FormControl>
