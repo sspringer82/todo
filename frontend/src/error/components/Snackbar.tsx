@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import Alert from '@material-ui/lab/Alert';
 
 import { Snackbar as MUISnackbar } from '@material-ui/core';
 import { getCurrentError } from '../selectors/error.selector';
@@ -26,9 +27,12 @@ const Snackbar: React.FC = () => {
     <MUISnackbar
       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       open={open}
-      message={currentError}
       onClose={handleClose}
-    ></MUISnackbar>
+    >
+      <Alert severity="error" variant="filled">
+        {currentError}
+      </Alert>
+    </MUISnackbar>
   );
 };
 
