@@ -12,6 +12,7 @@ import { User } from '../../user/user/user.entity';
 import { List } from '../list/list.entity';
 import { Subtask } from '../subtask/subtask.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsBoolean } from 'class-validator';
 
 @Entity()
 export class Todo extends BaseEntity {
@@ -21,10 +22,12 @@ export class Todo extends BaseEntity {
 
   @Column('text')
   @ApiProperty()
+  @IsNotEmpty()
   title: string;
 
   @Column()
   @ApiProperty()
+  @IsBoolean()
   done: boolean;
 
   @Column({ nullable: true, default: null })
