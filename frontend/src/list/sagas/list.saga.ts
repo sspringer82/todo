@@ -33,11 +33,10 @@ import {
 import isNetworkError, {
   NETWORK_ERROR,
 } from '../../shared/helpers/isNetworkError';
-import { push } from 'connected-react-router';
 import { getSettings } from '../../settings/selectors/settings.selector';
 import { saveSettingsAction } from '../../settings/actions/settings.actions';
 
-function* loadLists() {
+function* load() {
   try {
     const response = yield axios.get<List[]>(
       `${process.env.REACT_APP_SERVER}/list`,
@@ -186,8 +185,8 @@ function* redirectToList({
   yield put(saveSettingsAction.request(newSettings));
 }
 
-export default function* todoSaga() {
-  yield takeLatest(LOAD_LISTS, loadLists);
+export default function* listSaga() {
+  yield takeLatest(LOAD_LISTS, load);
   yield takeLatest(SAVE_LIST, save);
   yield takeLatest(CREATE_LIST, createOnline);
   yield takeLatest(CREATE_LIST_OFFLINE, createOffline);

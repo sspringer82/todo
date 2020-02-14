@@ -33,7 +33,7 @@ import isNetworkError, {
   NETWORK_ERROR,
 } from '../../shared/helpers/isNetworkError';
 
-function* loadTodos() {
+function* load() {
   try {
     const response = yield axios.get<Todo[]>(
       `${process.env.REACT_APP_SERVER}/todo`,
@@ -184,7 +184,7 @@ function* removeOffline({
 }
 
 export default function* todoSaga() {
-  yield takeLatest(LOAD_TODOS, loadTodos);
+  yield takeLatest(LOAD_TODOS, load);
   yield takeLatest(LOAD_TODOS_OFFLINE, loadOffline);
   yield takeLatest(SAVE_TODO, save);
   yield takeLatest(CREATE_TODO, createOnline);

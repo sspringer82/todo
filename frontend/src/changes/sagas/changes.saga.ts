@@ -12,11 +12,11 @@ import { takeLatest, select, put } from '@redux-saga/core/effects';
 import db from '../../db/db';
 import { getToken } from '../../login/selectors/login.selector';
 
-function* addChange({ payload: change }: ActionType<typeof addChangeAction>) {
+function* add({ payload: change }: ActionType<typeof addChangeAction>) {
   yield db.table('changes').add(change);
 }
 
-function* applyChanges() {
+function* apply() {
   const changes = yield db.table('changes').toArray();
   if (changes.length > 0) {
     yield axios.post(`${process.env.REACT_APP_SERVER}/changes/`, changes, {
@@ -28,12 +28,12 @@ function* applyChanges() {
   yield put(clearChangesAction());
 }
 
-function* clearChanges() {
+function* clear() {
   yield db.table('changes').clear();
 }
 
 export default function* changesSaga() {
-  yield takeLatest(ONLINE, applyChanges);
-  yield takeLatest(ADD_CHANGE, addChange);
-  yield takeLatest(CLEAR_CHANGES, clearChanges);
+  yield takeLatest(ONLINE, apply);
+  yield takeLatest(ADD_CHANGE, add);
+  yield takeLatest(CLEAR_CHANGES, clear);
 }

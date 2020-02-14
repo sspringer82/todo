@@ -30,7 +30,7 @@ import isNetworkError, {
   NETWORK_ERROR,
 } from '../../shared/helpers/isNetworkError';
 
-function* loadSettings() {
+function* load() {
   try {
     const response = yield axios.get<Settings>(
       `${process.env.REACT_APP_SERVER}/settings`,
@@ -151,8 +151,8 @@ function* save({
   }
 }
 
-export default function* todoSaga() {
-  yield takeLatest(LOAD_SETTINGS, loadSettings);
+export default function* settingsSaga() {
+  yield takeLatest(LOAD_SETTINGS, load);
   yield takeLatest(LOAD_SETTINGS_OFFLINE, loadOffline);
   yield takeLatest(SAVE_SETTINGS, save);
   yield takeLatest(CREATE_SETTINGS, createOnline);

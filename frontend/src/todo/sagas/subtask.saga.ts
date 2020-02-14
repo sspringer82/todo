@@ -217,7 +217,7 @@ function* toggleTodoStatusDependingOnSubtasks({
   yield put(saveTodoAction.request(update(todo, { done: { $set: allDone } })));
 }
 
-export default function* todoSaga() {
+export default function* subtaskSaga() {
   yield takeLatest(SAVE_SUBTASK, save);
   yield takeLatest(DELETE_SUBTASK, remove);
   yield takeLatest(DELETE_SUBTASK_OFFLINE, removeOffline);

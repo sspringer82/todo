@@ -15,7 +15,7 @@ import isNetworkError, {
 } from '../../shared/helpers/isNetworkError';
 import { onlineAction } from '../../changes/actions/changes.actions';
 
-function* loadUsers() {
+function* load() {
   try {
     const response = yield axios.get<User[]>(
       `${process.env.REACT_APP_SERVER}/user`,
@@ -46,7 +46,7 @@ function* loadOffline() {
   yield put(loadUsersAction.success(users));
 }
 
-export default function* todoSaga() {
-  yield takeLatest(LOAD_USERS, loadUsers);
+export default function* userSaga() {
+  yield takeLatest(LOAD_USERS, load);
   yield takeLatest(LOAD_USERS_OFFLINE, loadOffline);
 }
