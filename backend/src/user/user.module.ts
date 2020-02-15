@@ -15,7 +15,7 @@ import { UserService } from './user/user.service';
     JwtModule.register({
       secret: 'todoKey',
       signOptions: {
-        expiresIn: 3600,
+        expiresIn: '1d',
       },
     }),
     TypeOrmModule.forFeature([User]),
