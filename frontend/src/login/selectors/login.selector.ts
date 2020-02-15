@@ -1,7 +1,8 @@
 import { AppState } from '../../reducers/rootReducer';
 
 export function getToken(state: AppState) {
-  return state.login.token;
+  return localStorage.getItem('token');
+  // return state.login.token;
 }
 
 export function hasLoginError(state: AppState) {

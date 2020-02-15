@@ -31,7 +31,7 @@ window.addEventListener('online', () => {
 
 const App: React.FC = () => {
   const mainPage = () => {
-    if (navigator.onLine && getToken(store.getState()) === '') {
+    if (navigator.onLine && !getToken(store.getState())) {
       return <Redirect to="/login" />;
     }
     return (
