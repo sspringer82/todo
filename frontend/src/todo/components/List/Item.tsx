@@ -13,6 +13,7 @@ import {
   Title,
   ListItem,
 } from '../../../shared/components/Item/Item.styles';
+import Dialog from '../../../shared/components/confirm/Confirm';
 
 interface Props {
   todo: Todo;
@@ -24,57 +25,70 @@ const MENU_WIDTH = 53;
 
 const Item: React.FC<Props> = ({ todo, onChange, onRemove }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
-    <ListItem>
-      {!todo.done && (
-        <RadioButtonUncheckedIcon
-          onClick={() => onChange({ ...todo, done: true })}
-        />
-      )}
-      {todo.done && (
-        <CheckCircleOutlineIcon
-          onClick={() => onChange({ ...todo, done: false })}
-        />
-      )}
-      <Title done={todo.done}>
-        {todo.title}
-
-        {todo.subtasks.length > 0 && (
-          <>
-            &nbsp;(
-            {todo.subtasks.reduce((prev, curr) => {
-              if (curr.done) {
-                return prev + 1;
-              }
-              return prev;
-            }, 0)}{' '}
-            / {todo.subtasks.length})
-          </>
-        )}
-      </Title>
-      <StarContainer
-        onClick={() => onChange({ ...todo, starred: !todo.starred })}
-      >
-        {todo.starred ? <StarIcon /> : <StarBorderIcon />}
-      </StarContainer>
-      <MoreVertIcon
-        onClick={() => {
-          setShowMenu(!showMenu);
+    <>
+      <Dialog
+        open={open}
+        title="löschen"
+        content="Wirklich löschen?"
+        onCancel={() => setOpen(false)}
+        onConfirm={() => {
+          setOpen(false);
+          onRemove(todo);
+          setShowMenu(false);
         }}
-      />
-      <MenuContainer style={{ width: showMenu ? MENU_WIDTH : 0 }}>
-        <DeleteIcon
+      ></Dialog>
+      <ListItem>
+        {!todo.done && (
+          <RadioButtonUncheckedIcon
+            onClick={() => onChange({ ...todo, done: true })}
+          />
+        )}
+        {todo.done && (
+          <CheckCircleOutlineIcon
+            onClick={() => onChange({ ...todo, done: false })}
+          />
+        )}
+        <Title done={todo.done}>
+          {todo.title}
+
+          {todo.subtasks.length > 0 && (
+            <>
+              &nbsp;(
+              {todo.subtasks.reduce((prev, curr) => {
+                if (curr.done) {
+                  return prev + 1;
+                }
+                return prev;
+              }, 0)}{' '}
+              / {todo.subtasks.length})
+            </>
+          )}
+        </Title>
+        <StarContainer
+          onClick={() => onChange({ ...todo, starred: !todo.starred })}
+        >
+          {todo.starred ? <StarIcon /> : <StarBorderIcon />}
+        </StarContainer>
+        <MoreVertIcon
           onClick={() => {
-            onRemove(todo);
-            setShowMenu(false);
+            setShowMenu(!showMenu);
           }}
         />
-        <Link to={`/edit/${todo.id}`}>
-          <EditIcon onClick={() => setShowMenu(false)} />
-        </Link>
-      </MenuContainer>
-    </ListItem>
+        <MenuContainer style={{ width: showMenu ? MENU_WIDTH : 0 }}>
+          <DeleteIcon
+            onClick={() => {
+              setOpen(true);
+            }}
+          />
+          <Link to={`/edit/${todo.id}`}>
+            <EditIcon onClick={() => setShowMenu(false)} />
+          </Link>
+        </MenuContainer>
+      </ListItem>
+    </>
   );
 };
 export default Item;
