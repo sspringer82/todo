@@ -22,12 +22,16 @@ const Confirm: React.FC<Props> = ({
   onConfirm,
   onCancel,
 }) => (
-  <Dialog open={open}>
+  <Dialog open={open} disableBackdropClick disableEscapeKeyDown>
     <DialogTitle>{title}</DialogTitle>
     <DialogContent>{content}</DialogContent>
     <DialogActions>
-      <Button onClick={onConfirm}>OK</Button>
-      <Button onClick={onCancel}>Abbrechen</Button>
+      <Button onClick={onConfirm} color="primary">
+        OK
+      </Button>
+      <Button onClick={onCancel} color="secondary">
+        Abbrechen
+      </Button>
     </DialogActions>
   </Dialog>
 );
