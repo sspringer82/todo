@@ -29,6 +29,7 @@ import { loadUsersAction } from '../../user/actions/user.actions';
 import { getSettings } from '../../settings/selectors/settings.selector';
 import { saveSettingsAction } from '../../settings/actions/settings.actions';
 import { TextField, FormControl } from './Form.styles';
+import Confirm from '../../shared/components/confirm/Confirm';
 
 const Form: React.FC = () => {
   const params = useParams<{ id: string }>();
@@ -36,6 +37,9 @@ const Form: React.FC = () => {
   const dispatch = useDispatch();
   const users = useSelector(getUsers);
   const listName = useRef<HTMLInputElement>(null);
+  const settings = useSelector(getSettings);
+
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   let initialList: InputTypeList = {
     name: '',
@@ -92,7 +96,6 @@ const Form: React.FC = () => {
     handleClose();
   }
 
-  const settings = useSelector(getSettings);
   function handleDelete() {
     dispatch(deleteListAction.request(list as List));
     dispatch(
@@ -140,9 +143,21 @@ const Form: React.FC = () => {
         </DialogContent>
         <DialogActions>
           {list.id && (
-            <IconButton onClick={handleDelete}>
-              <DeleteIcon />
-            </IconButton>
+            <>
+              <Confirm
+                open={deleteDialogOpen}
+                title="löschen"
+                content="Wirklich löschen?"
+                onCancel={() => setDeleteDialogOpen(false)}
+                onConfirm={() => {
+                  setDeleteDialogOpen(false);
+                  handleDelete();
+                }}
+              ></Confirm>
+              <IconButton onClick={() => setDeleteDialogOpen(true)}>
+                <DeleteIcon />
+              </IconButton>
+            </>
           )}
           <Button type="submit">speichern</Button>
           <Button color="secondary" onClick={handleClose}>
