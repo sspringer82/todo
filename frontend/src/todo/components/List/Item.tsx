@@ -13,7 +13,7 @@ import {
   Title,
   ListItem,
 } from '../../../shared/components/Item/Item.styles';
-import Dialog from '../../../shared/components/confirm/Confirm';
+import Confirm from '../../../shared/components/confirm/Confirm';
 
 interface Props {
   todo: Todo;
@@ -29,7 +29,7 @@ const Item: React.FC<Props> = ({ todo, onChange, onRemove }) => {
 
   return (
     <>
-      <Dialog
+      <Confirm
         open={open}
         title="löschen"
         content="Wirklich löschen?"
@@ -39,7 +39,7 @@ const Item: React.FC<Props> = ({ todo, onChange, onRemove }) => {
           onRemove(todo);
           setShowMenu(false);
         }}
-      ></Dialog>
+      ></Confirm>
       <ListItem>
         {!todo.done && (
           <RadioButtonUncheckedIcon
