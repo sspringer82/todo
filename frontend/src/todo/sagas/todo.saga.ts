@@ -61,7 +61,7 @@ function* load() {
     if (isNetworkError(e)) {
       yield put(loadTodosOfflineAction());
     } else {
-      yield put(loadTodosAction.failure(e));
+      yield put(loadTodosAction.failure(e.message));
     }
   }
 }
