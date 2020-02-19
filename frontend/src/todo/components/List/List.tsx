@@ -8,6 +8,7 @@ import { Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import InlineEdit from '../../../shared/components/InlineEdit/InlineEdit';
 import { getActiveList } from '../../../settings/selectors/settings.selector';
+import { Grid, Hidden } from '@material-ui/core';
 
 const List: React.FC = () => {
   const { todos, handleSave, handleDelete } = useTodoList();
@@ -18,30 +19,40 @@ const List: React.FC = () => {
       <Route path="/edit/:id">
         <FormDialog />
       </Route>
-      <StyledList>
-        {todos.map((todo: Todo) => (
-          <Item
-            todo={todo}
-            key={todo.id}
-            onChange={handleSave}
-            onRemove={handleDelete}
-          />
-        ))}
-        <InlineEdit
-          onSave={({ title }) => {
-            const newTodo: InputTypeTodo = {
-              title,
-              done: false,
-              starred: false,
-              subtasks: [],
-            };
-            if (activeList) {
-              newTodo['list'] = activeList;
-            }
-            handleSave(newTodo);
-          }}
-        />
-      </StyledList>
+      <Grid container>
+        <Hidden smDown>
+          <Grid item md={3} />
+        </Hidden>
+        <Grid item xs={12} md={6}>
+          <StyledList>
+            {todos.map((todo: Todo) => (
+              <Item
+                todo={todo}
+                key={todo.id}
+                onChange={handleSave}
+                onRemove={handleDelete}
+              />
+            ))}
+            <InlineEdit
+              onSave={({ title }) => {
+                const newTodo: InputTypeTodo = {
+                  title,
+                  done: false,
+                  starred: false,
+                  subtasks: [],
+                };
+                if (activeList) {
+                  newTodo['list'] = activeList;
+                }
+                handleSave(newTodo);
+              }}
+            />
+          </StyledList>
+        </Grid>
+        <Hidden smDown>
+          <Grid item md={3} />
+        </Hidden>
+      </Grid>
     </>
   );
 };
