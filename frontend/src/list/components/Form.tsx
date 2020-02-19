@@ -121,7 +121,7 @@ const Form: React.FC = () => {
             />
           </div>
           <FormControl>
-            <InputLabel id="demo-mutiple-name-label">Name</InputLabel>
+            <InputLabel id="demo-mutiple-name-label">Geteilt mit</InputLabel>
             <Select
               labelId="demo-mutiple-name-label"
               id="demo-mutiple-name"
