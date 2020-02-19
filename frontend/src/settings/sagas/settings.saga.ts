@@ -125,7 +125,11 @@ function* createOffline(
   const id = yield db.table('settings').add(action.payload);
   const responseSettings = update(action.payload, { id: { $set: id } });
   yield all([
-    put(addChangeAction({ action })),
+    put(
+      addChangeAction({
+        action: update(action, { payload: { $set: responseSettings } }),
+      })
+    ),
     put(saveSettingsAction.success(responseSettings)),
   ]);
 }

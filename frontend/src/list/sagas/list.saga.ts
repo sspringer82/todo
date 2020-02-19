@@ -106,7 +106,11 @@ function* createOffline(action: ActionType<typeof createListOfflineAction>) {
   const id = yield db.table('list').add(action.payload);
   const responseList = update(action.payload, { id: { $set: id } }) as List;
   yield all([
-    put(addChangeAction({ action })),
+    put(
+      addChangeAction({
+        action: update(action, { payload: { $set: responseList } }),
+      })
+    ),
     put(saveListAction.success(responseList)),
   ]);
 }

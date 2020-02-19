@@ -92,7 +92,11 @@ function* createOffline(action: ActionType<typeof createSubtaskOfflineAction>) {
     update(todo, { subtasks: { $push: [responseSubtask] } })
   );
   yield all([
-    put(addChangeAction({ action })),
+    put(
+      addChangeAction({
+        action: update(action, { payload: { $set: responseSubtask } }),
+      })
+    ),
     put(createSubtaskAction.success(responseSubtask as Subtask)),
   ]);
 }

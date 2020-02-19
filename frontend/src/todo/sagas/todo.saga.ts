@@ -137,7 +137,11 @@ function* createOffline(action: ActionType<typeof createTodoOfflineAction>) {
   const id = yield db.table('todo').add(action.payload);
   const responseTodo = update(action.payload, { id: { $set: id } }) as Todo;
   yield all([
-    put(addChangeAction({ action })),
+    put(
+      addChangeAction({
+        action: update(action, { payload: { $set: responseTodo } }),
+      })
+    ),
     put(saveTodoAction.success(responseTodo)),
   ]);
 }
