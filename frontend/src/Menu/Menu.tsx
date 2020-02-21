@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Drawer, List, ListItem, Divider, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { AppBar, MenuButton } from './Menu.styles';
@@ -6,7 +6,6 @@ import Search from '../todo/components/Search/Search';
 import Done from './Done';
 import ShowOnlyStars from './Star';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadListsAction } from '../list/actions/list.actions';
 import { getLists } from '../list/selectors/list.selector';
 import TodoList from './List';
 import Form from '../list/components/Form';
@@ -17,18 +16,11 @@ import {
   getSettings,
   getActiveList,
 } from '../settings/selectors/settings.selector';
-import {
-  saveSettingsAction,
-  loadSettingsAction,
-} from '../settings/actions/settings.actions';
+import { saveSettingsAction } from '../settings/actions/settings.actions';
 import update from 'immutability-helper';
 
 const Menu: React.FC = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(loadListsAction.request());
-    dispatch(loadSettingsAction.request());
-  }, [dispatch]);
   const lists = useSelector(getLists);
   const currentList = useSelector(getActiveList);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -38,7 +30,6 @@ const Menu: React.FC = () => {
         update(settings, { list: { $set: (list && list.id) || undefined } })
       )
     );
-    // dispatch(selectListAction(list));
     setMenuOpen(false);
   }
   const settings = useSelector(getSettings);

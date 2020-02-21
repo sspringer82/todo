@@ -25,7 +25,6 @@ import { AppState } from '../../reducers/rootReducer';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { deleteListAction, saveListAction } from '../actions/list.actions';
 import { getUsers } from '../../user/selectors/user.selector';
-import { loadUsersAction } from '../../user/actions/user.actions';
 import { getSettings } from '../../settings/selectors/settings.selector';
 import { saveSettingsAction } from '../../settings/actions/settings.actions';
 import { TextField, FormControl } from './Form.styles';
@@ -85,10 +84,6 @@ const Form: React.FC = () => {
       listName.current && listName.current!.focus();
     }, 0);
   }, []);
-
-  useEffect(() => {
-    dispatch(loadUsersAction.request());
-  }, [dispatch]);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
