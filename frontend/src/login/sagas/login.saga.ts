@@ -3,6 +3,10 @@ import { takeLatest, put, all } from '@redux-saga/core/effects';
 import { loginAction, LOGIN, LOGIN_SUCCESS } from '../actions/login.actions';
 import axios from 'axios';
 import { push } from 'connected-react-router';
+import { loadListsAction } from '../../list/actions/list.actions';
+import { loadSettingsAction } from '../../settings/actions/settings.actions';
+import { loadTodosAction } from '../../todo/actions/todo.actions';
+import { loadUsersAction } from '../../user/actions/user.actions';
 
 function* login({ payload: user }: ActionType<typeof loginAction.request>) {
   try {
@@ -22,7 +26,17 @@ function* storeTokenInLocalStorage({
   yield localStorage.setItem('token', token);
 }
 
+function* getInitialData() {
+  yield all([
+    put(loadListsAction.request()),
+    put(loadSettingsAction.request()),
+    put(loadTodosAction.request()),
+    put(loadUsersAction.request()),
+  ]);
+}
+
 export default function* loginSaga() {
   yield takeLatest(LOGIN, login);
+  yield takeLatest(LOGIN_SUCCESS, getInitialData);
   yield takeLatest(LOGIN_SUCCESS, storeTokenInLocalStorage);
 }
