@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import List from './todo/components/List/List';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Menu from './Menu/Menu';
@@ -13,6 +13,7 @@ import { onlineAction } from './changes/actions/changes.actions';
 import axios from 'axios';
 import isNetworkError from './shared/helpers/isNetworkError';
 import Snackbar from './error/components/Snackbar';
+import { initialDataAction } from './login/actions/login.actions';
 
 const store = configureStore();
 
@@ -41,6 +42,14 @@ const App: React.FC = () => {
       </>
     );
   };
+
+  const token = getToken(store.getState());
+
+  useEffect(() => {
+    if (token) {
+      store.dispatch(initialDataAction());
+    }
+  }, [token]);
 
   return (
     <Provider store={store}>
