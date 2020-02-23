@@ -31,7 +31,7 @@ const initialState: State = {
   search: '',
 };
 
-export default function(
+export default function (
   state: State = initialState,
   action: ActionType<
     | typeof loadTodosAction.success
@@ -45,10 +45,8 @@ export default function(
 ): State {
   switch (action.type) {
     case LOAD_TODOS_SUCCESS:
-      if (navigator.onLine) {
-        db.table('todo').clear();
-        db.table('todo').bulkAdd(action.payload);
-      }
+      db.table('todo').clear();
+      db.table('todo').bulkAdd(action.payload);
       return update(state, { todos: { $set: action.payload } });
     case SAVE_TODO_SUCCESS:
       const index = state.todos.findIndex(

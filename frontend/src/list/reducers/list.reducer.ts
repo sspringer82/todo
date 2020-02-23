@@ -21,7 +21,7 @@ const initialState: State = {
   lists: [],
 };
 
-export default function(
+export default function (
   state: State = initialState,
   action: ActionType<
     | typeof loadListsAction.success
@@ -31,10 +31,8 @@ export default function(
 ): State {
   switch (action.type) {
     case LOAD_LISTS_SUCCESS:
-      if (navigator.onLine) {
-        db.table('list').clear();
-        db.table('list').bulkAdd(action.payload);
-      }
+      db.table('list').clear();
+      db.table('list').bulkAdd(action.payload);
       return update(state, { lists: { $set: action.payload } });
     case SAVE_LIST_SUCCESS:
       const index = state.lists.findIndex(
