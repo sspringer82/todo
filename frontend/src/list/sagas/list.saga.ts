@@ -174,11 +174,9 @@ function* remove({
   }
 }
 
-function* removeOffline({
-  payload: list,
-}: ActionType<typeof deleteListOfflineAction>) {
-  db.table('list').delete(list.id);
-  yield put(deleteListAction.success(list));
+function* removeOffline({ action: ActionType<typeof deleteListOfflineAction>) {
+  db.table('list').delete(action.payload.id);
+  yield all([put(deleteListAction.success(action.payload)), put(addChangeAction({ action }))]);
 }
 
 function* redirectToList({

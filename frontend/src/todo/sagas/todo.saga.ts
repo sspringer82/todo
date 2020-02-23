@@ -180,11 +180,9 @@ function* remove({
   }
 }
 
-function* removeOffline({
-  payload: todo,
-}: ActionType<typeof deleteTodoOfflineAction>) {
-  db.table('todo').delete(todo.id);
-  yield put(deleteTodoAction.success(todo));
+function* removeOffline(action: ActionType<typeof deleteTodoOfflineAction>) {
+  db.table('todo').delete(action.payload.id);
+  yield all([put(deleteTodoAction.success(action.payload)), put(addChangeAction({ action }))]);
 }
 
 export default function* todoSaga() {
