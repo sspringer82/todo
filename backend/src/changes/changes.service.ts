@@ -15,17 +15,36 @@ export class ChangesService {
     private readonly settingsService: SettingsService,
     private readonly listService: ListService,
     private readonly subtaskService: SubtaskService
-  ) {}
+  ) { }
 
   applyChanges(changes: any[]) {
     return Promise.all(changes.map(change => this.passChange(change)));
   }
 
-  passChange(change): Promise<Todo | Settings | List | Subtask> {
+  async passChange(change): Promise<Todo | Settings | List | Subtask> {
+
+    const ids = {
+      todo: []
+    }
+
     switch (change.action.type) {
       case 'CREATE_TODO_OFFLINE':
       case 'UPDATE_TODO_OFFLINE':
-        return this.todoService.save(change.action.payload);
+        let id: number;
+        if (change.action.type === 'CREATE_TODO_OFFLINE') {
+          id = change.action.payload.id;
+          delete change.action.payload.id;
+        }
+        if (change.action.type === 'UPDATE_TODO_OFFLINE') {
+          const isCreatedOffline = ids.todo.find((item) => item.id === change.action.payload.id);
+          if (isCreatedOffline) {
+            change.action.payload.id = isCreatedOffline.newId;
+          }
+        }
+        const data = await this.todoService.save(change.action.payload);
+        if (id) {
+          ids.todo.push({ id, newId: data.id });
+        }
       case 'DELETE_TODO_OFFLINE':
         return this.todoService.remove(change.action.payload.id);
       case 'CREATE_SETTINGS_OFFLINE':
