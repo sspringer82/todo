@@ -85,6 +85,11 @@ function* updateOnline({ payload: todo }: ActionType<typeof updateTodoAction>) {
     if (!response) {
       throw new Error(NETWORK_ERROR);
     }
+
+    yield db
+      .table('todo')
+      .update(response.data.id, update(response.data, { $unset: ['creator'] }));
+
     yield all([
       put(onlineAction()),
       put(saveTodoAction.success(response.data)),
@@ -120,6 +125,8 @@ function* createOnline({ payload: todo }: ActionType<typeof createTodoAction>) {
     if (!response) {
       throw new Error(NETWORK_ERROR);
     }
+    yield db.table('todo').add(response.data);
+
     yield all([
       put(onlineAction()),
       put(saveTodoAction.success(response.data)),
@@ -169,6 +176,9 @@ function* remove({
     if (!response) {
       throw new Error(NETWORK_ERROR);
     }
+
+    yield db.table('todo').delete(todo.id);
+
     yield all([put(onlineAction()), put(deleteTodoAction.success(todo))]);
   } catch (e) {
     if (isNetworkError(e)) {
@@ -182,7 +192,10 @@ function* remove({
 
 function* removeOffline(action: ActionType<typeof deleteTodoOfflineAction>) {
   db.table('todo').delete(action.payload.id);
-  yield all([put(deleteTodoAction.success(action.payload)), put(addChangeAction({ action }))]);
+  yield all([
+    put(deleteTodoAction.success(action.payload)),
+    put(addChangeAction({ action })),
+  ]);
 }
 
 export default function* todoSaga() {
