@@ -5,6 +5,8 @@ import {
   LOGIN,
   LOGIN_SUCCESS,
   INITIAL_DATA,
+  initialDataAction,
+  LOGOUT,
 } from '../actions/login.actions';
 import axios from 'axios';
 import { push } from 'connected-react-router';
@@ -19,7 +21,11 @@ function* login({ payload: user }: ActionType<typeof loginAction.request>) {
       `${process.env.REACT_APP_SERVER}/auth/login`,
       user
     );
-    yield all([put(loginAction.success(response.data)), put(push('/'))]);
+    yield all([
+      put(loginAction.success(response.data)),
+      put(initialDataAction()),
+      put(push('/')),
+    ]);
   } catch (e) {
     yield put(loginAction.failure('Anmeldung fehlgeschlagen'));
   }
@@ -40,8 +46,14 @@ function* getInitialData() {
   ]);
 }
 
+function* logout() {
+  yield localStorage.removeItem('token');
+  yield put(push('/'));
+}
+
 export default function* loginSaga() {
   yield takeLatest(LOGIN, login);
   yield takeLatest(INITIAL_DATA, getInitialData);
   yield takeLatest(LOGIN_SUCCESS, storeTokenInLocalStorage);
+  yield takeLatest(LOGOUT, logout);
 }

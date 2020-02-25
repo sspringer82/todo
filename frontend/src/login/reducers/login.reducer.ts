@@ -2,6 +2,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_ERROR,
   loginAction,
+  logoutAction,
+  LOGOUT,
 } from '../actions/login.actions';
 import update from 'immutability-helper';
 import { ActionType } from 'typesafe-actions';
@@ -18,9 +20,15 @@ const initialState: State = {
 
 export default function(
   state: State = initialState,
-  action: ActionType<typeof loginAction.success | typeof loginAction.failure>
+  action: ActionType<
+    | typeof loginAction.success
+    | typeof loginAction.failure
+    | typeof logoutAction
+  >
 ): State {
   switch (action.type) {
+    case LOGOUT:
+      return update(state, { token: { $set: '' }, error: { $set: false } });
     case LOGIN_SUCCESS:
       return update(state, {
         token: { $set: action.payload },

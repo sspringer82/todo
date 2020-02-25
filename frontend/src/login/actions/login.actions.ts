@@ -13,6 +13,9 @@ export type LOGIN_ERROR = typeof LOGIN_ERROR;
 export const INITIAL_DATA = 'INITIAL_DATA';
 export type INITIAL_DATA = typeof INITIAL_DATA;
 
+export const LOGOUT = 'LOGOUT';
+export type LOGOUT = typeof LOGOUT;
+
 export const loginAction = createAsyncAction(LOGIN, LOGIN_SUCCESS, LOGIN_ERROR)<
   Login,
   string,
@@ -20,3 +23,5 @@ export const loginAction = createAsyncAction(LOGIN, LOGIN_SUCCESS, LOGIN_ERROR)<
 >();
 
 export const initialDataAction = createAction(INITIAL_DATA)<void>();
+
+export const logoutAction = createAction(LOGOUT)<void>();
