@@ -18,6 +18,7 @@ import {
 } from '../settings/selectors/settings.selector';
 import { saveSettingsAction } from '../settings/actions/settings.actions';
 import update from 'immutability-helper';
+import { logoutAction } from '../login/actions/login.actions';
 
 const Menu: React.FC = () => {
   const dispatch = useDispatch();
@@ -97,6 +98,11 @@ const Menu: React.FC = () => {
           <ListItem>
             <Link to="/list/new">
               <Button onClick={() => setMenuOpen(false)}>neue Liste</Button>
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/list/new">
+              <Button onClick={() => dispatch(logoutAction())}>abmelden</Button>
             </Link>
           </ListItem>
         </List>
