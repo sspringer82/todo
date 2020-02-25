@@ -53,6 +53,10 @@ function* load() {
         return update(todo, { subtasks: { $set: [] } });
       }
     });
+
+    db.table('todo').clear();
+    db.table('todo').bulkAdd(todosWithSubtasks);
+
     yield all([
       put(onlineAction()),
       put(loadTodosAction.success(todosWithSubtasks)),

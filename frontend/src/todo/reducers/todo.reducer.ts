@@ -18,7 +18,6 @@ import {
   createSubtaskAction,
   updateSubtaskAction,
 } from '../actions/subtask.actions';
-import db from '../../db/db';
 import { ActionType } from 'typesafe-actions';
 
 export interface State {
@@ -31,7 +30,7 @@ const initialState: State = {
   search: '',
 };
 
-export default function (
+export default function(
   state: State = initialState,
   action: ActionType<
     | typeof loadTodosAction.success
@@ -45,8 +44,6 @@ export default function (
 ): State {
   switch (action.type) {
     case LOAD_TODOS_SUCCESS:
-      db.table('todo').clear();
-      db.table('todo').bulkAdd(action.payload);
       return update(state, { todos: { $set: action.payload } });
     case SAVE_TODO_SUCCESS:
       const index = state.todos.findIndex(
