@@ -2,10 +2,12 @@ import { ActionType } from 'typesafe-actions';
 import {
   createTodoOfflineAction,
   updateTodoOfflineAction,
+  deleteTodoOfflineAction,
 } from '../todo/actions/todo.actions';
 import {
   createListOfflineAction,
   updateListOfflineAction,
+  deleteListOfflineAction,
 } from '../list/actions/list.actions';
 import { createSettingsOfflineAction } from '../settings/actions/settings.actions';
 import {
@@ -22,5 +24,7 @@ export interface Change {
     | ActionType<typeof createSubtaskOfflineAction>
     | ActionType<typeof updateSubtaskOfflineAction>
     | ActionType<typeof createTodoOfflineAction>
-    | ActionType<typeof updateTodoOfflineAction>;
+    | ActionType<typeof updateTodoOfflineAction>
+    | ActionType<typeof deleteListOfflineAction>
+    | ActionType<typeof deleteTodoOfflineAction>;
 }
