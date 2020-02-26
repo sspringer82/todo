@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -21,19 +21,36 @@ const Confirm: React.FC<Props> = ({
   open,
   onConfirm,
   onCancel,
-}) => (
-  <Dialog open={open} disableBackdropClick disableEscapeKeyDown>
-    <DialogTitle>{title}</DialogTitle>
-    <DialogContent>{content}</DialogContent>
-    <DialogActions>
-      <Button onClick={onConfirm} color="primary">
-        OK
-      </Button>
-      <Button onClick={onCancel} color="secondary">
-        Abbrechen
-      </Button>
-    </DialogActions>
-  </Dialog>
-);
+}) => {
+  const confirmCallback = useCallback(
+    (e: KeyboardEvent) => {
+      if (open && e.code === 'Enter') {
+        onConfirm();
+      }
+    },
+    [onConfirm, open]
+  );
+
+  useEffect(() => {
+    console.log('register');
+    document.addEventListener('keypress', confirmCallback);
+    return () => document.removeEventListener('keypress', confirmCallback);
+  }, [confirmCallback]);
+
+  return (
+    <Dialog open={open} disableBackdropClick disableEscapeKeyDown>
+      <DialogTitle>{title}</DialogTitle>
+      <DialogContent>{content}</DialogContent>
+      <DialogActions>
+        <Button onClick={onConfirm} color="primary">
+          OK
+        </Button>
+        <Button onClick={onCancel} color="secondary">
+          Abbrechen
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
 
 export default Confirm;
