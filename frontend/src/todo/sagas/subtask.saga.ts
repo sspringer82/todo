@@ -185,7 +185,10 @@ function* removeOffline(action: ActionType<typeof deleteSubtaskOfflineAction>) {
     id,
     update(todo, { subtasks: { $splice: [[subtaskIndex, 1]] } })
   );
-  yield put(deleteSubtaskAction.success(action.payload));
+  yield all([
+    put(deleteSubtaskAction.success(action.payload)),
+    put(addChangeAction({ action })),
+  ]);
 }
 
 function* toggleTodoStatusDependingOnSubtasks({
