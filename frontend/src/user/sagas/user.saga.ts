@@ -28,6 +28,10 @@ function* load() {
     if (!response) {
       throw new Error(NETWORK_ERROR);
     }
+
+    db.table('user').clear();
+    db.table('user').bulkAdd(response.data);
+
     yield all([
       put(onlineAction()),
       put(loadUsersAction.success(response.data)),

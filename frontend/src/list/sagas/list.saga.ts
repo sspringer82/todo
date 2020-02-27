@@ -49,6 +49,10 @@ function* load() {
     if (!response) {
       throw new Error(NETWORK_ERROR);
     }
+
+    db.table('list').clear();
+    db.table('list').bulkAdd(response.data);
+
     yield all([
       put(onlineAction()),
       put(loadListsAction.success(response.data)),

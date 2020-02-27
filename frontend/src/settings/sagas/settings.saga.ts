@@ -43,6 +43,10 @@ function* load() {
     if (!response) {
       throw new Error(NETWORK_ERROR);
     }
+
+    db.table('settings').clear();
+    db.table('settings').add(response.data);
+
     yield all([
       put(onlineAction()),
       put(loadSettingsAction.success(response.data)),

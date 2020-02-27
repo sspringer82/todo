@@ -18,7 +18,7 @@ const initialState: State = {
   onlyStars: false,
 };
 
-export default function (
+export default function(
   state: State = initialState,
   action: ActionType<
     typeof saveSettingsAction.success | typeof loadSettingsAction.success
@@ -27,8 +27,6 @@ export default function (
   switch (action.type) {
     case SAVE_SETTINGS_SUCCESS:
     case LOAD_SETTINGS_SUCCESS:
-      db.table('settings').clear();
-      db.table('settings').add(action.payload);
       return action.payload;
     default:
       return state;
