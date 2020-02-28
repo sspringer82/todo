@@ -13,6 +13,7 @@ import { createSettingsOfflineAction } from '../settings/actions/settings.action
 import {
   createSubtaskOfflineAction,
   updateSubtaskOfflineAction,
+  deleteSubtaskOfflineAction,
 } from '../todo/actions/subtask.actions';
 
 export interface Change {
@@ -26,5 +27,6 @@ export interface Change {
     | ActionType<typeof createTodoOfflineAction>
     | ActionType<typeof updateTodoOfflineAction>
     | ActionType<typeof deleteListOfflineAction>
-    | ActionType<typeof deleteTodoOfflineAction>;
+    | ActionType<typeof deleteTodoOfflineAction>
+    | ActionType<typeof deleteSubtaskOfflineAction>;
 }
