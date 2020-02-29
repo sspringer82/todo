@@ -1,7 +1,6 @@
 import { User } from '../../shared/User';
 import { LOAD_USERS_SUCCESS, loadUsersAction } from '../actions/user.actions';
 import update from 'immutability-helper';
-import db from '../../db/db';
 import { ActionType } from 'typesafe-actions';
 
 export interface State {

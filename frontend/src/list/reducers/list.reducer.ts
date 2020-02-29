@@ -8,7 +8,6 @@ import {
   deleteListAction,
 } from '../actions/list.actions';
 import update from 'immutability-helper';
-import db from '../../db/db';
 import { ActionType } from 'typesafe-actions';
 
 export interface State {

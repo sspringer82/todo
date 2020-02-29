@@ -4,7 +4,6 @@ import {
   loadSettingsAction,
   saveSettingsAction,
 } from '../actions/settings.actions';
-import db from '../../db/db';
 import { ActionType } from 'typesafe-actions';
 
 export interface State {
