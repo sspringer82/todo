@@ -41,7 +41,7 @@ function* load() {
         headers: {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
-      }
+      },
     );
     if (!response) {
       throw new Error(NETWORK_ERROR);
@@ -84,7 +84,7 @@ function* updateOnline({ payload: todo }: ActionType<typeof updateTodoAction>) {
         headers: {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
-      }
+      },
     );
     if (!response) {
       throw new Error(NETWORK_ERROR);
@@ -124,7 +124,7 @@ function* createOnline({ payload: todo }: ActionType<typeof createTodoAction>) {
         headers: {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
-      }
+      },
     );
     if (!response) {
       throw new Error(NETWORK_ERROR);
@@ -151,7 +151,7 @@ function* createOffline(action: ActionType<typeof createTodoOfflineAction>) {
     put(
       addChangeAction({
         action: update(action, { payload: { $set: responseTodo } }),
-      })
+      }),
     ),
     put(saveTodoAction.success(responseTodo)),
   ]);
@@ -175,7 +175,7 @@ function* remove({
         headers: {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
-      }
+      },
     );
     if (!response) {
       throw new Error(NETWORK_ERROR);
@@ -203,8 +203,8 @@ function* removeOffline(action: ActionType<typeof deleteTodoOfflineAction>) {
 }
 
 export default function* todoSaga() {
-  yield takeLatest(LOAD_TODOS, load);
   yield takeLatest(LOAD_TODOS_OFFLINE, loadOffline);
+  yield takeLatest(LOAD_TODOS, load);
   yield takeLatest(SAVE_TODO, save);
   yield takeLatest(CREATE_TODO, createOnline);
   yield takeLatest(CREATE_TODO_OFFLINE, createOffline);
