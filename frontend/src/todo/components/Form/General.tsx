@@ -19,13 +19,13 @@ interface Props {
   tab: number;
   handleChange: (
     e:
-      | React.ChangeEvent<HTMLInputElement>
+      | ChangeEvent<HTMLInputElement>
       | {
           currentTarget: {
             name: string;
             value: string;
           };
-        }
+        },
   ) => void;
 }
 
@@ -82,18 +82,18 @@ const General: React.FC<Props> = ({ todo, tabIndex, tab, handleChange }) => {
           labelId="list-label"
           value={todo.list && todo.list.id ? todo.list.id : ''}
           name="list"
-          onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+          onChange={(e: any) => {
             handleChange({
               currentTarget: {
                 name: e.target.name as string,
                 value: (lists.find(
-                  list => list.id === parseInt(e.target.value as string, 10)
+                  (list) => list.id === parseInt(e.target.value as string, 10),
                 ) as unknown) as string,
               },
             });
           }}
         >
-          {lists.map(list => (
+          {lists.map((list) => (
             <MenuItem value={list.id} key={list.id}>
               {list.name}
             </MenuItem>

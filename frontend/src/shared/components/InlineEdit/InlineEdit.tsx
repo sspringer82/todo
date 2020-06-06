@@ -1,4 +1,10 @@
-import React, { useState, useRef, useEffect, ChangeEvent } from 'react';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  ChangeEvent,
+  KeyboardEvent,
+} from 'react';
 import {
   FormContainer,
   NewButton,

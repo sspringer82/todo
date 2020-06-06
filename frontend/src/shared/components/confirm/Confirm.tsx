@@ -28,11 +28,10 @@ const Confirm: React.FC<Props> = ({
         onConfirm();
       }
     },
-    [onConfirm, open]
+    [onConfirm, open],
   );
 
   useEffect(() => {
-    console.log('register');
     document.addEventListener('keypress', confirmCallback);
     return () => document.removeEventListener('keypress', confirmCallback);
   }, [confirmCallback]);
