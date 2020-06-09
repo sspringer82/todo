@@ -37,7 +37,7 @@ export class SettingsController {
   @ApiTags('Settings')
   async update(@Body() settings: Settings, @Req() request) {
     const savedSettings = await this.settingsService.getByUserId(
-      request.user.id
+      request.user.id,
     );
     if (
       (savedSettings as Settings).id &&

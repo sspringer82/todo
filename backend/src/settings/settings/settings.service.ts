@@ -7,12 +7,12 @@ import { Repository } from 'typeorm';
 export class SettingsService {
   constructor(
     @InjectRepository(Settings)
-    private readonly settingsRepository: Repository<Settings>
+    private readonly settingsRepository: Repository<Settings>,
   ) {}
 
   async getByUserId(id: number) {
     const userSettings = await this.settingsRepository.findOne({
-      where: { userId: id },
+      where: { user: id },
       relations: ['list'],
     });
     if (userSettings) {
