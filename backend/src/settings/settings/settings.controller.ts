@@ -39,13 +39,6 @@ export class SettingsController {
     const savedSettings = await this.settingsService.getByUserId(
       request.user.id,
     );
-    if (
-      (savedSettings as Settings).id &&
-      (savedSettings as Settings).id === settings.id
-    ) {
-      return this.settingsService.save(settings);
-    } else {
-      throw new UnauthorizedException();
-    }
+    return this.settingsService.save({ ...savedSettings, ...settings });
   }
 }
