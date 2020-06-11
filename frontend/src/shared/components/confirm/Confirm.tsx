@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -22,26 +22,20 @@ const Confirm: React.FC<Props> = ({
   onConfirm,
   onCancel,
 }) => {
-  const confirmCallback = useCallback(
-    (e: KeyboardEvent) => {
-      if (open && e.code === 'Enter') {
-        onConfirm();
-      }
-    },
-    [onConfirm, open],
-  );
+  const button = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    document.addEventListener('keypress', confirmCallback);
-    return () => document.removeEventListener('keypress', confirmCallback);
-  }, [confirmCallback]);
+    setTimeout(() => {
+      button.current && button.current!.focus();
+    }, 0);
+  }, [open]);
 
   return (
     <Dialog open={open} disableBackdropClick disableEscapeKeyDown>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{content}</DialogContent>
       <DialogActions>
-        <Button onClick={onConfirm} color="primary">
+        <Button onClick={onConfirm} color="primary" ref={button}>
           OK
         </Button>
         <Button onClick={onCancel} color="secondary">
