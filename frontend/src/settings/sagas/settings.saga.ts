@@ -38,7 +38,7 @@ function* load() {
         headers: {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
-      }
+      },
     );
     if (!response) {
       throw new Error(NETWORK_ERROR);
@@ -76,7 +76,7 @@ function* createOnline({
         headers: {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
-      }
+      },
     );
     if (!response) {
       throw new Error(NETWORK_ERROR);
@@ -105,7 +105,7 @@ function* updateOnline({
         headers: {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
-      }
+      },
     );
     if (!response) {
       throw new Error(NETWORK_ERROR);
@@ -124,7 +124,7 @@ function* updateOnline({
 }
 
 function* createOffline(
-  action: ActionType<typeof createSettingsOfflineAction>
+  action: ActionType<typeof createSettingsOfflineAction>,
 ) {
   const id = yield db.table('settings').add(action.payload);
   const responseSettings = update(action.payload, { id: { $set: id } });
@@ -132,14 +132,14 @@ function* createOffline(
     put(
       addChangeAction({
         action: update(action, { payload: { $set: responseSettings } }),
-      })
+      }),
     ),
     put(saveSettingsAction.success(responseSettings)),
   ]);
 }
 
 function* updateOffline(
-  action: ActionType<typeof createSettingsOfflineAction>
+  action: ActionType<typeof createSettingsOfflineAction>,
 ) {
   yield db.table('settings').update(action.payload.id, action.payload);
   const responseSettings = action.payload;
