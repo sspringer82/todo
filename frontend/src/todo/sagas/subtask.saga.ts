@@ -54,7 +54,7 @@ function* createOnline({
         headers: {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
-      }
+      },
     );
     if (!response) {
       throw new Error(NETWORK_ERROR);
@@ -73,15 +73,13 @@ function* createOnline({
 }
 
 function* createOffline(action: ActionType<typeof createSubtaskOfflineAction>) {
-  const id = action.payload.todo.id
-    ? action.payload.todo.id
-    : action.payload.todo;
+  const id = action.payload.todo.id;
   const todo = yield db.table('todo').get(id);
   const subtaskIndex =
-    (id as number) * 1000 +
+    id * 1000 +
     Math.max.apply(
       null,
-      todo.subtasks.map((st: Subtask) => st.id)
+      todo.subtasks.map((st: Subtask) => st.id),
     ) +
     1;
   const responseSubtask = update(action.payload, {
@@ -89,13 +87,13 @@ function* createOffline(action: ActionType<typeof createSubtaskOfflineAction>) {
   });
   db.table('todo').update(
     id,
-    update(todo, { subtasks: { $push: [responseSubtask] } })
+    update(todo, { subtasks: { $push: [responseSubtask] } }),
   );
   yield all([
     put(
       addChangeAction({
         action: update(action, { payload: { $set: responseSubtask } }),
-      })
+      }),
     ),
     put(createSubtaskAction.success(responseSubtask as Subtask)),
   ]);
@@ -112,7 +110,7 @@ function* updateOnline({
         headers: {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
-      }
+      },
     );
     if (!response) {
       throw new Error(NETWORK_ERROR);
@@ -131,16 +129,14 @@ function* updateOnline({
 }
 
 function* updateOffline(action: ActionType<typeof updateSubtaskOfflineAction>) {
-  const id = action.payload.todo.id
-    ? action.payload.todo.id
-    : action.payload.todo;
+  const id = action.payload.todo.id;
   const todo = yield db.table('todo').get(id);
   const subtaskIndex = todo.subtasks.findIndex(
-    (st: Subtask) => st.id === action.payload.id
+    (st: Subtask) => st.id === action.payload.id,
   );
   db.table('todo').update(
     id,
-    update(todo, { subtasks: { [subtaskIndex]: { $set: action.payload } } })
+    update(todo, { subtasks: { [subtaskIndex]: { $set: action.payload } } }),
   );
   yield all([
     put(addChangeAction({ action })),
@@ -158,7 +154,7 @@ function* remove({
         headers: {
           Authorization: `Bearer ${yield select(getToken)}`,
         },
-      }
+      },
     );
     if (!response) {
       throw new Error(NETWORK_ERROR);
@@ -174,16 +170,14 @@ function* remove({
 }
 
 function* removeOffline(action: ActionType<typeof deleteSubtaskOfflineAction>) {
-  const id = action.payload.todo.id
-    ? action.payload.todo.id
-    : action.payload.todo;
+  const id = action.payload.todo.id;
   const todo = yield db.table('todo').get(id);
   const subtaskIndex = todo.subtasks.findIndex(
-    (st: Subtask) => st.id === action.payload.id
+    (st: Subtask) => st.id === action.payload.id,
   );
   db.table('todo').update(
     id,
-    update(todo, { subtasks: { $splice: [[subtaskIndex, 1]] } })
+    update(todo, { subtasks: { $splice: [[subtaskIndex, 1]] } }),
   );
   yield all([
     put(deleteSubtaskAction.success(action.payload)),
@@ -206,7 +200,7 @@ function* toggleTodoStatusDependingOnSubtasks({
   const todo = yield select(getTodo(id as number));
   const subtasks = todo.subtasks;
   const subtaskIndex = subtasks.findIndex(
-    (st: Subtask) => st.id === subtask.id
+    (st: Subtask) => st.id === subtask.id,
   );
 
   if (type === CREATE_SUBTASK_SUCCESS && subtaskIndex === -1) {
@@ -234,6 +228,6 @@ export default function* subtaskSaga() {
   yield takeLatest(UPDATE_SUBTASK_OFFLINE, updateOffline);
   yield takeLatest(
     [UPDATE_SUBTASK_SUCCESS, CREATE_SUBTASK_SUCCESS, DELETE_SUBTASK_SUCCESS],
-    toggleTodoStatusDependingOnSubtasks
+    toggleTodoStatusDependingOnSubtasks,
   );
 }
