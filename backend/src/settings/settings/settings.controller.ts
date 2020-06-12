@@ -39,6 +39,10 @@ export class SettingsController {
     const savedSettings = await this.settingsService.getByUserId(
       request.user.id,
     );
-    return this.settingsService.save({ ...savedSettings, ...settings });
+    return this.settingsService.save({
+      ...savedSettings,
+      ...settings,
+      ...{ user: request.user },
+    });
   }
 }
