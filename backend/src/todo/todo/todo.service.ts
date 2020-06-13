@@ -10,7 +10,7 @@ import { Subtask } from '../subtask/subtask.entity';
 export class TodoService {
   constructor(
     @InjectRepository(Todo)
-    private readonly todoRepository: Repository<Todo>
+    private readonly todoRepository: Repository<Todo>,
   ) {}
 
   async getAll(user: User) {
@@ -26,14 +26,14 @@ export class TodoService {
       .getRawAndEntities();
 
     const todosWithList = raw
-      .filter(rawTodo => rawTodo.l_id !== null)
+      .filter((rawTodo) => rawTodo.l_id !== null)
       .reduce((prev, current) => {
         prev[current.todo_id] = current;
         return prev;
       }, {});
 
     const subtasks = raw
-      .filter(rawTodo => rawTodo.s_id !== null)
+      .filter((rawTodo) => rawTodo.s_id !== null)
       .reduce((prev, current) => {
         prev[current.s_id] = Subtask.create({
           id: current.s_id,
@@ -55,10 +55,10 @@ export class TodoService {
         }
         return prev;
       },
-      {}
+      {},
     );
 
-    const enrichedTodos = entities.map(todoEntity => {
+    const enrichedTodos = entities.map((todoEntity) => {
       if (todosWithList[todoEntity.id]) {
         const l = todosWithList[todoEntity.id];
         todoEntity.list = List.create({

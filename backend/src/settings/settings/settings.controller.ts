@@ -6,7 +6,6 @@ import {
   Post,
   Body,
   Put,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { SettingsService } from './settings.service';
 import { AuthGuard } from '@nestjs/passport';
