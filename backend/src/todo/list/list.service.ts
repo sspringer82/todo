@@ -7,7 +7,7 @@ import { User } from '../../user/user/user.entity';
 @Injectable()
 export class ListService {
   constructor(
-    @InjectRepository(List) private readonly listRepository: Repository<List>
+    @InjectRepository(List) private readonly listRepository: Repository<List>,
   ) {}
 
   getAll(currentUser: User) {
@@ -40,7 +40,7 @@ export class ListService {
           .leftJoinAndSelect(
             'list_shared_with_user',
             'lu',
-            'list.id = lu.listId'
+            'list.id = lu.listId',
           )
           .leftJoinAndSelect('user', 'u', 'lu.userId = u.id')
           .where('list.creator = :userId OR u.id = :userId', {
