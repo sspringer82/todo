@@ -41,7 +41,7 @@ export class TodoService {
           done: !!current.s_done,
           createdAt: current.s_createdAt,
           updatedAt: current.s_updatedAt,
-          todo: current.s_todoId,
+          todo: { id: current.s_todoId },
         });
         return prev;
       }, {});

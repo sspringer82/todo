@@ -10,6 +10,7 @@ import {
   Delete,
   Param,
   HttpCode,
+  BadRequestException,
 } from '@nestjs/common';
 import { TodoService } from '../todo/todo.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -21,7 +22,7 @@ import { ApiTags } from '@nestjs/swagger';
 export class SubtaskController {
   constructor(
     private readonly subtaskService: SubtaskService,
-    private readonly todoService: TodoService
+    private readonly todoService: TodoService,
   ) {}
 
   @Post()
@@ -37,8 +38,9 @@ export class SubtaskController {
   update(@Body() subtask: Subtask, @Req() request) {
     if (this.todoService.isAllowedToModify(request.user.id, subtask.todo.id)) {
       return this.subtaskService.save(subtask);
+    } else {
+      throw new UnauthorizedException();
     }
-    throw new UnauthorizedException();
   }
 
   @Delete(':id')
@@ -48,11 +50,15 @@ export class SubtaskController {
   async remove(@Param('id') id: string, @Req() request) {
     const subtaskId = parseInt(id, 10);
     const subtask = await this.subtaskService.getOne(subtaskId);
+    if (!subtask.todo) {
+      throw new BadRequestException('No Todo reference provided');
+    }
     if (
       await this.todoService.isAllowedToModify(request.user.id, subtask.todo.id)
     ) {
       await this.subtaskService.remove(subtaskId);
+    } else {
+      throw new UnauthorizedException();
     }
-    throw new UnauthorizedException();
   }
 }

@@ -30,7 +30,7 @@ const initialState: State = {
   search: '',
 };
 
-export default function(
+export default function (
   state: State = initialState,
   action: ActionType<
     | typeof loadTodosAction.success
@@ -40,14 +40,14 @@ export default function(
     | typeof updateSubtaskAction.success
     | typeof deleteSubtaskAction
     | typeof searchAction
-  >
+  >,
 ): State {
   switch (action.type) {
     case LOAD_TODOS_SUCCESS:
       return update(state, { todos: { $set: action.payload } });
     case SAVE_TODO_SUCCESS:
       const index = state.todos.findIndex(
-        todo => todo.id === action.payload.id
+        (todo) => todo.id === action.payload.id,
       );
       if (index > -1) {
         return update(state, { todos: { [index]: { $set: action.payload } } });
@@ -56,7 +56,7 @@ export default function(
       }
     case DELETE_TODO_SUCCESS:
       const deleteIndex = state.todos.findIndex(
-        todo => todo.id === action.payload.id
+        (todo) => todo.id === action.payload.id,
       );
       return update(state, { todos: { $splice: [[deleteIndex, 1]] } });
     case SEARCH:
@@ -65,7 +65,7 @@ export default function(
       const todoId = action.payload.todo.id
         ? action.payload.todo.id
         : action.payload.todo;
-      const todoIndex = state.todos.findIndex(todo => todo.id === todoId);
+      const todoIndex = state.todos.findIndex((todo) => todo.id === todoId);
       const subtask = update(action.payload, {
         todo: { $set: action.payload.todo },
       });
@@ -74,10 +74,10 @@ export default function(
       });
     case UPDATE_SUBTASK_SUCCESS:
       const todoIndex3 = state.todos.findIndex(
-        todo => todo.id === action.payload.todo.id
+        (todo) => todo.id === action.payload.todo.id,
       );
       const subtaskIndex2 = state.todos[todoIndex3].subtasks!.findIndex(
-        subtask => subtask.id === action.payload.id
+        (subtask) => subtask.id === action.payload.id,
       );
       return update(state, {
         todos: {
@@ -90,9 +90,9 @@ export default function(
       const todoId2 = action.payload.todo.id
         ? action.payload.todo.id
         : action.payload.todo;
-      const todoIndex2 = state.todos.findIndex(todo => todo.id === todoId2);
+      const todoIndex2 = state.todos.findIndex((todo) => todo.id === todoId2);
       const subtaskIndex = state.todos[todoIndex2].subtasks!.findIndex(
-        subtask => subtask.id === action.payload.id
+        (subtask) => subtask.id === action.payload.id,
       );
       return update(state, {
         todos: { [todoIndex2]: { subtasks: { $splice: [[subtaskIndex, 1]] } } },

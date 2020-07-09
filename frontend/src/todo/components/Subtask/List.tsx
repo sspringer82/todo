@@ -23,7 +23,7 @@ const List: React.FC<Props> = ({ todo }) => {
   return (
     <div>
       {subtasks &&
-        subtasks.map(subtask =>
+        subtasks.map((subtask) =>
           subtask.id === inEditMode ? (
             <InlineEdit
               task={subtask}
@@ -31,7 +31,9 @@ const List: React.FC<Props> = ({ todo }) => {
               onSave={({ title }) => {
                 setInEditMode(null);
                 dispatch(
-                  saveSubtaskAction(update(subtask, { title: { $set: title } }))
+                  saveSubtaskAction(
+                    update(subtask, { title: { $set: title } }),
+                  ),
                 );
               }}
             />
@@ -47,7 +49,7 @@ const List: React.FC<Props> = ({ todo }) => {
                 dispatch(deleteSubtaskAction.request(subtask))
               }
             />
-          )
+          ),
         )}
 
       {inEditMode === null && (
@@ -59,7 +61,7 @@ const List: React.FC<Props> = ({ todo }) => {
                 title,
                 done: false,
                 todo,
-              })
+              }),
             );
           }}
         />

@@ -117,7 +117,7 @@ function* updateOnline({
     }
     yield all([
       put(onlineAction()),
-      put(createSubtaskAction.success(response.data)),
+      put(updateSubtaskAction.success(response.data)),
     ]);
   } catch (e) {
     if (isNetworkError(e)) {
