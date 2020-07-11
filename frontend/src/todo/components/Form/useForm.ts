@@ -1,12 +1,12 @@
 import { Todo, InputTypeTodo } from '../../../shared/Todo';
 import { useParams, useHistory } from 'react-router-dom';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../../../reducers/rootReducer';
 import update from 'immutability-helper';
 import { saveTodoAction } from '../../actions/todo.actions';
 
-export default function() {
+export default function () {
   const dispatch = useDispatch();
   const params = useParams<{ id: string }>();
   const history = useHistory();
@@ -20,20 +20,27 @@ export default function() {
   };
 
   const foundTodo = useSelector((state: AppState) =>
-    state.todo.todos.find((todo: Todo) => todo.id === parseInt(params.id, 10))
+    state.todo.todos.find((todo: Todo) => todo.id === parseInt(params.id, 10)),
   );
 
   if (foundTodo) {
     initialTodo = foundTodo as InputTypeTodo;
   }
+
   const [todo, setTodo] = useState<InputTypeTodo>(initialTodo);
+
+  useEffect(() => {
+    setTodo((prevTodo) =>
+      update(prevTodo, { subtasks: { $set: initialTodo.subtasks } }),
+    );
+  }, [initialTodo.subtasks]);
 
   return {
     todo,
     handleChange(
       e:
         | ChangeEvent<HTMLInputElement>
-        | { currentTarget: { name: string; value: string } }
+        | { currentTarget: { name: string; value: string } },
     ) {
       const field = e.currentTarget.name as string;
       const value =
@@ -42,7 +49,7 @@ export default function() {
           : e.currentTarget.value;
 
       setTodo((prevTodo: InputTypeTodo) =>
-        update(prevTodo, { [field]: { $set: value } })
+        update(prevTodo, { [field]: { $set: value } }),
       );
     },
     handleClose() {
