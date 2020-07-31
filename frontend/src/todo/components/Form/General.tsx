@@ -11,7 +11,12 @@ import moment, { Moment } from 'moment';
 import { useSelector } from 'react-redux';
 import { getLists } from '../../../list/selectors/list.selector';
 import { InputTypeTodo } from '../../../shared/Todo';
-import { Select, TextField, DateTimePicker, Divider } from './General.styles';
+import {
+  Select,
+  TextField,
+  KeyboardDatePicker,
+  Divider,
+} from './General.styles';
 
 interface Props {
   todo: InputTypeTodo;
@@ -61,8 +66,9 @@ const General: React.FC<Props> = ({ todo, tabIndex, tab, handleChange }) => {
         />
       </div>
       <Divider />
-      <DateTimePicker
-        clearable
+      <KeyboardDatePicker
+        variant="inline"
+        format="MM/dd/yyyy"
         value={todo.due}
         onChange={(date: Moment | null) =>
           handleChange(({
