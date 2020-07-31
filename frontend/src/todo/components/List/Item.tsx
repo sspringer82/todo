@@ -14,6 +14,7 @@ import {
   ListItem,
 } from '../../../shared/components/Item/Item.styles';
 import Confirm from '../../../shared/components/confirm/Confirm';
+import moment from 'moment';
 
 interface Props {
   todo: Todo;
@@ -66,6 +67,7 @@ const Item: React.FC<Props> = ({ todo, onChange, onRemove }) => {
               / {todo.subtasks.length})
             </>
           )}
+          {todo.due && ` (bis ${moment(todo.due).format('DD.MM.YYYY')})`}
         </Title>
         <StarContainer
           onClick={() => onChange({ ...todo, starred: !todo.starred })}
