@@ -12,28 +12,24 @@ import { AuthGuard } from '@nestjs/passport';
 import { Settings } from './settings.entity';
 import { ApiTags } from '@nestjs/swagger';
 
+@UseGuards(AuthGuard('jwt'))
+@ApiTags('Settings')
 @Controller('settings')
 export class SettingsController {
   constructor(private readonly settingsService: SettingsService) {}
 
   @Get()
-  @UseGuards(AuthGuard('jwt'))
-  @ApiTags('Settings')
   getAll(@Req() request) {
     return this.settingsService.getByUserId(request.user.id);
   }
 
   @Post()
-  @UseGuards(AuthGuard('jwt'))
-  @ApiTags('Settings')
   save(@Body() settings: Settings, @Req() request) {
     settings.user = request.user;
     return this.settingsService.save(settings);
   }
 
   @Put(':id')
-  @UseGuards(AuthGuard('jwt'))
-  @ApiTags('Settings')
   async update(@Body() settings: Settings, @Req() request) {
     const savedSettings = await this.settingsService.getByUserId(
       request.user.id,
