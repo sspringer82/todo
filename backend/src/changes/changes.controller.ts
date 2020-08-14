@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards, Body } from '@nestjs/common';
+import { Controller, Post, UseGuards, Body, Req } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ChangesService } from './changes.service';
 import { ApiTags } from '@nestjs/swagger';
@@ -10,7 +10,8 @@ export class ChangesController {
   constructor(private readonly changesService: ChangesService) {}
 
   @Post()
-  applyChanges(@Body() changes: any[]) {
-    return this.changesService.applyChanges(changes);
+  applyChanges(@Body() changes: any[], @Req() request) {
+    const user = request.user;
+    return this.changesService.applyChanges(changes, user);
   }
 }
