@@ -7,6 +7,7 @@ import { ListItem } from '@material-ui/core';
 import { Title } from '../../../shared/components/Item/Item.styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Confirm from '../../../shared/components/confirm/Confirm';
+import update from 'immutability-helper';
 
 interface Props {
   subtask: Subtask;
@@ -37,12 +38,16 @@ const Item: React.FC<Props> = ({
       <ListItem>
         {!subtask.done && (
           <RadioButtonUncheckedIcon
-            onClick={() => onStateChange({ ...subtask, done: true })}
+            onClick={() =>
+              onStateChange(update(subtask, { done: { $set: true } }))
+            }
           />
         )}
         {subtask.done && (
           <CheckCircleOutlineIcon
-            onClick={() => onStateChange({ ...subtask, done: false })}
+            onClick={() =>
+              onStateChange(update(subtask, { done: { $set: true } }))
+            }
           />
         )}
         <Title done={subtask.done}>{subtask.title}</Title>

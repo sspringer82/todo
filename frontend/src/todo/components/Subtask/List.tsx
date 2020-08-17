@@ -60,7 +60,7 @@ const List: React.FC<Props> = ({ todo }) => {
               saveSubtaskAction({
                 title,
                 done: false,
-                todo,
+                todo: { id: todo.id },
               }),
             );
           }}

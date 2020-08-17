@@ -25,7 +25,6 @@ import { takeLatest, put, select, all } from '@redux-saga/core/effects';
 import { getTodo } from '../selectors/todo.selector';
 import { saveTodoAction } from '../actions/todo.actions';
 import update from 'immutability-helper';
-import { Todo } from '../../shared/Todo';
 import db from '../../db/db';
 import isNetworkError, {
   NETWORK_ERROR,
@@ -193,11 +192,8 @@ function* toggleTodoStatusDependingOnSubtasks({
   | typeof createSubtaskAction.success
   | typeof deleteSubtaskAction.success
 >) {
-  let id: Todo | number = subtask.todo;
-  if (typeof id !== 'number' && subtask.todo.id) {
-    id = subtask.todo.id;
-  }
-  const todo = yield select(getTodo(id as number));
+  let todoId = subtask.todo.id;
+  const todo = yield select(getTodo(todoId));
   const subtasks = todo.subtasks;
   const subtaskIndex = subtasks.findIndex(
     (st: Subtask) => st.id === subtask.id,
