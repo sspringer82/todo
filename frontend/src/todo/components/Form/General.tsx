@@ -99,6 +99,9 @@ const General: React.FC<Props> = ({ todo, tabIndex, tab, handleChange }) => {
             });
           }}
         >
+          <MenuItem value="" key="">
+            keine Liste
+          </MenuItem>
           {lists.map((list) => (
             <MenuItem value={list.id} key={list.id}>
               {list.name}
