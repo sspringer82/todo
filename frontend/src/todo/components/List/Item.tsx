@@ -18,13 +18,21 @@ import moment from 'moment';
 
 interface Props {
   todo: Todo;
+  isActive: boolean;
+  onActivate: (todo: Todo) => void;
   onChange: (todo: Todo) => void;
   onRemove: (todo: Todo) => void;
 }
 
 const MENU_WIDTH = 53;
 
-const Item: React.FC<Props> = ({ todo, onChange, onRemove }) => {
+const Item: React.FC<Props> = ({
+  todo,
+  onChange,
+  onRemove,
+  isActive,
+  onActivate,
+}) => {
   const [showMenu, setShowMenu] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -41,7 +49,7 @@ const Item: React.FC<Props> = ({ todo, onChange, onRemove }) => {
           setShowMenu(false);
         }}
       ></Confirm>
-      <ListItem>
+      <ListItem isActive={isActive} onClick={() => onActivate(todo)}>
         {!todo.done && (
           <RadioButtonUncheckedIcon
             onClick={() => onChange({ ...todo, done: true })}

@@ -9,10 +9,12 @@ import { useSelector } from 'react-redux';
 import InlineEdit from '../../../shared/components/InlineEdit/InlineEdit';
 import { getActiveList } from '../../../settings/selectors/settings.selector';
 import { Grid, Hidden } from '@material-ui/core';
+import useActiveTodo from './useActiveTodo';
 
 const List: React.FC = () => {
   const { todos, handleSave, handleDelete } = useTodoList();
   const activeList = useSelector(getActiveList);
+  const [activeTodo, activate] = useActiveTodo();
 
   return (
     <>
@@ -27,6 +29,8 @@ const List: React.FC = () => {
           <StyledList>
             {todos.map((todo: Todo) => (
               <Item
+                isActive={todo.id === activeTodo}
+                onActivate={activate}
                 todo={todo}
                 key={todo.id}
                 onChange={handleSave}
