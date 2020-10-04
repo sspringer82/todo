@@ -19,7 +19,7 @@ import moment from 'moment';
 interface Props {
   todo: Todo;
   isActive: boolean;
-  onActivate: (todo: Todo) => void;
+  onActivate: (todo: Todo | null) => void;
   onChange: (todo: Todo) => void;
   onRemove: (todo: Todo) => void;
 }
@@ -94,7 +94,10 @@ const Item: React.FC<Props> = ({
             }}
           />
           <Link to={`/edit/${todo.id}`}>
-            <EditIcon onClick={() => setShowMenu(false)} />
+            <EditIcon onClick={() => {
+              setShowMenu(false); 
+              onActivate(null);
+            }} />
           </Link>
         </MenuContainer>
       </ListItem>

@@ -29,7 +29,7 @@ const List: React.FC = () => {
           <StyledList>
             {todos.map((todo: Todo) => (
               <Item
-                isActive={todo.id === activeTodo}
+                isActive={activeTodo !== null && activeTodo.id === todo.id}
                 onActivate={activate}
                 todo={todo}
                 key={todo.id}
@@ -37,20 +37,22 @@ const List: React.FC = () => {
                 onRemove={handleDelete}
               />
             ))}
-            <InlineEdit
-              onSave={({ title }) => {
-                const newTodo: InputTypeTodo = {
-                  title,
-                  done: false,
-                  starred: false,
-                  subtasks: [],
-                };
-                if (activeList) {
-                  newTodo['list'] = activeList;
-                }
-                handleSave(newTodo);
-              }}
-            />
+            <div onClick={() => activate(null)}>
+              <InlineEdit
+                onSave={({ title }) => {
+                  const newTodo: InputTypeTodo = {
+                    title,
+                    done: false,
+                    starred: false,
+                    subtasks: [],
+                  };
+                  if (activeList) {
+                    newTodo['list'] = activeList;
+                  }
+                  handleSave(newTodo);
+                }}
+              />
+            </div>
           </StyledList>
         </Grid>
         <Hidden smDown>
