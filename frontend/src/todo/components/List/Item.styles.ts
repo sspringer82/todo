@@ -8,8 +8,6 @@ export const MenuContainer = styled.div`
   white-space: nowrap;
 `;
 
-export const StarContainer = styled.div``;
-
 export const EditIcon = styled(MUIEditIcon)`
   color: black;
 `;

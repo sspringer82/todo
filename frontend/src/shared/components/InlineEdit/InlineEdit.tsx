@@ -1,3 +1,6 @@
+import { IconButton } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/AddCircleOutline';
+import NotDoneIcon from '@material-ui/icons/RadioButtonUnchecked';
 import React, {
   useState,
   useRef,
@@ -10,8 +13,6 @@ import {
   NewButton,
   Input,
   SaveButton,
-  AddIcon,
-  NotDoneIcon,
 } from './InlineEdit.styles';
 
 interface Task {
@@ -57,13 +58,17 @@ const InlineEdit: React.FC<Props> = ({ onSave, task }) => {
     <FormContainer>
       {isButtonVisible && (
         <>
-          <AddIcon onClick={handleCreate} />
+          <IconButton>
+            <AddIcon style={{ color: 'white' }} onClick={handleCreate} />
+          </IconButton>
           <NewButton onClick={handleCreate}>Neue Aufgabe</NewButton>
         </>
       )}
       {!isButtonVisible && (
         <>
-          <NotDoneIcon />
+          <IconButton>
+            <NotDoneIcon style={{ color: 'white' }} />
+          </IconButton>
           <Input
             ref={inputEl}
             type="text"

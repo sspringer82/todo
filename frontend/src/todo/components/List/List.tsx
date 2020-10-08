@@ -10,6 +10,7 @@ import InlineEdit from '../../../shared/components/InlineEdit/InlineEdit';
 import { getActiveList } from '../../../settings/selectors/settings.selector';
 import { Grid, Hidden } from '@material-ui/core';
 import useActiveTodo from './useActiveTodo';
+import Hr from '../../../shared/components/Hr/Hr';
 
 const List: React.FC = () => {
   const { todos, handleSave, handleDelete } = useTodoList();
@@ -28,14 +29,16 @@ const List: React.FC = () => {
         <Grid item xs={12} md={6}>
           <StyledList>
             {todos.map((todo: Todo) => (
-              <Item
-                isActive={activeTodo !== null && activeTodo.id === todo.id}
-                onActivate={activate}
-                todo={todo}
-                key={todo.id}
-                onChange={handleSave}
-                onRemove={handleDelete}
-              />
+              <React.Fragment key={todo.id}>
+                <Item
+                  isActive={activeTodo !== null && activeTodo.id === todo.id}
+                  onActivate={activate}
+                  todo={todo}
+                  onChange={handleSave}
+                  onRemove={handleDelete}
+                />
+                <Hr />
+              </React.Fragment>
             ))}
             <div onClick={() => activate(null)}>
               <InlineEdit

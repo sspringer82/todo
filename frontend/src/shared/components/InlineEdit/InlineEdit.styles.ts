@@ -1,11 +1,8 @@
 import styled from 'styled-components';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
 export const FormContainer = styled.div`
-  border: 1px solid black;
-  border-radius: 5px;
-  margin: 5px;
+  padding: 5px 0;
+  margin: 5px 0;
   height: 30px;
   display: flex;
   align-items: center;
@@ -13,10 +10,10 @@ export const FormContainer = styled.div`
 `;
 
 export const NewButton = styled.button`
+  background-color: black;
   font-size: inherit;
   font-family: inherit;
   text-align: left;
-  padding-left: 5px;
   color: inherit;
   border-radius: 5px;
   width: 100%;
@@ -26,6 +23,8 @@ export const NewButton = styled.button`
 `;
 
 export const Input = styled.input`
+  background-color: black;
+  color: white;
   font-size: inherit;
   font-family: inherit;
   border-radius: 5px;
@@ -41,12 +40,4 @@ export const Input = styled.input`
 export const SaveButton = styled.button`
   position: absolute;
   right: 5px;
-`;
-
-export const AddIcon = styled(AddCircleOutlineIcon)`
-  margin-left: 5px;
-`;
-
-export const NotDoneIcon = styled(RadioButtonUncheckedIcon)`
-  margin-left: 5px;
 `;

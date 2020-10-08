@@ -6,18 +6,14 @@ interface ItemProps {
 }
 
 export const ListItem = styled.li`
+  padding: 5px 0;
   ${({ isActive }: ItemProps) =>
     isActive &&
     css`
-      box-shadow: inset 0 0 5px red;
+      box-shadow: inset 0px -5px 5px 0px rgba(0,0,255,0.50);
     `}
-  border: 1px solid black;
-  border-radius: 5px;
-  margin: 5px;
-  height: 30px;
   display: flex;
   align-items: center;
-  padding-left: 5px;
 `;
 
 interface TitleProps {
@@ -33,6 +29,9 @@ export const Title = styled.div`
       color: grey;
       text-decoration: line-through;
     `}
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `;
 
 export const CheckCircleOutlineIcon = styled(MuiCheckCircleOutlineIcon)`
