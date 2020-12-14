@@ -6,20 +6,23 @@ export const ListItem = styled(MuiListItem)`
   && {
     display: flex;
     justify-content: space-between;
-    border: 1px solid white;
-    border-radius: 5px;
+  }
+
+  &&.active {
+    .MuiButton-label {
+    justify-content: flex-start;
+    color: blue;
+  }
   }
 
   && .MuiButton-label {
     justify-content: flex-start;
-  }
-  &&.active {
-    border: 1px solid black;
+    color: white;
   }
 `;
 
 export const EditLink = styled(Link)`
-  color: black;
+  color: white;
 `;
 
 export const ItemButton = styled(Button)`

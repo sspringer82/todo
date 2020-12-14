@@ -17,3 +17,9 @@ export const LoginContainer = styled(Form)`
   flex-direction: column;
   height: 100vh;
 `;
+
+export const ButtonContainer = styled.div`
+  & Button:first-child {
+    margin-right: 8px;
+  }
+`;

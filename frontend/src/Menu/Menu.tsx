@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Drawer, List, ListItem, Divider, Button } from '@material-ui/core';
+import { List, ListItem, Divider, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import { AppBar, MenuButton } from './Menu.styles';
+import { AppBar, MenuButton, Drawer } from './Menu.styles';
 import Search from '../todo/components/Search/Search';
 import Done from './Done';
 import ShowOnlyStars from './Star';
@@ -28,8 +28,8 @@ const Menu: React.FC = () => {
   function handleSelect(list: ListType | null) {
     dispatch(
       saveSettingsAction.request(
-        update(settings, { list: { $set: (list && list.id) || undefined } })
-      )
+        update(settings, { list: { $set: (list && list.id) || undefined } }),
+      ),
     );
     setMenuOpen(false);
   }
@@ -47,14 +47,18 @@ const Menu: React.FC = () => {
           edge="start"
           color="inherit"
           aria-label="menu"
-          onClick={() => setMenuOpen(prevState => !prevState)}
+          onClick={() => setMenuOpen((prevState) => !prevState)}
         >
           <MenuIcon />
         </MenuButton>
         <Search />
         <h1>{currentList !== null ? currentList.name : 'Todo List'}</h1>
       </AppBar>
-      <Drawer open={menuOpen} onClose={() => setMenuOpen(false)}>
+      <Drawer
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        classes={{ paper: 'paper' }}
+      >
         <List>
           <ListItem>
             <Done
@@ -62,8 +66,8 @@ const Menu: React.FC = () => {
               onChange={(hideDone: boolean) => {
                 dispatch(
                   saveSettingsAction.request(
-                    update(settings, { hideDone: { $set: hideDone } })
-                  )
+                    update(settings, { hideDone: { $set: hideDone } }),
+                  ),
                 );
               }}
             />
@@ -74,8 +78,8 @@ const Menu: React.FC = () => {
               onChange={(onlyStars: boolean) => {
                 dispatch(
                   saveSettingsAction.request(
-                    update(settings, { onlyStars: { $set: onlyStars } })
-                  )
+                    update(settings, { onlyStars: { $set: onlyStars } }),
+                  ),
                 );
               }}
             />
@@ -87,7 +91,7 @@ const Menu: React.FC = () => {
             isAll={true}
             onSelect={handleSelect}
           />
-          {lists.map(list => (
+          {lists.map((list) => (
             <TodoList
               key={list.id}
               list={list}
@@ -96,13 +100,23 @@ const Menu: React.FC = () => {
             />
           ))}
           <ListItem>
-            <Link to="/list/new">
-              <Button onClick={() => setMenuOpen(false)}>neue Liste</Button>
+            <Link to="/list/new" style={{ textDecoration: 'none' }}>
+              <Button
+                style={{ color: 'white' }}
+                onClick={() => setMenuOpen(false)}
+              >
+                neue Liste
+              </Button>
             </Link>
           </ListItem>
           <ListItem>
-            <Link to="/list/new">
-              <Button onClick={() => dispatch(logoutAction())}>abmelden</Button>
+            <Link to="/list/new" style={{ textDecoration: 'none' }}>
+              <Button
+                style={{ color: 'white' }}
+                onClick={() => dispatch(logoutAction())}
+              >
+                abmelden
+              </Button>
             </Link>
           </ListItem>
         </List>

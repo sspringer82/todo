@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { AppBar as MUIAppBar, IconButton } from '@material-ui/core';
+import { AppBar as MUIAppBar, IconButton, Drawer as MUIDrawer } from '@material-ui/core';
 
 export const AppBar = styled(MUIAppBar)`
   && {
@@ -17,5 +17,12 @@ export const AppBar = styled(MUIAppBar)`
 export const MenuButton = styled(IconButton)`
   && {
     margin-left: 8px;
+  }
+`;
+
+export const Drawer = styled(MUIDrawer)`
+  && .paper {
+    background-color: black;
+    color: white;
   }
 `;

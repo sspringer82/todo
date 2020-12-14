@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Grid, Hidden } from '@material-ui/core';
-import { LoginContainer, TextField } from './Login.styles';
+import { ButtonContainer, LoginContainer, TextField } from './Login.styles';
 import { Login as LoginType } from '../../shared/User';
 
 import * as Yup from 'yup';
@@ -75,8 +75,10 @@ const Login: React.FC<Props> = ({ hasLoginError, onLogin }) => {
                   Sie es erneut
                 </div>
               )}
-              <div>
+              <ButtonContainer>
                 <Button
+                  color="primary"
+                  variant="contained"
                   type="submit"
                   data-testid="submit"
                   disabled={isSubmitting}
@@ -85,12 +87,13 @@ const Login: React.FC<Props> = ({ hasLoginError, onLogin }) => {
                 </Button>
                 <Button
                   color="secondary"
+                  variant="contained"
                   data-testid="cancel"
                   onClick={() => resetForm()}
                 >
                   abbrechen
                 </Button>
-              </div>
+              </ButtonContainer>
             </LoginContainer>
           )}
         </Formik>
