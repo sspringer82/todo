@@ -17,12 +17,10 @@ export const ListItem = styled(MuiListItem)`
 
   && .MuiButton-label {
     justify-content: flex-start;
-    color: white;
   }
 `;
 
 export const EditLink = styled(Link)`
-  color: white;
 `;
 
 export const ItemButton = styled(Button)`

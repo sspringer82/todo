@@ -102,7 +102,6 @@ const Menu: React.FC = () => {
           <ListItem>
             <Link to="/list/new" style={{ textDecoration: 'none' }}>
               <Button
-                style={{ color: 'white' }}
                 onClick={() => setMenuOpen(false)}
               >
                 neue Liste
@@ -112,7 +111,6 @@ const Menu: React.FC = () => {
           <ListItem>
             <Link to="/list/new" style={{ textDecoration: 'none' }}>
               <Button
-                style={{ color: 'white' }}
                 onClick={() => dispatch(logoutAction())}
               >
                 abmelden
