@@ -10,7 +10,6 @@ export const FormContainer = styled.div`
 `;
 
 export const NewButton = styled.button`
-  background-color: black;
   font-size: inherit;
   font-family: inherit;
   text-align: left;
@@ -23,8 +22,6 @@ export const NewButton = styled.button`
 `;
 
 export const Input = styled.input`
-  background-color: black;
-  color: white;
   font-size: inherit;
   font-family: inherit;
   border-radius: 5px;

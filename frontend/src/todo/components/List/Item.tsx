@@ -22,7 +22,7 @@ interface Props {
   isActive: boolean;
   onActivate: (todo: Todo | null) => void;
   onChange: (todo: Todo) => void;
-  onRemove: (todo: Todo) => void;
+  onRemove: (todo: Todo) => void; 
 }
 
 const MENU_WIDTH = 100;
@@ -55,7 +55,6 @@ const Item: React.FC<Props> = ({
         <IconButton>
           {!todo.done && (
             <RadioButtonUncheckedIcon
-              style={{ color: 'white' }}
               onClick={() => onChange({ ...todo, done: true })}
             />
           )}
@@ -89,7 +88,7 @@ const Item: React.FC<Props> = ({
           {todo.starred ? (
             <StarIcon style={{ color: 'yellow' }} />
           ) : (
-            <StarBorderIcon style={{ color: 'white' }} />
+            <StarBorderIcon />
           )}
         </IconButton>
 
@@ -98,7 +97,7 @@ const Item: React.FC<Props> = ({
             setShowMenu(!showMenu);
           }}
         >
-          <MoreVertIcon style={{ color: 'white' }} />
+          <MoreVertIcon />
         </IconButton>
 
         <MenuContainer style={{ width: showMenu ? MENU_WIDTH : 0 }}>
@@ -107,7 +106,7 @@ const Item: React.FC<Props> = ({
               setOpen(true);
             }}
           >
-            <DeleteIcon style={{ color: 'white' }} />
+            <DeleteIcon />
           </IconButton>
           <IconButton
             onClick={() => {
@@ -116,7 +115,7 @@ const Item: React.FC<Props> = ({
               history.push(`/edit/${todo.id}`);
             }}
           >
-            <EditIcon style={{ color: 'white' }} />
+            <EditIcon />
           </IconButton>
         </MenuContainer>
       </ListItem>

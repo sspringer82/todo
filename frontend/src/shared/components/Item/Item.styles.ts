@@ -10,7 +10,7 @@ export const ListItem = styled.li`
   ${({ isActive }: ItemProps) =>
     isActive &&
     css`
-      box-shadow: inset 0px -5px 5px 0px rgba(0,0,255,0.50);
+      background-color: lightgrey;
     `}
   display: flex;
   align-items: center;

@@ -21,8 +21,5 @@ export const MenuButton = styled(IconButton)`
 `;
 
 export const Drawer = styled(MUIDrawer)`
-  && .paper {
-    background-color: black;
-    color: white;
-  }
+ 
 `;
