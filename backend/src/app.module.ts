@@ -8,7 +8,7 @@ import { ChangesModule } from './changes/changes.module';
 @Module({
   imports: [
     TodoModule,
-    TypeOrmModule.forRoot({ keepConnectionAlive: true }),
+    TypeOrmModule.forRoot({ keepConnectionAlive: true, database: process.env.DATABASE }),
     UserModule,
     SettingsModule,
     ChangesModule,

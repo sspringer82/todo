@@ -20,7 +20,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "ts-node ./node_modules/.bin/typeorm",
     "typeorm:generate-migration": "npm run typeorm migration:generate -- -n update",
-    "typeorm:run": "npm run typeorm migration:run"
+    "typeorm:run": "npm run typeorm migration:run",
+    "keygen": " openssl req  -nodes -new -x509  -keyout ssl/key.pem -out ssl/cert.pem -subj '/CN=localhost./O=Sebastian Springer./C=DE'"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.4",
@@ -31,6 +32,7 @@
     "@nestjs/swagger": "^4.7.9",
     "@nestjs/typeorm": "^7.1.5",
     "class-validator": "^0.12.2",
+    "dotenv": "^8.2.0",
     "global": "^4.4.0",
     "immutability-helper": "^3.1.1",
     "passport": "^0.4.1",

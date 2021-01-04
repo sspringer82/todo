@@ -13,7 +13,10 @@
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.6.1",
+    "cross-var": "^1.1.0",
     "dexie": "^3.0.1",
+    "dotenv": "^8.2.0",
+    "dotenv-cli": "^4.0.0",
     "formik": "^2.1.3",
     "history": "^4.10.1",
     "immutability-helper": "^3.1.1",
@@ -41,8 +44,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "preserve": "npm run build && npm run keygen",
-    "serve": "http-server -S -C server.cert ./build",
-    "keygen": " openssl req  -nodes -new -x509  -keyout key.pem -out server.cert -subj '/CN=localhost./O=Sebastian Springer./C=DE'"
+    "serve": "dotenv -- cross-var http-server -S -C %CERT_FILE% ./build",
+    "keygen": "dotenv -- cross-var openssl req  -nodes -new -x509  -keyout %KEY_FILE% -out %CERT_FILE% -subj '/CN=localhost./O=Sebastian Springer./C=DE'"
   },
   "eslintConfig": {
     "extends": "react-app"

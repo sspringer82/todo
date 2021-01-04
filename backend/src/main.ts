@@ -2,9 +2,28 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as bodyParser from 'body-parser';
+import {readFileSync} from 'fs';
+import { NestApplicationOptions } from '@nestjs/common';
+
+import {config} from 'dotenv';
+config();
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+
+  const nestOptions: NestApplicationOptions = {}
+
+  try {
+    const key = readFileSync(process.env.KEY_FILE);
+    const cert = readFileSync(process.env.CERT_FILE);
+
+    nestOptions.httpsOptions = {
+      key, cert
+    }
+  } catch {}
+
+  const app = await NestFactory.create(AppModule,
+    nestOptions
+  );
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   app.enableCors();
