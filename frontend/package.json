@@ -40,8 +40,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "preserve": "npm build",
-    "serve": "http-server build -S"
+    "preserve": "npm run build && npm run keygen",
+    "serve": "http-server -S -C server.cert ./build",
+    "keygen": " openssl req  -nodes -new -x509  -keyout key.pem -out server.cert -subj '/CN=localhost./O=Sebastian Springer./C=DE'"
   },
   "eslintConfig": {
     "extends": "react-app"
