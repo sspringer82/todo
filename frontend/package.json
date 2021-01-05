@@ -43,8 +43,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "preserve": "npm run build && npm run keygen",
-    "serve": "dotenv -- cross-var http-server -S -C %CERT_FILE% ./build",
+    "serve": "dotenv -- cross-var http-server -S -C %CERT_FILE% -K %KEY_FILE% ./build",
     "keygen": "dotenv -- cross-var openssl req  -nodes -new -x509  -keyout %KEY_FILE% -out %CERT_FILE% -subj '/CN=localhost./O=Sebastian Springer./C=DE'"
   },
   "eslintConfig": {
