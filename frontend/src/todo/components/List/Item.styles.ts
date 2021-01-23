@@ -10,3 +10,7 @@ export const MenuContainer = styled.div`
 export const EditIcon = styled(MUIEditIcon)`
   color: black;
 `;
+
+export const Addition = styled.span`
+  color: grey;
+`;

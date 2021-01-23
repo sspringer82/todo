@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { List, ListItem, Divider, Button } from '@material-ui/core';
+import { List, ListItem, Divider, Button, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { AppBar, MenuButton, Drawer } from './Menu.styles';
 import Search from '../todo/components/Search/Search';
@@ -19,6 +19,7 @@ import {
 import { saveSettingsAction } from '../settings/actions/settings.actions';
 import update from 'immutability-helper';
 import { logoutAction } from '../login/actions/login.actions';
+import CachedIcon from '@material-ui/icons/Cached';
 
 const Menu: React.FC = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,9 @@ const Menu: React.FC = () => {
     setMenuOpen(false);
   }
   const settings = useSelector(getSettings);
+  function handleReload() {
+    window.location.reload();
+  }
   return (
     <>
       <Route path="/list/edit/:id">
@@ -53,6 +57,9 @@ const Menu: React.FC = () => {
         </MenuButton>
         <Search />
         <h1>{currentList !== null ? currentList.name : 'Todo List'}</h1>
+        <IconButton aria-label="reload" onClick={handleReload}>
+          <CachedIcon />
+        </IconButton>
       </AppBar>
       <Drawer
         open={menuOpen}
@@ -101,20 +108,12 @@ const Menu: React.FC = () => {
           ))}
           <ListItem>
             <Link to="/list/new" style={{ textDecoration: 'none' }}>
-              <Button
-                onClick={() => setMenuOpen(false)}
-              >
-                neue Liste
-              </Button>
+              <Button onClick={() => setMenuOpen(false)}>neue Liste</Button>
             </Link>
           </ListItem>
           <ListItem>
             <Link to="/list/new" style={{ textDecoration: 'none' }}>
-              <Button
-                onClick={() => dispatch(logoutAction())}
-              >
-                abmelden
-              </Button>
+              <Button onClick={() => dispatch(logoutAction())}>abmelden</Button>
             </Link>
           </ListItem>
         </List>

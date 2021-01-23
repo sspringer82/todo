@@ -68,7 +68,7 @@ const General: React.FC<Props> = ({ todo, tabIndex, tab, handleChange }) => {
       <Divider />
       <KeyboardDatePicker
         variant="inline"
-        format="MM/dd/yyyy"
+        format="MM/DD/yyyy"
         value={todo.due}
         onChange={(date: Moment | null) =>
           handleChange(({

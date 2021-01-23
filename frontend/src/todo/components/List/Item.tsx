@@ -22,7 +22,7 @@ interface Props {
   isActive: boolean;
   onActivate: (todo: Todo | null) => void;
   onChange: (todo: Todo) => void;
-  onRemove: (todo: Todo) => void; 
+  onRemove: (todo: Todo) => void;
 }
 
 const MENU_WIDTH = 100;
@@ -69,7 +69,7 @@ const Item: React.FC<Props> = ({
           {todo.title}
 
           {todo.subtasks.length > 0 && (
-            <>
+            <Addition>
               &nbsp;(
               {todo.subtasks.reduce((prev, curr) => {
                 if (curr.done) {
@@ -78,9 +78,12 @@ const Item: React.FC<Props> = ({
                 return prev;
               }, 0)}{' '}
               / {todo.subtasks.length})
-            </>
+            </Addition>
           )}
-          {todo.due && ` (bis ${moment(todo.due).format('DD.MM.YYYY')})`}
+          {todo.due &&
+            ` <Addition>(bis ${moment(todo.due).format(
+              'DD.MM.YYYY',
+            )})</Addition>`}
         </Title>
         <IconButton
           onClick={() => onChange({ ...todo, starred: !todo.starred })}
