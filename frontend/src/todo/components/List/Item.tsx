@@ -60,7 +60,7 @@ const Item: React.FC<Props> = ({
           )}
           {todo.done && (
             <CheckCircleOutlineIcon
-              style={{ color: 'lawngreen' }}
+              style={{ color: 'green' }}
               onClick={() => onChange({ ...todo, done: false })}
             />
           )}
@@ -89,7 +89,7 @@ const Item: React.FC<Props> = ({
           onClick={() => onChange({ ...todo, starred: !todo.starred })}
         >
           {todo.starred ? (
-            <StarIcon style={{ color: 'yellow' }} />
+            <StarIcon style={{ color: 'gold' }} />
           ) : (
             <StarBorderIcon />
           )}
