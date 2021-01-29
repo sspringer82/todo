@@ -21,6 +21,8 @@ import update from 'immutability-helper';
 import { logoutAction } from '../login/actions/login.actions';
 import CachedIcon from '@material-ui/icons/Cached';
 
+import {version} from '../../package.json';
+
 const Menu: React.FC = () => {
   const dispatch = useDispatch();
   const lists = useSelector(getLists);
@@ -115,6 +117,9 @@ const Menu: React.FC = () => {
             <Link to="/list/new" style={{ textDecoration: 'none' }}>
               <Button onClick={() => dispatch(logoutAction())}>abmelden</Button>
             </Link>
+          </ListItem>
+          <ListItem>
+            Version: {version}
           </ListItem>
         </List>
       </Drawer>

@@ -58,8 +58,8 @@ const InlineEdit: React.FC<Props> = ({ onSave, task }) => {
     <FormContainer>
       {isButtonVisible && (
         <>
-          <IconButton>
-            <AddIcon style={{ color: 'white' }} onClick={handleCreate} />
+          <IconButton onClick={handleCreate}>
+            <AddIcon style={{ color: 'white' }} />
           </IconButton>
           <NewButton onClick={handleCreate}>Neue Aufgabe</NewButton>
         </>

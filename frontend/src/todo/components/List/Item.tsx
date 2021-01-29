@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
-import { Todo } from '../../../shared/Todo';
-import { MenuContainer, EditIcon } from './Item.styles';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import DeleteIcon from '@material-ui/icons/Delete';
+import React, { useState } from "react";
+import { Todo } from "../../../shared/Todo";
+import { MenuContainer, Addition } from "./Item.styles";
+import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import DeleteIcon from "@material-ui/icons/Delete";
 
-import { useHistory } from 'react-router-dom';
-import StarIcon from '@material-ui/icons/Star';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import { useHistory } from "react-router-dom";
+import StarIcon from "@material-ui/icons/Star";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import EditIcon from '@material-ui/icons/Edit';
 import {
   CheckCircleOutlineIcon,
   Title,
   ListItem,
-} from '../../../shared/components/Item/Item.styles';
-import Confirm from '../../../shared/components/confirm/Confirm';
-import moment from 'moment';
-import { IconButton } from '@material-ui/core';
+} from "../../../shared/components/Item/Item.styles";
+import Confirm from "../../../shared/components/confirm/Confirm";
+import moment from "moment";
+import { IconButton } from "@material-ui/core";
 
 interface Props {
   todo: Todo;
@@ -52,19 +53,16 @@ const Item: React.FC<Props> = ({
         }}
       ></Confirm>
       <ListItem isActive={isActive} onClick={() => onActivate(todo)}>
-        <IconButton>
-          {!todo.done && (
-            <RadioButtonUncheckedIcon
-              onClick={() => onChange({ ...todo, done: true })}
-            />
-          )}
-          {todo.done && (
-            <CheckCircleOutlineIcon
-              style={{ color: 'green' }}
-              onClick={() => onChange({ ...todo, done: false })}
-            />
-          )}
-        </IconButton>
+        {!todo.done && (
+          <IconButton onClick={() => onChange({ ...todo, done: true })}>
+            <RadioButtonUncheckedIcon />
+          </IconButton>
+        )}
+        {todo.done && (
+          <IconButton onClick={() => onChange({ ...todo, done: false })}>
+            <CheckCircleOutlineIcon style={{ color: "green" }} />
+          </IconButton>
+        )}
         <Title done={todo.done}>
           {todo.title}
 
@@ -76,20 +74,20 @@ const Item: React.FC<Props> = ({
                   return prev + 1;
                 }
                 return prev;
-              }, 0)}{' '}
+              }, 0)}{" "}
               / {todo.subtasks.length})
             </Addition>
           )}
           {todo.due &&
             ` <Addition>(bis ${moment(todo.due).format(
-              'DD.MM.YYYY',
+              "DD.MM.YYYY"
             )})</Addition>`}
         </Title>
         <IconButton
           onClick={() => onChange({ ...todo, starred: !todo.starred })}
         >
           {todo.starred ? (
-            <StarIcon style={{ color: 'gold' }} />
+            <StarIcon style={{ color: "gold" }} />
           ) : (
             <StarBorderIcon />
           )}
