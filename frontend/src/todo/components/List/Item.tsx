@@ -90,7 +90,7 @@ const Item: React.FC<Props> = ({
           )}
           {todo.due && (
             <Addition>
-              {`(bis ${moment(todo.due).format("DD.MM.YYYY")})`}
+              {` (bis ${moment(todo.due).format("DD.MM.YYYY")})`}
             </Addition>
           )}
         </Title>
