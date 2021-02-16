@@ -8,7 +8,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { useHistory } from "react-router-dom";
 import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from "@material-ui/icons/Edit";
 import {
   CheckCircleOutlineIcon,
   Title,
@@ -17,6 +17,7 @@ import {
 import Confirm from "../../../shared/components/confirm/Confirm";
 import moment from "moment";
 import { IconButton } from "@material-ui/core";
+import Progress from "./Progress";
 
 interface Props {
   todo: Todo;
@@ -39,6 +40,16 @@ const Item: React.FC<Props> = ({
   const [open, setOpen] = useState(false);
   const history = useHistory();
 
+  let subtasksDone = 0;
+  if (todo.subtasks.length > 0) {
+    subtasksDone = todo.subtasks.reduce((prev, curr) => {
+      if (curr.done) {
+        return prev + 1;
+      }
+      return prev;
+    }, 0);
+  }
+
   return (
     <>
       <Confirm
@@ -53,6 +64,12 @@ const Item: React.FC<Props> = ({
         }}
       ></Confirm>
       <ListItem isActive={isActive} onClick={() => onActivate(todo)}>
+        {todo.subtasks.length > 0 && (
+          <Progress
+            percentage={(subtasksDone / todo.subtasks.length) * 100}
+            color="green"
+          />
+        )}
         {!todo.done && (
           <IconButton onClick={() => onChange({ ...todo, done: true })}>
             <RadioButtonUncheckedIcon />
@@ -68,20 +85,14 @@ const Item: React.FC<Props> = ({
 
           {todo.subtasks.length > 0 && (
             <Addition>
-              &nbsp;(
-              {todo.subtasks.reduce((prev, curr) => {
-                if (curr.done) {
-                  return prev + 1;
-                }
-                return prev;
-              }, 0)}{" "}
-              / {todo.subtasks.length})
+              &nbsp;{`(${subtasksDone} / ${todo.subtasks.length})`}
             </Addition>
           )}
-          {todo.due &&
-            ` <Addition>(bis ${moment(todo.due).format(
-              "DD.MM.YYYY"
-            )})</Addition>`}
+          {todo.due && (
+            <Addition>
+              {`(bis ${moment(todo.due).format("DD.MM.YYYY")})`}
+            </Addition>
+          )}
         </Title>
         <IconButton
           onClick={() => onChange({ ...todo, starred: !todo.starred })}

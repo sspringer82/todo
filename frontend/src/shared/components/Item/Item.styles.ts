@@ -14,6 +14,7 @@ export const ListItem = styled.li`
     `}
   display: flex;
   align-items: center;
+  position: relative;
 `;
 
 interface TitleProps {
