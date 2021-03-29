@@ -6,7 +6,7 @@ const List: React.FC = () => {
   const [todos, setTodos] = useTodo();
   useEffect(() => {
     setTodos([{id: 1, title: 'Get up', done: true},{id: 2, title: 'Eat', done: false}, {id: 3, title: 'Sleep', done: false}])
-  }, []);
+  }, [setTodos]);
   return <div>
     {todos.map(todo => <ListItem todo={todo} />)}
   </div>;
