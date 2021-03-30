@@ -1,18 +1,14 @@
 import React, { useEffect } from "react";
 import ListItem from "./ListItem";
-import { useTodo } from "./TodoContext";
+import useTodoService from "./useTodoService";
 
 const List: React.FC = () => {
-  const [todos, setTodos] = useTodo();
+  const {todos, getAll, remove } = useTodoService();
   useEffect(() => {
-    (async () => {
-      const request = await fetch('http://localhost:3001/todo');
-      const data = await request.json();
-      setTodos(data);
-    })();
-  }, [setTodos]);
+    getAll();
+  }, [getAll]);
   return <div>
-    {todos.map(todo => <ListItem todo={todo} />)}
+    {todos.map(todo => <ListItem todo={todo} onDelete={remove}/>)}
   </div>;
 };
 
