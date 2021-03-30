@@ -8,7 +8,7 @@ const List: React.FC = () => {
     getAll();
   }, [getAll]);
   return <div>
-    {todos.map(todo => <ListItem todo={todo} onDelete={remove}/>)}
+    {todos.map(todo => <ListItem key={todo.id} todo={todo} onDelete={remove}/>)}
   </div>;
 };
 
