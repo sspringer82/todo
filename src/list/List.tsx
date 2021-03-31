@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import ListItem from "./ListItem";
-import useTodoService from "./useTodoService";
+import useTodoService from "../useTodoService";
 
 const List: React.FC = () => {
   const {todos, getAll, remove } = useTodoService();

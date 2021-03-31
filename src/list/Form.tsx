@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import { TodoInput } from "./Todo";
+import { TodoInput } from "../Todo";
 import produce from "immer";
-import useTodoService from "./useTodoService";
+import useTodoService from "../useTodoService";
 
 const initialTodo: TodoInput = {
   title: "",
