@@ -1,19 +1,19 @@
 {
-    "todo": [
-        {
-            "id": 1,
-            "title": "Get up",
-            "done": true
-        },
-        {
-            "id": 2,
-            "title": "Eat",
-            "done": false
-        },
-        {
-            "id": 3,
-            "title": "Sleep",
-            "done": false
-        }
-    ]
+  "todo": [
+    {
+      "id": 1,
+      "title": "Get up",
+      "done": true
+    },
+    {
+      "id": 2,
+      "title": "Eat",
+      "done": true
+    },
+    {
+      "id": 3,
+      "title": "Sleep",
+      "done": false
+    }
+  ]
 }
