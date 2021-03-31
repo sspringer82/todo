@@ -5,9 +5,10 @@ import { useCallback } from "react";
 
 type ReturnValue = {
   todos: Todo[],
-  getAll(): Promise<void>,
+  getAll(): Promise<Todo[]>,
   remove(id: number): Promise<void>,
-  save(todo: TodoInput): Promise<void>
+  save(todo: TodoInput): Promise<void>,
+  getOneById(id: number): Promise<Todo>
 }
 
 export default function useTodoService(): ReturnValue {
@@ -19,6 +20,7 @@ export default function useTodoService(): ReturnValue {
       const request = await fetch('http://localhost:3001/todo');
       const data = await request.json();
       setTodos(data);
+      return data;
     }, [setTodos]),
     async remove(id: number) {
       await fetch(`http://localhost:3001/todo/${id}`, {method: 'DELETE'});
@@ -27,6 +29,14 @@ export default function useTodoService(): ReturnValue {
           draftState.splice(prevTodos.findIndex(todo => todo.id === id), 1);
         });
       })
+    },
+    async getOneById(id: number): Promise<Todo> {
+      let todo = todos.find(item => item.id === id);
+      if (todo === undefined) {
+        const todos = await this.getAll();
+        todo = todos.find(item => item.id === id);
+      }
+      return todo!;
     },
     async save(todo: TodoInput) {
       let method = 'POST'

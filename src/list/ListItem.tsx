@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import { Todo } from "../Todo";
 
 type Props = {
@@ -15,6 +16,7 @@ const ListItem: React.FC<Props> = ({ todo, onDelete, onStatusToggle }) => {
         <button onClick={() => onStatusToggle(todo)}>{todo.done ? "✔" : "❌"}</button>
       </div>
       <button onClick={() => onDelete(todo.id)}>delete</button>
+      <Link to={`/edit/${todo.id}`}>edit</Link>
     </div>
   );
 };

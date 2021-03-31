@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, Dispatch, FormEvent, SetStateAction, useState } from "react";
 import produce from "immer";
 
 export default function useForm<T>(
@@ -7,6 +7,7 @@ export default function useForm<T>(
 ): {
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: FormEvent) => Promise<void>;
+  setItem: Dispatch<SetStateAction<T>>;
   item: T;
 } {
   const [item, setItem] = useState<T>(initialValue);
@@ -36,6 +37,7 @@ export default function useForm<T>(
   return {
     handleSubmit,
     handleChange,
+    setItem,
     item,
   };
 }

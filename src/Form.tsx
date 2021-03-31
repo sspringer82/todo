@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useParams } from 'react-router';
 import { TodoInput } from "./Todo";
 import useForm from "./useForm";
 import useTodoService from './useTodoService';
@@ -9,12 +10,20 @@ const initialTodo: TodoInput = {
 };
 
 const Form: React.FC = () => {
-  const {save} = useTodoService();
-
-  const { handleSubmit, handleChange, item } = useForm<TodoInput>(
+  const {id} = useParams<{id: string}>();
+  const {save, getOneById} = useTodoService();
+  const { handleSubmit, handleChange, setItem, item } = useForm<TodoInput>(
     initialTodo,
     save
   );
+
+  useEffect(() => {
+    (async () => {
+      const todo = await getOneById(parseInt(id, 10));
+      setItem(todo);
+    })();
+  }, [id]);
+
   return (
     <form onSubmit={handleSubmit}>
       <fieldset>
