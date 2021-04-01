@@ -51,7 +51,8 @@ export default function useTodoService(): ReturnValue {
         if (method === 'POST') {
           draftState.push(result);
         } else {
-          draftState[result.id] = result;
+          const index = draftState.findIndex(item => item.id === result.id);
+          draftState[index] = result;
         }
       }));
     }

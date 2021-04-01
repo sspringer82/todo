@@ -29,7 +29,6 @@ export default function useForm<T>(
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    console.log(item);
     await onSave(item);
     setItem(initialValue);
   }

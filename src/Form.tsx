@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { useParams } from 'react-router';
+import React, { useEffect, useRef } from "react";
+import { useHistory, useParams } from "react-router";
 import { TodoInput } from "./Todo";
 import useForm from "./useForm";
-import useTodoService from './useTodoService';
+import useTodoService from "./useTodoService";
 
 const initialTodo: TodoInput = {
   title: "",
@@ -10,22 +10,31 @@ const initialTodo: TodoInput = {
 };
 
 const Form: React.FC = () => {
-  const {id} = useParams<{id: string}>();
-  const {save, getOneById} = useTodoService();
+  const history = useHistory();
+  const { id } = useParams<{ id: string }>();
+  const { save, getOneById } = useTodoService();
   const { handleSubmit, handleChange, setItem, item } = useForm<TodoInput>(
     initialTodo,
     save
   );
 
+  const getById = useRef(getOneById);
+
   useEffect(() => {
     (async () => {
-      const todo = await getOneById(parseInt(id, 10));
+      const todo = await getById.current(parseInt(id, 10));
       setItem(todo);
     })();
-  }, [id]);
+  }, [id, getById, setItem]);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={async (e) => {
+        await handleSubmit(e);
+        history.push("/");
+      }}
+      autoComplete="off"
+    >
       <fieldset>
         <label>
           Title:{" "}
