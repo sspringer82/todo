@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router";
+import Done from '../done/Done';
 import { useTodo } from "../TodoContext";
 
 const Detail: React.FC = () => {
@@ -10,6 +11,7 @@ const Detail: React.FC = () => {
 
   return (
     <div>
+      { todo && <Done todo={todo} /> }
       <div>{todo?.title}</div>
       <div>{todo?.comment}</div>
     </div>
