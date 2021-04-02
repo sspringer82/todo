@@ -1,12 +1,8 @@
 import React from 'react';
-import { TodoInput } from '../Todo';
+import { initialTodo, TodoInput } from '../Todo';
 import useForm from '../useForm';
 import useTodoService from '../useTodoService';
 
-const initialTodo: TodoInput = {
-  title: '',
-  done: false,
-};
 
 const Form: React.FC = () => {
   const {save} = useTodoService();

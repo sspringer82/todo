@@ -17,6 +17,7 @@ const ListItem: React.FC<Props> = ({ todo, onDelete, onStatusToggle }) => {
       </div>
       <button onClick={() => onDelete(todo.id)}>delete</button>
       <Link to={`/edit/${todo.id}`}>edit</Link>
+      <Link to={`/detail/${todo.id}`}>detail</Link>
     </div>
   );
 };

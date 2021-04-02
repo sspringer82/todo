@@ -1,13 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { useHistory, useParams } from "react-router";
-import { TodoInput } from "./Todo";
-import useForm from "./useForm";
-import useTodoService from "./useTodoService";
-
-const initialTodo: TodoInput = {
-  title: "",
-  done: false,
-};
+import { initialTodo, TodoInput } from "../Todo";
+import useForm from "../useForm";
+import useTodoService from "../useTodoService";
 
 const Form: React.FC = () => {
   const history = useHistory();
@@ -55,6 +50,12 @@ const Form: React.FC = () => {
             checked={item.done}
             onChange={handleChange}
           />
+        </label>
+      </fieldset>
+      <fieldset>
+        <label>
+          Comment:
+          <textarea name="comment" value={item.comment} onChange={handleChange}></textarea>
         </label>
       </fieldset>
       <button type="submit">save</button>

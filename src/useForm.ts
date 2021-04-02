@@ -5,19 +5,19 @@ export default function useForm<T>(
   initialValue: T,
   onSave: (item: T) => Promise<void>
 ): {
-  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   handleSubmit: (e: FormEvent) => Promise<void>;
   setItem: Dispatch<SetStateAction<T>>;
   item: T;
 } {
   const [item, setItem] = useState<T>(initialValue);
   
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+  function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     let value: string | boolean = e.target.value;
     const name = e.target.name as keyof T;
 
     if (e.target.type === 'checkbox') {
-      value = e.target.checked;
+      value = (e.target as HTMLInputElement).checked;
     }
 
     setItem((prevState) =>
