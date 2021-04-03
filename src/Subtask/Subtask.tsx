@@ -1,3 +1,4 @@
+import produce from 'immer';
 import React from 'react';
 import Form from '../list/Form';
 import ListItem from '../list/ListItem';
@@ -17,8 +18,10 @@ const Subtask: React.FC<Props> = ({todo}) => {
     }
   
     <Form onSave={async (item: TodoInput) => {
-      (item as SubtaskInput).todoId = todo.id;
-      save(item as SubtaskInput);
+      const subtask = produce(item, (draftItem) => {
+        (draftItem as SubtaskInput).todoId = todo.id;
+      })
+      save(subtask as SubtaskInput);
     }}/>
   </div>);
 }
