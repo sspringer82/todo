@@ -15,7 +15,7 @@ const Detail: React.FC = () => {
       { todo && <Done todo={todo} /> }
       <div>{todo?.title}</div>
       <div>{todo?.comment}</div>
-      <Subtask subtasks={todo?.subtask} />
+      <Subtask todo={todo!} />
     </div>
   );
 };

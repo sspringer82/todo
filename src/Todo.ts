@@ -8,7 +8,7 @@ export type Todo = {
 
 export type TodoInput = {id?: number} & Omit<Todo, 'id'>;
 
-export type Subtask = Omit<Todo, 'comment' | 'subtask'>
+export type Subtask = {todoId: number} & Omit<Todo, 'comment' | 'subtask'>
 
 export type SubtaskInput = {id?: number} & Omit<Subtask, 'id'>
 

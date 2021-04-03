@@ -1,4 +1,4 @@
-export default {
+const config = {
   url: {
     "todo": {
       extension: ['_embed=subtask'],
@@ -22,3 +22,5 @@ export default {
     }
   }
 };
+
+export default config;

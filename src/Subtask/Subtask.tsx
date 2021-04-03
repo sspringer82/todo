@@ -1,21 +1,24 @@
 import React from 'react';
 import Form from '../list/Form';
 import ListItem from '../list/ListItem';
-import { Subtask as SubtaskType, TodoInput } from '../Todo';
+import {SubtaskInput, Todo, TodoInput } from '../Todo';
+import useSubtaskService from '../useSubtaskService';
 
 type Props = {
-  subtasks?: SubtaskType[]
+  todo: Todo;
 }
+ 
+const Subtask: React.FC<Props> = ({todo}) => {
+  const {save, remove} = useSubtaskService();
 
-const Subtask: React.FC<Props> = ({subtasks}) => {
   return (<div>
-    {subtasks?.length && subtasks.length > 0} {
-      subtasks?.map(subtask => <ListItem key={subtask.id} todo={subtask} onDelete={(id) => 'foo'} />)
+    {todo.subtask?.length && todo.subtask.length > 0} {
+      todo.subtask?.map(subtask => <ListItem key={subtask.id} todo={subtask} onDelete={remove} />)
     }
   
     <Form onSave={async (item: TodoInput) => {
-      // @todo implement save
-      console.log('TODO: create Subtask');
+      (item as SubtaskInput).todoId = todo.id;
+      save(item as SubtaskInput);
     }}/>
   </div>);
 }
