@@ -11,7 +11,7 @@ type Props = {
 const ListItem: React.FC<Props> = ({ todo, onDelete }) => {
   return (
     <div>
-      <div>{todo.title}</div>
+      <div>({todo.id}){todo.title}</div>
       <Done todo={todo} />
       <button onClick={() => onDelete(todo.id)}>delete</button>
       <Link to={`/edit/${todo.id}`}>edit</Link>

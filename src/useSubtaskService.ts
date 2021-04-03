@@ -11,7 +11,6 @@ export default function useSubtaskService(): ReturnValue {
   const [, setTodos] = useTodo();
   return {
     async save(subtask: SubtaskInput): Promise<void> {
-      console.log("save subtask", subtask);
       let url = "";
       let method = "";
       if (subtask.id) {
@@ -45,20 +44,19 @@ export default function useSubtaskService(): ReturnValue {
       );
     },
     async remove(id: number): Promise<void> {
-      // server call
       await fetch(`http://localhost:3001/subtask/${id}`, { method: "DELETE" });
 
-      // update corresponding todo
       setTodos((prevTodos) =>
         produce(prevTodos, (draftTodos) => {
           const todo = draftTodos.find((todo) =>
             todo?.subtask?.some((subtask) => subtask.id === id)
           );
-          const subtaskIndex = todo?.subtask?.find(
+          const subtaskIndex = todo?.subtask?.findIndex(
             (subtask) => subtask.id === id
           );
+
           if (subtaskIndex) {
-            todo?.subtask?.splice((subtaskIndex as unknown) as number, 1);
+            todo?.subtask?.splice(subtaskIndex, 1);
           }
         })
       );
