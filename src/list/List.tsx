@@ -12,7 +12,7 @@ const List: React.FC = () => {
     <>
       <div>
         {todos.map((todo) => (
-          <ListItem key={todo.id} todo={todo} onDelete={remove} />
+          <ListItem key={todo.id} todo={todo} onDelete={remove} onSave={save} />
         ))}
       </div>
       <Form onSave={save} />

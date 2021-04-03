@@ -3,8 +3,10 @@ import { useParams } from "react-router";
 import Done from '../done/Done';
 import Subtask from '../Subtask/Subtask';
 import { useTodo } from "../TodoContext";
+import useTodoService from '../useTodoService';
 
 const Detail: React.FC = () => {
+  const { save } = useTodoService();
   const [todos] = useTodo();
   const { id } = useParams<{ id: string }>();
 
@@ -12,7 +14,7 @@ const Detail: React.FC = () => {
 
   return (
     <div>
-      { todo && <Done todo={todo} /> }
+      { todo && <Done todo={todo} onSave={save} /> }
       <div>{todo?.title}</div>
       <div>{todo?.comment}</div>
       <Subtask todo={todo!} />

@@ -1,17 +1,15 @@
 import React from "react";
-import { Todo } from "../Todo";
-import useTodoService from "../useTodoService";
+import { Todo, TodoInput } from "../Todo";
 import produce from 'immer';
 
 type Props = {
   todo: Todo;
+  onSave(todo: TodoInput): Promise<void>;
 };
 
-const Done: React.FC<Props> = ({ todo }) => {
-  const { save } = useTodoService();
-
+const Done: React.FC<Props> = ({ todo, onSave }) => {
   function handleStatusToggle(todo: Todo) {
-    save(produce(todo, (draftTodo) => {draftTodo.done = !draftTodo.done}))
+    onSave(produce(todo, (draftTodo) => {draftTodo.done = !draftTodo.done}))
   }
 
   return (

@@ -14,7 +14,7 @@ const Subtask: React.FC<Props> = ({todo}) => {
 
   return (<div>
     {todo.subtask?.length && todo.subtask.length > 0} {
-      todo.subtask?.map(subtask => <ListItem key={subtask.id} todo={subtask} onDelete={remove} />)
+      todo.subtask?.map(subtask => <ListItem key={subtask.id} todo={subtask} onDelete={remove} onSave={save} />)
     }
   
     <Form onSave={async (item: TodoInput) => {

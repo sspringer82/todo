@@ -36,7 +36,7 @@ export default function useSubtaskService(): ReturnValue {
             const subtaskIndex = todo?.subtask?.findIndex(
               (subtask) => subtask.id === data.id
             );
-            if (todo && todo.subtask && subtaskIndex) {
+            if (todo && todo.subtask && subtaskIndex !== undefined) {
               todo.subtask[subtaskIndex] = data;
             }
           }
