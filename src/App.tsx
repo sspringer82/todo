@@ -11,7 +11,6 @@ const App: React.FC = () => {
     <TodoProvider>
       <Router>
         <List />
-        <Form />
 
         <Switch>
           <Route path="/edit/:id">
