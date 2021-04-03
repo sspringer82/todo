@@ -2,6 +2,7 @@ import { Todo, TodoInput } from "./Todo";
 import { useTodo } from "./TodoContext";
 import produce from 'immer';
 import { useCallback } from "react";
+import config from './config';
 
 type ReturnValue = {
   todos: Todo[],
@@ -17,13 +18,13 @@ export default function useTodoService(): ReturnValue {
   return {
     todos,
     getAll: useCallback(async () => {
-      const request = await fetch('http://localhost:3001/todo');
+      const request = await fetch(config.url.todo.get());
       const data = await request.json();
       setTodos(data);
       return data;
     }, [setTodos]),
     async remove(id: number) {
-      await fetch(`http://localhost:3001/todo/${id}`, {method: 'DELETE'});
+      await fetch(config.url.todo.delete(id), {method: 'DELETE'});
       setTodos((prevTodos) => {
         return produce(prevTodos, (draftState) => {
           draftState.splice(prevTodos.findIndex(todo => todo.id === id), 1);
@@ -39,11 +40,14 @@ export default function useTodoService(): ReturnValue {
       return todo!;
     },
     async save(todo: TodoInput) {
-      let method = 'POST'
-      let url = 'http://localhost:3001/todo';
+      let method = '';
+      let url = '';
       if (todo.id) {
         method = 'PUT';
-        url += `/${todo.id}`;
+        url = config.url.todo.edit(todo.id);
+      } else {
+        method = 'POST';
+        url = config.url.todo.create();
       }
       const request = await fetch(url, {method, headers: {'Content-Type': 'Application/json'}, body: JSON.stringify(todo)});
       const result = await request.json();
