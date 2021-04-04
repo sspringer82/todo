@@ -22,7 +22,7 @@ const Subtask: React.FC<Props> = ({ todo }) => {
           todo={subtask}
           onDelete={remove}
           onSave={save}
-          edit={editMode === todo.id}
+          edit={editMode === subtask.id}
           onEnableEdit={setEditMode}
         />
       ))}
