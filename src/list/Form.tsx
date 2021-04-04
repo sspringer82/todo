@@ -1,14 +1,16 @@
 import React from 'react';
-import { initialTodo, TodoInput } from '../Todo';
+import { initialTodo, Todo, TodoInput } from '../Todo';
 import useForm from '../useForm';
 
 type Props = {
+  todo?: Todo;
   onSave: (item: TodoInput) => Promise<void>
 }
 
 // @todo generic component?
-const Form: React.FC<Props> = ({onSave}) => {
-  const {handleSubmit, handleChange, item} = useForm<TodoInput>(initialTodo, onSave);
+const Form: React.FC<Props> = ({todo, onSave}) => {
+  const initialValue = todo ? todo : initialTodo;
+  const {handleSubmit, handleChange, item} = useForm<TodoInput>(initialValue, onSave);
 
   return (
     <form onSubmit={handleSubmit}>
