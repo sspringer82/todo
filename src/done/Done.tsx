@@ -2,7 +2,7 @@ import React from "react";
 import { Todo, TodoInput } from "../Todo";
 import produce from 'immer';
 
-type Props = {
+export type Props = {
   todo: Todo;
   onSave(todo: TodoInput): Promise<void>;
 };
