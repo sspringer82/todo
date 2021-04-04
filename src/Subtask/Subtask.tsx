@@ -18,12 +18,13 @@ const Subtask: React.FC<Props> = ({ todo }) => {
       {todo.subtask?.length && todo.subtask.length > 0}{" "}
       {todo.subtask?.map((subtask) => (
         <ListItem
+          canEdit={false}
           key={subtask.id}
           todo={subtask}
           onDelete={remove}
           onSave={save}
-          edit={editMode === subtask.id}
-          onEnableEdit={setEditMode}
+          editModeEnabled={editMode === subtask.id}
+          onEditModeEnable={setEditMode}
         />
       ))}
       <Form

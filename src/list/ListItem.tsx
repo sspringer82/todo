@@ -5,19 +5,21 @@ import { Todo, TodoInput } from "../Todo";
 import Form from "./Form";
 
 type Props = {
-  edit: boolean;
+  editModeEnabled: boolean;
   todo: Todo;
-  onEnableEdit: (id: number | null) => void;
+  canEdit: boolean;
+  onEditModeEnable: (id: number | null) => void;
   onDelete: (id: number) => void;
   onSave(todo: TodoInput): Promise<void>;
 };
 
 const ListItem: React.FC<Props> = ({
   todo,
+  canEdit,
   onDelete,
   onSave,
-  edit,
-  onEnableEdit,
+  editModeEnabled: edit,
+  onEditModeEnable: onEnableEdit,
 }) => {
   if (edit) {
     return (
@@ -37,7 +39,7 @@ const ListItem: React.FC<Props> = ({
         </div>
         <Done todo={todo} onSave={onSave} />
         <button onClick={() => onDelete(todo.id)}>delete</button>
-        <Link to={`/edit/${todo.id}`}>edit</Link>
+        {canEdit && <Link to={`/edit/${todo.id}`}>edit</Link>}
         <Link to={`/detail/${todo.id}`}>detail</Link>
       </div>
     );

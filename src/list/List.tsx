@@ -14,12 +14,13 @@ const List: React.FC = () => {
       <div>
         {todos.map((todo) => (
           <ListItem
+            canEdit={true}
             key={todo.id}
             todo={todo}
             onDelete={remove}
             onSave={save}
-            edit={editMode === todo.id}
-            onEnableEdit={setEditMode}
+            editModeEnabled={editMode === todo.id}
+            onEditModeEnable={setEditMode}
           />
         ))}
       </div>
