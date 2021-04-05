@@ -1,20 +1,17 @@
 import React from "react";
-import { useParams } from "react-router";
 import Done from '../done/Done';
 import Subtask from '../Subtask/Subtask';
-import { useTodo } from "../TodoContext";
-import useTodoService from '../useTodoService';
+import { Todo, TodoInput } from '../Todo';
 
-const Detail: React.FC = () => {
-  const { save } = useTodoService();
-  const [todos] = useTodo();
-  const { id } = useParams<{ id: string }>();
+export type Props = {
+  todo: Todo,
+  onSave(todo: TodoInput): Promise<void>;
+}
 
-  const todo = todos.find((todo) => todo.id === parseInt(id, 10));
-
+const Detail: React.FC<Props> = ({todo, onSave}) => {
   return (
     <div>
-      { todo && <Done todo={todo} onSave={save} /> }
+      { todo && <Done todo={todo} onSave={onSave} /> }
       <div>{todo?.title}</div>
       <div>{todo?.comment}</div>
       <Subtask todo={todo!} />
