@@ -5,7 +5,7 @@ import ListItem from "../list/ListItem";
 import { SubtaskInput, Todo, TodoInput } from "../Todo";
 import useSubtaskService from "../useSubtaskService";
 
-type Props = {
+export type Props = {
   todo: Todo;
 };
 
@@ -15,7 +15,6 @@ const Subtask: React.FC<Props> = ({ todo }) => {
 
   return (
     <div>
-      {todo.subtask?.length && todo.subtask.length > 0}{" "}
       {todo.subtask?.map((subtask) => (
         <ListItem
           canEdit={false}
