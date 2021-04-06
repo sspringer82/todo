@@ -2,7 +2,7 @@ import React from 'react';
 import { initialTodo, Todo, TodoInput } from '../Todo';
 import useForm from '../useForm';
 
-type Props = {
+export type Props = {
   todo?: Todo;
   onSave: (item: TodoInput) => Promise<void>
 }
