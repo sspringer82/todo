@@ -29,6 +29,7 @@ const ListItem: React.FC<Props> = ({
           await onSave(data);
           onEnableEdit(null);
         }}
+        onCancel={() => onEnableEdit(null)}
       />
     );
   } else {

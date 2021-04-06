@@ -5,10 +5,11 @@ import useForm from '../useForm';
 export type Props = {
   todo?: Todo;
   onSave: (item: TodoInput) => Promise<void>
+  onCancel: () => void;
 }
 
 // @todo generic component?
-const Form: React.FC<Props> = ({todo, onSave}) => {
+const Form: React.FC<Props> = ({todo, onSave, onCancel}) => {
   const initialValue = todo ? todo : initialTodo;
   const {handleSubmit, handleChange, item} = useForm<TodoInput>(initialValue, onSave);
 
@@ -21,6 +22,7 @@ const Form: React.FC<Props> = ({todo, onSave}) => {
         name="title"
       />
       <button type="submit">save</button>
+      <button type="button" onClick={onCancel}>cancel</button>
     </form>
   );
 };

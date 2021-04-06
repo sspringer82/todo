@@ -27,7 +27,10 @@ const List: React.FC<Props> = ({todos, save, remove}) => {
           />
         ))}
       </div>
-      <Form onSave={save} />
+      <Form onSave={save} onCancel={() => {
+
+        setEditMode(null);
+        }} />
     </>
   );
 };

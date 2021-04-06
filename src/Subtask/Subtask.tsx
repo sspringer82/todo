@@ -33,6 +33,7 @@ const Subtask: React.FC<Props> = ({ todo }) => {
           });
           save(subtask as SubtaskInput);
         }}
+        onCancel={() => setEditMode(null)}
       />
     </div>
   );
