@@ -3,7 +3,7 @@ import produce from "immer";
 
 export default function useForm<T>(
   initialValue: T,
-  onSave: (item: T) => Promise<void>
+  onSave?: (item: T) => Promise<void>
 ): {
   handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   handleSubmit: (e: FormEvent) => Promise<void>;
@@ -29,7 +29,9 @@ export default function useForm<T>(
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    await onSave(item);
+    if (onSave) {
+      await onSave(item);
+    }
     setItem(initialValue);
   }
 

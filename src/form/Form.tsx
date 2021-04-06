@@ -1,36 +1,22 @@
-import React, { useCallback, useEffect } from "react";
-import { useHistory, useParams } from "react-router";
+import React, { FormEvent } from "react";
 import Subtask from "../Subtask/Subtask";
-import { initialTodo, Todo, TodoInput } from "../Todo";
+import { Todo, TodoInput } from "../Todo";
 import useForm from "../useForm";
-import useTodoService from "../useTodoService";
 
-const Form: React.FC = () => {
-  const history = useHistory();
-  const { id } = useParams<{ id: string }>();
-  const { save, getOneById } = useTodoService();
-  const { handleSubmit, handleChange, setItem, item } = useForm<TodoInput>(
-    initialTodo,
-    save
+export type Props = {
+  todo: TodoInput,
+  onSubmit: (e: FormEvent) => Promise<void>,
+}
+
+const Form: React.FC<Props> = ({todo, onSubmit}) => {
+  const { handleChange, item } = useForm<TodoInput>(
+    todo,
   );
-
-  //const getById = useRef(getOneById);
-  const getById = useCallback(getOneById, [getOneById]);
-
-  useEffect(() => {
-    (async () => {
-      const todo = await getById(parseInt(id, 10));
-      setItem(todo);
-    })();
-  }, [id, getById, setItem]);
 
   return (
     <>
       <form
-        onSubmit={async (e) => {
-          await handleSubmit(e);
-          history.push("/");
-        }}
+        onSubmit={onSubmit}
         autoComplete="off"
       >
         <fieldset>
