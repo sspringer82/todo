@@ -4,7 +4,7 @@ import Done from "../done/Done";
 import { Todo, TodoInput } from "../Todo";
 import Form from "./Form";
 
-type Props = {
+export type Props = {
   editModeEnabled: boolean;
   todo: Todo;
   canEdit: boolean;
