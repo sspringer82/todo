@@ -1,18 +1,14 @@
-import React, { FormEvent } from "react";
+import React, { ChangeEvent, FormEvent } from "react";
 import Subtask from "../Subtask/Subtask";
 import { Todo, TodoInput } from "../Todo";
-import useForm from "../useForm";
 
 export type Props = {
   todo: TodoInput,
   onSubmit: (e: FormEvent) => Promise<void>,
+  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-const Form: React.FC<Props> = ({todo, onSubmit}) => {
-  const { handleChange, item } = useForm<TodoInput>(
-    todo,
-  );
-
+const Form: React.FC<Props> = ({todo, onSubmit, onChange }) => {
   return (
     <>
       <form
@@ -25,8 +21,8 @@ const Form: React.FC<Props> = ({todo, onSubmit}) => {
             <input
               type="text"
               name="title"
-              value={item.title}
-              onChange={handleChange}
+              value={todo.title}
+              onChange={onChange}
             />
           </label>
         </fieldset>
@@ -36,8 +32,8 @@ const Form: React.FC<Props> = ({todo, onSubmit}) => {
             <input
               type="checkbox"
               name="done"
-              checked={item.done}
-              onChange={handleChange}
+              checked={todo.done}
+              onChange={onChange}
             />
           </label>
         </fieldset>
@@ -46,14 +42,14 @@ const Form: React.FC<Props> = ({todo, onSubmit}) => {
             Comment:
             <textarea
               name="comment"
-              value={item.comment}
-              onChange={handleChange}
+              value={todo.comment}
+              onChange={onChange}
             ></textarea>
           </label>
         </fieldset>
         <button type="submit">save</button>
       </form>
-      {item.id && <Subtask todo={item as Todo} />}
+      {todo.id && <Subtask todo={todo as Todo} />}
     </>
   );
 };

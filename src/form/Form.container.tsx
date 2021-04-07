@@ -1,35 +1,42 @@
-import React, { FormEvent, useCallback, useEffect } from "react";
-import { useHistory, useParams } from 'react-router-dom';
-import { TodoInput, initialTodo } from '../Todo';
-import useForm from '../useForm';
-import useTodoService from '../useTodoService';
+import React, { FormEvent, useEffect,  useRef } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { TodoInput, initialTodo } from "../Todo";
+import useForm from "../useForm";
+import useTodoService from "../useTodoService";
 import FormComponent from "./Form";
 
 const Form: React.FC = () => {
-
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
   const { save, getOneById } = useTodoService();
-  const { handleSubmit: handleTodoSubmit, setItem, item } = useForm<TodoInput>(
-    initialTodo,
-    save
-  );
+  const {
+    handleSubmit: handleTodoSubmit,
+    setItem,
+    item,
+    handleChange,
+  } = useForm<TodoInput>(initialTodo, save);
 
-  const getById = useCallback(getOneById, [getOneById]);
+  const getById = useRef(getOneById);
 
   useEffect(() => {
     (async () => {
-      const todo = await getById(parseInt(id, 10));
+      const todo = await getById.current(parseInt(id, 10));
       setItem(todo);
     })();
-  }, [id, getById, setItem]);
+  }, [id, setItem, getById]);
 
   async function handleSubmit(e: FormEvent) {
     await handleTodoSubmit(e);
     history.push("/");
   }
 
-  return <FormComponent todo={item} onSubmit={handleSubmit} />;
+  return (
+    <FormComponent
+      todo={item}
+      onSubmit={handleSubmit}
+      onChange={handleChange}
+    />
+  );
 };
 
 export default Form;
