@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { initialTodo, Todo, TodoInput } from '../Todo';
 import useForm from '../useForm';
 
@@ -10,8 +10,12 @@ export type Props = {
 
 // @todo generic component?
 const Form: React.FC<Props> = ({todo, onSave, onCancel}) => {
-  const initialValue = todo ? todo : initialTodo;
-  const {handleSubmit, handleChange, item} = useForm<TodoInput>(initialValue, onSave);
+  const {handleSubmit, handleChange, item, setItem} = useForm<TodoInput>(initialTodo, onSave);
+  useEffect(() => {
+    if (todo) {
+      setItem(todo);
+    }
+  }, [todo])
 
   return (
     <form onSubmit={handleSubmit}>
