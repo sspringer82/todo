@@ -15,7 +15,7 @@ const Form: React.FC<Props> = ({todo, onSave, onCancel}) => {
     if (todo) {
       setItem(todo);
     }
-  }, [todo])
+  }, [todo, setItem])
 
   return (
     <form onSubmit={handleSubmit}>

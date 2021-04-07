@@ -1,5 +1,5 @@
 import produce from "immer";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Form from "../list/Form";
 import ListItem from "../list/ListItem";
 import { SubtaskInput, Todo, TodoInput } from "../Todo";
@@ -12,6 +12,10 @@ export type Props = {
 const Subtask: React.FC<Props> = ({ todo }) => {
   const { save, remove } = useSubtaskService();
   const [editMode, setEditMode] = useState<number | null>(null);
+
+  useEffect(() => {
+    setEditMode(null);
+  }, [todo]);
 
   return (
     <div>

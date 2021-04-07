@@ -25,10 +25,7 @@ const ListItem: React.FC<Props> = ({
     return (
       <Form
       todo={todo}
-        onSave={async (data) => {
-          await onSave(data);
-          onEnableEdit(null);
-        }}
+        onSave={onSave}
         onCancel={() => onEnableEdit(null)}
       />
     );

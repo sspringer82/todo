@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ListItem from "./ListItem";
 import Form from "./Form";
 import { Todo, TodoInput } from '../Todo';
@@ -11,6 +11,10 @@ export type Props = {
 
 const List: React.FC<Props> = ({todos, save, remove}) => {
   const [editMode, setEditMode] = useState<number | null>(null);
+
+  useEffect(() => {
+    setEditMode(null);
+  }, [todos]);
 
   return (
     <>
