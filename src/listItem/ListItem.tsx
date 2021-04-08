@@ -32,13 +32,13 @@ const ListItem: React.FC<Props> = ({
   } else {
     return (
       <div>
-        <div onClick={() => onEnableEdit(todo.id)}>
-          ({todo.id}){todo.title}
+        <div onClick={() => onEnableEdit(todo.id)} data-testid="title">
+          {todo.title}
         </div>
         <Done todo={todo} onSave={onSave} />
-        <button onClick={() => onDelete(todo.id)}>delete</button>
-        {canEdit && <Link to={`/edit/${todo.id}`}>edit</Link>}
-        <Link to={`/detail/${todo.id}`}>detail</Link>
+        <button onClick={() => onDelete(todo.id)} data-testid="delete-button">delete</button>
+        {canEdit && <Link to={`/edit/${todo.id}`} data-testid="edit-link">edit</Link>}
+        <Link to={`/detail/${todo.id}`} data-testid="detail-link">detail</Link>
       </div>
     );
   }
