@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import ListItem from "./ListItem";
-import Form from "./Form";
+import ListItem from "../listItem/ListItem";
+import Form from "../inlineForm/Form";
 import { Todo, TodoInput } from '../Todo';
 
 export type Props = {

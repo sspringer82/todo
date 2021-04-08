@@ -1,7 +1,7 @@
 import produce from "immer";
 import React, { useEffect, useState } from "react";
-import Form from "../list/Form";
-import ListItem from "../list/ListItem";
+import Form from "../inlineForm/Form";
+import ListItem from "../listItem/ListItem";
 import { SubtaskInput, Todo, TodoInput } from "../Todo";
 import useSubtaskService from "../useSubtaskService";
 

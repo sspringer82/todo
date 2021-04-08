@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Done from "../done/Done";
 import { Todo, TodoInput } from "../Todo";
-import Form from "./Form";
+import Form from "../inlineForm/Form";
 
 export type Props = {
   editModeEnabled: boolean;
