@@ -14,7 +14,7 @@ const Done: React.FC<Props> = ({ todo, onSave }) => {
 
   return (
     <div>
-      <button onClick={() => handleStatusToggle(todo)}>
+      <button onClick={() => handleStatusToggle(todo)} data-testid="done-button">
         {todo.done ? "✔" : "❌"}
       </button>
     </div>
