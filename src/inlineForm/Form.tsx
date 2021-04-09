@@ -24,9 +24,10 @@ const Form: React.FC<Props> = ({todo, onSave, onCancel}) => {
         onChange={handleChange}
         value={item.title}
         name="title"
+        data-testid="title-input"
       />
-      <button type="submit">save</button>
-      <button type="button" onClick={onCancel}>cancel</button>
+      <button type="submit" data-testid="submit-button">save</button>
+      <button type="button" onClick={onCancel} data-testid="cancel-button">cancel</button>
     </form>
   );
 };
