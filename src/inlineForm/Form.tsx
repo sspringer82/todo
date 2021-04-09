@@ -18,7 +18,7 @@ const Form: React.FC<Props> = ({todo, onSave, onCancel}) => {
   }, [todo, setItem])
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} data-testid="inlineForm">
       <input
         type="text"
         onChange={handleChange}
