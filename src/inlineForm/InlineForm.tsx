@@ -9,7 +9,7 @@ export type Props = {
 };
 
 // @todo generic component?
-const Form: React.FC<Props> = ({ todo, onSave, onCancel }) => {
+const InlineForm: React.FC<Props> = ({ todo, onSave, onCancel }) => {
   const { handleSubmit, handleChange, item, setItem } = useForm<TodoInput>(
     initialTodo,
     onSave,
@@ -43,4 +43,4 @@ const Form: React.FC<Props> = ({ todo, onSave, onCancel }) => {
   );
 };
 
-export default Form;
+export default InlineForm;

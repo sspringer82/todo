@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Done from "../done/Done";
 import { Todo, TodoInput } from "../Todo";
-import Form from "../inlineForm/Form";
+import InlineForm from "../inlineForm/InlineForm";
 
 export type Props = {
   editModeEnabled: boolean;
@@ -23,7 +23,7 @@ const ListItem: React.FC<Props> = ({
 }) => {
   if (edit) {
     return (
-      <Form
+      <InlineForm
       todo={todo}
         onSave={onSave}
         onCancel={() => onEnableEdit(null)}

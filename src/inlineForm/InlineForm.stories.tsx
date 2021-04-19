@@ -2,14 +2,14 @@ import React, { FormEvent } from "react";
 import { Story, Meta } from "@storybook/react";
 import { action } from '@storybook/addon-actions';
 import { BrowserRouter } from 'react-router-dom';
-import Form, {Props} from './Form';
+import InlineForm, {Props} from './InlineForm';
 
 export default {
   title: "List/Form",
-  component: Form,
+  component: InlineForm,
 } as Meta;
 
-const Template: Story<Props> = (args) => <BrowserRouter><Form {...args} /></BrowserRouter>;
+const Template: Story<Props> = (args) => <BrowserRouter><InlineForm {...args} /></BrowserRouter>;
 
 export const New = Template.bind({});
 New.args = {

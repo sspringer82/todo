@@ -1,6 +1,6 @@
 import produce from "immer";
 import React, { useEffect, useState } from "react";
-import Form from "../inlineForm/Form";
+import InlineForm from "../inlineForm/InlineForm";
 import ListItem from "../listItem/ListItem";
 import { SubtaskInput, Todo, TodoInput } from "../Todo";
 import useSubtaskService from "../useSubtaskService";
@@ -30,7 +30,7 @@ const Subtask: React.FC<Props> = ({ todo }) => {
           onEditModeEnable={setEditMode}
         />
       ))}
-      <Form
+      <InlineForm
         onSave={async (item: TodoInput) => {
           const subtask = produce(item, (draftItem) => {
             (draftItem as SubtaskInput).todoId = todo.id;

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import Form, { Props } from './Form';
+import InlineForm, { Props } from './InlineForm';
 
 describe('InlineForm', () => {
   let props: Props;
@@ -14,12 +14,12 @@ describe('InlineForm', () => {
   });
 
   it('should show an empty form if no todo is handed over', () => {
-    const { getByTestId } = render(<Form {...props} />);
+    const { getByTestId } = render(<InlineForm {...props} />);
     expect(getByTestId('title-input')).toHaveValue('');
   });
   it('should call onSave with a new item if one should be created', async () => {
     await act(async () => {
-      render(<Form {...props} />);
+      render(<InlineForm {...props} />);
     });
 
     act(() => {
@@ -39,7 +39,7 @@ describe('InlineForm', () => {
   });
   it('should call onCancel if the cancel button is hit', () => {
     act(() => {
-      render(<Form {...props} />);
+      render(<InlineForm {...props} />);
     });
 
     act(() => {
@@ -56,7 +56,7 @@ describe('InlineForm', () => {
     };
 
     await act(async () => {
-      render(<Form {...props} />);
+      render(<InlineForm {...props} />);
     });
 
     act(() => {

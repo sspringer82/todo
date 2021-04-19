@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ListItem from "../listItem/ListItem";
-import Form from "../inlineForm/Form";
+import InlineForm from "../inlineForm/InlineForm";
 import { Todo, TodoInput } from '../Todo';
 
 export type Props = {
@@ -31,8 +31,7 @@ const List: React.FC<Props> = ({todos, save, remove}) => {
           />
         ))}
       </div>
-      <Form onSave={save} onCancel={() => {
-
+      <InlineForm onSave={save} onCancel={() => {
         setEditMode(null);
         }} />
     </>
