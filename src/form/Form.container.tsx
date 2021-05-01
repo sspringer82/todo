@@ -20,8 +20,11 @@ const Form: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      const todo = await getById.current(parseInt(id, 10));
-      setItem(todo);
+      const todoId = parseInt(id, 10);
+      if (todoId) {
+        const todo = await getById.current(todoId);
+        setItem(todo);
+      }
     })();
   }, [id, setItem, getById]);
 

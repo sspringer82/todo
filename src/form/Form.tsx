@@ -23,6 +23,7 @@ const Form: React.FC<Props> = ({todo, onSubmit, onChange }) => {
               name="title"
               value={todo.title}
               onChange={onChange}
+              data-testid="title"
             />
           </label>
         </fieldset>
@@ -34,6 +35,7 @@ const Form: React.FC<Props> = ({todo, onSubmit, onChange }) => {
               name="done"
               checked={todo.done}
               onChange={onChange}
+              data-testid="done"
             />
           </label>
         </fieldset>
@@ -44,6 +46,7 @@ const Form: React.FC<Props> = ({todo, onSubmit, onChange }) => {
               name="comment"
               value={todo.comment}
               onChange={onChange}
+              data-testid="comment"
             ></textarea>
           </label>
         </fieldset>

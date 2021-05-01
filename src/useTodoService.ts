@@ -15,19 +15,23 @@ type ReturnValue = {
 export default function useTodoService(): ReturnValue {
   const [todos, setTodos] = useTodo();
 
-  return {
+  const service = {
     todos,
     getAll: useCallback(async () => {
-      const request = await fetch(config.url.todo.get());
-      const data = await request.json();
-      setTodos(data);
-      return data;
+      try {
+        const request = await fetch(config.url.todo.get());
+        const data = await request.json();
+        setTodos(data);
+        return data;
+      } catch (e) {
+        console.log('ERROR', e);
+      }
     }, [setTodos]),
     async getOneById(id: number): Promise<Todo> {
       let todo = todos.find((item) => item.id === id);
       if (todo === undefined) {
         const todos = await this.getAll();
-        todo = todos.find((item) => item.id === id);
+        todo = todos.find((item: Todo) => item.id === id);
       }
       return todo!;
     },
@@ -71,4 +75,8 @@ export default function useTodoService(): ReturnValue {
       });
     },
   };
+
+  service.getOneById = service.getOneById.bind(service);
+
+  return service;
 }
