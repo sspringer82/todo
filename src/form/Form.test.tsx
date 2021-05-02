@@ -89,5 +89,53 @@ describe('Form', () => {
     expect(body.done).toBe(false);
     expect(body.comment).toBe('Existing Comment Modified');
   });
-  it('should show a list of subtasks', () => {});
+  it('should show a list of subtasks', async () => {
+    const response = [
+      {
+        "id": 1,
+        "title": "Get up",
+        "done": true,
+        "subtask": []
+      },
+      {
+        "id": 2,
+        "title": "Eat",
+        "done": true,
+        "subtask": [
+          {
+            "id": 1,
+            "title": "sit down",
+            "todoId": 1
+          },
+          {
+            "id": 2,
+            "title": "open your mouth",
+            "todoId": 1
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Sleep",
+        "done": false,
+        "subtask": []
+      }
+    ];
+
+    (fetch as any).mockResponse(JSON.stringify(response));
+    await act(async () => {
+      render(<MemoryRouter initialEntries={["/edit/2"]}>
+        <Route path="/edit/:id">
+          <Form></Form>
+        </Route>
+      </MemoryRouter>);
+    });
+    expect(screen.getAllByTestId('title')[0]).toHaveValue('Eat');
+    expect(screen.getByTestId('done')).toBeChecked();
+    expect(screen.getByTestId('comment')).toHaveValue('');
+    
+    expect(screen.getAllByTestId('listItem-container')).toHaveLength(2);
+    expect(screen.getAllByTestId('title')[1]).toHaveTextContent('sit down');
+    expect(screen.getAllByTestId('title')[2]).toHaveTextContent('open your mouth');
+  });
 })
