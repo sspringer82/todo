@@ -56,6 +56,38 @@ describe('Form', () => {
     expect(body.done).toBe(true);
     expect(body.comment).toBe('New Comment');
   });
-  it('should save an existing entry', () => {});
+  it('should save an existing entry',async () => {
+    (fetch as any).mockResponseOnce(JSON.stringify([{ id: 2, title: "Existing Todo", done: true, comment: 'Existing Comment' }]));
+    await act(async () => {
+      render(<MemoryRouter initialEntries={["/edit/2"]}>
+        <Route path="/edit/:id">
+          <Form></Form>
+        </Route>
+      </MemoryRouter>);
+    });
+    expect(screen.getByTestId('title')).toHaveValue('Existing Todo');
+    expect(screen.getByTestId('done')).toBeChecked();
+    expect(screen.getByTestId('comment')).toHaveValue('Existing Comment');
+    act(() => {
+      fireEvent.change(screen.getByTestId('title'), {
+        target: { value: 'Existing Todo Modified' },
+      });
+      fireEvent.click(screen.getByTestId('done'));
+      fireEvent.change(screen.getByTestId('comment'), {
+        target: { value: 'Existing Comment Modified' },
+      });
+    });
+    expect(screen.getByTestId('title')).toHaveValue('Existing Todo Modified');
+    expect(screen.getByTestId('done')).not.toBeChecked();
+    expect(screen.getByTestId('comment')).toHaveValue('Existing Comment Modified');
+    (fetch as any).mockResponseOnce(JSON.stringify([{ id: 2, title: "Existing Todo Modified", done: false, comment: 'Existing Comment Modified' }]));
+    await act(async () => {fireEvent.click(screen.getByTestId('submit'))});
+    expect(fetchMock.mock.calls[1][1].method).toBe('PUT');
+    expect(fetchMock.mock.calls[1][1].headers['Content-Type']).toBe('Application/json');
+    const body = JSON.parse(fetchMock.mock.calls[1][1].body);
+    expect(body.title).toBe('Existing Todo Modified');
+    expect(body.done).toBe(false);
+    expect(body.comment).toBe('Existing Comment Modified');
+  });
   it('should show a list of subtasks', () => {});
 })
