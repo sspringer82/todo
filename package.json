@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.1.2",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
@@ -20,9 +21,9 @@
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject",
     "backend": "json-server -p 3001 -w data.json",
     "storybook": "start-storybook -p 6006 -s public",
@@ -64,6 +65,9 @@
     "@storybook/preset-create-react-app": "^3.1.7",
     "@storybook/react": "^6.2.2",
     "@types/react-router-dom": "^5.1.7",
-    "jest-fetch-mock": "^3.0.3"
+    "autoprefixer": "^9.8.6",
+    "jest-fetch-mock": "^3.0.3",
+    "postcss": "^7.0.35",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.2"
   }
 }
