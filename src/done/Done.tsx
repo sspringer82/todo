@@ -1,8 +1,8 @@
-import React from 'react';
-import { Todo, TodoInput } from '../Todo';
-import produce from 'immer';
-import ClearIcon from '@material-ui/icons/Clear';
-import CheckIcon from '@material-ui/icons/Check';
+import React from "react";
+import { Todo, TodoInput } from "../Todo";
+import produce from "immer";
+import ClearIcon from "@material-ui/icons/Clear";
+import CheckIcon from "@material-ui/icons/Check";
 
 export type Props = {
   todo: Todo;
@@ -14,20 +14,21 @@ const Done: React.FC<Props> = ({ todo, onSave }) => {
     onSave(
       produce(todo, (draftTodo) => {
         draftTodo.done = !draftTodo.done;
-      }),
+      })
     );
   }
 
   return (
     <div>
       <button
+        className="focus:outline-none"
         onClick={() => handleStatusToggle(todo)}
         data-testid="done-button"
       >
         {todo.done ? (
-          <CheckIcon style={{ color: 'limegreen' }} />
+          <CheckIcon style={{ color: "limegreen" }} />
         ) : (
-          <ClearIcon style={{ color: 'red' }} />
+          <ClearIcon style={{ color: "red" }} />
         )}
       </button>
     </div>

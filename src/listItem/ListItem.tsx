@@ -7,6 +7,7 @@ import { ActionsContainer, ButtonContainer, TitleContainer } from "./Border";
 import DeleteIcon from "@material-ui/icons/Delete";
 import BuildIcon from "@material-ui/icons/Build";
 import SearchIcon from "@material-ui/icons/Search";
+import { textColor } from '../colors';
 
 export type Props = {
   editModeEnabled: boolean;
@@ -36,34 +37,34 @@ const ListItem: React.FC<Props> = ({
   } else {
     const actions = [
       <Link to={`/detail/${todo.id}`} data-testid="detail-link">
-        <SearchIcon />
+        <SearchIcon style={{color: todo.done ? textColor.inactive : textColor.active}} />
       </Link>,
       <button onClick={() => onDelete(todo.id)} data-testid="delete-button">
-        <DeleteIcon />
+        <DeleteIcon style={{color: todo.done ? textColor.inactive : textColor.active}} />
       </button>,
     ];
     if (canEdit) {
       actions.push(
         <Link to={`/edit/${todo.id}`} data-testid="edit-link">
-          <BuildIcon />
+          <BuildIcon style={{color: todo.done ? textColor.inactive : textColor.active}} />
         </Link>
       );
     }
     return (
-      <div data-testid="listItem-container" className="flex">
+      <div data-testid="listItem-container" className="flex mx-2">
         <div
           onClick={() => onEnableEdit(todo.id)}
           data-testid="title"
           style={{ position: "relative" }}
         >
-          <TitleContainer>{todo.title}</TitleContainer>
+          <TitleContainer done={todo.done}>{todo.title}</TitleContainer>
         </div>
 
-        <ButtonContainer>
+        <ButtonContainer done={todo.done}>
           <Done todo={todo} onSave={onSave} />
         </ButtonContainer>
 
-        <ActionsContainer>{actions}</ActionsContainer>
+        <ActionsContainer done={todo.done}>{actions}</ActionsContainer>
       </div>
     );
   }

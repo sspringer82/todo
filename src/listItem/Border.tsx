@@ -1,22 +1,22 @@
 import React from 'react';
+import { colors, textColor } from '../colors';
 
-const colors = {
-  active: "#34D399",
-  inactive: "#064E3B",
-};
+type Props = {
+  done: boolean;
+}
 
-const TitleBorderTop = () => {
+const TitleBorderTop: React.FC<Props> = ({done}) => {
   return (
-    <div style={{ display: "flex", position: "relative", top: 0 }}>
-      <div style={{ height: 5, width: 5, backgroundColor: "#34D399" }}></div>
-      <div style={{ width: 100, height: 1, backgroundColor: "#34D399" }}></div>
+    <div className="flex relative top-0">
+      <div style={{ height: 5, width: 5, backgroundColor: done ? colors.inactive : colors.active }}></div>
+      <div style={{ width: 100, height: 1, backgroundColor: done ? colors.inactive : colors.active }}></div>
       <div
         style={{
           marginLeft: 7,
           marginRight: 7,
           height: 8,
           width: 16,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           transform: "skew(70deg)",
         }}
       ></div>
@@ -24,7 +24,7 @@ const TitleBorderTop = () => {
         style={{
           width: 100,
           height: 1,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 7,
         }}
       ></div>
@@ -32,7 +32,7 @@ const TitleBorderTop = () => {
         style={{
           height: 5,
           width: 5,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 7,
         }}
       ></div>
@@ -40,15 +40,15 @@ const TitleBorderTop = () => {
   );
 };
 
-const TitleBorderBottom = () => {
+const TitleBorderBottom: React.FC<Props> = ({done}) => {
   return (
     <div style={{ display: "flex", position: "relative", bottom: 0 }}>
-      <div style={{ height: 5, width: 5, backgroundColor: "#34D399" }}></div>
+      <div style={{ height: 5, width: 5, backgroundColor: done ? colors.inactive : colors.active }}></div>
       <div
         style={{
           width: 110,
           height: 1,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 4,
         }}
       ></div>
@@ -59,7 +59,7 @@ const TitleBorderBottom = () => {
           marginRight: 7,
           height: 8,
           width: 16,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           transform: "skew(70deg)",
         }}
       ></div>
@@ -67,7 +67,7 @@ const TitleBorderBottom = () => {
         style={{
           width: 90,
           height: 1,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 11,
         }}
       ></div>
@@ -75,7 +75,7 @@ const TitleBorderBottom = () => {
         style={{
           height: 5,
           width: 5,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 7,
         }}
       ></div>
@@ -83,24 +83,24 @@ const TitleBorderBottom = () => {
   );
 };
 
-export const TitleContainer: React.FC = ({ children }) => {
+export const TitleContainer: React.FC<Props> = ({ children, done }) => {
   return (
     <div>
-      <TitleBorderTop />
-      <div style={{ marginLeft: 10, position: "relative" }}>{children}</div>
-      <TitleBorderBottom />
+      <TitleBorderTop done={done} />
+      <div style={{ marginLeft: 10, color: done ? textColor.inactive : textColor.active }} className="relative">{children}</div>
+      <TitleBorderBottom done={done} />
     </div>
   );
 };
 
-const ButtonContainerTop = () => {
+const ButtonContainerTop: React.FC<Props> = ({done}) => {
   return (
-    <div style={{ display: "flex", position: "relative" }}>
+    <div className="flex relative">
       <div
         style={{
           height: 5,
           width: 5,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 7,
         }}
       ></div>
@@ -108,7 +108,7 @@ const ButtonContainerTop = () => {
         style={{
           width: 40,
           height: 1,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 7,
         }}
       ></div>
@@ -116,7 +116,7 @@ const ButtonContainerTop = () => {
         style={{
           height: 5,
           width: 5,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 7,
         }}
       ></div>
@@ -124,14 +124,14 @@ const ButtonContainerTop = () => {
   );
 };
 
-const ButtonContainerBottom = () => {
+const ButtonContainerBottom: React.FC<Props> = ({done}) => {
   return (
-    <div style={{ display: "flex", position: "relative", bottom: 0 }}>
+    <div className="flex relative bottom-0">
       <div
         style={{
           height: 5,
           width: 5,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 8,
         }}
       ></div>
@@ -139,7 +139,7 @@ const ButtonContainerBottom = () => {
         style={{
           width: 40,
           height: 1,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 12,
         }}
       ></div>
@@ -147,7 +147,7 @@ const ButtonContainerBottom = () => {
         style={{
           height: 5,
           width: 5,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 8,
         }}
       ></div>
@@ -155,35 +155,35 @@ const ButtonContainerBottom = () => {
   );
 };
 
-export const ButtonContainer: React.FC = ({children}) => {
+export const ButtonContainer: React.FC<Props> = ({children, done}) => {
   return (
-    <div style={{ position: "relative", marginLeft: 5 }}>
-      <ButtonContainerTop />
-      <div style={{ position: "relative" }}>
+    <div style={{ marginLeft: 5 }} className="relative">
+      <ButtonContainerTop done={done} />
+      <div className="relative">
         &nbsp;
         <div
           style={{
-            position: "absolute",
             top: 1,
             left: 12,
           }}
+          className="absolute"
         >
           {children}
         </div>
       </div>
-      <ButtonContainerBottom />
+      <ButtonContainerBottom done={done} />
     </div>
   );
 };
 
-const ActionsContainerTop = () => {
+const ActionsContainerTop: React.FC<Props> = ({done}) => {
   return (
-    <div style={{ display: "flex", position: "relative" }}>
+    <div className="flex relative">
       <div
         style={{
           height: 5,
           width: 5,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 7,
         }}
       ></div>
@@ -191,7 +191,7 @@ const ActionsContainerTop = () => {
         style={{
           width: 40,
           height: 1,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 7,
         }}
       ></div>
@@ -201,7 +201,7 @@ const ActionsContainerTop = () => {
           marginRight: 7,
           height: 8,
           width: 16,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           transform: "skew(-70deg)",
         }}
       ></div>
@@ -209,7 +209,7 @@ const ActionsContainerTop = () => {
         style={{
           width: 40,
           height: 1,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 0,
         }}
       ></div>
@@ -217,7 +217,7 @@ const ActionsContainerTop = () => {
         style={{
           height: 5,
           width: 5,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 0,
         }}
       ></div>
@@ -225,14 +225,14 @@ const ActionsContainerTop = () => {
   );
 };
 
-const ActionsContainerBottom = () => {
+const ActionsContainerBottom: React.FC<Props> = ({done}) => {
   return (
-    <div style={{ display: "flex", position: "relative", bottom: 0 }}>
+    <div className="flex relative bottom-0">
       <div
         style={{
           height: 5,
           width: 5,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 7,
         }}
       ></div>
@@ -240,7 +240,7 @@ const ActionsContainerBottom = () => {
         style={{
           width: 30,
           height: 1,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 11,
         }}
       ></div>
@@ -251,7 +251,7 @@ const ActionsContainerBottom = () => {
           marginRight: 7,
           height: 8,
           width: 16,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           transform: "skew(-70deg)",
         }}
       ></div>
@@ -259,7 +259,7 @@ const ActionsContainerBottom = () => {
         style={{
           width: 50,
           height: 1,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 4,
         }}
       ></div>
@@ -267,7 +267,7 @@ const ActionsContainerBottom = () => {
         style={{
           height: 5,
           width: 5,
-          backgroundColor: "#34D399",
+          backgroundColor: done ? colors.inactive : colors.active,
           marginTop: 0,
         }}
       ></div>
@@ -281,14 +281,14 @@ const InnerButtonContainer: React.FC = ({children}) => {
   </div>
 }
 
-export const ActionsContainer: React.FC<{children: JSX.Element[]}> = ({children}) => {
+export const ActionsContainer: React.FC<{children: JSX.Element[]} & Props> = ({children, done}) => {
   return (
-    <div style={{ position: "relative", marginLeft: 5 }}>
-      <ActionsContainerTop />
+    <div style={{ marginLeft: 5 }} className="relative">
+      <ActionsContainerTop done={done} />
       <div className="flex">
         {children && children.map((child, i) => <InnerButtonContainer key={i}>{child}</InnerButtonContainer>)}
       </div>
-      <ActionsContainerBottom />
+      <ActionsContainerBottom done={done} />
     </div>
   );
 };
