@@ -30,14 +30,16 @@ const InlineForm: React.FC<Props> = ({ todo, onSave, onCancel }) => {
         value={item.title}
         name="title"
         data-testid="title-input"
+        style={{width: 239}}
       />
-      <Button type="submit" data-testid="submit-button" variant="primary">
+      <Button type="submit" data-testid="submit-button" variant="primary" style={{marginLeft: 5}}>
         save
       </Button>
       <Button
         type="button"
         onClick={() => onCancel()}
         data-testid="cancel-button"
+        style={{marginLeft: 5}}
       >
         cancel
       </Button>
