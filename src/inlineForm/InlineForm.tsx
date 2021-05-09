@@ -23,7 +23,7 @@ const InlineForm: React.FC<Props> = ({ todo, onSave, onCancel }) => {
   }, [todo, setItem]);
 
   return (
-    <form onSubmit={handleSubmit} data-testid="inlineForm">
+    <form onSubmit={handleSubmit} data-testid="inlineForm" className="m-2 flex">
       <Input
         type="text"
         onChange={handleChange}
