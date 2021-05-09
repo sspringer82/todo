@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { initialTodo, Todo, TodoInput } from '../Todo';
 import useForm from '../useForm';
+import Button from '../util/button/Button';
+import Input from '../util/input/Input';
 
 export type Props = {
   todo?: Todo;
@@ -22,23 +24,23 @@ const InlineForm: React.FC<Props> = ({ todo, onSave, onCancel }) => {
 
   return (
     <form onSubmit={handleSubmit} data-testid="inlineForm">
-      <input
+      <Input
         type="text"
         onChange={handleChange}
         value={item.title}
         name="title"
         data-testid="title-input"
       />
-      <button type="submit" data-testid="submit-button">
+      <Button type="submit" data-testid="submit-button" variant="primary">
         save
-      </button>
-      <button
+      </Button>
+      <Button
         type="button"
         onClick={() => onCancel()}
         data-testid="cancel-button"
       >
         cancel
-      </button>
+      </Button>
     </form>
   );
 };
