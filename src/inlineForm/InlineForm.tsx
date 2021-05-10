@@ -25,6 +25,7 @@ const InlineForm: React.FC<Props> = ({ todo, onSave, onCancel }) => {
   return (
     <form onSubmit={handleSubmit} data-testid="inlineForm" className="m-2 flex">
       <Input
+        label="Title"
         type="text"
         onChange={handleChange}
         value={item.title}
