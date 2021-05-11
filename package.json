@@ -28,7 +28,8 @@
     "eject": "react-scripts eject",
     "backend": "json-server -p 3001 -w data.json",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -67,6 +68,7 @@
     "@storybook/react": "^6.2.2",
     "@types/react-router-dom": "^5.1.7",
     "autoprefixer": "^9.8.6",
+    "husky": "^6.0.0",
     "jest-fetch-mock": "^3.0.3",
     "postcss": "^7.0.35",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.2"
