@@ -36,16 +36,16 @@ const ListItem: React.FC<Props> = ({
     );
   } else {
     const actions = [
-      <Link to={`/detail/${todo.id}`} data-testid="detail-link">
+      <Link to={`/detail/${todo.id}`} data-testid="detail-link" key="detail">
         <SearchIcon style={{color: todo.done ? textColor.inactive : textColor.active}} />
       </Link>,
-      <button onClick={() => onDelete(todo.id)} data-testid="delete-button">
+      <button onClick={() => onDelete(todo.id)} data-testid="delete-button" key="delete">
         <DeleteIcon style={{color: todo.done ? textColor.inactive : textColor.active}} />
       </button>,
     ];
     if (canEdit) {
       actions.push(
-        <Link to={`/edit/${todo.id}`} data-testid="edit-link">
+        <Link to={`/edit/${todo.id}`} data-testid="edit-link" key="edit">
           <BuildIcon style={{color: todo.done ? textColor.inactive : textColor.active}} />
         </Link>
       );
