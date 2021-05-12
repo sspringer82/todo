@@ -44,7 +44,31 @@ describe('List', () => {
     expect(listItems).toHaveLength(1);
   });
 
-  it('should render a list with multiple items', () => {});
+  it('should render a list with multiple items', async () => {
+    props.todos = [{
+      id: 1,
+      title: 'First Todo',
+      done: true,
+      comment: '',
+    }, {
+      id: 2,
+      title: 'Second Todo',
+      done: false,
+      comment: '',
+    }];
+
+    await act(async () => {
+      render(<MemoryRouter><List {...props} /></MemoryRouter>);
+    });
+
+    const emptyContainer = screen.queryByTestId('no-todos');
+    const listContainer = screen.getByTestId('todo-list');
+    const listItems = screen.getAllByTestId('listItem-container');
+    expect(listContainer).toBeInTheDocument();
+    expect(emptyContainer).toBeNull();
+    expect(listItems).toHaveLength(2);
+  });
+
   it('should contain the form to create a new item', () => {});
   it('should support inline editing', () => {});
   it('should only put one item in edit mode', () => {});
