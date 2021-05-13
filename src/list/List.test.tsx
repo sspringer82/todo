@@ -131,12 +131,12 @@ describe("List", () => {
     expect(inlineForm).toBeInTheDocument();
 
     await act(async () => {
-      fireEvent.click(screen.getByText('Second Todo'));
+      fireEvent.click(screen.getByText("Second Todo"));
     });
 
-    const notVisibleInlineForm = screen.queryByTestId('inline-form');
+    const notVisibleInlineForm = screen.queryByTestId("inline-form");
     expect(notVisibleInlineForm).toBeNull();
-    const visibleInlineForm = screen.getByTestId('inline-form-2');
+    const visibleInlineForm = screen.getByTestId("inline-form-2");
     expect(visibleInlineForm).toBeInTheDocument();
   });
 
@@ -164,33 +164,33 @@ describe("List", () => {
       );
     });
 
-    const inlineForm_0_0 = screen.getByTestId('inline-form');
+    const inlineForm_0_0 = screen.getByTestId("inline-form");
     expect(inlineForm_0_0).toBeInTheDocument();
-    const inlineForm_0_1 = screen.queryByTestId('inline-form-1');
+    const inlineForm_0_1 = screen.queryByTestId("inline-form-1");
     expect(inlineForm_0_1).toBeNull();
-    const inlineForm_0_2 = screen.queryByTestId('inline-form-2');
+    const inlineForm_0_2 = screen.queryByTestId("inline-form-2");
     expect(inlineForm_0_2).toBeNull();
 
     await act(async () => {
-      fireEvent.click(screen.getByText('First Todo'));
+      fireEvent.click(screen.getByText("First Todo"));
     });
 
-    const inlineForm_1_0 = screen.queryByTestId('inline-form');
+    const inlineForm_1_0 = screen.queryByTestId("inline-form");
     expect(inlineForm_1_0).toBeNull();
-    const inlineForm_1_1 = screen.getByTestId('inline-form-1');
+    const inlineForm_1_1 = screen.getByTestId("inline-form-1");
     expect(inlineForm_1_1).toBeInTheDocument();
-    const inlineForm_1_2 = screen.queryByTestId('inline-form-2');
+    const inlineForm_1_2 = screen.queryByTestId("inline-form-2");
     expect(inlineForm_1_2).toBeNull();
 
     await act(async () => {
-      fireEvent.click(screen.getByText('Second Todo'));
+      fireEvent.click(screen.getByText("Second Todo"));
     });
 
-    const inlineForm_2_0 = screen.queryByTestId('inline-form');
+    const inlineForm_2_0 = screen.queryByTestId("inline-form");
     expect(inlineForm_2_0).toBeNull();
-    const inlineForm_2_1 = screen.queryByTestId('inline-form-1');
+    const inlineForm_2_1 = screen.queryByTestId("inline-form-1");
     expect(inlineForm_2_1).toBeNull();
-    const inlineForm_2_2 = screen.getByTestId('inline-form-2');
+    const inlineForm_2_2 = screen.getByTestId("inline-form-2");
     expect(inlineForm_2_2).toBeInTheDocument();
   });
 
@@ -215,12 +215,43 @@ describe("List", () => {
     const inlineForm = screen.getByTestId("inline-form");
     expect(inlineForm).toBeInTheDocument();
 
-    await act (async () => {
-      fireEvent.click(screen.getByTestId('delete-button'));
+    await act(async () => {
+      fireEvent.click(screen.getByTestId("delete-button"));
     });
 
     expect(props.remove).toHaveBeenCalledWith(1);
   });
 
-  it("should be possible to change the state of an item", () => {});
+  it("should be possible to change the state of an item", async () => {
+    props.todos = [
+      {
+        id: 1,
+        title: "New Todo",
+        done: true,
+        comment: "",
+      },
+    ];
+
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <List {...props} />
+        </MemoryRouter>
+      );
+    });
+
+    const inlineForm = screen.getByTestId("inline-form");
+    expect(inlineForm).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(screen.getByTestId("done-button"));
+    });
+
+    expect(props.save).toHaveBeenCalledWith({
+      id: 1,
+      title: "New Todo",
+      done: false,
+      comment: "",
+    });
+  });
 });
