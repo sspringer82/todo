@@ -193,7 +193,34 @@ describe("List", () => {
     const inlineForm_2_2 = screen.getByTestId('inline-form-2');
     expect(inlineForm_2_2).toBeInTheDocument();
   });
-  
-  it("should support the removal of an item", () => {});
+
+  it("should support the removal of an item", async () => {
+    props.todos = [
+      {
+        id: 1,
+        title: "New Todo",
+        done: true,
+        comment: "",
+      },
+    ];
+
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <List {...props} />
+        </MemoryRouter>
+      );
+    });
+
+    const inlineForm = screen.getByTestId("inline-form");
+    expect(inlineForm).toBeInTheDocument();
+
+    await act (async () => {
+      fireEvent.click(screen.getByTestId('delete-button'));
+    });
+
+    expect(props.remove).toHaveBeenCalledWith(1);
+  });
+
   it("should be possible to change the state of an item", () => {});
 });
