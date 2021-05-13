@@ -84,7 +84,7 @@ describe("ListItem", () => {
       </BrowserRouter>
     );
     expect(queryByTestId('listItem-container')).toBeNull();
-    expect(getByTestId('inlineForm')).toBeInTheDocument();
+    expect(getByTestId('inline-form-1')).toBeInTheDocument();
   });
   it("should call onDelete, if delete is hit", () => {
     const { getByTestId } = render(

@@ -38,12 +38,12 @@ const List: React.FC<Props> = ({ todos, save, remove }) => {
   return (
     <>
       {todoContainer}
-      <InlineForm
+      {editMode === null && <InlineForm
         onSave={save}
         onCancel={() => {
           setEditMode(null);
         }}
-      />
+      />}
     </>
   );
 };

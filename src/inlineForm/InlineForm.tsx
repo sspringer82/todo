@@ -23,7 +23,7 @@ const InlineForm: React.FC<Props> = ({ todo, onSave, onCancel }) => {
   }, [todo, setItem]);
 
   return (
-    <form onSubmit={handleSubmit} data-testid="inlineForm" className="m-2 flex">
+    <form onSubmit={handleSubmit} data-testid={`inline-form${todo ? `-${todo.id}` : ''}`} className="m-2 flex">
       <Input
         label="Title"
         type="text"
