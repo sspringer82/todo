@@ -1,6 +1,6 @@
 import React from "react";
 import Done from '../done/Done';
-import Subtask from '../Subtask/Subtask';
+import Subtask from '../Subtask/Subtask.container';
 import { Todo, TodoInput } from '../Todo';
 
 export type Props = {

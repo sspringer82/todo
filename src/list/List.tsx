@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ListItem from "../listItem/ListItem";
 import InlineForm from "../inlineForm/InlineForm";
-import { Todo, TodoInput } from "../Todo";
+import { Todo, TodoInput, Subtask } from "../Todo";
 
 export type Props = {
-  todos: Todo[];
+  todos: Todo[] | Subtask[];
   save(todo: TodoInput): Promise<void>;
   remove(id: number): Promise<void>;
 };
@@ -20,7 +20,7 @@ const List: React.FC<Props> = ({ todos, save, remove }) => {
   if (todos.length > 0) {
     todoContainer = (
       <div data-testid="todo-list">
-        {todos.map((todo) => (
+        {todos.map((todo: Todo | Subtask) => (
           <ListItem
             canEdit={true}
             key={todo.id}

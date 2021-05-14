@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent } from "react";
-import Subtask from "../Subtask/Subtask";
+import Subtask from "../Subtask/Subtask.container";
 import { Todo, TodoInput } from "../Todo";
 
 export type Props = {
