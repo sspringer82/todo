@@ -17,7 +17,7 @@ const List: React.FC<Props> = ({ todos, save, remove }) => {
   }, [todos]);
 
   let todoContainer = <div data-testid="no-todos">Keine Aufgaben gefunden.</div>;
-  if (todos.length > 0) {
+  if (todos && todos.length > 0) {
     todoContainer = (
       <div data-testid="todo-list">
         {todos.map((todo: Todo | Subtask) => (
