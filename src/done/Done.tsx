@@ -26,9 +26,9 @@ const Done: React.FC<Props> = ({ todo, onSave }) => {
         data-testid="done-button"
       >
         {todo.done ? (
-          <CheckIcon style={{ color: "limegreen" }} />
+          <CheckIcon style={{ color: "limegreen" }} data-testid="done-done" />
         ) : (
-          <ClearIcon style={{ color: "red" }} />
+          <ClearIcon style={{ color: "red" }} data-testid="done-notdone" />
         )}
       </button>
     </div>
