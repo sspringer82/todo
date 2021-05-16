@@ -12,8 +12,8 @@ const Detail: React.FC<Props> = ({todo, onSave}) => {
   return (
     <div>
       { todo && <Done todo={todo} onSave={onSave} /> }
-      <div>{todo?.title}</div>
-      <div>{todo?.comment}</div>
+      <div data-testid="detail-title">{todo?.title}</div>
+      <div data-testid="detail-comment">{todo?.comment}</div>
       <Subtask todo={todo!} />
     </div>
   );
