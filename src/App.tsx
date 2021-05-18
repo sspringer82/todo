@@ -10,9 +10,7 @@ const App: React.FC = () => {
     <TodoProvider>
       <Router>
         <div className="flex">
-          <div>
-            <List />
-          </div>
+          <List />
           <div>
             <Switch>
               <Route path="/edit/:id">

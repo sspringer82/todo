@@ -2,6 +2,7 @@ import React from "react";
 import List, { Props } from "./List";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
+import { Route } from "react-router-dom";
 
 describe("List", () => {
   let props: Props;
@@ -15,7 +16,11 @@ describe("List", () => {
   });
 
   it("should render an empty list", () => {
-    const { getByTestId, queryByTestId } = render(<List {...props} />);
+    const { getByTestId, queryByTestId } = render(
+      <MemoryRouter>
+        <List {...props} />
+      </MemoryRouter>
+    );
     const emptyContainer = getByTestId("no-todos");
     const listContainer = queryByTestId("todo-list");
     expect(emptyContainer).toBeInTheDocument();
@@ -253,5 +258,52 @@ describe("List", () => {
       done: false,
       comment: "",
     });
+  });
+
+  it("should add classes to hide list in small breakpoint if edit/detail is shown", async () => {
+    props.todos = [
+      {
+        id: 1,
+        title: "New Todo",
+        done: true,
+        comment: "",
+      },
+    ];
+    await act(async () => {
+      render(
+        <MemoryRouter initialEntries={["/edit/1"]}>
+          <Route path="/edit/:id">
+            <List {...props} />
+          </Route>
+        </MemoryRouter>
+      );
+    });
+
+    const listContainer = screen.getByTestId('list-container');
+    expect(listContainer).toHaveClass('hidden');
+    expect(listContainer).toHaveClass('md:block');
+  });
+  it("should not add classes to hide list in small breakpoint if only list is shown", async () => {
+    props.todos = [
+      {
+        id: 1,
+        title: "New Todo",
+        done: true,
+        comment: "",
+      },
+    ];
+    await act(async () => {
+      render(
+        <MemoryRouter initialEntries={["/"]}>
+          <Route path="/">
+            <List {...props} />
+          </Route>
+        </MemoryRouter>
+      );
+    });
+
+    const listContainer = screen.getByTestId('list-container');
+    expect(listContainer).not.toHaveClass('hidden');
+    expect(listContainer).not.toHaveClass('md:block');
   });
 });
