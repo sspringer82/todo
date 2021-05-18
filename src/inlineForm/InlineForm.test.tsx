@@ -47,6 +47,25 @@ describe('InlineForm', () => {
     });
     expect(props.onCancel).toHaveBeenCalledWith();
   });
+
+  it('should clear the form if the cancel button is hit', () => {
+    act(() => {
+      render(<InlineForm {...props} />);
+    });
+
+    act(() => {
+      fireEvent.change(screen.getByTestId('title-input'), {
+        target: { value: 'New Todo' },
+      });
+    });
+    expect(screen.getByTestId('title-input')).toHaveValue('New Todo');
+
+    act(() => {
+      fireEvent.click(screen.getByTestId('cancel-button'));
+    });
+    expect(screen.getByTestId('title-input')).toHaveValue('');
+  });
+  
   it('should call onSave with a changed todo on edit', async () => {
     props.todo = {
       id: 1,

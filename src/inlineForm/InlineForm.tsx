@@ -38,7 +38,10 @@ const InlineForm: React.FC<Props> = ({ todo, onSave, onCancel }) => {
       </Button>
       <Button
         type="button"
-        onClick={() => onCancel()}
+        onClick={() => {
+          setItem(initialTodo);
+          onCancel();
+        }}
         data-testid="cancel-button"
         style={{marginLeft: 5}}
       >
