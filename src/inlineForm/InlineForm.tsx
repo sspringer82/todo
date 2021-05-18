@@ -31,7 +31,7 @@ const InlineForm: React.FC<Props> = ({ todo, onSave, onCancel }) => {
         value={item.title}
         name="title"
         data-testid="title-input"
-        style={{width: 239}}
+        style={{width: 230}}
       />
       <Button type="submit" data-testid="submit-button" variant="primary" style={{marginLeft: 5}}>
         save
