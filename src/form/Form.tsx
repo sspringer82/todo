@@ -1,6 +1,8 @@
 import React, { ChangeEvent, FormEvent } from "react";
+import { useHistory } from 'react-router-dom';
 import Subtask from "../Subtask/Subtask.container";
 import { Todo, TodoInput } from "../Todo";
+import Button from '../util/button/Button';
 
 export type Props = {
   todo: TodoInput,
@@ -9,6 +11,7 @@ export type Props = {
 }
 
 const Form: React.FC<Props> = ({todo, onSubmit, onChange }) => {
+  const history = useHistory();
   return (
     <>
       <form
@@ -53,6 +56,7 @@ const Form: React.FC<Props> = ({todo, onSubmit, onChange }) => {
         <button type="submit" data-testid="submit">save</button>
       </form>
       {todo.id && <Subtask todo={todo as Todo} />}
+      <Button onClick={() => history.push('/')}>close</Button>
     </>
   );
 };
