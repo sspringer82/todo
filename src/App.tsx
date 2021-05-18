@@ -9,15 +9,21 @@ const App: React.FC = () => {
   return (
     <TodoProvider>
       <Router>
-        <List />
-        <Switch>
-          <Route path="/edit/:id">
-            <Form />
-          </Route>
-          <Route path="/detail/:id">
-            <Detail />
-          </Route>
-        </Switch>
+        <div className="flex">
+          <div>
+            <List />
+          </div>
+          <div>
+            <Switch>
+              <Route path="/edit/:id">
+                <Form />
+              </Route>
+              <Route path="/detail/:id">
+                <Detail />
+              </Route>
+            </Switch>
+          </div>
+        </div>
       </Router>
     </TodoProvider>
   );
