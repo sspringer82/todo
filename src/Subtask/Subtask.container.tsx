@@ -1,15 +1,15 @@
 import React from 'react';
+import useSubtaskService from '../hooks/useSubtaskService';
 import List from '../list/List';
 import { Todo } from '../Todo';
-import useSubtaskService from '../useSubtaskService';
 
 type Props = {
-  todo: Todo
-}
+  todo: Todo;
+};
 
-const Subtask: React.FC<Props> = ({todo}) => {
+const Subtask: React.FC<Props> = ({ todo }) => {
   const { save, remove } = useSubtaskService();
-  return <List todos={todo.subtask!} save={save} remove={remove} />
-}
+  return <List todos={todo.subtask!} save={save} remove={remove} />;
+};
 
 export default Subtask;
