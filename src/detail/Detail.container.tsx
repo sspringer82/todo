@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useTodo } from '../TodoContext';
-import useTodoService from '../useTodoService';
+import useTodoService from '../hooks/useTodoService';
 import Detail from './Detail';
 
 const DetailContainer: React.FC = () => {
@@ -11,7 +11,7 @@ const DetailContainer: React.FC = () => {
 
   const todo = todos.find((todo) => todo.id === parseInt(id, 10));
 
-  return <Detail todo={todo!} onSave={save} />
-}
+  return <Detail todo={todo!} onSave={save} />;
+};
 
 export default DetailContainer;
