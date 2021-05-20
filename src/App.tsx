@@ -15,12 +15,12 @@ const App: React.FC = () => {
           <div>
             <Switch>
               <Route path="/edit/:id">
-                <Frame>
+                <Frame title="Edit">
                   <Form />
                 </Frame>
               </Route>
               <Route path="/detail/:id">
-                <Frame>
+                <Frame title="Detail">
                   <Detail />
                 </Frame>
               </Route>
