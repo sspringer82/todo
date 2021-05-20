@@ -10,7 +10,7 @@ const App: React.FC = () => {
   return (
     <TodoProvider>
       <Router>
-        <div className="flex">
+        <div className="flex flex-between gap-2 m-2">
           <List />
           <div>
             <Switch>
