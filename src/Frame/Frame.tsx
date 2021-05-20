@@ -1,39 +1,19 @@
-import React from 'react';
-import { colors } from '../colors';
+import React from "react";
+import Corner from "./Corner";
 
 const Form: React.FC = ({ children }) => {
   return (
-    <div>
-      <div className="flex justify-between">
-        <div className="flex">
-          <div
-            style={{
-              height: 5,
-              width: 5,
-              backgroundColor: colors.active,
-              paddingTop: 4,
-            }}
-          ></div>
-          <div
-            style={{ height: 1, width: 40, backgroundColor: colors.active }}
-          ></div>
-        </div>
-        <div className="flex">
-          <div
-            style={{ height: 1, width: 40, backgroundColor: colors.active }}
-          ></div>
-          <div
-            style={{
-              height: 5,
-              width: 5,
-              backgroundColor: colors.active,
-              paddingTop: 4,
-            }}
-          ></div>
-        </div>
+    <div className="relative">
+      <div className="relative" style={{ top: 0, height: 15 }}>
+        <Corner position="top-left" />
+        <Corner position="top-right" />
       </div>
-      {children}
-      <div></div>
+      <div style={{ paddingLeft: 10 }}>{children}</div>
+      <div className="relative" style={{ bottom: 0, height: 15 }}>
+        <Corner position="bottom-left" />
+        <Corner position="bottom-right" />
+        
+      </div>
     </div>
   );
 };
