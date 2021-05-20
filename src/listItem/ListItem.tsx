@@ -51,7 +51,7 @@ const ListItem: React.FC<Props> = ({
       );
     }
     return (
-      <div data-testid="listItem-container" className="flex mx-2">
+      <div data-testid="listItem-container" className="flex">
         <div
           onClick={() => onEnableEdit(todo.id)}
           data-testid="title"

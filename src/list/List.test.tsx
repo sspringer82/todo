@@ -47,9 +47,7 @@ describe("List", () => {
     });
 
     const emptyContainer = screen.queryByTestId("no-todos");
-    const listContainer = screen.getByTestId("todo-list");
     const listItems = screen.getAllByTestId("listItem-container");
-    expect(listContainer).toBeInTheDocument();
     expect(emptyContainer).toBeNull();
     expect(listItems).toHaveLength(1);
   });
@@ -79,9 +77,7 @@ describe("List", () => {
     });
 
     const emptyContainer = screen.queryByTestId("no-todos");
-    const listContainer = screen.getByTestId("todo-list");
     const listItems = screen.getAllByTestId("listItem-container");
-    expect(listContainer).toBeInTheDocument();
     expect(emptyContainer).toBeNull();
     expect(listItems).toHaveLength(2);
   });
@@ -281,7 +277,7 @@ describe("List", () => {
 
     const listContainer = screen.getByTestId('list-container');
     expect(listContainer).toHaveClass('hidden');
-    expect(listContainer).toHaveClass('md:block');
+    expect(listContainer).toHaveClass('md:flex');
   });
   it("should not add classes to hide list in small breakpoint if only list is shown", async () => {
     props.todos = [
