@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import Subtask from "../Subtask/Subtask.container";
 import { Todo, TodoInput } from "../Todo";
 import Button from "../util/button/Button";
+import {BottomDivider, Divider} from '../util/divider/Divider';
 import Input from "../util/input/Input";
 
 export type Props = {
@@ -23,7 +24,7 @@ const Form: React.FC<Props> = ({ todo, onSubmit, onChange }) => {
           value={todo.title}
           name="title"
           data-testid="title"
-          style={{width: '100%'}}
+          style={{ width: "100%" }}
         />
         <fieldset>
           <label>
@@ -48,12 +49,20 @@ const Form: React.FC<Props> = ({ todo, onSubmit, onChange }) => {
             ></textarea>
           </label>
         </fieldset>
-        <button type="submit" data-testid="submit">
+        <Button type="submit" data-testid="submit" variant="primary">
           save
-        </button>
+        </Button>
       </form>
-      {todo.id && <Subtask todo={todo as Todo} />}
-      <Button onClick={() => history.push("/")}>close</Button>
+      {todo.id && (
+        <>
+        <Divider containerStyle={{margin: '10px -10px'}}>Subtasks {todo && todo.subtask && todo.subtask?.length > 0 && `(${todo.subtask.length})`}</Divider>
+          <Subtask todo={todo as Todo} />
+        </>
+      )}
+
+        <BottomDivider containerStyle={{ margin: '10px -10px 15px -10px'}}/>
+
+      <Button style={{marginTop: 10}} onClick={() => history.push("/")}>close</Button>
     </>
   );
 };
