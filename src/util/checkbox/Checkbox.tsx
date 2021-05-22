@@ -26,10 +26,7 @@ const Checkbox: React.FC<Props> = (props) => {
         aria-checked={props.checked}
         data-testid={props["data-testid"]}
         onClick={() => {
-          props.onChange!({
-            type: "checkboxEvent",
-            target: { checked: !props.checked, name: props.name, value: "" },
-          });
+          props.onChange!(new CheckboxChangeEvent(props.name, !props.checked));
         }}
       >
         {props.checked ? (
@@ -44,11 +41,15 @@ const Checkbox: React.FC<Props> = (props) => {
 
 export default Checkbox;
 
-export type CheckboxChangeEvent = {
-  target: {
-    name: string;
-    checked: boolean;
-    value: string;
+export class CheckboxChangeEvent {
+  type = "checkboxEvent";
+  target = {
+    checked: false,
+    name: "",
+    value: "",
   };
-  type: "checkboxEvent";
-};
+  constructor(name: string, checked: boolean) {
+    this.target.name = name;
+    this.target.checked = checked;
+  }
+}
