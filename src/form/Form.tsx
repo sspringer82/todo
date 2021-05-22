@@ -4,7 +4,8 @@ import Subtask from "../Subtask/Subtask.container";
 import { Todo, TodoInput } from "../Todo";
 import Button from "../util/button/Button";
 import Checkbox, { CheckboxChangeEvent } from "../util/checkbox/Checkbox";
-import { BottomDivider, Divider } from "../util/divider/Divider";
+import { BottomDivider } from "../util/divider/Divider";
+import SubtaskDivider from '../util/divider/SubtaskDivider';
 import Input from "../util/input/Input";
 import Textarea from "../util/textarea/Textarea";
 
@@ -57,13 +58,7 @@ const Form: React.FC<Props> = ({ todo, onSubmit, onChange }) => {
       </form>
       {todo.id && (
         <>
-          <Divider containerStyle={{ margin: "10px -10px" }}>
-            Subtasks{" "}
-            {todo &&
-              todo.subtask &&
-              todo.subtask?.length > 0 &&
-              `(${todo.subtask.length})`}
-          </Divider>
+          <SubtaskDivider todo={todo} />
           <Subtask todo={todo as Todo} />
         </>
       )}

@@ -4,6 +4,7 @@ import Done from "../done/Done";
 import Subtask from "../Subtask/Subtask.container";
 import { Todo, TodoInput } from "../Todo";
 import Button from "../util/button/Button";
+import SubtaskDivider from '../util/divider/SubtaskDivider';
 
 export type Props = {
   todo: Todo;
@@ -21,6 +22,7 @@ const Detail: React.FC<Props> = ({ todo, onSave }) => {
       {todo && todo.comment && (
         <div data-testid="detail-comment" style={{maxWidth: 422}}>{todo?.comment}</div>
       )}
+      <SubtaskDivider todo={todo} />
       {todo && todo.subtask && todo.subtask.length > 0 ? (
         <Subtask todo={todo!} />
       ) : (
