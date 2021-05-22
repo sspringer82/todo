@@ -21,7 +21,7 @@ const Done: React.FC<Props> = ({ todo, onSave }) => {
   return (
     <div>
       <button
-        className="focus:outline-none"
+        className="focus:outline-none relative"
         onClick={() => handleStatusToggle(todo)}
         data-testid="done-button"
       >
