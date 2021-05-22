@@ -29,7 +29,7 @@ export default function useSubtaskService(): ReturnValue {
 
       setTodos((prevTodos) =>
         produce(prevTodos, (draftTodos) => {
-          const todo = draftTodos.find((todo) => (todo.id = subtask.todoId));
+          const todo = draftTodos.find((todo) => (todo.id === subtask.todoId));
           if (method === 'POST') {
             todo?.subtask?.push(data);
           } else {
