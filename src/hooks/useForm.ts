@@ -1,23 +1,25 @@
 import { ChangeEvent, Dispatch, FormEvent, SetStateAction, useState } from "react";
 import produce from "immer";
+import { CheckboxChangeEvent } from '../util/checkbox/Checkbox';
 
 export default function useForm<T>(
   initialValue: T,
   onSave?: (item: T) => Promise<void>
 ): {
-  handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | CheckboxChangeEvent) => void;
   handleSubmit: (e: FormEvent) => Promise<void>;
   setItem: Dispatch<SetStateAction<T>>;
   item: T;
 } {
   const [item, setItem] = useState<T>(initialValue);
   
-  function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    let value: string | boolean = e.target.value;
+  function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | CheckboxChangeEvent) {
+    let value: string | boolean;
     const name = e.target.name as keyof T;
-
-    if (e.target.type === 'checkbox') {
-      value = (e.target as HTMLInputElement).checked;
+    if (e.type === 'checkboxEvent') {
+      value = (e as CheckboxChangeEvent).target.checked;
+    } else {
+      value = e.target.value;
     }
 
     setItem((prevState) =>

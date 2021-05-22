@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import Subtask from "../Subtask/Subtask.container";
 import { Todo, TodoInput } from "../Todo";
 import Button from "../util/button/Button";
+import Checkbox, { CheckboxChangeEvent } from '../util/checkbox/Checkbox';
 import { BottomDivider, Divider } from "../util/divider/Divider";
 import Input from "../util/input/Input";
 import Textarea from "../util/textarea/Textarea";
@@ -10,7 +11,7 @@ import Textarea from "../util/textarea/Textarea";
 export type Props = {
   todo: TodoInput;
   onSubmit: (e: FormEvent) => Promise<void>;
-  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | CheckboxChangeEvent) => void;
 };
 
 const Form: React.FC<Props> = ({ todo, onSubmit, onChange }) => {
@@ -27,18 +28,10 @@ const Form: React.FC<Props> = ({ todo, onSubmit, onChange }) => {
           data-testid="title"
           style={{ width: "100%" }}
         />
-        <fieldset>
-          <label>
-            Done:{" "}
-            <input
-              type="checkbox"
-              name="done"
+        <Checkbox label="Done" name="done"
               checked={todo.done}
               onChange={onChange}
-              data-testid="done"
-            />
-          </label>
-        </fieldset>
+              data-testid="done" />
         <Textarea
           style={{ width: "100%" }}
           name="comment"
