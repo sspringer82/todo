@@ -13,6 +13,11 @@ describe('InlineForm', () => {
     };
   });
 
+  it("should perform a snapshot test", () => {
+    const {container} = render(<InlineForm {...props} />);
+    expect(container).toMatchSnapshot();
+  });
+
   it('should show an empty form if no todo is handed over', () => {
     const { getByTestId } = render(<InlineForm {...props} />);
     expect(getByTestId('title-input')).toHaveValue('');
