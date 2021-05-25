@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form should perform a snapshot test 1`] = `
+<div>
+  <form
+    autocomplete="off"
+    class="flex flex-col gap-4"
+  >
+    <div
+      class="border relative p-1"
+      style="border-color: #34d399;"
+    >
+      <label
+        class="absolute bg-gray-800 text-xs px-1"
+        style="top: -12px; left: 0px; color: rgb(52, 211, 153);"
+      >
+        Title
+      </label>
+      <input
+        class="bg-gray-900 py-1 pl-1 focus:outline-none"
+        data-testid="title"
+        label="Title"
+        name="title"
+        style="width: 100%;"
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      class="border relative p-1"
+      style="border-color: #34d399;"
+    >
+      <label
+        class="absolute bg-gray-800 text-xs px-1"
+        style="top: -12px; left: 0px; color: rgb(52, 211, 153);"
+      >
+        Done
+      </label>
+      <div
+        aria-checked="false"
+        data-testid="done"
+        role="checkbox"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root"
+          focusable="false"
+          style="color: red;"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="border relative p-1"
+      style="border-color: #34d399;"
+    >
+      <label
+        class="absolute bg-gray-800 text-xs px-1"
+        style="top: -12px; left: 0px; color: rgb(52, 211, 153);"
+      >
+        Comment
+      </label>
+      <textarea
+        class="bg-gray-900 py-1 pl-1 focus:outline-none"
+        data-testid="comment"
+        label="Comment"
+        name="comment"
+        style="margin-bottom: -7px; width: 100%;"
+      />
+    </div>
+    <div>
+      <button
+        class="px-5 py-1 bg-opacity-25 focus:outline-none border"
+        data-testid="submit"
+        style="border-color: #34d399; background-color: rgba(52, 211, 153, 0.25);"
+        type="submit"
+        variant="primary"
+      >
+        save
+      </button>
+    </div>
+  </form>
+  <div
+    class="flex"
+    style="margin: 10px -10px 15px -10px;"
+  >
+    <div
+      style="height: 5px; width: 5px; background-color: rgb(52, 211, 153);"
+    />
+    <div
+      style="margin-top: 4px; height: 0px; border-top: 1px solid #34D399; flex-grow: 1;"
+    />
+    <div
+      style="margin-top: 4px; margin-left: 7px; margin-right: 10px; height: 8px; width: 16px; background-color: rgb(52, 211, 153); transform: skew(70deg);"
+    />
+    <div
+      style="height: 0px; border-top: 1px solid #34D399; flex-grow: 2; margin-top: 11px;"
+    />
+    <div
+      style="margin-top: 4px; margin-left: 7px; margin-right: 10px; height: 8px; width: 16px; background-color: rgb(52, 211, 153); transform: skew(-70deg);"
+    />
+    <div
+      style="height: 0px; border-top: 1px solid #34D399; flex-grow: 1; margin-top: 4px;"
+    />
+    <div
+      style="height: 5px; width: 5px; background-color: rgb(52, 211, 153);"
+    />
+  </div>
+  <button
+    class="px-5 py-1 bg-opacity-25 focus:outline-none border"
+    style="border-color: #34d399; margin-top: 10px;"
+  >
+    close
+  </button>
+</div>
+`;

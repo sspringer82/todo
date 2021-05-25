@@ -6,7 +6,14 @@ import Form from './Form.container';
 describe('Form', () => {
   beforeEach(() => {
     fetchMock.resetMocks();
-  })
+  });
+
+  it("should perform a snapshot test", () => {
+    const {container} = render(<MemoryRouter>
+      <Form></Form>
+    </MemoryRouter>);
+    expect(container).toMatchSnapshot();
+  });
 
   it('should render an empty form', async () => {
     act(() => {render(<MemoryRouter>
