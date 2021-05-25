@@ -15,6 +15,13 @@ describe("List", () => {
     };
   });
 
+  it("should perform a snapshot test", () => {
+    const {container} = render(<MemoryRouter>
+      <List {...props} />
+    </MemoryRouter>);
+    expect(container).toMatchSnapshot();
+  });
+
   it("should render an empty list", () => {
     const { getByTestId, queryByTestId } = render(
       <MemoryRouter>
