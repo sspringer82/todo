@@ -1,17 +1,30 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import Done from './Done';
+import Done, { Props } from './Done';
+import { Todo } from '../Todo';
 
 describe('Done', () => {
+
+  let props: Props;
+
+  beforeEach(() => {
+    props = {
+      onSave: jest.fn(),
+      todo:  {
+        id: 1,
+        title: 'Test',
+        done: false
+      }
+    }
+  });
+
+  it("should perform a snapshot test", () => {
+    const {container} = render(<Done {...props} />);
+    expect(container).toMatchSnapshot();
+  });
+
   it('should toggle a not done task to done', () => {
-    const todo = {
-      id: 1,
-      title: 'Test',
-      done: false
-    };
-    const onSave = jest.fn();
-    
-    const {getByTestId} = render(<Done todo={todo} onSave={onSave} />);
+    const {getByTestId} = render(<Done {...props} />);
     fireEvent.click(getByTestId('done-button'));
 
     const expected = {
@@ -19,18 +32,13 @@ describe('Done', () => {
       title: 'Test',
       done: true
     }
-    expect(onSave).toHaveBeenCalledWith(expected);
+    expect(props.onSave).toHaveBeenCalledWith(expected);
   });
 
   it('should toggle a done task to not done', () => {
-    const todo = {
-      id: 1,
-      title: 'Test',
-      done: true
-    };
-    const onSave = jest.fn();
+    props.todo.done = true;
     
-    const {getByTestId} = render(<Done todo={todo} onSave={onSave} />);
+    const {getByTestId} = render(<Done {...props} />);
     fireEvent.click(getByTestId('done-button'));
 
     const expected = {
@@ -38,18 +46,13 @@ describe('Done', () => {
       title: 'Test',
       done: false
     }
-    expect(onSave).toHaveBeenCalledWith(expected);
+    expect(props.onSave).toHaveBeenCalledWith(expected);
   });
 
   it('should have the done icon if done', () => {
-    const todo = {
-      id: 1,
-      title: 'Test',
-      done: true
-    };
-    const onSave = jest.fn();
+    props.todo.done = true;
     
-    const {getByTestId, queryByTestId} = render(<Done todo={todo} onSave={onSave} />);
+    const {getByTestId, queryByTestId} = render(<Done {...props} />);
 
     const done = getByTestId('done-done');
     const notDone = queryByTestId('done-notdone');
@@ -59,14 +62,7 @@ describe('Done', () => {
   });
 
   it('should have the notdone icon if notdone', () => {
-    const todo = {
-      id: 1,
-      title: 'Test',
-      done: false
-    };
-    const onSave = jest.fn();
-    
-    const {getByTestId, queryByTestId} = render(<Done todo={todo} onSave={onSave} />);
+    const {getByTestId, queryByTestId} = render(<Done {...props} />);
 
     const notDone = getByTestId('done-notdone');
     const done = queryByTestId('done-done');
