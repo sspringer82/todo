@@ -1,6 +1,7 @@
 import React from "react";
-import { colors } from '../colors';
-import Corner from "./Corner";
+import { colors } from '../../colors';
+import Corner from './Corner';
+
 
 type Props = {
   title: string;
@@ -18,7 +19,6 @@ const Form: React.FC<Props> = ({ children, title }) => {
       <div className="relative" style={{ bottom: 0, height: 15 }}>
         <Corner position="bottom-left" />
         <Corner position="bottom-right" />
-        
       </div>
     </div>
   );

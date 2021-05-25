@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { colors } from "../colors";
+import { colors } from "../../colors";
 
 type Props = {
   position: "top-left" | "top-right" | "bottom-left" | "bottom-right";

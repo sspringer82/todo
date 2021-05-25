@@ -4,7 +4,7 @@ import Form from './form/Form.container';
 import { TodoProvider } from './TodoContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Detail from './detail/Detail.container';
-import Frame from './Frame/Frame';
+import Frame from './util/frame/Frame';
 
 const App: React.FC = () => {
   return (
