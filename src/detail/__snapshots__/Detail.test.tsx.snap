@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Detail should perform a snapshot test 1`] = `
+<div>
+  <div
+    class="flex flex-col gap-4"
+  >
+    <div
+      class="flex"
+    >
+      <div>
+        <button
+          class="focus:outline-none relative"
+          data-testid="done-button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root"
+            data-testid="done-done"
+            focusable="false"
+            style="color: limegreen;"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        data-testid="detail-title"
+      >
+        New Todo
+      </div>
+    </div>
+    <div
+      data-testid="detail-comment"
+      style="max-width: 422px;"
+    >
+      Todo Comment
+    </div>
+    <div
+      class="flex mb-2"
+      style="margin: 10px -10px;"
+    >
+      <div
+        style="height: 5px; width: 5px; background-color: rgb(52, 211, 153); margin-top: 18px;"
+      />
+      <div
+        style="height: 0px; border-top: 1px solid #34D399; flex-grow: 1; margin-top: 18px;"
+      />
+      <div
+        style="margin-top: 11px; margin-left: 7px; margin-right: 10px; height: 8px; width: 16px; background-color: rgb(52, 211, 153); transform: skew(-70deg);"
+      />
+      <div
+        style="height: 0px; border-top: 1px solid #34D399; flex-grow: 1; margin-top: 11px;"
+      />
+      <div
+        class="mx-2"
+        style="color: rgb(52, 211, 153);"
+      >
+        Subtasks
+         
+      </div>
+      <div
+        style="height: 0px; border-top: 1px solid #34D399; flex-grow: 1; margin-top: 11px;"
+      />
+      <div
+        style="margin-top: 11px; margin-left: 7px; margin-right: 10px; height: 8px; width: 16px; background-color: rgb(52, 211, 153); transform: skew(70deg);"
+      />
+      <div
+        style="height: 0px; border-top: 1px solid #34D399; flex-grow: 1; margin-top: 18px;"
+      />
+      <div
+        style="height: 5px; width: 5px; background-color: rgb(52, 211, 153); margin-top: 18px;"
+      />
+    </div>
+    <div
+      data-testid="detail-nosubtasks"
+    >
+      Keine Unteraufgaben
+    </div>
+    <div>
+      <button
+        class="px-5 py-1 bg-opacity-25 focus:outline-none border"
+        style="border-color: #34d399;"
+      >
+        close
+      </button>
+    </div>
+  </div>
+</div>
+`;

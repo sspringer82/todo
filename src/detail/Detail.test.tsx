@@ -12,6 +12,11 @@ describe("Detail", () => {
     };
   });
 
+  it("should perform a snapshot test", () => {
+    const {container} = render(<Detail {...props} />);
+    expect(container).toMatchSnapshot();
+  })
+
   it("should render details of a todo", async () => {
     const { getByTestId } = render(<Detail {...props} />);
     const title = getByTestId("detail-title");
