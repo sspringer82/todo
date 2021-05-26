@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { colors, textColor } from '../colors';
+import { Todo } from '../Todo';
 
 type Props = {
-  done: boolean;
+  todo: Todo
 }
 
-const TitleBorderTop: React.FC<Props> = ({done}) => {
+const TitleBorderTop: React.FC<Props> = ({todo: {done}}) => {
   return (
     <div className="flex relative top-0">
       <div style={{ height: 5, width: 5, backgroundColor: done ? colors.inactive : colors.active }}></div>
@@ -40,7 +41,7 @@ const TitleBorderTop: React.FC<Props> = ({done}) => {
   );
 };
 
-const TitleBorderBottom: React.FC<Props> = ({done}) => {
+const TitleBorderBottom: React.FC<Props> = ({todo: {done}}) => {
   return (
     <div style={{ display: "flex", position: "relative", bottom: 0 }}>
       <div style={{ height: 5, width: 5, backgroundColor: done ? colors.inactive : colors.active }}></div>
@@ -83,17 +84,22 @@ const TitleBorderBottom: React.FC<Props> = ({done}) => {
   );
 };
 
-export const TitleContainer: React.FC<Props> = ({ children, done }) => {
+export const TitleContainer: React.FC<Props> = ({ todo }) => {
+  const backgroundColor = todo.done ? colors.inactive : colors.active;
+  const marginLeft = 10 +15;
   return (
     <div>
-      <TitleBorderTop done={done} />
-      <div style={{ marginLeft: 10, color: done ? textColor.inactive : textColor.active }} className="relative">{children}</div>
-      <TitleBorderBottom done={done} />
+      <TitleBorderTop todo={todo} />
+      <div className="flex">
+        {todo && <div style={{backgroundColor, height: 40, width: 15, top: 0 }} className="absolute"></div>}
+        <div style={{ marginLeft, color: todo.done ? textColor.inactive : textColor.active }} className="relative">{todo?.title}</div>
+      </div>
+      <TitleBorderBottom todo={todo} />
     </div>
   );
 };
 
-const ButtonContainerTop: React.FC<Props> = ({done}) => {
+const ButtonContainerTop: React.FC<Props> = ({todo: {done}}) => {
   return (
     <div className="flex relative">
       <div
@@ -124,7 +130,7 @@ const ButtonContainerTop: React.FC<Props> = ({done}) => {
   );
 };
 
-const ButtonContainerBottom: React.FC<Props> = ({done}) => {
+const ButtonContainerBottom: React.FC<Props> = ({todo: {done}}) => {
   return (
     <div className="flex relative bottom-0">
       <div
@@ -155,10 +161,10 @@ const ButtonContainerBottom: React.FC<Props> = ({done}) => {
   );
 };
 
-export const ButtonContainer: React.FC<Props> = ({children, done}) => {
+export const ButtonContainer: React.FC<Props> = ({children, todo}) => {
   return (
     <div style={{ marginLeft: 5 }} className="relative">
-      <ButtonContainerTop done={done} />
+      <ButtonContainerTop todo={todo} />
       <div className="relative">
         &nbsp;
         <div
@@ -171,12 +177,12 @@ export const ButtonContainer: React.FC<Props> = ({children, done}) => {
           {children}
         </div>
       </div>
-      <ButtonContainerBottom done={done} />
+      <ButtonContainerBottom todo={todo} />
     </div>
   );
 };
 
-const ActionsContainerTop: React.FC<Props> = ({done}) => {
+const ActionsContainerTop: React.FC<Props> = ({todo: {done}}) => {
   return (
     <div className="flex relative">
       <div
@@ -225,7 +231,7 @@ const ActionsContainerTop: React.FC<Props> = ({done}) => {
   );
 };
 
-const ActionsContainerBottom: React.FC<Props> = ({done}) => {
+const ActionsContainerBottom: React.FC<Props> = ({todo: {done}}) => {
   return (
     <div className="flex relative bottom-0">
       <div
@@ -281,14 +287,14 @@ const InnerButtonContainer: React.FC = ({children}) => {
   </div>
 }
 
-export const ActionsContainer: React.FC<{children: JSX.Element[]} & Props> = ({children, done}) => {
+export const ActionsContainer: React.FC<{children: JSX.Element[]} & Props> = ({children, todo}) => {
   return (
     <div style={{ marginLeft: 5 }} className="relative">
-      <ActionsContainerTop done={done} />
+      <ActionsContainerTop todo={todo} />
       <div className="flex">
         {children && children.map((child, i) => <InnerButtonContainer key={i}>{child}</InnerButtonContainer>)}
       </div>
-      <ActionsContainerBottom done={done} />
+      <ActionsContainerBottom todo={todo} />
     </div>
   );
 };

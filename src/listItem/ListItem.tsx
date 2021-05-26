@@ -7,7 +7,7 @@ import { ActionsContainer, ButtonContainer, TitleContainer } from "./Border";
 import DeleteIcon from "@material-ui/icons/Delete";
 import BuildIcon from "@material-ui/icons/Build";
 import SearchIcon from "@material-ui/icons/Search";
-import { textColor } from '../colors';
+import { colors, textColor } from '../colors';
 
 export type Props = {
   editModeEnabled: boolean;
@@ -55,16 +55,16 @@ const ListItem: React.FC<Props> = ({
         <div
           onClick={() => onEnableEdit(todo.id)}
           data-testid="title"
-          style={{ position: "relative" }}
+          style={{ position: "relative"}}
         >
-          <TitleContainer done={todo.done}>{todo.title}</TitleContainer>
+          <TitleContainer todo={todo} />
         </div>
 
-        <ButtonContainer done={todo.done}>
+        <ButtonContainer todo={todo}>
           <Done todo={todo} onSave={onSave} />
         </ButtonContainer>
 
-        <ActionsContainer done={todo.done}>{actions}</ActionsContainer>
+        <ActionsContainer todo={todo}>{actions}</ActionsContainer>
       </div>
     );
   }
