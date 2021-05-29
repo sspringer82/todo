@@ -31,7 +31,7 @@ const TitleBorderTop: React.FC<Props> = ({ todo: { done } }) => {
           height: 8,
           width: 16,
           backgroundColor: done ? colors.inactive : colors.active,
-          transform: "skew(70deg)",
+          transform: 'skew(70deg)',
         }}
       ></div>
       <div
@@ -80,7 +80,7 @@ const TitleBorderBottom: React.FC<Props> = ({ todo: { done } }) => {
           height: 8,
           width: 16,
           backgroundColor: done ? colors.inactive : colors.active,
-          transform: "skew(70deg)",
+          transform: 'skew(70deg)',
         }}
       ></div>
       <div
@@ -246,7 +246,7 @@ const ActionsContainerTop: React.FC<Props> = ({ todo: { done } }) => {
           height: 8,
           width: 16,
           backgroundColor: done ? colors.inactive : colors.active,
-          transform: "skew(-70deg)",
+          transform: 'skew(-70deg)',
         }}
       ></div>
       <div
@@ -296,7 +296,7 @@ const ActionsContainerBottom: React.FC<Props> = ({ todo: { done } }) => {
           height: 8,
           width: 16,
           backgroundColor: done ? colors.inactive : colors.active,
-          transform: "skew(-70deg)",
+          transform: 'skew(-70deg)',
         }}
       ></div>
       <div
