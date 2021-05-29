@@ -21,7 +21,7 @@ const TitleBorderTop: React.FC<Props> = ({ todo: { done } }) => {
         style={{
           width: 100,
           height: 1,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: done ? colors.inactive : colors.active, 
         }}
       ></div>
       <div
