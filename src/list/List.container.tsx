@@ -7,7 +7,7 @@ const List: React.FC = () => {
   useEffect(() => {
     getAll();
   }, [getAll]);
-  return <ListComponent todos={todos} save={save} remove={remove} />;
+  return <ListComponent todos={todos} save={save} remove={remove} canEdit={true} />;
 };
 
 export default List;

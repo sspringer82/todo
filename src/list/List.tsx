@@ -5,12 +5,13 @@ import { Todo, TodoInput, Subtask } from "../Todo";
 import { useLocation } from "react-router-dom";
 
 export type Props = {
+  canEdit: boolean;
   todos: Todo[] | Subtask[];
   save(todo: TodoInput): Promise<void>;
   remove(id: number): Promise<void>;
 };
 
-const List: React.FC<Props> = ({ todos, save, remove }) => {
+const List: React.FC<Props> = ({ todos, save, remove, canEdit }) => {
   const location = useLocation();
   const [editMode, setEditMode] = useState<number | null>(null);
 
@@ -22,7 +23,7 @@ const List: React.FC<Props> = ({ todos, save, remove }) => {
   if (todos && todos.length > 0) {
     todoContent = todos.map((todo: Todo | Subtask) => (
       <ListItem
-        canEdit={true}
+        canEdit={canEdit}
         key={todo.id}
         todo={todo}
         onDelete={remove}

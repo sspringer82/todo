@@ -9,7 +9,7 @@ type Props = {
 
 const Subtask: React.FC<Props> = ({ todo }) => {
   const { save, remove } = useSubtaskService();
-  return <List todos={todo.subtask!} save={save} remove={remove} />;
+  return <List todos={todo.subtask!} save={save} remove={remove} canEdit={false} />;
 };
 
 export default Subtask;
