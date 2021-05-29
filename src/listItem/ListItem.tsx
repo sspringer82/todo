@@ -7,7 +7,7 @@ import { ActionsContainer, ButtonContainer, TitleContainer } from "./Border";
 import DeleteIcon from "@material-ui/icons/Delete";
 import BuildIcon from "@material-ui/icons/Build";
 import SearchIcon from "@material-ui/icons/Search";
-import { colors, textColor } from '../colors';
+import { textColor } from '../colors';
 
 export type Props = {
   editModeEnabled: boolean;

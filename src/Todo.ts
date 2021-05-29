@@ -2,6 +2,8 @@ export type Todo = {
     id: number,
     title: string,
     done: boolean,
+    category?: string,
+    color?: string,
     comment?: string,
     subtask?: Subtask[]
 };

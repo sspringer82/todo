@@ -5,7 +5,7 @@ import { Todo, TodoInput } from "../Todo";
 import Button from "../util/button/Button";
 import Checkbox, { CheckboxChangeEvent } from "../util/checkbox/Checkbox";
 import { BottomDivider } from "../util/divider/Divider";
-import SubtaskDivider from '../util/divider/SubtaskDivider';
+import SubtaskDivider from "../util/divider/SubtaskDivider";
 import Input from "../util/input/Input";
 import Textarea from "../util/textarea/Textarea";
 
@@ -33,8 +33,26 @@ const Form: React.FC<Props> = ({ todo, onSubmit, onChange }) => {
           value={todo.title}
           name="title"
           data-testid="title"
-          style={{ width: "100%" }}
         />
+        <div className="flex">
+          <Input
+            label="Category"
+            type="text"
+            onChange={onChange}
+            value={todo.category}
+            name="category"
+            data-testid="category"
+            style={{ width: "100%" }}
+          />
+          <Input
+            label="Color"
+            type="color"
+            onChange={onChange}
+            value={todo.color}
+            name="color"
+            data-testid="color"
+          />
+        </div>
         <Checkbox
           label="Done"
           name="done"
