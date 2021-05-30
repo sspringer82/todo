@@ -40,6 +40,10 @@ describe('InlineForm', () => {
       title: 'New Todo',
       done: false,
       comment: '',
+      category: {
+        color: '',
+        title: ''
+      }
     });
   });
   it('should call onCancel if the cancel button is hit', () => {

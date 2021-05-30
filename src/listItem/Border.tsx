@@ -104,20 +104,20 @@ const TitleBorderBottom: React.FC<Props> = ({ todo: { done } }) => {
 };
 
 export const TitleContainer: React.FC<Props> = ({ todo }) => {
-  const backgroundColor = todo.color ? todo.color : "rgb(31, 41, 55)";
+  const backgroundColor = todo.category?.color ? todo.category?.color : "rgb(31, 41, 55)";
   const marginLeft = 10 ;
   return (
     <div>
       <TitleBorderTop todo={todo} />
-      <div className="flex">
-        {todo && (
+      <div className="flex"> 
+        {todo && ( 
           <div
             style={{
               height: 31,
               width: 5,
               top: 5,
               backgroundColor,
-              zIndex: todo.color ? 100 : 0,
+              zIndex: todo.category?.color ? 100 : 0,
             }}
             className="absolute"
           ></div>

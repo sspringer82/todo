@@ -39,7 +39,7 @@ const Form: React.FC<Props> = ({ todo, onSubmit, onChange }) => {
             label="Category"
             type="text"
             onChange={onChange}
-            value={todo.category}
+            value={todo.category?.title}
             name="category"
             data-testid="category"
             style={{ width: "100%" }}
@@ -48,7 +48,7 @@ const Form: React.FC<Props> = ({ todo, onSubmit, onChange }) => {
             label="Color"
             type="color"
             onChange={onChange}
-            value={todo.color}
+            value={todo.category?.color}
             name="color"
             data-testid="color"
           />

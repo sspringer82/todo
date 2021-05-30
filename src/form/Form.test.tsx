@@ -33,7 +33,13 @@ describe("Form", () => {
   it("should load an existing entry into the form", async () => {
     (fetch as any).mockResponse(
       JSON.stringify([
-        { id: 1, title: "first todo", done: true, comment: "comment" },
+        {
+          id: 1,
+          title: "first todo",
+          done: true,
+          comment: "comment",
+          category: { id: 1, title: "Private", color: "green" },
+        },
       ])
     );
     await act(async () => {
@@ -71,7 +77,13 @@ describe("Form", () => {
     expect(screen.getByTestId("comment")).toHaveValue("New Comment");
     (fetch as any).mockResponse(
       JSON.stringify([
-        { id: 1, title: "New Title", done: true, comment: "New Comment" },
+        {
+          id: 1,
+          title: "New Title",
+          done: true,
+          comment: "New Comment",
+          category: { id: 1, title: "Private", color: "green" },
+        },
       ])
     );
     await act(async () => {
@@ -94,6 +106,7 @@ describe("Form", () => {
           title: "Existing Todo",
           done: true,
           comment: "Existing Comment",
+          category: { id: 1, title: "Private", color: "green" },
         },
       ])
     );
@@ -130,6 +143,7 @@ describe("Form", () => {
           title: "Existing Todo Modified",
           done: false,
           comment: "Existing Comment Modified",
+          category: { id: 1, title: "Private", color: "green" },
         },
       ])
     );
@@ -152,11 +166,13 @@ describe("Form", () => {
         title: "Get up",
         done: true,
         subtasks: [],
+        category: { id: 1, title: "Private", color: "green" },
       },
       {
         id: 2,
         title: "Eat",
         done: true,
+        category: { id: 1, title: "Private", color: "green" },
         subtasks: [
           {
             id: 1,
@@ -177,6 +193,7 @@ describe("Form", () => {
         title: "Sleep",
         done: false,
         subtasks: [],
+        category: { id: 1, title: "Private", color: "green" },
       },
     ];
 
