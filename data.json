@@ -3,25 +3,20 @@
     {
       "id": 1,
       "title": "Get up",
-      "done": true
+      "done": true,
+      "category": 1
     },
     {
       "id": 2,
       "title": "Eat",
       "done": true,
-      "subtask": []
+      "category": 1
     },
     {
       "id": 3,
       "title": "Sleep",
       "done": false,
-      "subtask": [
-        {
-          "id": 3,
-          "title": "close eyes",
-          "todoId": 3
-        }
-      ]
+      "category": 2
     }
   ],
   "subtask": [
@@ -40,5 +35,9 @@
       "title": "close eyes",
       "todoId": 3
     }
+  ],
+  "category": [
+    {"id": 1, "title": "Work", "color": "blue"},
+    {"id": 2, "title": "Private", "color": "red"}
   ]
 }
