@@ -11,9 +11,9 @@ const SubtaskDivider: React.FC<Props> = ({ todo }) => {
     <Divider containerStyle={{ margin: "10px -10px" }}>
       Subtasks{" "}
       {todo &&
-        todo.subtask &&
-        todo.subtask?.length > 0 &&
-        `(${todo.subtask.length})`}
+        todo.subtasks &&
+        todo.subtasks?.length > 0 &&
+        `(${todo.subtasks.length})`}
     </Divider>
   );
 };

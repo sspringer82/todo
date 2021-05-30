@@ -1,25 +1,25 @@
 {
-  "todo": [
+  "todos": [
     {
       "id": 1,
       "title": "Get up",
       "done": true,
-      "category": 1
+      "categoryId": 1
     },
     {
       "id": 2,
       "title": "Eat",
       "done": true,
-      "category": 1
+      "categoryId": 1
     },
     {
       "id": 3,
       "title": "Sleep",
       "done": false,
-      "category": 2
+      "categoryId": 2
     }
   ],
-  "subtask": [
+  "subtasks": [
     {
       "id": 1,
       "title": "turn off alarm",
@@ -36,7 +36,7 @@
       "todoId": 3
     }
   ],
-  "category": [
+  "categories": [
     {"id": 1, "title": "Work", "color": "blue"},
     {"id": 2, "title": "Private", "color": "red"}
   ]

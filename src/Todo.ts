@@ -5,7 +5,7 @@ export type Todo = {
     category?: string,
     color?: string,
     comment?: string,
-    subtask?: Subtask[]
+    subtasks?: Subtask[]
 };
 
 export type TodoInput = {id?: number} & Omit<Todo, 'id'>;

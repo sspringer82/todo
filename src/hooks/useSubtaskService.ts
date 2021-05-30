@@ -31,13 +31,13 @@ export default function useSubtaskService(): ReturnValue {
         produce(prevTodos, (draftTodos) => {
           const todo = draftTodos.find((todo) => (todo.id === subtask.todoId));
           if (method === 'POST') {
-            todo?.subtask?.push(data);
+            todo?.subtasks?.push(data);
           } else {
-            const subtaskIndex = todo?.subtask?.findIndex(
+            const subtaskIndex = todo?.subtasks?.findIndex(
               (subtask) => subtask.id === data.id,
             );
-            if (todo && todo.subtask && subtaskIndex !== undefined) {
-              todo.subtask[subtaskIndex] = data;
+            if (todo && todo.subtasks && subtaskIndex !== undefined) {
+              todo.subtasks[subtaskIndex] = data;
             }
           }
         }),
@@ -49,14 +49,14 @@ export default function useSubtaskService(): ReturnValue {
       setTodos((prevTodos) =>
         produce(prevTodos, (draftTodos) => {
           const todo = draftTodos.find((todo) =>
-            todo?.subtask?.some((subtask) => subtask.id === id),
+            todo?.subtasks?.some((subtask) => subtask.id === id),
           );
-          const subtaskIndex = todo?.subtask?.findIndex(
+          const subtaskIndex = todo?.subtasks?.findIndex(
             (subtask) => subtask.id === id,
           );
 
           if (subtaskIndex) {
-            todo?.subtask?.splice(subtaskIndex, 1);
+            todo?.subtasks?.splice(subtaskIndex, 1);
           }
         }),
       );

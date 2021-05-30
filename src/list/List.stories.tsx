@@ -35,7 +35,7 @@ WithSubtask.args = {
     title: 'Test',
     done: true, 
     comment: 'Test comment',
-    subtask: [
+    subtasks: [
       {
         id: 1,
         title: 'Foo',

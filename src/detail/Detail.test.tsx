@@ -29,7 +29,7 @@ describe("Detail", () => {
     expect(noSubtasks).toBeInTheDocument();
   });
   it("should render details of a todo with subtasks", () => {
-    props.todo.subtask = [
+    props.todo.subtasks = [
       {
         id: 11,
         done: true,

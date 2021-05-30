@@ -28,7 +28,7 @@ WithSubtask.args = {
     id: 1,
     title: 'Test',
     done: true,
-    subtask: [
+    subtasks: [
       {id: 1, title: 'Subtask1', done: true, todoId: 1},
       {id: 2, title: 'Subtask2', done: false, todoId: 1},
       {id: 3, title: 'Subtask3', done: false, todoId: 1}

@@ -23,7 +23,7 @@ const Detail: React.FC<Props> = ({ todo, onSave }) => {
         <div data-testid="detail-comment" style={{maxWidth: 422}}>{todo?.comment}</div>
       )}
       <SubtaskDivider todo={todo} />
-      {todo && todo.subtask && todo.subtask.length > 0 ? (
+      {todo && todo.subtasks && todo.subtasks.length > 0 ? (
         <Subtask todo={todo!} />
       ) : (
         <div data-testid="detail-nosubtasks">Keine Unteraufgaben</div>
