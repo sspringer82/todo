@@ -9,15 +9,27 @@ const config = {
         return '';
       },
       get(): string {
-        return `http://localhost:3001/todos${this.appendExtension()}`;
+        return `${process.env.REACT_APP_BACKEND_URL}/todos${this.appendExtension()}`;
       }, getOne(id: number): string {
-        return `http://localhost:3001/todos/${id}${this.appendExtension()}`;
-      }, create() {
+        return `${process.env.REACT_APP_BACKEND_URL}/todos/${id}${this.appendExtension()}`;
+      }, create(): string {
         return this.get();
       }, edit(id: number): string {
         return this.getOne(id);
       }, delete(id: number): string {
         return this.getOne(id);
+      }
+    },
+    "subtask": {
+      base(): string {
+        return 'http://localhost:3001/subtask';
+      },
+      create(): string {
+        return this.base();
+      }, edit(id: number): string {
+        return `${this.base()}/${id}`;
+      }, delete(id: number): string {
+        return `${this.base()}/${id}`;
       }
     }
   }
