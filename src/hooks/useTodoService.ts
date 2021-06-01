@@ -3,6 +3,7 @@ import { useTodo } from '../TodoContext';
 import produce from 'immer';
 import { useCallback } from 'react';
 import config from '../config';
+import { Temporal } from 'proposal-temporal';
 
 type ReturnValue = {
   todos: Todo[];
@@ -39,17 +40,20 @@ export default function useTodoService(): ReturnValue {
     async save(todo: TodoInput) {
       let method = '';
       let url = '';
-      if (todo.id) {
+      let cloneTodo: TodoInput = {...todo};
+      if (cloneTodo.id) {
         method = 'PUT';
-        url = config.url.todo.edit(todo.id);
+        url = config.url.todo.edit(cloneTodo.id);
+        (cloneTodo as Todo).updated = Temporal.now.plainDateTimeISO().toString();
       } else {
         method = 'POST';
         url = config.url.todo.create();
+        cloneTodo.created = Temporal.now.plainDateTimeISO().toString();
       }
       const request = await fetch(url, {
         method,
         headers: { 'Content-Type': 'Application/json' },
-        body: JSON.stringify(todo),
+        body: JSON.stringify(cloneTodo),
       });
       const result = await request.json();
       setTodos((prevTodos) =>
