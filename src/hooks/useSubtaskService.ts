@@ -1,6 +1,7 @@
 import produce from "immer";
+import { Temporal } from 'proposal-temporal';
 import config from "../config";
-import { SubtaskInput } from "../Todo";
+import { Subtask, SubtaskInput } from "../Todo";
 import { useTodo } from "../TodoContext";
 
 type ReturnValue = {
@@ -14,23 +15,26 @@ export default function useSubtaskService(): ReturnValue {
     async save(subtask: SubtaskInput): Promise<void> {
       let url = "";
       let method = "";
-      if (subtask.id) {
-        url = config.url.subtask.edit(subtask.id);
+      let cloneSubtask = {...subtask};
+      if (cloneSubtask.id) {
+        url = config.url.subtask.edit(cloneSubtask.id);
         method = "PUT";
+        (cloneSubtask as Subtask).updated = Temporal.now.plainDateTimeISO().toString();
       } else {
         url = config.url.subtask.create();
         method = "POST";
+        cloneSubtask.created = Temporal.now.plainDateTimeISO().toString();
       }
       const response = await fetch(url, {
         method,
         headers: { "Content-Type": "Application/json" },
-        body: JSON.stringify(subtask),
+        body: JSON.stringify(cloneSubtask),
       });
       const data = await response.json();
 
       setTodos((prevTodos) =>
         produce(prevTodos, (draftTodos) => {
-          const todo = draftTodos.find((todo) => todo.id === subtask.todoId);
+          const todo = draftTodos.find((todo) => todo.id === cloneSubtask.todoId);
           if (method === "POST") {
             todo?.subtasks?.push(data);
           } else {
