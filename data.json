@@ -4,36 +4,44 @@
       "id": 1,
       "title": "Get up",
       "done": true,
-      "categoryId": 1
+      "categoryId": 1,
+      "created": "2021-02-02T08:15:00",
+      "updated": "2021-02-03T09:15:00",
+      "due": "2022-12-24T08:15:00"
     },
     {
       "id": 2,
       "title": "Eat",
       "done": true,
-      "categoryId": 1
+      "categoryId": 1,
+      "created": "2021-02-04T08:15:00"
     },
     {
       "id": 3,
       "title": "Sleep",
       "done": false,
-      "categoryId": 2
+      "categoryId": 2,
+      "created": "2021-02-05T08:15:00"
     }
   ],
   "subtasks": [
     {
       "id": 1,
       "title": "turn off alarm",
-      "todoId": 1
+      "todoId": 1,
+      "created": "2021-02-02T08:15:00"
     },
     {
       "id": 2,
       "title": "open eyes",
-      "todoId": 1
+      "todoId": 1,
+      "created": "2021-02-02T08:15:00"
     },
     {
       "id": 3,
       "title": "close eyes",
-      "todoId": 3
+      "todoId": 3,
+      "created": "2021-02-02T08:15:00"
     }
   ],
   "categories": [
