@@ -22,7 +22,8 @@ Edit.args = {
     id: 1,
     title: 'Test',
     done: false,
-    comment: 'lala'
+    comment: 'lala',
+    created: '2021-06-31T06:06'
   },
   onSave: action('saved') as any
 }

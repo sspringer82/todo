@@ -17,7 +17,8 @@ WithoutSubtask.args = {
     id: 1,
     title: 'Test',
     done: true, 
-    comment: 'Test comment'
+    comment: 'Test comment',
+    created: '2021-06-31T06:06'
   },
   onSave: action('saved') as any
 }
@@ -28,10 +29,11 @@ WithSubtask.args = {
     id: 1,
     title: 'Test',
     done: true,
+    created: '2021-06-31T06:06',
     subtasks: [
-      {id: 1, title: 'Subtask1', done: true, todoId: 1},
-      {id: 2, title: 'Subtask2', done: false, todoId: 1},
-      {id: 3, title: 'Subtask3', done: false, todoId: 1}
+      {id: 1, title: 'Subtask1', done: true, todoId: 1, created: '2021-06-31T06:06'},
+      {id: 2, title: 'Subtask2', done: false, todoId: 1, created: '2021-06-31T06:06'},
+      {id: 3, title: 'Subtask3', done: false, todoId: 1, created: '2021-06-31T06:06'}
     ]
   },
   onSave: action('saved') as any

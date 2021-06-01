@@ -81,6 +81,12 @@ exports[`Detail should perform a snapshot test 1`] = `
       Keine Unteraufgaben
     </div>
     <div>
+      Created: 
+    </div>
+    <div>
+      Updated: 
+    </div>
+    <div>
       <button
         class="px-5 py-1 bg-opacity-25 focus:outline-none border"
         style="border-color: #34d399;"

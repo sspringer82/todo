@@ -5,13 +5,16 @@ export type Todo = {
     comment?: string,
     subtasks?: Subtask[],
     category?: Category,
+    created: string;
+    updated?: string;
+    due?: string;
 };
 
-export type TodoInput = {id?: number, category?: CategoryInput} & Omit<Todo, 'id' | 'category'>;
+export type TodoInput = {id?: number, category?: CategoryInput} & Omit<Todo, 'id' | 'category' | 'updated'>;
 
-export type Subtask = {todoId: number} & Omit<Todo, 'comment' | 'subtask' | 'category'>
+export type Subtask = {todoId: number} & Omit<Todo, 'comment' | 'subtask' | 'category' | 'due'>
 
-export type SubtaskInput = {id?: number} & Omit<Subtask, 'id'>
+export type SubtaskInput = {id?: number} & Omit<Subtask, 'id' | 'updated'>
 
 export const initialTodo:TodoInput = {
     title: '',
@@ -20,7 +23,8 @@ export const initialTodo:TodoInput = {
     category: {
         title: '',
         color: ''
-    }
+    },
+    created: ''
 };
 Object.freeze(initialTodo);
 

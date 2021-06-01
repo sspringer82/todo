@@ -16,7 +16,8 @@ Done.args = {
   todo: {
     id: 1,
     title: 'Test',
-    done: true
+    done: true,
+    created: '2021-06-31T06:06'
   },
   onSave: action('saved') as any
 }
@@ -26,7 +27,8 @@ NotDone.args = {
   todo: {
     id: 1,
     title: 'Test',
-    done: false
+    done: false,
+    created: '2021-06-31T06:06'
   },
   onSave: action('saved') as any
 

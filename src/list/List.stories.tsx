@@ -17,12 +17,14 @@ WithoutSubtask.args = {
     id: 1,
     title: 'Test',
     done: true, 
-    comment: 'Test comment'
+    comment: 'Test comment',
+    created: '2021-06-31T06:06'
   }, {
     id: 2,
     title: 'Test',
     done: false, 
-    comment: 'Test comment'
+    comment: 'Test comment',
+    created: '2021-06-31T06:06'
   }],
   save: action('saved') as any,
   remove: action('removed') as any
@@ -35,19 +37,22 @@ WithSubtask.args = {
     title: 'Test',
     done: true, 
     comment: 'Test comment',
+    created: '2021-06-31T06:06',
     subtasks: [
       {
         id: 1,
         title: 'Foo',
         done: false,
-        todoId: 1
+        todoId: 1,
+        created: '2021-06-31T06:06'
       }
     ]
   }, {
     id: 2,
     title: 'Test',
     done: false, 
-    comment: 'Test comment'
+    comment: 'Test comment',
+    created: '2021-06-31T06:06'
   }],
   save: action('saved') as any,
   remove: action('removed') as any
