@@ -121,7 +121,7 @@ export const TitleContainer: React.FC<Props> = ({ todo }) => {
               backgroundColor,
               zIndex: todo.category?.color ? 100 : 0,
             }}
-            className="absolute"
+            className={'absolute ' + (todo.done ? 'opacity-30' : '')}
           ></div>
         )}
         <div
