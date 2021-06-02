@@ -14,14 +14,14 @@ const TitleBorderTop: React.FC<Props> = ({ todo: { done } }) => {
           width: 5,
           height: 5,
           backgroundColor: done ? colors.inactive : colors.active,
-          zIndex: 1
+          zIndex: 1,
         }}
       ></div>
       <div
         style={{
           width: 100,
           height: 1,
-          backgroundColor: done ? colors.inactive : colors.active, 
+          backgroundColor: done ? colors.inactive : colors.active,
         }}
       ></div>
       <div
@@ -31,7 +31,7 @@ const TitleBorderTop: React.FC<Props> = ({ todo: { done } }) => {
           height: 8,
           width: 16,
           backgroundColor: done ? colors.inactive : colors.active,
-          transform: 'skew(70deg)',
+          transform: "skew(70deg)",
         }}
       ></div>
       <div
@@ -80,7 +80,7 @@ const TitleBorderBottom: React.FC<Props> = ({ todo: { done } }) => {
           height: 8,
           width: 16,
           backgroundColor: done ? colors.inactive : colors.active,
-          transform: 'skew(70deg)',
+          transform: "skew(70deg)",
         }}
       ></div>
       <div
@@ -104,13 +104,15 @@ const TitleBorderBottom: React.FC<Props> = ({ todo: { done } }) => {
 };
 
 export const TitleContainer: React.FC<Props> = ({ todo }) => {
-  const backgroundColor = todo.category?.color ? todo.category?.color : "rgb(31, 41, 55)";
-  const marginLeft = 10 ;
+  const backgroundColor = todo.category?.color
+    ? todo.category?.color
+    : "rgb(31, 41, 55)";
+  const marginLeft = 10;
   return (
     <div>
       <TitleBorderTop todo={todo} />
-      <div className="flex"> 
-        {todo && ( 
+      <div className="flex">
+        {todo && (
           <div
             style={{
               height: 31,
@@ -130,7 +132,16 @@ export const TitleContainer: React.FC<Props> = ({ todo }) => {
           className="relative"
         >
           {todo?.title}
+          
         </div>
+        {todo.due && (
+            <div className="transform rotate-90 text-xs absolute" style={{right: -5, top: 20, color: todo.done ? textColor.inactive : textColor.active}}>
+              {new Intl.DateTimeFormat(undefined, {
+                day: "2-digit",
+                month: "2-digit",
+              }).format(new Date(todo.due))}
+            </div>
+          )}
       </div>
       <TitleBorderBottom todo={todo} />
     </div>
@@ -246,7 +257,7 @@ const ActionsContainerTop: React.FC<Props> = ({ todo: { done } }) => {
           height: 8,
           width: 16,
           backgroundColor: done ? colors.inactive : colors.active,
-          transform: 'skew(-70deg)',
+          transform: "skew(-70deg)",
         }}
       ></div>
       <div
@@ -296,7 +307,7 @@ const ActionsContainerBottom: React.FC<Props> = ({ todo: { done } }) => {
           height: 8,
           width: 16,
           backgroundColor: done ? colors.inactive : colors.active,
-          transform: 'skew(-70deg)',
+          transform: "skew(-70deg)",
         }}
       ></div>
       <div
