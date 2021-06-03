@@ -7,13 +7,20 @@ describe("Detail", () => {
 
   beforeEach(() => {
     props = {
-      todo: { id: 1, title: "New Todo", done: true, comment: "Todo Comment" },
+      todo: {
+        id: 1,
+        title: "New Todo",
+        done: true,
+        comment: "Todo Comment",
+        due: "",
+        created: "2021-06-01T08:15:00",
+      },
       onSave: jest.fn(),
     };
   });
 
   it("should perform a snapshot test", () => {
-    const {container} = render(<Detail {...props} />);
+    const { container } = render(<Detail {...props} />);
     expect(container).toMatchSnapshot();
   });
 
@@ -35,12 +42,14 @@ describe("Detail", () => {
         done: true,
         title: "Subtask one",
         todoId: 1,
+        created: "2021-06-01T08:15:00",
       },
       {
         id: 12,
         done: false,
         title: "Subtask two",
         todoId: 1,
+        created: "2021-06-01T08:15:00",
       },
     ];
     const { getAllByTestId, getByText, queryByTestId } = render(
@@ -71,6 +80,21 @@ describe("Detail", () => {
       done: false,
       id: 1,
       title: "New Todo",
+      created: "2021-06-01T08:15:00",
+      due: ""
     });
+  });
+
+  it("should show the due date if it is set", () => {
+    props.todo.due = "2024-06-30T08:15:00";
+    const { getByTestId } = render(<Detail {...props} />);
+    const dueElement = getByTestId('detail-due');
+    expect(dueElement).toBeInTheDocument();
+    expect(dueElement).toHaveTextContent('Due: 2024-06-30T08:15:00');
+  });
+
+  it("should not contain a due date, if it is not set", () => {
+    const { queryByTestId } = render(<Detail {...props} />);
+    expect(queryByTestId('detail-due')).toBeNull();
   });
 });

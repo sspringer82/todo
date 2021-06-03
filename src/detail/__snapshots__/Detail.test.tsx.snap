@@ -80,8 +80,10 @@ exports[`Detail should perform a snapshot test 1`] = `
     >
       Keine Unteraufgaben
     </div>
+    
     <div>
       Created: 
+      2021-06-01T08:15:00
     </div>
     <div>
       Updated: 

@@ -30,6 +30,7 @@ const Detail: React.FC<Props> = ({ todo, onSave }) => {
       ) : (
         <div data-testid="detail-nosubtasks">Keine Unteraufgaben</div>
       )}
+      {todo.due && <div data-testid="detail-due">Due: {todo.due}</div>}
       <div>Created: {todo?.created}</div>
       <div>Updated: {todo?.updated}</div>
       <div>
