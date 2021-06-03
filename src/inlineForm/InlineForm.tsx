@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
-import { initialTodo, Todo, TodoInput } from '../Todo';
+import { initialTodo, Subtask, SubtaskInput, Todo, TodoInput } from '../Todo';
 import useForm from '../hooks/useForm';
 import Button from '../util/button/Button';
 import Input from '../util/input/Input';
 
 export type Props = {
-  todo?: Todo;
-  onSave: (item: TodoInput) => Promise<void>;
+  todo?: Todo | Subtask;
+  onSave: (item: TodoInput | SubtaskInput) => Promise<void>;
   onCancel: () => void;
 };
 
 // @todo generic component?
 const InlineForm: React.FC<Props> = ({ todo, onSave, onCancel }) => {
-  const { handleSubmit, handleChange, item, setItem } = useForm<TodoInput>(
+  const { handleSubmit, handleChange, item, setItem } = useForm<TodoInput | SubtaskInput>(
     initialTodo,
     onSave,
   );

@@ -39,6 +39,8 @@ describe("Form", () => {
           done: true,
           comment: "comment",
           category: { id: 1, title: "Private", color: "green" },
+          due: "",
+          created: "2021-06-01T08:15:00"
         },
       ])
     );
@@ -83,6 +85,8 @@ describe("Form", () => {
           done: true,
           comment: "New Comment",
           category: { id: 1, title: "Private", color: "green" },
+          due: "",
+          created: "2021-06-01T08:15:00",
         },
       ])
     );
@@ -107,6 +111,8 @@ describe("Form", () => {
           done: true,
           comment: "Existing Comment",
           category: { id: 1, title: "Private", color: "green" },
+          due: "",
+          created: "2021-06-01T08:15:00",
         },
       ])
     );
@@ -144,6 +150,8 @@ describe("Form", () => {
           done: false,
           comment: "Existing Comment Modified",
           category: { id: 1, title: "Private", color: "green" },
+          due: "",
+          created: "2021-06-01T08:15:00",
         },
       ])
     );
@@ -167,6 +175,8 @@ describe("Form", () => {
         done: true,
         subtasks: [],
         category: { id: 1, title: "Private", color: "green" },
+        due: "",
+        created: "2021-06-01T08:15:00"
       },
       {
         id: 2,
@@ -179,14 +189,18 @@ describe("Form", () => {
             title: "sit down",
             todoId: 1,
             done: false,
+            created: "2021-06-01T08:15:00",
           },
           {
             id: 2,
             title: "open your mouth",
             todoId: 1,
             done: false,
+            created: "2021-06-01T08:15:00",
           },
         ],
+        due: "",
+        created: "2021-06-01T08:15:00",
       },
       {
         id: 3,
@@ -194,6 +208,8 @@ describe("Form", () => {
         done: false,
         subtasks: [],
         category: { id: 1, title: "Private", color: "green" },
+        due: "",
+        created: "2021-06-01T08:15:00",
       },
     ];
 

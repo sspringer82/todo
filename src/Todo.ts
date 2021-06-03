@@ -2,12 +2,12 @@ export type Todo = {
     id: number,
     title: string,
     done: boolean,
+    created: string;
+    due: string;
     comment?: string,
     subtasks?: Subtask[],
     category?: Category,
-    created: string;
     updated?: string;
-    due?: string;
 };
 
 export type TodoInput = {id?: number, category?: CategoryInput} & Omit<Todo, 'id' | 'category' | 'updated'>;
@@ -24,7 +24,8 @@ export const initialTodo:TodoInput = {
         title: '',
         color: ''
     },
-    created: ''
+    created: '',
+    due: ''
 };
 Object.freeze(initialTodo);
 

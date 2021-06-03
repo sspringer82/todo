@@ -18,12 +18,14 @@ WithoutSubtask.args = {
     title: 'Test',
     done: true, 
     comment: 'Test comment',
+    due: '2024-06-31T06:06',
     created: '2021-06-31T06:06'
   }, {
     id: 2,
     title: 'Test',
     done: false, 
     comment: 'Test comment',
+    due: '2024-06-31T06:06',
     created: '2021-06-31T06:06'
   }],
   save: action('saved') as any,
@@ -37,6 +39,7 @@ WithSubtask.args = {
     title: 'Test',
     done: true, 
     comment: 'Test comment',
+    due: '2024-06-31T06:06',
     created: '2021-06-31T06:06',
     subtasks: [
       {
@@ -52,6 +55,7 @@ WithSubtask.args = {
     title: 'Test',
     done: false, 
     comment: 'Test comment',
+    due: '2024-06-31T06:06',
     created: '2021-06-31T06:06'
   }],
   save: action('saved') as any,

@@ -1,16 +1,16 @@
 import React from "react";
-import { Todo, TodoInput } from "../Todo";
+import { Subtask, SubtaskInput, Todo, TodoInput } from "../Todo";
 import produce from "immer";
 import ClearIcon from "@material-ui/icons/Clear";
 import CheckIcon from "@material-ui/icons/Check";
 
 export type Props = {
-  todo: Todo;
-  onSave(todo: TodoInput): Promise<void>;
+  todo: Todo | Subtask;
+  onSave(todo: TodoInput | SubtaskInput): Promise<void>;
 };
 
 const Done: React.FC<Props> = ({ todo, onSave }) => {
-  function handleStatusToggle(todo: Todo) {
+  function handleStatusToggle(todo: Todo | Subtask) {
     onSave(
       produce(todo, (draftTodo) => {
         draftTodo.done = !draftTodo.done;

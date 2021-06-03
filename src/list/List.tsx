@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ListItem from "../listItem/ListItem";
 import InlineForm from "../inlineForm/InlineForm";
-import { Todo, TodoInput, Subtask } from "../Todo";
+import { Todo, TodoInput, Subtask, SubtaskInput } from "../Todo";
 import { useLocation } from "react-router-dom";
 
 export type Props = {
   canEdit: boolean;
   todos: Todo[] | Subtask[];
-  save(todo: TodoInput): Promise<void>;
+  save(todo: TodoInput | SubtaskInput): Promise<void>;
   remove(id: number): Promise<void>;
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Done from "../done/Done";
-import { Todo, TodoInput } from "../Todo";
+import { Subtask, SubtaskInput, Todo, TodoInput } from "../Todo";
 import InlineForm from "../inlineForm/InlineForm";
 import { ActionsContainer, ButtonContainer, TitleContainer } from "./Border";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -11,11 +11,11 @@ import { textColor } from '../colors';
 
 export type Props = {
   editModeEnabled: boolean;
-  todo: Todo;
+  todo: Todo | Subtask;
   canEdit: boolean;
   onEditModeEnable: (id: number | null) => void;
   onDelete: (id: number) => void;
-  onSave(todo: TodoInput): Promise<void>;
+  onSave(todo: TodoInput | SubtaskInput): Promise<void>;
 };
 
 const ListItem: React.FC<Props> = ({

@@ -14,14 +14,16 @@
       "title": "Eat",
       "done": true,
       "categoryId": 1,
-      "created": "2021-02-04T08:15:00"
+      "created": "2021-02-04T08:15:00",
+      "due": ""
     },
     {
       "id": 3,
       "title": "Sleep",
       "done": false,
       "categoryId": 2,
-      "created": "2021-02-05T08:15:00"
+      "created": "2021-02-05T08:15:00",
+      "due": ""
     }
   ],
   "subtasks": [

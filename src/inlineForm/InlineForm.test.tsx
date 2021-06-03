@@ -44,7 +44,8 @@ describe('InlineForm', () => {
         color: '',
         title: ''
       },
-      created: ''
+      created: '',
+      due: ''
     });
   });
   it('should call onCancel if the cancel button is hit', () => {

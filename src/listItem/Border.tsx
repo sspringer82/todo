@@ -1,9 +1,9 @@
 import React from "react";
 import { colors, textColor } from "../colors";
-import { Todo } from "../Todo";
+import { Subtask, Todo } from "../Todo";
 
 type Props = {
-  todo: Todo;
+  todo: Todo | Subtask;
 };
 
 const TitleBorderTop: React.FC<Props> = ({ todo: { done } }) => {
@@ -104,8 +104,8 @@ const TitleBorderBottom: React.FC<Props> = ({ todo: { done } }) => {
 };
 
 export const TitleContainer: React.FC<Props> = ({ todo }) => {
-  const backgroundColor = todo.category?.color
-    ? todo.category?.color
+  const backgroundColor = ((todo as Todo).category && (todo as Todo).category?.color)
+    ? (todo as Todo).category?.color
     : "rgb(31, 41, 55)";
   const marginLeft = 10;
   return (
@@ -119,7 +119,7 @@ export const TitleContainer: React.FC<Props> = ({ todo }) => {
               width: 5,
               top: 5,
               backgroundColor,
-              zIndex: todo.category?.color ? 100 : 0,
+              zIndex: (todo as Todo).category && (todo as Todo).category?.color ? 100 : 0,
             }}
             className={'absolute ' + (todo.done ? 'opacity-30' : '')}
           ></div>
@@ -134,12 +134,12 @@ export const TitleContainer: React.FC<Props> = ({ todo }) => {
           {todo?.title}
           
         </div>
-        {todo.due && (
+        {(todo as Todo).due && (
             <div className="transform rotate-90 text-xs absolute" style={{right: -5, top: 20, color: todo.done ? textColor.inactive : textColor.active}}>
               {new Intl.DateTimeFormat(undefined, {
                 day: "2-digit",
                 month: "2-digit",
-              }).format(new Date(todo.due))}
+              }).format(new Date((todo as Todo).due))}
             </div>
           )}
       </div>

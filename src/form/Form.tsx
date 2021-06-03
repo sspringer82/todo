@@ -9,7 +9,7 @@ import SubtaskDivider from "../util/divider/SubtaskDivider";
 import Input from "../util/input/Input";
 import Textarea from "../util/textarea/Textarea";
 
-export type Props = {
+export type Props = { 
   todo: TodoInput;
   onSubmit: (e: FormEvent) => Promise<void>;
   onChange: (
@@ -68,6 +68,14 @@ const Form: React.FC<Props> = ({ todo, onSubmit, onChange }) => {
           data-testid="comment"
           label="Comment"
         />
+        <Input
+            label="Due"
+            type="text"
+            onChange={onChange}
+            value={todo.due}
+            name="due"
+            data-testid="due"
+          />
         <div>
           <Button type="submit" data-testid="submit" variant="primary">
             save
