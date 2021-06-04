@@ -135,7 +135,7 @@ export const TitleContainer: React.FC<Props> = ({ todo }) => {
           
         </div>
         {(todo as Todo).due && (
-            <div className="transform rotate-90 text-xs absolute" style={{right: -5, top: 20, color: todo.done ? textColor.inactive : textColor.active}}>
+            <div className="transform rotate-90 text-xs absolute" style={{right: -5, top: 20, color: todo.done ? textColor.inactive : textColor.active}} data-testid="listitem-due">
               {new Intl.DateTimeFormat(undefined, {
                 day: "2-digit",
                 month: "2-digit",
