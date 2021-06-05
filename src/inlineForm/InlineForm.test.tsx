@@ -83,6 +83,9 @@ describe('InlineForm', () => {
       title: 'New Todo',
       done: true,
       comment: '',
+      created: '2021-06-01T08:15:00',
+      due: '2024-06-01T08:15:00',
+      
     };
 
     await act(async () => {
@@ -103,6 +106,8 @@ describe('InlineForm', () => {
       title: 'Changed Todo',
       done: true,
       comment: '',
+      created: '2021-06-01T08:15:00',
+      due: '2024-06-01T08:15:00'
     });
   });
 });
