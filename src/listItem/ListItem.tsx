@@ -7,7 +7,8 @@ import { ActionsContainer, ButtonContainer, TitleContainer } from "./Border";
 import DeleteIcon from "@material-ui/icons/Delete";
 import BuildIcon from "@material-ui/icons/Build";
 import SearchIcon from "@material-ui/icons/Search";
-import { textColor } from '../colors';
+import { colors, textColor } from '../colors';
+import { Temporal } from 'proposal-temporal';
 
 export type Props = {
   editModeEnabled: boolean;
@@ -50,6 +51,16 @@ const ListItem: React.FC<Props> = ({
         </Link>
       );
     }
+
+    let overdue = false;
+    let color = colors.active;
+    if (todo.done) {
+      color = colors.inactive;
+    } else if ((todo as Todo).due && Temporal.now.plainDateTimeISO().until(Temporal.PlainDateTime.from((todo as Todo).due)).total({unit: 'second'}) < 0) {
+      color = colors.overdue;
+      overdue = true;
+    }
+
     return (
       <div data-testid="listItem-container" className="flex">
         <div
@@ -57,14 +68,14 @@ const ListItem: React.FC<Props> = ({
           data-testid="title"
           style={{ position: "relative"}}
         >
-          <TitleContainer todo={todo} />
+          <TitleContainer color={color} todo={todo} overdue={overdue} />
         </div>
 
-        <ButtonContainer todo={todo}>
+        <ButtonContainer color={color}>
           <Done todo={todo} onSave={onSave} />
         </ButtonContainer>
 
-        <ActionsContainer todo={todo}>{actions}</ActionsContainer>
+        <ActionsContainer color={color}>{actions}</ActionsContainer>
       </div>
     );
   }

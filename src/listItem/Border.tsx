@@ -1,19 +1,19 @@
 import React from "react";
-import { colors, textColor } from "../colors";
+import { textColor } from "../colors";
 import { Subtask, Todo } from "../Todo";
 
-type Props = {
-  todo: Todo | Subtask;
-};
+type ColorProps = {
+  color: string;
+}
 
-const TitleBorderTop: React.FC<Props> = ({ todo: { done } }) => {
+const TitleBorderTop: React.FC<ColorProps> = ({color}) => {
   return (
     <div className="flex relative top-0">
       <div
         style={{
           width: 5,
           height: 5,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           zIndex: 1,
         }}
       ></div>
@@ -21,7 +21,7 @@ const TitleBorderTop: React.FC<Props> = ({ todo: { done } }) => {
         style={{
           width: 100,
           height: 1,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
         }}
       ></div>
       <div
@@ -30,7 +30,7 @@ const TitleBorderTop: React.FC<Props> = ({ todo: { done } }) => {
           marginRight: 7,
           height: 8,
           width: 16,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           transform: "skew(70deg)",
         }}
       ></div>
@@ -38,7 +38,7 @@ const TitleBorderTop: React.FC<Props> = ({ todo: { done } }) => {
         style={{
           width: 100,
           height: 1,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 7,
         }}
       ></div>
@@ -46,7 +46,7 @@ const TitleBorderTop: React.FC<Props> = ({ todo: { done } }) => {
         style={{
           height: 5,
           width: 5,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 7,
         }}
       ></div>
@@ -54,21 +54,21 @@ const TitleBorderTop: React.FC<Props> = ({ todo: { done } }) => {
   );
 };
 
-const TitleBorderBottom: React.FC<Props> = ({ todo: { done } }) => {
+const TitleBorderBottom: React.FC<ColorProps> = ({color }) => {
   return (
     <div style={{ display: "flex", position: "relative", bottom: 0 }}>
       <div
         style={{
           width: 5,
           height: 5,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
         }}
       ></div>
       <div
         style={{
           width: 110,
           height: 1,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 4,
         }}
       ></div>
@@ -79,7 +79,7 @@ const TitleBorderBottom: React.FC<Props> = ({ todo: { done } }) => {
           marginRight: 7,
           height: 8,
           width: 16,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           transform: "skew(70deg)",
         }}
       ></div>
@@ -87,7 +87,7 @@ const TitleBorderBottom: React.FC<Props> = ({ todo: { done } }) => {
         style={{
           width: 90,
           height: 1,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 11,
         }}
       ></div>
@@ -95,7 +95,7 @@ const TitleBorderBottom: React.FC<Props> = ({ todo: { done } }) => {
         style={{
           height: 5,
           width: 5,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 7,
         }}
       ></div>
@@ -103,14 +103,27 @@ const TitleBorderBottom: React.FC<Props> = ({ todo: { done } }) => {
   );
 };
 
-export const TitleContainer: React.FC<Props> = ({ todo }) => {
+
+type Props = {
+  todo: Todo | Subtask;
+  color: string;
+  overdue: boolean;
+};
+export const TitleContainer: React.FC<Props> = ({ todo, color, overdue }) => {
   const backgroundColor = ((todo as Todo).category && (todo as Todo).category?.color)
     ? (todo as Todo).category?.color
     : "rgb(31, 41, 55)";
+  let dueColor = textColor.active;
+  if (todo.done) {
+    dueColor = textColor.inactive;
+  } else if (overdue) {
+    dueColor = textColor.overdue;
+  }
+
   const marginLeft = 10;
   return (
     <div>
-      <TitleBorderTop todo={todo} />
+      <TitleBorderTop color={color} />
       <div className="flex">
         {todo && (
           <div
@@ -135,7 +148,7 @@ export const TitleContainer: React.FC<Props> = ({ todo }) => {
           
         </div>
         {(todo as Todo).due && (
-            <div className="transform rotate-90 text-xs absolute" style={{right: -5, top: 20, color: todo.done ? textColor.inactive : textColor.active}} data-testid="listitem-due">
+            <div className="transform rotate-90 text-xs absolute" style={{right: -5, top: 20, color: dueColor}} data-testid="listitem-due">
               {new Intl.DateTimeFormat(undefined, {
                 day: "2-digit",
                 month: "2-digit",
@@ -143,19 +156,19 @@ export const TitleContainer: React.FC<Props> = ({ todo }) => {
             </div>
           )}
       </div>
-      <TitleBorderBottom todo={todo} />
+      <TitleBorderBottom color={color} />
     </div>
   );
 };
 
-const ButtonContainerTop: React.FC<Props> = ({ todo: { done } }) => {
+const ButtonContainerTop: React.FC<ColorProps> = ({color}) => {
   return (
     <div className="flex relative">
       <div
         style={{
           height: 5,
           width: 5,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 7,
         }}
       ></div>
@@ -163,7 +176,7 @@ const ButtonContainerTop: React.FC<Props> = ({ todo: { done } }) => {
         style={{
           width: 40,
           height: 1,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 7,
         }}
       ></div>
@@ -171,7 +184,7 @@ const ButtonContainerTop: React.FC<Props> = ({ todo: { done } }) => {
         style={{
           height: 5,
           width: 5,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 7,
         }}
       ></div>
@@ -179,14 +192,14 @@ const ButtonContainerTop: React.FC<Props> = ({ todo: { done } }) => {
   );
 };
 
-const ButtonContainerBottom: React.FC<Props> = ({ todo: { done } }) => {
+const ButtonContainerBottom: React.FC<ColorProps> = ({ color }) => {
   return (
     <div className="flex relative bottom-0">
       <div
         style={{
           height: 5,
           width: 5,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 8,
         }}
       ></div>
@@ -194,7 +207,7 @@ const ButtonContainerBottom: React.FC<Props> = ({ todo: { done } }) => {
         style={{
           width: 40,
           height: 1,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 12,
         }}
       ></div>
@@ -202,7 +215,7 @@ const ButtonContainerBottom: React.FC<Props> = ({ todo: { done } }) => {
         style={{
           height: 5,
           width: 5,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 8,
         }}
       ></div>
@@ -210,10 +223,10 @@ const ButtonContainerBottom: React.FC<Props> = ({ todo: { done } }) => {
   );
 };
 
-export const ButtonContainer: React.FC<Props> = ({ children, todo }) => {
+export const ButtonContainer: React.FC<ColorProps> = ({ children, color }) => {
   return (
     <div style={{ marginLeft: 5 }} className="relative">
-      <ButtonContainerTop todo={todo} />
+      <ButtonContainerTop color={color} />
       <div className="relative">
         &nbsp;
         <div
@@ -226,19 +239,19 @@ export const ButtonContainer: React.FC<Props> = ({ children, todo }) => {
           {children}
         </div>
       </div>
-      <ButtonContainerBottom todo={todo} />
+      <ButtonContainerBottom color={color} />
     </div>
   );
 };
 
-const ActionsContainerTop: React.FC<Props> = ({ todo: { done } }) => {
+const ActionsContainerTop: React.FC<ColorProps> = ({color}) => {
   return (
     <div className="flex relative">
       <div
         style={{
           height: 5,
           width: 5,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 7,
         }}
       ></div>
@@ -246,7 +259,7 @@ const ActionsContainerTop: React.FC<Props> = ({ todo: { done } }) => {
         style={{
           width: 40,
           height: 1,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 7,
         }}
       ></div>
@@ -256,7 +269,7 @@ const ActionsContainerTop: React.FC<Props> = ({ todo: { done } }) => {
           marginRight: 7,
           height: 8,
           width: 16,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           transform: "skew(-70deg)",
         }}
       ></div>
@@ -264,7 +277,7 @@ const ActionsContainerTop: React.FC<Props> = ({ todo: { done } }) => {
         style={{
           width: 40,
           height: 1,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 0,
         }}
       ></div>
@@ -272,7 +285,7 @@ const ActionsContainerTop: React.FC<Props> = ({ todo: { done } }) => {
         style={{
           height: 5,
           width: 5,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 0,
         }}
       ></div>
@@ -280,14 +293,14 @@ const ActionsContainerTop: React.FC<Props> = ({ todo: { done } }) => {
   );
 };
 
-const ActionsContainerBottom: React.FC<Props> = ({ todo: { done } }) => {
+const ActionsContainerBottom: React.FC<ColorProps> = ({color}) => {
   return (
     <div className="flex relative bottom-0">
       <div
         style={{
           height: 5,
           width: 5,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 7,
         }}
       ></div>
@@ -295,7 +308,7 @@ const ActionsContainerBottom: React.FC<Props> = ({ todo: { done } }) => {
         style={{
           width: 30,
           height: 1,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 11,
         }}
       ></div>
@@ -306,7 +319,7 @@ const ActionsContainerBottom: React.FC<Props> = ({ todo: { done } }) => {
           marginRight: 7,
           height: 8,
           width: 16,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           transform: "skew(-70deg)",
         }}
       ></div>
@@ -314,7 +327,7 @@ const ActionsContainerBottom: React.FC<Props> = ({ todo: { done } }) => {
         style={{
           width: 50,
           height: 1,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 4,
         }}
       ></div>
@@ -322,7 +335,7 @@ const ActionsContainerBottom: React.FC<Props> = ({ todo: { done } }) => {
         style={{
           height: 5,
           width: 5,
-          backgroundColor: done ? colors.inactive : colors.active,
+          backgroundColor: color,
           marginTop: 0,
         }}
       ></div>
@@ -335,18 +348,18 @@ const InnerButtonContainer: React.FC = ({ children }) => {
 };
 
 export const ActionsContainer: React.FC<
-  { children: JSX.Element[] } & Props
-> = ({ children, todo }) => {
+  { children: JSX.Element[] } & ColorProps
+> = ({ children, color }) => {
   return (
     <div style={{ marginLeft: 5 }} className="relative">
-      <ActionsContainerTop todo={todo} />
+      <ActionsContainerTop color={color} />
       <div className="flex">
         {children &&
           children.map((child, i) => (
             <InnerButtonContainer key={i}>{child}</InnerButtonContainer>
           ))}
       </div>
-      <ActionsContainerBottom todo={todo} />
+      <ActionsContainerBottom color={color} />
     </div>
   );
 };
