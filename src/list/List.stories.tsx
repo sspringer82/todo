@@ -3,6 +3,7 @@ import { Story, Meta } from "@storybook/react";
 import { action } from '@storybook/addon-actions';
 import { BrowserRouter } from 'react-router-dom';
 import List, {Props} from './List';
+import { Todo } from '../Todo';
 
 export default {
   title: "List",
@@ -19,6 +20,7 @@ WithoutSubtask.args = {
     done: true, 
     comment: 'Test comment',
     due: '2024-06-31T06:06',
+    categoryId: '',
     created: '2021-06-31T06:06'
   }, {
     id: 2,
@@ -26,6 +28,7 @@ WithoutSubtask.args = {
     done: false, 
     comment: 'Test comment',
     due: '2024-06-31T06:06',
+    categoryId: '',
     created: '2021-06-31T06:06'
   }],
   save: action('saved') as any,
@@ -40,6 +43,7 @@ WithSubtask.args = {
     done: true, 
     comment: 'Test comment',
     due: '2024-06-31T06:06',
+    categoryId: '',
     created: '2021-06-31T06:06',
     subtasks: [
       {
@@ -56,6 +60,7 @@ WithSubtask.args = {
     done: false, 
     comment: 'Test comment',
     due: '2024-06-31T06:06',
+    categoryId: '',
     created: '2021-06-31T06:06'
   }],
   save: action('saved') as any,

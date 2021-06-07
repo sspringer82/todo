@@ -19,7 +19,8 @@ WithoutSubtask.args = {
     done: true, 
     comment: 'Test comment',
     due: '2024-06-31T06:06',
-    created: '2021-06-31T06:06'
+    created: '2021-06-31T06:06',
+    categoryId: '',
   },
   onSave: action('saved') as any
 }
@@ -32,6 +33,7 @@ WithSubtask.args = {
     done: true,
     created: '2021-06-31T06:06',
     due: '2024-06-31T06:06',
+    categoryId: '',
     subtasks: [
       {id: 1, title: 'Subtask1', done: true, todoId: 1, created: '2021-06-31T06:06'},
       {id: 2, title: 'Subtask2', done: false, todoId: 1, created: '2021-06-31T06:06'},

@@ -24,6 +24,7 @@ Edit.args = {
     done: false,
     comment: 'lala',
     due: '2024-06-31T06:06',
+    categoryId: '',
     created: '2021-06-31T06:06'
   },
   onSave: action('saved') as any

@@ -18,6 +18,7 @@ SimpleNotDone.args = {
     title: 'Test',
     done: false, 
     due: '2024-06-31T06:06',
+    categoryId: '',
     created: '2021-06-31T06:06'
   },
   canEdit: true,
@@ -34,6 +35,7 @@ SimpleDone.args = {
     title: 'Test',
     done: true,
     due: '2024-06-31T06:06',
+    categoryId: '',
     created: '2021-06-31T06:06'
   },
   canEdit: true,
@@ -51,6 +53,7 @@ WithoutEdit.args = {
     title: 'Test',
     done: true,
     due: '2024-06-31T06:06',
+    categoryId: '',
     created: '2021-06-31T06:06'
   },
   canEdit: false,
@@ -67,6 +70,7 @@ InlineEdit.args = {
     title: 'Test',
     done: true,
     due: '2024-06-31T06:06',
+    categoryId: '',
     created: '2021-06-31T06:06'
   },
   canEdit: false,

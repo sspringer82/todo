@@ -19,6 +19,7 @@ WithoutSubtask.args = {
     done: true, 
     comment: 'Test comment',
     due: '2024-06-31T06:06',
+    categoryId: '',
     created: '2021-06-31T06:06'
   },
   onSubmit: async (e: FormEvent) => {

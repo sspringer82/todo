@@ -45,7 +45,8 @@ describe('InlineForm', () => {
         title: ''
       },
       created: '',
-      due: ''
+      due: '',
+      categoryId: ''
     });
   });
   it('should call onCancel if the cancel button is hit', () => {
@@ -85,7 +86,7 @@ describe('InlineForm', () => {
       comment: '',
       created: '2021-06-01T08:15:00',
       due: '2024-06-01T08:15:00',
-      
+      categoryId: '',
     };
 
     await act(async () => {
@@ -107,7 +108,8 @@ describe('InlineForm', () => {
       done: true,
       comment: '',
       created: '2021-06-01T08:15:00',
-      due: '2024-06-01T08:15:00'
+      due: '2024-06-01T08:15:00',
+      categoryId: ''
     });
   });
 });
