@@ -8,6 +8,9 @@ describe("Form", () => {
   beforeEach(() => {
     fetchMock.resetMocks();
   });
+  afterEach(() => {
+    fetchMock.resetMocks();
+  });
 
   it("should perform a snapshot test", () => {
     const { container } = render(
@@ -105,6 +108,9 @@ describe("Form", () => {
     expect(body.title).toBe("New Title");
     expect(body.done).toBe(true);
     expect(body.comment).toBe("New Comment");
+    expect(body.created).toBe("2021-06-01T06:08:04.188083793");
+    expect(body.due).toBe("2022-06-01T08:15:00");
+    expect(body.updated).toBeUndefined();
   });
   it("should save an existing entry", async () => {
     (fetch as any).mockResponseOnce(
