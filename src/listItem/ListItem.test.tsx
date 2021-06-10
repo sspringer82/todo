@@ -4,6 +4,8 @@ import { Router, BrowserRouter, MemoryRouter } from "react-router-dom";
 import { Todo } from "../Todo";
 import ListItem, { Props } from "./ListItem";
 
+jest.unmock('proposal-temporal')
+
 describe("ListItem", () => {
   let props: Props;
 
